@@ -1,8 +1,18 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Apr 20 11:03:01 2023
+from abc import ABC, abstractmethod
 
-@author: questiero
-"""
-
+class Formula(ABC):
+    
+    _children = None
+    _symbol = ""
+    
+    @abstractmethod
+    def getVariables():
+        pass
+    
+    @abstractmethod
+    def toDNF():
+        pass
+    
+    @abstractmethod
+    def _toDNFNeg():
+        pass
