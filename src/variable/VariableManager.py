@@ -12,9 +12,15 @@ class VariableManager:
         """
         if(isinstance(obj, Variable)):
             if(obj._name not in __class__.instance):
-                __class__.instance[obj._name] = obj.__class__
+                __class__.instance[obj._name] = (obj.__class__, obj)
             else:
-                if(not isinstance(obj,  __class__.instance[obj._name])):
+                if(not isinstance(obj,  __class__.instance[obj._name][0])):
                     raise Exception(f"{obj._name} is already define with another type.")
         else:
             raise Exception(f"{obj} is not a Variable.")
+    
+    @staticmethod
+    def get(name):
+        if(name in __class__.instance):
+            return __class__.instance[name][1]
+        else: raise Exception(f"{name} is not declared.")
