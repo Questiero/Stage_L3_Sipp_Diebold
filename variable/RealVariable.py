@@ -12,5 +12,3 @@ class RealVariable(Variable):
         new = RealVariable(name)
         Variable.add(new)
         return new
-    
-test = RealVariable.declare("x")
