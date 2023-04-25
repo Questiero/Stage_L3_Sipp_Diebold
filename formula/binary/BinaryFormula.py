@@ -11,6 +11,9 @@ class BinaryFormula(Formula):
     def _simplify(self):
         pass
     
+    def getVariables(self):
+        return self._children.getVariables()
+    
     def toDNF(self):
         return self.simplify().toDNF()
     

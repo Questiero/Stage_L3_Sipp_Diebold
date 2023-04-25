@@ -1,7 +1,10 @@
 from ..Formula import Formula
+from ..unary.Not import Not
 
 class NullaryFormula(Formula):
     
-    # formula: Set(Formula)
-    def __init__(self, formulaSet):
-        self._children = formulaSet
+    def toDNF(self):
+        return self
+    
+    def _toDNFNeg(self):
+        return Not(self)

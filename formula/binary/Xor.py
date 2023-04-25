@@ -1,8 +1,11 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Apr 20 11:03:01 2023
+from .BinaryFormula import BinaryFormula
+from ..unary.Not import Not
+from ..nary.Or import Or
+from ..nary.And import And
 
-@author: questiero
-"""
-
+class Xor(BinaryFormula):
+    
+    _symbol = "XOR"
+    
+    def _simplify(self):
+        return Or({And({self._children[0], Not(self._children[1])}), And({Not(self._children[0]), self._children[1]})})
