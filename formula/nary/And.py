@@ -1,5 +1,5 @@
 from .NaryFormula import NaryFormula
-from .Or import Or
+from ..binary import *
 
 class And(NaryFormula):
     
@@ -11,7 +11,7 @@ class And(NaryFormula):
         orChildren = set()
 			
         for dnfChild in dnfChildren:
-            if isinstance(dnfChild, Or):		
+            if isinstance(dnfChild, binary.Or):		
                 orChildren.add(dnfChild)
                 dnfChildren.remove(dnfChild)
 					
@@ -27,7 +27,7 @@ class And(NaryFormula):
 
         dnfFormula = {dnfChildren.union(And(comb)) for comb in combinations}
 					
-        return Or(dnfFormula)
+        return binary.Or(dnfFormula)
     
     def _toDNFNeg(self):
-        return Or({child._toDNFNeg() for child in self._children})
+        return binary.Or({child._toDNFNeg() for child in self._children})
