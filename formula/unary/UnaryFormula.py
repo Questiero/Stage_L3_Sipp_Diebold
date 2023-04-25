@@ -1,4 +1,7 @@
 from ..Formula import Formula
 
-class NaryFormula(Formula):
-    pass
+class UnaryFormula(Formula):
+        
+    # formula: Formula
+    def __init__(self, formula):
+        self._children = formula
