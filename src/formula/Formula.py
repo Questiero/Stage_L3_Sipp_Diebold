@@ -3,7 +3,11 @@ from abc import ABC, abstractmethod
 class Formula(ABC):
     
     _children = None
-    _symbol = ""
+    
+    @property
+    @abstractmethod
+    def _symbol(self):
+        pass
     
     @abstractmethod
     def getVariables(self):
