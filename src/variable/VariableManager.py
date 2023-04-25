@@ -5,10 +5,9 @@ class VariableManager:
     @staticmethod
     def add(obj):
         """
-            Method used for adding an instance of a Variable in the instance's dictionary
+            Function used for adding an instance of a variable in the instance's dictionary
             
-            params:
-                obj : Variable
+            :params obj: the new variable
         """
         if(isinstance(obj, Variable)):
             if(obj.getName() not in __class__.instance):
@@ -20,7 +19,13 @@ class VariableManager:
             raise Exception(f"{obj} is not a Variable.")
     
     @staticmethod
-    def get(name):
+    def get(name : str) -> Variable:
+        """
+            Function used for getting a variable wich already exist
+        
+            :param name: Name of a variable
+            :returns: A variable
+        """
         if(name in __class__.instance):
             return __class__.instance[name][1]
         else: raise Exception(f"{name} is not declared.")
