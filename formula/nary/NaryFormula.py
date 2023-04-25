@@ -6,5 +6,5 @@ class NaryFormula(Formula):
     def toDNF(self):
         return self
     
-    def toDNFNeg(self):
+    def _toDNFNeg(self):
         return Not(self)

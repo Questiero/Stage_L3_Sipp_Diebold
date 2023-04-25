@@ -5,7 +5,7 @@ class BinaryFormula(Formula):
       
     # formulas: tuple (Formula, Formula)
     def __init__(self, formulaTuple):
-        self._children = formulasTuple
+        self._children = formulaTuple
 
     @abstractmethod
     def _simplify(self):
@@ -14,5 +14,5 @@ class BinaryFormula(Formula):
     def toDNF(self):
         return self.simplify().toDNF()
     
-    def toDNFNeg(self):
-        return self.simplify().toDNFNeg()
+    def _toDNFNeg(self):
+        return self.simplify()._toDNFNeg()

@@ -1,8 +1,14 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Apr 20 11:03:01 2023
+from .UnaryFormula import UnaryFormula
 
-@author: questiero
-"""
-
+class Not(UnaryFormula):
+    
+    _symbol = "!"
+    
+    def getVariables(self):
+        return self._children.getVariables()
+    
+    def toDNF(self):
+        return self._children._toDNFNeg()
+    
+    def _toDNFNeg(self):
+        return self._children.toDNF()
