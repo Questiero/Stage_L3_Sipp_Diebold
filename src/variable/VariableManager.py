@@ -1,4 +1,4 @@
-from Variable import Variable
+from .Variable import Variable
 
 class VariableManager:
     instance = {}
@@ -10,7 +10,7 @@ class VariableManager:
             params:
                 obj : Variable
         """
-        if(isinstance(obj, Variable.__class__)):
+        if(isinstance(obj, Variable)):
             if(obj._name not in __class__.instance):
                 __class__.instance[obj._name] = obj.__class__
             else:
