@@ -15,7 +15,7 @@ class BinaryFormula(Formula):
         return self._children.getVariables()
     
     def toDNF(self):
-        return self.simplify().toDNF()
+        return self._simplify().toDNF()
     
     def _toDNFNeg(self):
-        return self.simplify()._toDNFNeg()
+        return self._simplify()._toDNFNeg()
