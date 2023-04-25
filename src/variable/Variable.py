@@ -12,3 +12,9 @@ class Variable(ABC):
 
     def getName(self) -> str:
         return self._name
+    
+    def __eq__(self, other):
+        """Overrides the default implementation"""
+        if isinstance(other, self.__class__):
+            return self.getName() == other.getName()
+        return False
