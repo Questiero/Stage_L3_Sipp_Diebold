@@ -6,13 +6,13 @@ class Formula(ABC):
     _symbol = ""
     
     @abstractmethod
-    def getVariables():
+    def getVariables(self):
         pass
     
     @abstractmethod
-    def toDNF():
+    def toDNF(self):
         pass
     
     @abstractmethod
-    def _toDNFNeg():
+    def _toDNFNeg(self):
         pass
