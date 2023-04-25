@@ -5,8 +5,10 @@ Created on Thu Apr 20 11:03:01 2023
 """
 from abc import ABC
 class Variable(ABC):
-    instance = {}
-    _name = ""
+    _name : str = ""
 
     def __init__(self):
         raise Exception("Variable can't have an instance")
+
+    def getName(self) -> str:
+        return self._name

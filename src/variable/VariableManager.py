@@ -11,11 +11,11 @@ class VariableManager:
                 obj : Variable
         """
         if(isinstance(obj, Variable)):
-            if(obj._name not in __class__.instance):
-                __class__.instance[obj._name] = (obj.__class__, obj)
+            if(obj.getName() not in __class__.instance):
+                __class__.instance[obj.getName()] = (obj.__class__, obj)
             else:
-                if(not isinstance(obj,  __class__.instance[obj._name][0])):
-                    raise Exception(f"{obj._name} is already define with another type.")
+                if(not isinstance(obj,  __class__.instance[obj.getName()][0])):
+                    raise Exception(f"{obj.getName()} is already define with another type.")
         else:
             raise Exception(f"{obj} is not a Variable.")
     
