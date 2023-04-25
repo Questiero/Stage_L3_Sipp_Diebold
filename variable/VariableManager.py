@@ -2,7 +2,7 @@ from Variable import Variable
 
 class VariableManager:
     instance = {}
-
+    @staticmethod
     def add(obj):
         """
             Method used for adding an instance of a Variable in the instance's dictionary
