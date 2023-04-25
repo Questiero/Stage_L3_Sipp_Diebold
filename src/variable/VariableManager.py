@@ -14,9 +14,9 @@ class VariableManager:
                 __class__.instance[obj.getName()] = (obj.__class__, obj)
             else:
                 if(not isinstance(obj,  __class__.instance[obj.getName()][0])):
-                    raise Exception(f"{obj.getName()} is already define with another type.")
+                    raise TypeError(f"{obj.getName()} is already define with another type.")
         else:
-            raise Exception(f"{obj} is not a Variable.")
+            raise TypeError(f"{obj} is not a Variable.")
     
     @staticmethod
     def get(name : str) -> Variable:
@@ -28,4 +28,4 @@ class VariableManager:
         """
         if(name in __class__.instance):
             return __class__.instance[name][1]
-        else: raise Exception(f"{name} is not declared.")
+        else: raise NameError(f"{name} is not declared.")
