@@ -1,6 +1,6 @@
-from .Constraint import Constraint
-from ....variable import Variable
-from ....variable import VariableManager
+from formula.nullary.constraint.Constraint import Constraint
+from variable import Variable
+from variable import VariableManager
 from fractions import Fraction
 from enum import Enum
 import re
@@ -13,8 +13,7 @@ class ConstraintOperator(Enum):
 class LinearConstraint(Constraint):
     
     _symbol = None
-    
-    __variables = {}
+
     __variables: dict[Variable: Fraction]
     __operator: ConstraintOperator
     __bound: Fraction
@@ -38,30 +37,30 @@ class LinearConstraint(Constraint):
         
     """
     def __init__(self, string):
-        
+        self.__variables = {}
         # rule 1, only accepted characters 
         unknownChar = re.match(r"[^\d a-zA-Z/\*+\-<>=\.]", string)
         if unknownChar:
             raise SyntaxError(f"Unknown character {unknownChar}")
         
         # rule 2, spaces doesn't matter
-        string.replace(" ", "")
+        string = re.sub('\s*','', string)
         
         leftRightParts = []
         
         #rule 3, only accepted operators
-        if string.find("<="):
+        if string.find("<=") != -1:
             leftRightParts = string.split("<=")
             self.__operator = ConstraintOperator.LEQ
-        elif string.find(">="):
+        elif string.find(">=") != -1:
             leftRightParts = string.split(">=")
             self.__operator = ConstraintOperator.GEQ
-        elif string.find("=="):
+        elif string.find("==") != -1:
             leftRightParts = string.split("==")
             self.__operator = ConstraintOperator.EQ
         else:
             raise SyntaxError("Operator not recognized")
-        
+
         if leftRightParts[1] == "":
             raise SyntaxError("Bound not found")
         else:
@@ -90,12 +89,12 @@ class LinearConstraint(Constraint):
             if var in self.__variables:
                 raise ValueError(f"Duplicate variable {var._name} found")
             else:
-                self.__variables.append(var, coef)
+                self.__variables[var] = coef
                 
             
     
     def getVariables(self):
-        return self._children.getKeys()
+        return self.__variables.keys()
     
     def getDictVar(self):
         return self.__variables

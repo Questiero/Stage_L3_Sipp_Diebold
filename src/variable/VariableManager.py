@@ -18,14 +18,18 @@ class VariableManager:
         else:
             raise TypeError(f"{obj} is not a Variable.")
     
-    @staticmethod
-    def get(name : str) -> Variable:
+    @classmethod
+    def get(cls, name : str) -> Variable:
         """
             Function used for getting a variable wich already exist
         
             :param name: Name of a variable
             :returns: A variable
         """
-        if(name in __class__.instance):
-            return __class__.instance[name][1]
+        if(name in cls.instance):
+            return cls.instance[name][1]
         else: raise NameError(f"{name} is not declared.")
+    
+    @staticmethod
+    def declare(classe, name : str):
+        obj = classe.__new__(name)

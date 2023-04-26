@@ -33,3 +33,6 @@ class Variable(ABC):
         if isinstance(other, self.__class__):
             return self.getName() == other.getName()
         return False
+    
+    def __hash__(self) -> int:
+        return self._name.__hash__()
