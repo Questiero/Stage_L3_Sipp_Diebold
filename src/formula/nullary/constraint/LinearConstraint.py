@@ -49,13 +49,13 @@ class LinearConstraint(Constraint):
         #rule 2, only accepted operators
         if string.find("<="):
             leftRightParts = string.split("<=")
-            self.__operator = _ConstraintOperator.LEQ
+            self.__operator = ConstraintOperator.LEQ
         elif string.find(">="):
             leftRightParts = string.split(">=")
-            self.__operator = _ConstraintOperator.GEQ
+            self.__operator = ConstraintOperator.GEQ
         elif string.find("=="):
             leftRightParts = string.split("==")
-            self.__operator = _ConstraintOperator.EQ
+            self.__operator = ConstraintOperator.EQ
         else:
             raise SyntaxError("Operator not recognized")
             
