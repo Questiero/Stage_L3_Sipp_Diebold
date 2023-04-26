@@ -3,7 +3,7 @@ from ....variable import Variable
 from fractions import Fraction
 from enum import Enum
 
-class _ConstraintSymbol(Enum):
+class _ConstraintOperator(Enum):
     LEQ: "<="
     GEQ: ">="
     EQ: "=="
@@ -13,8 +13,8 @@ class LinearConstraint(Constraint):
     _symbol = None
     
     __variables: dict[Variable: Fraction]
-    __sign = _ConstraintSymbol
-    __limit = Fraction
+    __operator: _ConstraintOperator()
+    __bound: Fraction
     
     def __init__(self, string):
         #TODO Parser
