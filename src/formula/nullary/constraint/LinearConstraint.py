@@ -4,9 +4,9 @@ from fractions import Fraction
 from enum import Enum
 
 class _ConstraintOperator(Enum):
-    LEQ: "<="
-    GEQ: ">="
-    EQ: "=="
+    LEQ = "<="
+    GEQ = ">="
+    EQ = "=="
 
 class LinearConstraint(Constraint):
     
