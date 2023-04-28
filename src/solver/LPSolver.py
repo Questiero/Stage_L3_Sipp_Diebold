@@ -12,11 +12,13 @@ class LPSolver(Solver):
         self._variables =  variables
         
     def solve(self,constraints : dict) -> tuple:
-        i = 0
-        const = []
         lp = lp_solve.lpsolve('make_lp', 0, 2)
         lp_solve.lpsolve('set_verbose', lp, lp_solve.IMPORTANT)
-        lp_solve.lpsolve('set_obj', lp, [-40,-30])
+        objectif = []
+        for variable in self._variables:
+            objectif.append(-1)
+
+        lp_solve.lpsolve('set_obj', lp, objectif)
 
         for constraint in constraints:
             constraintP = []
@@ -30,5 +32,6 @@ class LPSolver(Solver):
                 comp = lp_solve.GE
             lp_solve.lpsolve('add_constraint', lp, constraintP, comp, constraint.getBound())
 
-        lp_solve.lpsolve('solve', lp)
+        if lp_solve.lpsolve('solve', lp) != 0:
+            raise Exception("No optimisable")
         return lp_solve.lpsolve('get_variables', lp)[0]
