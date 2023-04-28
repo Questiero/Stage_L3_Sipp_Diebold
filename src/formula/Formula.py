@@ -20,3 +20,11 @@ class Formula(ABC):
     @abstractmethod
     def _toDNFNeg(self):
         pass
+
+    @abstractmethod
+    def getConstraintGonfle(self):
+        pass
+
+    @abstractmethod
+    def getConstraintGonfleNeg(self):
+        pass

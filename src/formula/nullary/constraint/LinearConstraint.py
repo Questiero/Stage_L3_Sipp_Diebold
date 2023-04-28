@@ -104,3 +104,16 @@ class LinearConstraint(Constraint):
     
     def getBound(self):
         return self.__bound
+    
+    def getConstraintGonfle(self):
+        return [[self]]
+    
+    def getConstraintGonfleNeg(self):
+        if(self.__operator == ConstraintOperator.EQ): return []
+        elif(self.__operator == ConstraintOperator.LEQ):
+            self.__operator = ConstraintOperator.GEQ
+        elif(self.__operator == ConstraintOperator.GEQ):
+            self.__operator = ConstraintOperator.LEQ
+
+        return [[self]]
+            

@@ -6,3 +6,9 @@ class Bottom(NullaryFormula):
     
     def getVariables(self):
         return None
+    
+    def getConstraintGonfle(self):
+        return []
+    
+    def getConstraintGonfleNeg(self):
+        return []

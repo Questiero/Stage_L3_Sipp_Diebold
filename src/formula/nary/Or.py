@@ -32,3 +32,18 @@ class Or(NaryFormula):
         dnfFormula = {dnfChildren.union(binary.And(comb)) for comb in combinations}
 					
         return Or(dnfFormula)
+    
+    def getConstraintGonfle(self):
+        res = []
+        for children in self._children:
+            for reschildren in children.getConstraintGonfle():
+                res.append(reschildren)
+        return res
+    
+    def getConstraintGonfleNeg(self):
+        res = []
+        for children in self._children:
+            for reschildren in children.getConstraintGonfleNeg():
+                for constraint in reschildren:  
+                    res.append(constraint)
+        return [res]

@@ -9,3 +9,9 @@ class Not(UnaryFormula):
     
     def _toDNFNeg(self):
         return self._children.toDNF()
+    
+    def getConstraintGonfle(self):
+        return self._children.getConstraintGonfleNeg()
+    
+    def getConstraintGonfleNeg(self):
+        return self._children.getConstraintGonfle()

@@ -31,3 +31,18 @@ class And(NaryFormula):
     
     def _toDNFNeg(self):
         return binary.Or({child._toDNFNeg() for child in self._children})
+    
+    def getConstraintGonfle(self):
+        res = []
+        for children in self._children:
+            for reschildren in children.getConstraintGonfle():
+                for constraint in reschildren:  
+                    res.append(constraint)
+        return [res]
+    
+    def getConstraintGonfleNeg(self):
+        res = []
+        for children in self._children:
+            for reschildren in children.getConstraintGonfleNeg():
+                res.append(reschildren)
+        return res
