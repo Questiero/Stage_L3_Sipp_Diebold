@@ -1,5 +1,4 @@
 from .NaryFormula import NaryFormula
-from ..binary import *
 
 class Or(NaryFormula):
     
@@ -10,26 +9,32 @@ class Or(NaryFormula):
     
     def _toDNFNeg(self):
         
+        from .And import And
+        
         dnfChildren = {child._toDNFNeg() for child in self._children}
 			
         andChildren = set()
 			
         for dnfChild in dnfChildren:
-            if isinstance(dnfChild, binary.And):		
+            if isinstance(dnfChild, And):		
                 andChildren.add(dnfChild)
-                dnfChildren.remove(dnfChild)
+
+        dnfChildren = dnfChildren ^ andChildren
+                
+        if not andChildren:
+            return Or(dnfChildren)
 					
-        combinations = {andChild for andChild in andChildren.pop()}
+        combinations = {andChild for andChild in andChildren.pop().__children}
 	
         tempcomb = set() 
         for andChild in andChildren:
-            for elem in andChild:
+            for elem in andChild._children:
                 for comb in combinations:
                     tempc = comb.copy() 
                     tempcomb.add(tempc.add(elem))
         combinations = tempc
 
-        dnfFormula = {dnfChildren.union(binary.And(comb)) for comb in combinations}
+        dnfFormula = {dnfChildren.union(And(comb)) for comb in combinations}
 					
         return Or(dnfFormula)
     
