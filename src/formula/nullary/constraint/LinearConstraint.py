@@ -23,7 +23,7 @@ class LinearConstraint(Constraint):
     rules:
         - only accepted characters are 1234567890*/+-=<>. and letters
         - spaces doesn't matter
-        - >=, == and <= only accepted operators
+        - >=, = and <= only accepted operators
         - var needs to be defined before
         - var names must start with a letter and be followed by numbers or letters
         - case doesn't matter
@@ -55,8 +55,8 @@ class LinearConstraint(Constraint):
         elif string.find(">=") != -1:
             leftRightParts = string.split(">=")
             self.__operator = ConstraintOperator.GEQ
-        elif string.find("==") != -1:
-            leftRightParts = string.split("==")
+        elif string.find("=") != -1:
+            leftRightParts = string.split("=")
             self.__operator = ConstraintOperator.EQ
         else:
             raise SyntaxError("Operator not recognized")
