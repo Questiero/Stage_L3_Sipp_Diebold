@@ -1,4 +1,5 @@
 from .NaryFormula import NaryFormula
+# local import of And
 
 class Or(NaryFormula):
     
