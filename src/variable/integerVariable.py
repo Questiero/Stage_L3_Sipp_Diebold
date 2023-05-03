@@ -3,8 +3,8 @@ Created on Thu Apr 20 11:03:01 2023
 
 @author: Di3bold
 """
-from .Variable import *
-from .VariableManager import VariableManager
+from .variable import *
+from .variableManager import VariableManager
 
 class IntegerVariable(Variable):
     def __init__(self, name):

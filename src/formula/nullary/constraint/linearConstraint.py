@@ -1,4 +1,4 @@
-from formula.nullary.constraint.Constraint import Constraint
+from formula.nullary.constraint.constraint import Constraint
 from variable import Variable
 from variable import VariableManager
 from fractions import Fraction

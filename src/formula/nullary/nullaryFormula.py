@@ -1,5 +1,5 @@
-from ..Formula import Formula
-from ..unary.Not import Not
+from ..formula import Formula
+from ..unary.notOperator import Not
 
 class NullaryFormula(Formula):
         

@@ -1,5 +1,5 @@
-from formula.Formula import *
-from solver.Solver import *
+from formula.formula import *
+from solver.solver import *
 
 class Revision:
     _solver : Solver

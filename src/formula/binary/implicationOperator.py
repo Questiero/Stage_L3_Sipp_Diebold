@@ -1,6 +1,6 @@
-from .BinaryFormula import BinaryFormula
-from ..unary.Not import Not
-from ..nary.Or import Or
+from .binaryFormula import BinaryFormula
+from ..unary.notOperator import Not
+from ..nary.orOperator import Or
 
 class Implication(BinaryFormula):
     

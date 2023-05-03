@@ -1,7 +1,7 @@
-from .BinaryFormula import BinaryFormula
-from ..unary.Not import Not
-from ..nary.Or import Or
-from ..nary.And import And
+from .binaryFormula import BinaryFormula
+from ..unary.notOperator import Not
+from ..nary.orOperator import Or
+from ..nary.andOperator import And
 
 class Xor(BinaryFormula):
     

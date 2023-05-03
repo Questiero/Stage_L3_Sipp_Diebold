@@ -1,4 +1,4 @@
-from .NullaryFormula import NullaryFormula
+from .nullaryFormula import NullaryFormula
 
 class Top(NullaryFormula):
     

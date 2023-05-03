@@ -1,4 +1,4 @@
-from .UnaryFormula import UnaryFormula
+from .unaryFormula import UnaryFormula
 
 class Not(UnaryFormula):
     

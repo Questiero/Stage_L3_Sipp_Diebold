@@ -1,4 +1,4 @@
-from ..Formula import Formula
+from ..formula import Formula
 
 class NaryFormula(Formula):
         

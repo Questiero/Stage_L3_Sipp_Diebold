@@ -1,4 +1,4 @@
-from ..Formula import Formula
+from ..formula import Formula
 from abc import abstractmethod
 
 class BinaryFormula(Formula):

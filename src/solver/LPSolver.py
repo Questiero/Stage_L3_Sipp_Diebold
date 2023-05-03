@@ -3,8 +3,8 @@ Created on Thu Apr 20 11:03:01 2023
 
 @author: di3bold
 """
-from solver.Solver import *
-from formula.nullary.constraint.LinearConstraint import *
+from solver.solver import *
+from formula.nullary.constraint.linearConstraint import *
 import lpsolve55 as lp_solve
 class LPSolver(Solver):
     _variables = []

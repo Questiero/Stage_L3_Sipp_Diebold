@@ -1,4 +1,4 @@
-from .NaryFormula import NaryFormula
+from .naryFormula import NaryFormula
 # local import of And
 
 class Or(NaryFormula):
@@ -10,7 +10,7 @@ class Or(NaryFormula):
     
     def _toDNFNeg(self):
         
-        from .And import And
+        from .andOperator import And
         
         dnfChildren = {child._toDNFNeg() for child in self._children}
 			
