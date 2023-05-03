@@ -12,3 +12,11 @@ class NaryFormula(formula.Formula):
         for child in tempChildren:
             variables = variables | child.getVariables()
         return variables
+    
+    def __str__(self):
+        s = "("
+        for child in self._children:
+            s += str(child) + " " + self._symbol + " "
+        toRemove = len(self._symbol) + 2
+        s = s[:-toRemove] + ")"
+        return s
