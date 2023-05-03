@@ -1,7 +1,8 @@
-from ..formula import Formula
+import formula
+
 from abc import abstractmethod
 
-class BinaryFormula(Formula):
+class BinaryFormula(formula.Formula):
         
     # formulas: tuple (Formula, Formula)
     def __init__(self, formulaTuple):

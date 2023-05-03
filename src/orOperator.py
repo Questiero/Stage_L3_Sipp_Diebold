@@ -1,7 +1,7 @@
-from .naryFormula import NaryFormula
+import naryFormula
 # local import of And
 
-class Or(NaryFormula):
+class Or(naryFormula.NaryFormula):
     
     _symbol = "OR"
     
@@ -10,14 +10,14 @@ class Or(NaryFormula):
     
     def _toDNFNeg(self):
         
-        from .andOperator import And
+        import andOperator
         
         dnfChildren = {child._toDNFNeg() for child in self._children}
 			
         andChildren = set()
 			
         for dnfChild in dnfChildren:
-            if isinstance(dnfChild, And):		
+            if isinstance(dnfChild, andOperator.And):		
                 andChildren.add(dnfChild)
 
         dnfChildren = dnfChildren ^ andChildren
@@ -35,7 +35,7 @@ class Or(NaryFormula):
                     tempcomb.add(tempc.add(elem))
         combinations = tempc
 
-        dnfFormula = {dnfChildren.union(And(comb)) for comb in combinations}
+        dnfFormula = {dnfChildren.union(andOperator.And(comb)) for comb in combinations}
 					
         return Or(dnfFormula)
     

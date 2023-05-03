@@ -1,8 +1,10 @@
-from formula.nullary.constraint.constraint import Constraint
-from variable import Variable
-from variable import VariableManager
+import constraint
+import variable
+import variableManager
+
 from fractions import Fraction
 from enum import Enum
+
 import re
 
 class ConstraintOperator(Enum):
@@ -10,11 +12,11 @@ class ConstraintOperator(Enum):
     GEQ = ">="
     EQ = "=="
 
-class LinearConstraint(Constraint):
+class LinearConstraint(constraint.Constraint):
     
     _symbol = None
 
-    __variables: dict[Variable: Fraction]
+    __variables: dict[variable.Variable: Fraction]
     __operator: ConstraintOperator
     __bound: Fraction
     
@@ -76,22 +78,23 @@ class LinearConstraint(Constraint):
             
             if split.find("*"):
                 (coefString, varName) = split.split("*")
-                var = VariableManager.VariableManager.get(varName.lower())
+                var = variableManager.VariableManager.get(varName.lower())
                 coef = Fraction(coefString)
             else:
                 if split[0] == "-":
                     coef = Fraction("-1")
-                    var = VariableManager.VariableManager.get(split[1:].lower())
+                    var = variableManager.VariableManager.get(split[1:].lower())
                 else:
                     coef = Fraction("1")
-                    var = VariableManager.VariableManager.get(split.lower())
+                    var = variableManager.VariableManager.get(split.lower())
             
             if var in self.__variables:
                 raise ValueError(f"Duplicate variable {var._name} found")
             else:
                 self.__variables[var] = coef
                 
-            
+    def __str__(self):
+        return "prout"
     
     def getVariables(self):
         return self.__variables.keys()

@@ -1,6 +1,6 @@
-from .nullaryFormula import NullaryFormula
+import nullaryFormula
 
-class Top(NullaryFormula):
+class Top(nullaryFormula.NullaryFormula):
     
     _symbol = "TOP"
     

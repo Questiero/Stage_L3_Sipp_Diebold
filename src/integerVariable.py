@@ -1,12 +1,7 @@
-"""
-Created on Thu Apr 20 11:03:01 2023
+import variable
+import variableManager
 
-@author: Di3bold
-"""
-from .variable import *
-from .variableManager import VariableManager
-
-class IntegerVariable(Variable):
+class IntegerVariable(variable.Variable):
     def __init__(self, name):
         self._name = name
 
@@ -20,5 +15,5 @@ class IntegerVariable(Variable):
             :returns: A variable
         """
         new = IntegerVariable(name)
-        VariableManager.add(new)
+        variableManager.VariableManager.add(new)
         return new

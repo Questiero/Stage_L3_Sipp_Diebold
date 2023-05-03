@@ -1,10 +1,10 @@
-from .binaryFormula import BinaryFormula
-from ..unary.notOperator import Not
-from ..nary.orOperator import Or
+import binaryFormula
+import notOperator
+import orOperator
 
-class Implication(BinaryFormula):
+class Implication(binaryFormula.BinaryFormula):
     
     _symbol = "=>"
     
     def _simplify(self):
-        return Or({Not(self._children[0], self._children[1])})
+        return orOperator.Or({notOperator.Not(self._children[0], self._children[1])})

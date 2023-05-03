@@ -1,12 +1,7 @@
-"""
-Created on Thu Apr 20 11:03:01 2023
+import variable
+import variableManager
 
-@author: Di3bold
-"""
-from .variable import Variable
-from .variableManager import VariableManager
-
-class RealVariable(Variable):
+class RealVariable(variable.Variable):
     def __init__(self, name):
         self._name = name
 
@@ -20,5 +15,5 @@ class RealVariable(Variable):
             :returns: A variable
         """
         new = RealVariable(name)
-        VariableManager.add(new)
+        variableManager.VariableManager.add(new)
         return new

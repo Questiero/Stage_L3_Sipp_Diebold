@@ -1,6 +1,6 @@
-from ..nullaryFormula import NullaryFormula
+import nullaryFormula
 
-class Constraint(NullaryFormula):
+class Constraint(nullaryFormula.NullaryFormula):
     
     _symbol = None
     

@@ -1,4 +1,4 @@
-from .variable import Variable
+import variable
 
 class VariableManager:
     instance = {}
@@ -9,7 +9,7 @@ class VariableManager:
             
             :params obj: the new variable
         """
-        if(isinstance(obj, Variable)):
+        if(isinstance(obj, variable.Variable)):
             if(obj.getName() not in __class__.instance):
                 __class__.instance[obj.getName()] = (obj.__class__, obj)
             else:
@@ -19,7 +19,7 @@ class VariableManager:
             raise TypeError(f"{obj} is not a Variable.")
     
     @classmethod
-    def get(cls, name : str) -> Variable:
+    def get(cls, name : str) -> variable.Variable:
         """
             Function used for getting a variable wich already exist
         

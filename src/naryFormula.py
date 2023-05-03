@@ -1,6 +1,6 @@
-from ..formula import Formula
+import formula
 
-class NaryFormula(Formula):
+class NaryFormula(formula.Formula):
         
     # formula: Set(Formula)
     def __init__(self, formulaSet):

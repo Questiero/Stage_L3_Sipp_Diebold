@@ -1,10 +1,10 @@
-from ..formula import Formula
+import formula
 
-class UnaryFormula(Formula):
+class UnaryFormula(formula.Formula):
             
     # formula: Formula
-    def __init__(self, formula):
-        self._children = formula
+    def __init__(self, formulaInit):
+        self._children = formulaInit
         
     def getVariables(self):
         return self._children.getVariables()

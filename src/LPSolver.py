@@ -1,12 +1,9 @@
-"""
-Created on Thu Apr 20 11:03:01 2023
+import solver
+import linearConstraint
 
-@author: di3bold
-"""
-from solver.solver import *
-from formula.nullary.constraint.linearConstraint import *
 import lpsolve55 as lp_solve
-class LPSolver(Solver):
+
+class LPSolver(solver.Solver):
     _variables = []
     def __init__(self, variables : list):
         self._variables =  variables
@@ -26,9 +23,9 @@ class LPSolver(Solver):
 
                 constraintP.append(constraint.getDictVar()[variable])
             comp = lp_solve.LE
-            if(constraint.getOperator() == ConstraintOperator.EQ):
+            if(constraint.getOperator() == linearConstraint.ConstraintOperator.EQ):
                 comp = lp_solve.EQ
-            elif (constraint.getOperator() == ConstraintOperator.GEQ):
+            elif (constraint.getOperator() == linearConstraint.ConstraintOperator.GEQ):
                 comp = lp_solve.GE
             lp_solve.lpsolve('add_constraint', lp, constraintP, comp, constraint.getBound())
 

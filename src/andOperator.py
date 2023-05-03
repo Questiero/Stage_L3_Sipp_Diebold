@@ -1,26 +1,26 @@
-from .naryFormula import NaryFormula
+import naryFormula
 # local import of Or
 
-class And(NaryFormula):
+class And(naryFormula.NaryFormula):
     
     _symbol = "AND"
     
     def toDNF(self):
         
-        from .orOperator import Or
+        import orOperator
         
         dnfChildren = {child.toDNF() for child in self._children}
 			
         orChildren = set()
 			
         for dnfChild in dnfChildren:
-            if isinstance(dnfChild, Or):		
+            if isinstance(dnfChild, orOperator.Or):		
                 orChildren.add(dnfChild)
 
         dnfChildren = dnfChildren ^ orChildren
         
         if not orChildren:
-            return Or(dnfChildren)
+            return orOperator.Or(dnfChildren)
         
         combinations = {orChild for orChild in orChildren.pop()._children}
 	
@@ -34,13 +34,13 @@ class And(NaryFormula):
 
         dnfFormula = {dnfChildren.union(And(comb)) for comb in combinations}
 					
-        return Or(dnfFormula)
+        return orOperator.Or(dnfFormula)
     
     def _toDNFNeg(self):
         
-        from .orOperator import Or
+        import orOperator
         
-        return Or({child._toDNFNeg() for child in self._children})
+        return orOperator.Or({child._toDNFNeg() for child in self._children})
     
     def getConstraintGonfle(self):
         res = []

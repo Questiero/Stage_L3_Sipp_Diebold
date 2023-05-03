@@ -1,12 +1,12 @@
-from .binaryFormula import BinaryFormula
-from ..unary.notOperator import Not
-from ..nary.orOperator import Or
-from ..nary.andOperator import And
+import binaryFormula
+import notOperator
+import orOperator
+import andOperator
 
 
-class Biconditional(BinaryFormula):
+class Biconditional(binaryFormula.BinaryFormula):
     
     _symbol = "<=>"
     
     def _simplify(self):
-        return Or({And({self._children[0], self._children[1]}), And({Not(self._children[0]), Not(self._children[1])})})
+        return orOperator.Or({andOperator.And({self._children[0], self._children[1]}), andOperator.And({notOperator.Not(self._children[0]), notOperator.Not(self._children[1])})})

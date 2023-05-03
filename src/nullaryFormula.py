@@ -1,10 +1,10 @@
-from ..formula import Formula
-from ..unary.notOperator import Not
+import formula
+import notOperator
 
-class NullaryFormula(Formula):
+class NullaryFormula(formula.Formula):
         
     def toDNF(self):
         return self
     
     def _toDNFNeg(self):
-        return Not(self)
+        return notOperator.Not(self)

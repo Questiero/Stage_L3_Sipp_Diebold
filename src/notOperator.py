@@ -1,6 +1,6 @@
-from .unaryFormula import UnaryFormula
+import unaryFormula
 
-class Not(UnaryFormula):
+class Not(unaryFormula.UnaryFormula):
     
     _symbol = "!"
     
