@@ -28,3 +28,7 @@ class Formula(ABC):
     @abstractmethod
     def getConstraintGonfleNeg(self):
         pass
+    
+    @abstractmethod
+    def __str__(self):
+        pass
