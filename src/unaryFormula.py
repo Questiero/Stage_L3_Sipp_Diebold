@@ -10,4 +10,4 @@ class UnaryFormula(formula.Formula):
         return self._children.getVariables()
     
     def __str__(self):
-        return self._symbol + "(" + self._children + ")"
+        return self._symbol + "(" + str(self._children) + ")"
