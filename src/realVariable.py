@@ -2,6 +2,7 @@ import variable
 import variableManager
 
 class RealVariable(variable.Variable):
+    
     def __init__(self, name):
         self._name = name
 

@@ -10,13 +10,13 @@ import re
 class ConstraintOperator(Enum):
     LEQ = "<="
     GEQ = ">="
-    EQ = "=="
+    EQ = "="
 
 class LinearConstraint(constraint.Constraint):
     
     _symbol = None
 
-    __variables: dict[variable.Variable: Fraction]
+    __variables: dict
     __operator: ConstraintOperator
     __bound: Fraction
     
@@ -94,7 +94,13 @@ class LinearConstraint(constraint.Constraint):
                 self.__variables[var] = coef
                 
     def __str__(self):
-        return "prout"
+        s = ""
+        for var, coef in self.__variables.items():
+            s += str(coef) + "*" + str(var) + " + "
+        s = s[:-2]
+        s += str(self.__operator.value) + " "
+        s += str(self.__bound)
+        return s
     
     def getVariables(self):
         return self.__variables.keys()

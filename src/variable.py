@@ -24,6 +24,9 @@ class Variable(ABC):
         """
         raise NotImplementedError("Function declare not implemented")
     
+    def __str__(self):
+        return self._name
+    
     def __eq__(self, other):
         """Overrides the default implementation"""
         if isinstance(other, self.__class__):

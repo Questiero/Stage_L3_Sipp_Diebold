@@ -12,3 +12,6 @@ class Top(nullaryFormula.NullaryFormula):
     
     def getConstraintGonfleNeg(self):
         return []
+    
+    def __str__(self):
+        return self._symbol;
