@@ -68,7 +68,7 @@ class LinearConstraint(constraint.Constraint):
         else:
             self.__bound = Fraction(leftRightParts[1])
         
-        leftRightParts[0].replace("-", "+-")
+        leftRightParts[0] = leftRightParts[0].replace("-", "+-")
         splitLeft = leftRightParts[0].split("+")
         
         for split in splitLeft:
