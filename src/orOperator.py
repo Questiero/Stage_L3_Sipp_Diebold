@@ -20,7 +20,7 @@ class Or(naryFormula.NaryFormula):
             if isinstance(dnfChild, andOperator.And):		
                 andChildren.add(dnfChild)
 
-        dnfChildren = dnfChildren ^ andChildren
+        dnfChildren = dnfChildren - andChildren
                 
         if not andChildren:
             return Or(dnfChildren)

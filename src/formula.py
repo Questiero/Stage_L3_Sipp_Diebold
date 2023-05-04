@@ -32,3 +32,15 @@ class Formula(ABC):
     @abstractmethod
     def __str__(self):
         pass
+    
+    def __add__(self, a):
+        import orOperator
+        return orOperator.Or(self, a)    
+    
+    def __mul__(self, a):
+        import andOperator
+        return andOperator.And(self, a)
+    
+    def __neg__(self):
+        import notOperator
+        return notOperator.Not(self)    

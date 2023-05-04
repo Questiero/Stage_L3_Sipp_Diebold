@@ -17,7 +17,7 @@ class And(naryFormula.NaryFormula):
             if isinstance(dnfChild, orOperator.Or):		
                 orChildren.add(dnfChild)
 
-        dnfChildren = dnfChildren ^ orChildren
+        dnfChildren = dnfChildren - orChildren
         
         if not orChildren:
             return orOperator.Or(dnfChildren)
