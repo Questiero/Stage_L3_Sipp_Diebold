@@ -3,8 +3,13 @@ import formula
 class NaryFormula(formula.Formula):
         
     # formula: Set(Formula)
-    def __init__(self, formulaSet):
-        self._children = formulaSet
+    def __init__(self, *formulas):
+        
+        formulaSet = set(formulas)
+        if len(formulaSet) >= 2:
+            self._children = formulaSet
+        else:
+            raise Exception("nary operators need at least two formulas")
         
     def getVariables(self):
         tempChildren = self._children.copy()
