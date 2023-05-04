@@ -94,12 +94,12 @@ class LinearConstraint(constraint.Constraint):
                 self.__variables[var] = coef
                 
     def __str__(self):
-        s = ""
+        s = "("
         for var, coef in self.__variables.items():
             s += str(coef) + "*" + str(var) + " + "
         s = s[:-2]
         s += str(self.__operator.value) + " "
-        s += str(self.__bound)
+        s += str(self.__bound) + ")"
         return s
     
     def getVariables(self):
