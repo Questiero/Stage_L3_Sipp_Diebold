@@ -1,11 +1,39 @@
 import naryFormula
 # local import of Or
 
+# Typing only imports
+import formula
+import constraint
+
 class And(naryFormula.NaryFormula):
+    '''
+    Class representing the And operator as a relation with an arity equal or
+    greater than 2 in PCMLC as a syntax tree.
+
+    Parameters
+    ----------
+    *formulas: Formula
+        The formulas meant as components of the And operator.
+
+    Attributes
+    ----------
+    _children: set[Formula]
+        The children of the current node.
+    _symbol: str
+        The symbol used to represent the And operator syntaxically.
+    '''
     
     _symbol = "AND"
     
-    def toDNF(self):
+    def toDNF(self) -> formula.Formula:
+        '''
+        Method returning the current Formula in Disjunctive Normal Form.
+
+        Returns
+        -------
+        formula: Formula
+            The current Formula in Disjunctive Normal Form.
+        '''
         
         import orOperator
         
@@ -36,23 +64,59 @@ class And(naryFormula.NaryFormula):
 					
         return orOperator.Or(dnfFormula)
     
-    def _toDNFNeg(self):
+    def _toDNFNeg(self) -> formula.Formula:
+        '''
+        Protected method used in the algorithm to recursivly determine the
+        Disjunctive Normal Form, used when a Negation is in play instead of toDNF().
+
+        Returns
+        -------
+        formula: Formula
+            The current Formula in Disjunctive Normal Form under Negation.
+        '''
         
         import orOperator
         
         return orOperator.Or({child._toDNFNeg() for child in self._children})
     
-    def getConstraintGonfle(self):
+    def getAdherence(self) -> list[list[constraint.Constraint]]:
+        '''
+        Returns a 2D list containing all the constraints of the adherence of 
+        the Formula, in Disjunctive Normal Form.
+
+        Returns
+        -------
+        res: list of list of Constraint
+            2D list containing all the constraints of the adherence of the Formula,
+            in Disjunctive Normal Form.
+        '''
+        
         res = []
+        
         for children in self._children:
             for reschildren in children.getConstraintGonfle():
-                for constraint in reschildren:  
-                    res.append(constraint)
+                for const in reschildren:  
+                    res.append(const)
+                    
         return [res]
     
-    def getConstraintGonfleNeg(self):
+    def _getAdherenceNeg(self) -> list(list(constraint.Constraint)):
+        '''
+        Protected method used in the algorithm to recursivly determine the
+        constraints of the adherence of the Formula, used when a Negation is in play
+        instead of getAdherence().
+
+        Returns
+        -------
+        res: list of list of Constraint
+            2D list containing all the constraints of the adherence of the Formula,
+            in Disjunctive Normal Form under Negation.
+        '''
+        
         res = []
+        
         for children in self._children:
             for reschildren in children.getConstraintGonfleNeg():
                 res.append(reschildren)
+                
         return res

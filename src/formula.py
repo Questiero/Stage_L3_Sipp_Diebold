@@ -1,32 +1,96 @@
+from __future__ import annotations # used to type hint the class itself
+
 from abc import ABC, abstractmethod
 
+# Typing only imports
+import variable
+import constraint
+
 class Formula(ABC):
+    '''
+    Abstract Formula class, representing a Formula in PCMLC as a syntax tree.
+
+    Attributes
+    ----------
+    _children: 
+        The children of the current node.
+        Typing depends of the formula's arity.
+    _symbol: str
+        The symbol used to represent the operator syntaxically.
+    '''
     
     _children = None
     
     @property
     @abstractmethod
-    def _symbol(self):
+    def _symbol(self) -> str:
         pass
     
     @abstractmethod
-    def getVariables(self):
+    def getVariables(self) -> set[variable.Variable]:
+        '''
+        Method recurcivly returning a set containing all the variables used in
+        the Formula.
+
+        Returns
+        -------
+        variables: set of Variable
+            All the variables used in the Formula.
+        '''
         pass
     
     @abstractmethod
-    def toDNF(self):
+    def toDNF(self) -> Formula:
+        '''
+        Method returning the current Formula in Disjunctive Normal Form.
+
+        Returns
+        -------
+        formula: Formula
+            The current Formula in Disjunctive Normal Form.
+        '''
         pass
     
     @abstractmethod
-    def _toDNFNeg(self):
+    def _toDNFNeg(self) -> Formula:
+        '''
+        Protected method used in the algorithm to recursivly determine the
+        Disjunctive Normal Form, used when a Negation is in play instead of toDNF().
+
+        Returns
+        -------
+        formula: Formula
+            The current Formula in Disjunctive Normal Form under Negation.
+        '''
         pass
 
     @abstractmethod
-    def getConstraintGonfle(self):
+    def getAdherence(self) -> list[list[constraint.Constraint]]:
+        '''
+        Returns a 2D list containing all the constraints of the adherence of 
+        the Formula, in Disjunctive Normal Form.
+
+        Returns
+        -------
+        res: list of list of Constraint
+            2D list containing all the constraints of the adherence of the Formula,
+            in Disjunctive Normal Form.
+        '''
         pass
 
     @abstractmethod
-    def getConstraintGonfleNeg(self):
+    def _getAdherenceNeg(self)  -> list[list[constraint.Constraint]]:
+        '''
+        Protected method used in the algorithm to recursivly determine the
+        constraints of the adherence of the Formula, used when a Negation is in play
+        instead of getAdherence().
+
+        Returns
+        -------
+        res: list of list of Constraint
+            2D list containing all the constraints of the adherence of the Formula,
+            in Disjunctive Normal Form under Negation.
+        '''
         pass
     
     @abstractmethod

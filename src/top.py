@@ -1,16 +1,63 @@
 import nullaryFormula
 
+# Typing only imports
+import variable
+import constraint
+
 class Top(nullaryFormula.NullaryFormula):
+    '''
+    Class representing the Top constant.
+
+    Attributes
+    ----------
+    _children: None 
+        The children of the current node.
+    _symbol: str
+        The symbol used to represent Top syntaxically.
+    '''
     
     _symbol = "TOP"
     
-    def getVariables(self):
+    def getVariables(self) -> set[variable.Variable]:
+        '''
+        Method recurcivly returning a set containing all the variables used in
+        Top, so None.
+
+        Returns
+        -------
+        variables: None
+            All the variables used in Top, so None.
+        '''
+        
         return None
     
-    def getConstraintGonfle(self):
+    def getAdherence(self) ->list[list[constraint.Constraint]]:
+        '''
+        Returns a 2D list containing all the constraints of the adherence of 
+        Top, in Disjunctive Normal Form. In this case, an empty list.
+
+        Returns
+        -------
+        variables: list of list of Constraint
+            2D list containing all the constraints of the adherence of Top,
+            in Disjunctive Normal Form. In this case, an empty list.
+        '''
+        
         return []
     
-    def getConstraintGonfleNeg(self):
+    def _getAdherenceNeg(self) -> list[list[constraint.Constraint]]:
+        '''
+        Protected method used in the algorithm to recursivly determine the
+        constraints of the adherence of Top, used when a Negation is in play
+        instead of getAdherence(). In this case, an empty list.
+
+        Returns
+        -------
+        variables: list of list of Constraint
+            2D list containing all the constraints of the adherence of Top,
+            in Disjunctive Normal Form under Negation. In this case, an empty list. 
+        '''
+        
         return []
     
     def __str__(self):

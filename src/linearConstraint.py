@@ -1,5 +1,4 @@
 import constraint
-import variable
 import variableManager
 
 from fractions import Fraction
@@ -7,39 +6,54 @@ from enum import Enum
 
 import re
 
+# Typing only imports
+import variable
+
 class ConstraintOperator(Enum):
     LEQ = "<="
     GEQ = ">="
     EQ = "="
 
 class LinearConstraint(constraint.Constraint):
+    '''
+    Abstract Constraint class, representing a Constraint in PCMLC.
+
+    Parameters
+    ----------
+    string: String
+        The linear constraint you want to define, following the syntax rules:
+            - only accepted characters are 1234567890*/+-=<>. and letters
+            - spaces doesn't matter
+            - >=, = and <= only accepted operators
+            - var needs to be defined before
+            - var names must start with a letter and be followed by numbers or letters
+            - case doesn't matter
+            - always a * between var and coef
+            - no duplicates variables in the same constraint
+            
+    Raises
+    ------
+    SyntaxError
+        If the syntax of string is wrong.
+        
+    Attributes
+    ----------
+    _children: None
+        The children of the current node. Since a cosntraint doesn't have any,
+        it's None.
+    _symbol: None
+        The symbol used to represent the constraint syntaxically. Since it's doesn't
+        have any, it's None.
+    '''
     
     _symbol = None
 
-    __variables: dict
-    __operator: ConstraintOperator
-    __bound: Fraction
+    variables: dict
+    operator: ConstraintOperator
+    bound: Fraction
     
-    
-    """
-    rules:
-        - only accepted characters are 1234567890*/+-=<>. and letters
-        - spaces doesn't matter
-        - >=, = and <= only accepted operators
-        - var needs to be defined before
-        - var names must start with a letter and be followed by numbers or letters
-        - case doesn't matter
-        - always a * between var and coef
-        - no duplicates variables in the same constraint
-        
-    exemples:
-        - 2/3*x + 3*y - z >= 12/4
-        - 1 / 2 * x + z = = - 5.3
-        - -3/4*y-2/3*z<=0
-        
-    """
     def __init__(self, string):
-        self.__variables = {}
+        self.variables = {}
         # rule 1, only accepted characters 
         unknownChar = re.match(r"[^\d a-zA-Z/\*+\-<>=\.]", string)
         if unknownChar:
@@ -53,20 +67,20 @@ class LinearConstraint(constraint.Constraint):
         #rule 3, only accepted operators
         if string.find("<=") != -1:
             leftRightParts = string.split("<=")
-            self.__operator = ConstraintOperator.LEQ
+            self.operator = ConstraintOperator.LEQ
         elif string.find(">=") != -1:
             leftRightParts = string.split(">=")
-            self.__operator = ConstraintOperator.GEQ
+            self.operator = ConstraintOperator.GEQ
         elif string.find("=") != -1:
             leftRightParts = string.split("=")
-            self.__operator = ConstraintOperator.EQ
+            self.operator = ConstraintOperator.EQ
         else:
             raise SyntaxError("Operator not recognized")
 
         if leftRightParts[1] == "":
             raise SyntaxError("Bound not found")
         else:
-            self.__bound = Fraction(leftRightParts[1])
+            self.bound = Fraction(leftRightParts[1])
         
         leftRightParts[0] = leftRightParts[0].replace("-", "+-")
         splitLeft = leftRightParts[0].split("+")
@@ -88,41 +102,65 @@ class LinearConstraint(constraint.Constraint):
                     coef = Fraction("1")
                     var = variableManager.VariableManager.get(split.lower())
             
-            if var in self.__variables:
+            if var in self.variables:
                 raise ValueError(f"Duplicate variable {var._name} found")
             else:
-                self.__variables[var] = coef
-                
-    def __str__(self):
-        s = "("
-        for var, coef in self.__variables.items():
-            s += str(coef) + "*" + str(var) + " + "
-        s = s[:-2]
-        s += str(self.__operator.value) + " "
-        s += str(self.__bound) + ")"
-        return s
+                self.variables[var] = coef
     
-    def getVariables(self):
-        return self.__variables.keys()
+    def getVariables(self) -> set[variable.Variable]:
+        '''
+        Method recurcivly returning a set containing all the variables used in
+        the Formula.
+
+        Returns
+        -------
+        variables: set of Variable
+            All the variables used in the Formula.
+        '''
+        
+        return self.variables.keys()
     
-    def getDictVar(self):
-        return self.__variables
-    
-    def getOperator(self):
-        return self.__operator
-    
-    def getBound(self):
-        return self.__bound
-    
-    def getConstraintGonfle(self):
+    def getAdherence(self) -> list[list[constraint.Constraint]]:
+        '''
+        Returns a 2D list containing all the constraints of the adherence of 
+        the Formula, in Disjunctive Normal Form.
+
+        Returns
+        -------
+        res: list of list of Constraint
+            2D list containing all the constraints of the adherence of the Formula,
+            in Disjunctive Normal Form.
+        '''
+        
         return [[self]]
     
-    def getConstraintGonfleNeg(self):
-        if(self.__operator == ConstraintOperator.EQ): return []
-        elif(self.__operator == ConstraintOperator.LEQ):
-            self.__operator = ConstraintOperator.GEQ
-        elif(self.__operator == ConstraintOperator.GEQ):
-            self.__operator = ConstraintOperator.LEQ
+    def _getAdherenceNeg(self) -> list[list[constraint.Constraint]]:
+        '''
+        Protected method used in the algorithm to recursivly determine the
+        constraints of the adherence of the Formula, used when a Negation is in play
+        instead of getAdherence().
+
+        Returns
+        -------
+        res: list of list of Constraint
+            2D list containing all the constraints of the adherence of the Formula,
+            in Disjunctive Normal Form under Negation.
+        '''
+        
+        if(self.operator == ConstraintOperator.EQ): return []
+        elif(self.operator == ConstraintOperator.LEQ):
+            self.operator = ConstraintOperator.GEQ
+        elif(self.operator == ConstraintOperator.GEQ):
+            self.operator = ConstraintOperator.LEQ
 
         return [[self]]
+    
+    def __str__(self):
+        s = "("
+        for var, coef in self.variables.items():
+            s += str(coef) + "*" + str(var) + " + "
+        s = s[:-2]
+        s += str(self.operator.value) + " "
+        s += str(self.bound) + ")"
+        return s
             
