@@ -28,4 +28,4 @@ class Xor(binaryFormula.BinaryFormula):
             The simplified version of the implication operator. In this case, it's
             (a AND NOT b) OR (NOT a AND b).
         '''
-        return (self._children[0] * -self._children[1]) + (-self._children[0] * self._children[1])
+        return (self._children[0] & ~self._children[1]) | (~self._children[0] & self._children[1])

@@ -29,4 +29,4 @@ class Biconditional(binaryFormula.BinaryFormula):
             it's (a AND b) OR (NOT a AND NOT b).
         '''
            
-        return (self._children[0] * self._children[1]) + (-self._children[0] * -self._children[1])
+        return (self._children[0] & self._children[1]) | (~self._children[0] * ~self._children[1])

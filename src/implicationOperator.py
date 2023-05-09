@@ -29,4 +29,4 @@ class Implication(binaryFormula.BinaryFormula):
             NOT a OR b.
         '''
         
-        return -self._children[0] + self._children[1]
+        return ~self._children[0] | self._children[1]
