@@ -15,7 +15,7 @@ class Biconditional(binaryFormula.BinaryFormula):
         The symbol used to represent the biconditional syntaxically.
     '''
     
-    _symbol = "<=>"
+    _symbol = "<->"
     
     def _simplify(self) -> formula.Formula:
         '''

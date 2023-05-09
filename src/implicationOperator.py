@@ -15,7 +15,7 @@ class Implication(binaryFormula.BinaryFormula):
         The symbol used to represent the implication syntaxically.
     '''
     
-    _symbol = "=>"
+    _symbol = "->"
     
     def _simplify(self) -> formula.Formula:
         '''
