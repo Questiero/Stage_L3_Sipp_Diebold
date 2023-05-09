@@ -16,7 +16,7 @@ class Not(unaryFormula.UnaryFormula):
         The symbol used to represent the node syntaxically.
     '''
     
-    _symbol = "!"
+    _symbol = "NOT"
     
     def toDNF(self) -> formula.Formula:
         '''

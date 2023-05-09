@@ -1,5 +1,5 @@
 import formula
-import notOperator
+#local import of Not
 
 class NullaryFormula(formula.Formula):
     '''
@@ -42,5 +42,6 @@ class NullaryFormula(formula.Formula):
             The current Formula in Disjunctive Normal Form under Negation. Since
             the arity is null, returns Not(self).
         '''
-        
+        import notOperator
+
         return notOperator.Not(self)

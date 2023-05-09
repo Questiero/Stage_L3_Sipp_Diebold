@@ -97,14 +97,14 @@ class Formula(ABC):
     def __str__(self):
         pass
     
-    def __add__(self, a):
+    def __or__(self, a):
         import orOperator
         return orOperator.Or(self, a)    
     
-    def __mul__(self, a):
+    def __and__(self, a):
         import andOperator
         return andOperator.And(self, a)
     
-    def __neg__(self):
+    def __invert__(self):
         import notOperator
         return notOperator.Not(self)    
