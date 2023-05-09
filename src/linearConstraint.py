@@ -41,13 +41,11 @@ class LinearConstraint(constraint.Constraint):
         have any, it's None.
     '''
     
-    _symbol = None
-
     variables: dict
     operator: constraintOperator.ConstraintOperator
     bound: Fraction
     
-    def __init__(self, string):
+    def __init__(self, string: String):
         self.variables = {}
         # rule 1, only accepted characters 
         unknownChar = re.match(r"[^\d a-zA-Z/\*+\-<>=\.]", string)
