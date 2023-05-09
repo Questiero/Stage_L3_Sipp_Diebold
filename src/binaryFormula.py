@@ -2,6 +2,7 @@ import formula
 
 # Typing only imports
 import variable
+import constraint
 
 from abc import abstractmethod
 
@@ -77,6 +78,33 @@ class BinaryFormula(formula.Formula):
         '''
         
         return self._simplify()._toDNFNeg()
+    
+    def getAdherence(self) -> list[list[constraint.Constraint]]:
+        '''
+        Returns a 2D list containing all the constraints of the adherence of 
+        the BinaryFormula, in Disjunctive Normal Form.
+
+        Returns
+        -------
+        res: list of list of Constraint
+            2D list containing all the constraints of the adherence of the BinaryFormula,
+            in Disjunctive Normal Form.
+        '''
+        return self._simplify().getAdherence()
+
+    def _getAdherenceNeg(self)  -> list[list[constraint.Constraint]]:
+        '''
+        Protected method used in the algorithm to recursivly determine the
+        constraints of the adherence of the BinaryFormula, used when a Negation is in play
+        instead of getAdherence().
+
+        Returns
+        -------
+        res: list of list of Constraint
+            2D list containing all the constraints of the adherence of the BinaryFormula,
+            in Disjunctive Normal Form under Negation.
+        '''
+        return self._simplify()._getAdherenceNeg()
     
     def __str__(self):
         return str(self._children[0]) + self._symbol + str(self._children[1])
