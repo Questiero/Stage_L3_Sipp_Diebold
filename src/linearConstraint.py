@@ -1,18 +1,13 @@
 import constraint
 import variableManager
+import constraintOperator
 
 from fractions import Fraction
-from enum import Enum
 
 import re
 
 # Typing only imports
 import variable
-
-class ConstraintOperator(Enum):
-    LEQ = "<="
-    GEQ = ">="
-    EQ = "="
 
 class LinearConstraint(constraint.Constraint):
     '''
@@ -49,7 +44,7 @@ class LinearConstraint(constraint.Constraint):
     _symbol = None
 
     variables: dict
-    operator: ConstraintOperator
+    operator: constraintOperator.ConstraintOperator
     bound: Fraction
     
     def __init__(self, string):
@@ -67,13 +62,13 @@ class LinearConstraint(constraint.Constraint):
         #rule 3, only accepted operators
         if string.find("<=") != -1:
             leftRightParts = string.split("<=")
-            self.operator = ConstraintOperator.LEQ
+            self.operator = constraintOperator.ConstraintOperator.LEQ
         elif string.find(">=") != -1:
             leftRightParts = string.split(">=")
-            self.operator = ConstraintOperator.GEQ
+            self.operator = constraintOperator.ConstraintOperator.GEQ
         elif string.find("=") != -1:
             leftRightParts = string.split("=")
-            self.operator = ConstraintOperator.EQ
+            self.operator = constraintOperator.ConstraintOperator.EQ
         else:
             raise SyntaxError("Operator not recognized")
 
@@ -147,11 +142,11 @@ class LinearConstraint(constraint.Constraint):
             in Disjunctive Normal Form under Negation.
         '''
         
-        if(self.operator == ConstraintOperator.EQ): return []
-        elif(self.operator == ConstraintOperator.LEQ):
-            self.operator = ConstraintOperator.GEQ
-        elif(self.operator == ConstraintOperator.GEQ):
-            self.operator = ConstraintOperator.LEQ
+        if(self.operator == constraintOperator.ConstraintOperator.EQ): return []
+        elif(self.operator == constraintOperator.ConstraintOperator.LEQ):
+            self.operator = constraintOperator.ConstraintOperator.GEQ
+        elif(self.operator == constraintOperator.ConstraintOperator.GEQ):
+            self.operator = constraintOperator.ConstraintOperator.LEQ
 
         return [[self]]
     

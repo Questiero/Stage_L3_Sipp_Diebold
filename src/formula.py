@@ -73,7 +73,7 @@ class Formula(ABC):
         Returns
         -------
         res: list of list of Constraint
-            2D list containing all the constraints of the adherence of the Formula,
+            2D list containing all the constraints of discute vraiment de l'implémentationthe adherence of the Formula,
             in Disjunctive Normal Form.
         '''
         pass
