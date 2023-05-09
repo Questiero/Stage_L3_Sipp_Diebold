@@ -24,8 +24,8 @@ class BinaryFormula(formula.Formula):
     '''
         
     # formulas: tuple (Formula, Formula)
-    def __init__(self, formulaTuple: tuple(formula.Formula, formula.Formula)):
-        self._children = formulaTuple
+    def __init__(self, formulaLeft: formula.Formula, formulaRight: formula.Formula):
+        self._children = (formulaLeft, formulaRight)
 
     @abstractmethod
     def _simplify(self) -> formula.Formula:
