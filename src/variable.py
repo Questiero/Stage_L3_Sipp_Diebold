@@ -15,7 +15,7 @@ class Variable(ABC):
     name : str = ""
 
     def __init__(self, name):
-        self._name = name
+        self.name = name
 
     @abstractmethod
     def declare(name : str) -> Variable:
@@ -38,7 +38,7 @@ class Variable(ABC):
         pass
     
     def __str__(self):
-        return self._name
+        return self.name
     
     def __eq__(self, other):
         """Overrides the default implementation"""
@@ -47,4 +47,4 @@ class Variable(ABC):
         return False
     
     def __hash__(self) -> int:
-        return self._name.__hash__()
+        return self.name.__hash__()

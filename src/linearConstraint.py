@@ -45,7 +45,7 @@ class LinearConstraint(constraint.Constraint):
     operator: constraintOperator.ConstraintOperator
     bound: Fraction
     
-    def __init__(self, string: String):
+    def __init__(self, string: str):
         self.variables = {}
         # rule 1, only accepted characters 
         unknownChar = re.match(r"[^\d a-zA-Z/\*+\-<>=\.]", string)

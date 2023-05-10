@@ -121,7 +121,8 @@ class Formula(ABC):
     def __invert__(self):
         import notOperator
         return notOperator.Not(self)
-    
+
+'''
     def __eq__(self, a):
         import biconditionalOperator
         return biconditionalOperator.Biconditional(self, a)
@@ -133,3 +134,4 @@ class Formula(ABC):
     def __rshift__(self, a):
         import implicationOperator
         return implicationOperator.Implication(self, a)
+'''
