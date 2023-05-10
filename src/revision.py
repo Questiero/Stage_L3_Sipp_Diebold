@@ -1,11 +1,14 @@
 import formula
 import solver
+import distanceFunction
 
 class Revision:
     _solver : solver.Solver
+    _distance : distanceFunction.DistanceFunction
 
-    def __init__(self, solverInit, distance):
+    def __init__(self, solverInit : solver.Solver, distance : distanceFunction.DistanceFunction):
         self._solver = solverInit
+        self._distance = distance 
 
     def execute(self, phi : formula.Formula, psy : formula.Formula):
         if not self._sat(phi) or not self._sat(psy) : return psy
