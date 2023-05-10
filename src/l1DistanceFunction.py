@@ -5,6 +5,9 @@ class l1DistanceFunction(distanceFunctionOnNumericalTuple.distanceFunctionOnNume
         self._fractions = w
     def dist(self, x : tuple, y :tuple):
         if(len(x) != len(y)): raise Exception("x and y are not in the same domaine")
+        print(x)
+        print(y)
+        print(self._fractions)
         res = 0
         for i in range(0, len(x)):
             res += self._fractions[i] * abs(x[i] - y[i])
