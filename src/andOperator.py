@@ -48,7 +48,7 @@ class And(naryFormula.NaryFormula):
         dnfChildren = dnfChildren - orChildren
         
         if not orChildren:
-            return orOperator.Or(dnfChildren)
+            return orOperator.Or(formulaSet = dnfChildren)
         
         combinations = {orChild for orChild in orChildren.pop()._children}
 	
@@ -62,7 +62,7 @@ class And(naryFormula.NaryFormula):
 
         dnfFormula = {dnfChildren.union(And(comb)) for comb in combinations}
 					
-        return orOperator.Or(dnfFormula)
+        return orOperator.Or(formulaSet = dnfFormula)
     
     def _toDNFNeg(self) -> formula.Formula:
         '''
@@ -77,7 +77,7 @@ class And(naryFormula.NaryFormula):
         
         import orOperator
         
-        return orOperator.Or({child._toDNFNeg() for child in self._children})
+        return orOperator.Or(formulaSet = {child._toDNFNeg() for child in self._children})
     
     def getAdherence(self) -> list[list[constraint.Constraint]]:
         '''

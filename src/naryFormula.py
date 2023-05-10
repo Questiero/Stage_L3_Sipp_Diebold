@@ -22,9 +22,12 @@ class NaryFormula(formula.Formula):
         The symbol used to represent the operator syntaxically.
     '''
         
-    def __init__(self, *formulas: formula.Formula):
-                
-        self._children = set(formulas)
+    def __init__(self, *formulas: formula.Formula, formulaSet: set[formula.Formula]=None):
+        
+        if formulaSet is None:
+            self._children = set(formulas)
+        else:
+            self._children= formulaSet
                 
         if len(self._children) >= 2:
             tempF = set()
