@@ -21,6 +21,19 @@ class Formula(ABC):
     
     _children = None
     
+    @staticmethod
+    def parser(string: str):
+        '''
+        Static method, allowing to parse a formula from a String
+
+        Attributes
+        ----------
+        string: String 
+            The String to parse
+        '''
+        
+        raise NotImplementedError("Function declare not implemented")
+    
     @property
     @abstractmethod
     def _symbol(self) -> str:
@@ -107,4 +120,16 @@ class Formula(ABC):
     
     def __invert__(self):
         import notOperator
-        return notOperator.Not(self)    
+        return notOperator.Not(self)
+    
+    def __eq__(self, a):
+        import biconditionalOperator
+        return biconditionalOperator.Biconditional(self, a)
+    
+    def __ne__(self, a):
+        import xorOperator
+        return xorOperator.Xor(self, a)
+    
+    def __rshift__(self, a):
+        import implicationOperator
+        return implicationOperator.Implication(self, a)
