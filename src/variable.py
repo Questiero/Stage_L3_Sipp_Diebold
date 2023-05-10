@@ -1,28 +1,41 @@
-from abc import ABC
+from __future__ import annotations # used to type hint the class itself
+
+from abc import ABC, abstractmethod
 
 class Variable(ABC):
-    _name : str = ""
+    '''
+    Abstract Variable class.
 
-    def __init__(self):
-        raise NotImplementedError("Variable can't have an instance")
-
-    def getName(self) -> str:
-        """
-            Method used to get the name of a variable
-            :return:
-        """
-        return self._name
+    Attributes
+    ----------
+    name: str
+        The name of the Variable
+    '''
     
-    def declare(name : str):
-        """
-            Function used to declare a new variable.
-            If this variable already exist and have another type compared to the new declaraton,
-            This function will raise an Exception.
+    name : str = ""
 
-            :param name: Name of the new variable
-            :returns: A variable
-        """
-        raise NotImplementedError("Function declare not implemented")
+    def __init__(self, name):
+        self._name = name
+
+    @abstractmethod
+    def declare(name : str) -> Variable:
+        '''
+        Function used to declare a new variable.
+        If this variable already exist and have another type compared to the new declaraton,
+        This function will raise an Exception.
+
+        Attributes
+        ----------
+        String: name
+            The name of the Variable to be declared.
+
+        Returns
+        -------
+        Variable: variable
+            The defined variable.
+        '''
+
+        pass
     
     def __str__(self):
         return self._name
@@ -30,7 +43,7 @@ class Variable(ABC):
     def __eq__(self, other):
         """Overrides the default implementation"""
         if isinstance(other, self.__class__):
-            return self.getName() == other.getName()
+            return self.getName() == other.name
         return False
     
     def __hash__(self) -> int:

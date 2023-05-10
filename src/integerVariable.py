@@ -1,19 +1,35 @@
+from __future__ import annotations # used to type hint the class itself
+
 import variable
 import variableManager
 
 class IntegerVariable(variable.Variable):
-    def __init__(self, name):
-        self._name = name
+    '''
+    IntegerVariable class, representing a Variable defined in N.
 
-    def declare(name):
-        """
-            Function used to declare a new variable.
-            If this variable already exist and have another type compared to the new declaraton,
-            This function will raise an Exception.
+    Attributes
+    ----------
+    name: str
+        The name of the Variable
+    '''
+    
+    def declare(name: str) -> IntegerVariable:
+        '''
+        Function used to declare a new variable.
+        If this variable already exist and have another type compared to the new declaraton,
+        This function will raise an Exception.
 
-            :param name: Name of the new variable
-            :returns: A variable
-        """
+        Attributes
+        ----------
+        String: name
+            The name of the Variable to be declared.
+
+        Returns
+        -------
+        Variable: variable
+            The defined variable.
+        '''
+        
         new = IntegerVariable(name)
         variableManager.VariableManager.add(new)
         return new

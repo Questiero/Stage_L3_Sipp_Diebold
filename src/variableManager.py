@@ -1,35 +1,80 @@
 import variable
 
 class VariableManager:
+    '''
+    VariableManager class, used to manage all instances of Variable.
+    
+    Attributes
+    ----------
+    dict(String, Variable): instance
+        A dictionnary of all instances of Variables
+
+    '''
+    
     instance = {}
+    
     @staticmethod
-    def add(obj):
-        """
-            Function used for adding an instance of a variable in the instance's dictionary
-            
-            :params obj: the new variable
-        """
+    def add(obj: variable.Variable):
+        '''
+        Static method to add a Variable to the VariableManager.
+    
+        Attributes
+        ----------
+        obj: Variable
+            The Variable to add
+        
+        Raises
+        ------
+        TypeError
+            If the Variable is not a Variable, or already defined with another Type.
+        '''
+        
         if(isinstance(obj, variable.Variable)):
-            if(obj.getName() not in __class__.instance):
-                __class__.instance[obj.getName()] = (obj.__class__, obj)
+            if(obj.name not in __class__.instance):
+                __class__.instance[obj.name] = obj
             else:
-                if(not isinstance(obj,  __class__.instance[obj.getName()][0])):
-                    raise TypeError(f"{obj.getName()} is already define with another type.")
+                if(not isinstance(obj,  __class__.instance[obj.name].__class__)):
+                    raise TypeError(f"{obj.name} is already define with another type.")
         else:
             raise TypeError(f"{obj} is not a Variable.")
     
     @classmethod
     def get(cls, name : str) -> variable.Variable:
-        """
-            Function used for getting a variable wich already exist
+        '''
+        Static method to get a Variable to the VariableManager.
+    
+        Attributes
+        ----------
+        obj: Variable
+            The Variable to add
         
-            :param name: Name of a variable
-            :returns: A variable
-        """
+        Raises
+        ------
+        NameError
+            The Variable isn't defined.
+            
+        Returns
+        -------
+        Variable: variable
+            The defined variable.
+
+        '''
+        
         if(name in cls.instance):
-            return cls.instance[name][1]
+            return cls.instance[name]
         else: raise NameError(f"{name} is not declared.")
     
     @staticmethod
     def declare(classe, name : str):
+        '''
+        Static method to declare a Variable to the VariableManager.
+    
+        Attributes
+        ----------
+        classe: Class
+            The class of the Variable to declare
+        name: String
+            The Variable name
+        '''
+        
         obj = classe.__new__(name)
