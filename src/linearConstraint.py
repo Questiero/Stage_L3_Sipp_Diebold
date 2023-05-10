@@ -22,7 +22,7 @@ class LinearConstraint(constraint.Constraint):
             - >=, = and <= only accepted operators
             - var needs to be defined before
             - var names must start with a letter and be followed by numbers or letters
-            - case doesn't matter
+            - case matters
             - always a * between var and coef
             - no duplicates variables in the same constraint
             
@@ -33,6 +33,12 @@ class LinearConstraint(constraint.Constraint):
         
     Attributes
     ----------
+    variables: dict[Variable, Fraction]
+        The variables in the constraint, associated with their coefficient
+    operator: ConstraintOperator
+        The operator of the constraint
+    bound: Fraction
+        The bound of the constraint
     _children: None
         The children of the current node. Since a cosntraint doesn't have any,
         it's None.
@@ -41,7 +47,7 @@ class LinearConstraint(constraint.Constraint):
         have any, it's None.
     '''
     
-    variables: dict
+    variables: dict[variable.Variable, Fraction]
     operator: constraintOperator.ConstraintOperator
     bound: Fraction
     
@@ -76,6 +82,8 @@ class LinearConstraint(constraint.Constraint):
             self.bound = Fraction(leftRightParts[1])
         
         leftRightParts[0] = leftRightParts[0].replace("-", "+-")
+        if leftRightParts[0].find("+-") == 0:
+            leftRightParts[0] = leftRightParts[0][1:]
         splitLeft = leftRightParts[0].split("+")
         
         for split in splitLeft:
@@ -83,17 +91,17 @@ class LinearConstraint(constraint.Constraint):
             var = None
             coef = None
             
-            if split.find("*"):
+            if split.find("*") != -1:
                 (coefString, varName) = split.split("*")
-                var = variableManager.VariableManager.get(varName.lower())
+                var = variableManager.VariableManager.get(varName)
                 coef = Fraction(coefString)
             else:
                 if split[0] == "-":
                     coef = Fraction("-1")
-                    var = variableManager.VariableManager.get(split[1:].lower())
+                    var = variableManager.VariableManager.get(split[1:])
                 else:
                     coef = Fraction("1")
-                    var = variableManager.VariableManager.get(split.lower())
+                    var = variableManager.VariableManager.get(split)
             
             if var in self.variables:
                 raise ValueError(f"Duplicate variable {var._name} found")
