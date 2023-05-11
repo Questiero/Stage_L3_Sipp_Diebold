@@ -92,7 +92,7 @@ class Or(naryFormula.NaryFormula):
         res = []
         
         for children in self._children:
-            for reschildren in children.getConstraintGonfle():
+            for reschildren in children.getAdherence():
                 res.append(reschildren)
                 
         return res
@@ -113,7 +113,7 @@ class Or(naryFormula.NaryFormula):
         res = []
         
         for children in self._children:
-            for reschildren in children.getConstraintGonfleNeg():
+            for reschildren in children._getAdherenceNeg():
                 for const in reschildren:  
                     res.append(const)
                     

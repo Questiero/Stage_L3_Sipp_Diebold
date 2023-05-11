@@ -43,7 +43,7 @@ class Variable(ABC):
     def __eq__(self, other):
         """Overrides the default implementation"""
         if isinstance(other, self.__class__):
-            return self.getName() == other.name
+            return self.name == other.name
         return False
     
     def __hash__(self) -> int:
