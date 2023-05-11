@@ -34,7 +34,7 @@ class And(naryFormula.NaryFormula):
         formula: Formula
             The current Formula in Disjunctive Normal Form.
         '''
-        
+                
         import orOperator
         
         dnfChildren = {child.toDNF() for child in self._children}
@@ -42,27 +42,30 @@ class And(naryFormula.NaryFormula):
         orChildren = set()
 			
         for dnfChild in dnfChildren:
-            if isinstance(dnfChild, orOperator.Or):		
+            if isinstance(dnfChild, orOperator.Or):
                 orChildren.add(dnfChild)
 
         dnfChildren = dnfChildren - orChildren
+                
+        if len(orChildren) == 0:
+            return And(formulaSet = dnfChildren)
         
-        if not orChildren:
-            return orOperator.Or(formulaSet = dnfChildren)
-        
-        combinations = {orChild for orChild in orChildren.pop()._children}
-	
-        tempcomb = set() 
+        combinations = [{orChild} for orChild in orChildren.pop()._children]
+    
+        tempcomb = []
         for orChild in orChildren:
             for elem in orChild._children:
                 for comb in combinations:
-                    tempc = comb.copy() 
-                    tempcomb.add(tempc.add(elem))
-        combinations = tempc
-
-        dnfFormula = {dnfChildren.union(And(comb)) for comb in combinations}
-					
-        return orOperator.Or(formulaSet = dnfFormula)
+                    tempc = comb.copy()
+                    tempc.add(elem)
+                    tempcomb.append(tempc)
+            combinations = tempcomb
+            tempcomb = []
+                
+        dnfFormula = [And(formulaSet=comb.union(dnfChildren)) for comb in combinations]
+            
+        #print(dnfFormula)
+        return orOperator.Or(formulaSet = set(dnfFormula))
     
     def _toDNFNeg(self) -> formula.Formula:
         '''

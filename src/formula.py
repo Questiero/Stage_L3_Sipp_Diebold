@@ -106,6 +106,10 @@ class Formula(ABC):
         '''
         pass
     
+    def copy(self):
+        cop = self.__class__(self.children)
+        return cop
+    
     @abstractmethod
     def __str__(self):
         pass

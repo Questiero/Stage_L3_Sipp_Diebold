@@ -52,30 +52,32 @@ class Or(naryFormula.NaryFormula):
         
         dnfChildren = {child._toDNFNeg() for child in self._children}
 			
-        andChildren = set()
+        orChildren = set()
 			
         for dnfChild in dnfChildren:
-            if isinstance(dnfChild, andOperator.And):		
-                andChildren.add(dnfChild)
+            if isinstance(dnfChild, Or):		
+                orChildren.add(dnfChild)
 
-        dnfChildren = dnfChildren - andChildren
+        dnfChildren = dnfChildren - orChildren
                 
-        if not andChildren:
-            return Or(formulaSet = dnfChildren)
+        if len(orChildren) == 0:
+            return andOperator.And(formulaSet = dnfChildren)
 					
-        combinations = {andChild for andChild in andChildren.pop().__children}
+        combinations = [{orChild} for orChild in orChildren.pop()._children]
 	
-        tempcomb = set() 
-        for andChild in andChildren:
-            for elem in andChild._children:
+        tempcomb = []
+        for orChild in orChildren:
+            for elem in orChild._children:
                 for comb in combinations:
-                    tempc = comb.copy() 
-                    tempcomb.add(tempc.add(elem))
-        combinations = tempc
+                    tempc = comb.copy()
+                    tempc.add(elem)
+                    tempcomb.append(tempc)
+            combinations = tempcomb
+            tempcomb = []
 
-        dnfFormula = {dnfChildren.union(andOperator.And(comb)) for comb in combinations}
-					
-        return Or(formulaSet = dnfFormula)
+        dnfFormula = [andOperator.And(formulaSet=comb.union(dnfChildren)) for comb in combinations]
+            
+        return Or(formulaSet = set(dnfFormula))
     
     def getAdherence(self)  -> list[list[constraint.Constraint]]:
         '''
