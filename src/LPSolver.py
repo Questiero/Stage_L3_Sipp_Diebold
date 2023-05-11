@@ -1,10 +1,10 @@
-import solver
+import MLOSolver
 import constraintOperator
 import integerVariable
 
 import lpsolve55 as lp_solve
 
-class LPSolver(solver.Solver):
+class LPSolver(MLOSolver.MLOSolver):
     def __init__(self):
         pass
         

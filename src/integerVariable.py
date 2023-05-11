@@ -13,7 +13,7 @@ class IntegerVariable(variable.Variable):
         The name of the Variable
     '''
     
-    def declare(name: str) -> IntegerVariable:
+    def declare(*lname: str) -> None:
         '''
         Function used to declare a new variable.
         If this variable already exist and have another type compared to the new declaraton,
@@ -23,13 +23,6 @@ class IntegerVariable(variable.Variable):
         ----------
         String: name
             The name of the Variable to be declared.
-
-        Returns
-        -------
-        Variable: variable
-            The defined variable.
         '''
-        
-        new = IntegerVariable(name)
-        variableManager.VariableManager.add(new)
-        return new
+        for name in lname:
+            variableManager.VariableManager.add(IntegerVariable(name))

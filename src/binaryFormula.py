@@ -52,7 +52,7 @@ class BinaryFormula(formula.Formula):
             All the variables used in the Formula.
         '''
         
-        return self._children.getVariables()
+        return self._children[0].getVariables().union(self._children[1].getVariables())
     
     def toDNF(self) -> formula.Formula:
         '''
@@ -79,32 +79,40 @@ class BinaryFormula(formula.Formula):
         
         return self._simplify()._toDNFNeg()
     
-    def getAdherence(self) -> list[list[constraint.Constraint]]:
+    def getAdherence(self, var : variable.Variable) -> list[list[constraint.Constraint]]:
         '''
         Returns a 2D list containing all the constraints of the adherence of 
-        the BinaryFormula, in Disjunctive Normal Form.
+        the Formula, in Disjunctive Normal Form.
+
+        Attributes
+        ----------
+        var : variable used in case of inequality
 
         Returns
         -------
         res: list of list of Constraint
-            2D list containing all the constraints of the adherence of the BinaryFormula,
+            2D list containing all the constraints of discute vraiment de l'implémentationthe adherence of the Formula,
             in Disjunctive Normal Form.
         '''
-        return self._simplify().getAdherence()
+        return self._simplify().getAdherence(var)
 
-    def _getAdherenceNeg(self)  -> list[list[constraint.Constraint]]:
+    def _getAdherenceNeg(self, var : variable.Variable)  -> list[list[constraint.Constraint]]:
         '''
         Protected method used in the algorithm to recursivly determine the
-        constraints of the adherence of the BinaryFormula, used when a Negation is in play
+        constraints of the adherence of the Formula, used when a Negation is in play
         instead of getAdherence().
+
+        Attributes
+        ----------
+        var : variable used in case of inequality
 
         Returns
         -------
         res: list of list of Constraint
-            2D list containing all the constraints of the adherence of the BinaryFormula,
+            2D list containing all the constraints of the adherence of the Formula,
             in Disjunctive Normal Form under Negation.
         '''
-        return self._simplify()._getAdherenceNeg()
+        return self._simplify()._getAdherenceNeg(var)
     
     def __str__(self):
         return str(self._children[0]) + self._symbol + str(self._children[1])

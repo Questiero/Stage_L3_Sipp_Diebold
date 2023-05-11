@@ -13,7 +13,7 @@ class RealVariable(variable.Variable):
         The name of the Variable
     '''
     
-    def declare(name: str) -> RealVariable:
+    def declare(*lname: str) -> RealVariable:
         '''
         Function used to declare a new variable.
         If this variable already exist and have another type compared to the new declaraton,
@@ -29,7 +29,5 @@ class RealVariable(variable.Variable):
         Variable: variable
             The defined variable.
         '''
-        
-        new = RealVariable(name)
-        variableManager.VariableManager.add(new)
-        return new
+        for name in lname:
+            variableManager.VariableManager.add(RealVariable(name))

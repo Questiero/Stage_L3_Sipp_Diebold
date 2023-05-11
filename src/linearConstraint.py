@@ -121,25 +121,32 @@ class LinearConstraint(constraint.Constraint):
         
         return self.variables.keys()
     
-    def getAdherence(self) -> list[list[constraint.Constraint]]:
+    def getAdherence(self, var : variable.Variable) -> list[list[constraint.Constraint]]:
         '''
         Returns a 2D list containing all the constraints of the adherence of 
         the Formula, in Disjunctive Normal Form.
 
+        Attributes
+        ----------
+        var : variable used in case of inequality
+
         Returns
         -------
         res: list of list of Constraint
-            2D list containing all the constraints of the adherence of the Formula,
+            2D list containing all the constraints of discute vraiment de l'implémentationthe adherence of the Formula,
             in Disjunctive Normal Form.
         '''
-        
         return [[self]]
-    
-    def _getAdherenceNeg(self) -> list[list[constraint.Constraint]]:
+
+    def _getAdherenceNeg(self, var : variable.Variable)  -> list[list[constraint.Constraint]]:
         '''
         Protected method used in the algorithm to recursivly determine the
         constraints of the adherence of the Formula, used when a Negation is in play
         instead of getAdherence().
+
+        Attributes
+        ----------
+        var : variable used in case of inequality
 
         Returns
         -------
@@ -147,14 +154,34 @@ class LinearConstraint(constraint.Constraint):
             2D list containing all the constraints of the adherence of the Formula,
             in Disjunctive Normal Form under Negation.
         '''
-        
-        if(self.operator == constraintOperator.ConstraintOperator.EQ): return []
-        elif(self.operator == constraintOperator.ConstraintOperator.LEQ):
-            self.operator = constraintOperator.ConstraintOperator.GEQ
-        elif(self.operator == constraintOperator.ConstraintOperator.GEQ):
-            self.operator = constraintOperator.ConstraintOperator.LEQ
+        copyConstrainte = LinearConstraint(str(self)[1:-1])
 
-        return [[self]]
+        if(self.operator == constraintOperator.ConstraintOperator.EQ): 
+            copyConstrainte2 = LinearConstraint(str(self)[1:-1])
+
+            copyConstrainte.operator = constraintOperator.ConstraintOperator.LEQ
+            copyConstrainte2.operator = constraintOperator.ConstraintOperator.LEQ
+
+            for variable in copyConstrainte2.variables.keys():
+                copyConstrainte.variables[variable] *= -1
+
+            copyConstrainte.variables[var] = Fraction(1,1)
+            copyConstrainte2.variables[var] = Fraction(1,1)
+            copyConstrainte2.bound *= -1
+            res = [[copyConstrainte], [copyConstrainte2]]
+
+        elif(self.operator == constraintOperator.ConstraintOperator.LEQ):
+            copyConstrainte.variables[var] = Fraction(1,1)
+            res = [[copyConstrainte]]
+        elif(self.operator == constraintOperator.ConstraintOperator.GEQ):
+            for variable in copyConstrainte.variables.keys():
+                copyConstrainte.variables[variable] *= -1
+            copyConstrainte.variables[var] = Fraction(1,1)
+            copyConstrainte.bound *= -1
+            copyConstrainte.operator = constraintOperator.ConstraintOperator.LEQ
+            res = [[copyConstrainte]]
+
+        return res
     
     def __str__(self):
         s = "("

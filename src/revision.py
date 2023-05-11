@@ -1,23 +1,18 @@
 import formula
-import solver
+import MLOSolver
 import distanceFunction
+import formulaInterpreter
 
 class Revision:
-    _solver : solver.Solver
+    _solver : MLOSolver.MLOSolver
     _distance : distanceFunction.DistanceFunction
+    _interpreter : formulaInterpreter.FormulaInterpreter
 
-    def __init__(self, solverInit : solver.Solver, distance : distanceFunction.DistanceFunction):
+    def __init__(self, solverInit : MLOSolver.MLOSolver, distance : distanceFunction.DistanceFunction):
         self._solver = solverInit
         self._distance = distance 
+        self._interpreter = formulaInterpreter.FormulaInterpreter(solverInit)
 
     def execute(self, phi : formula.Formula, psy : formula.Formula):
-        if not self._sat(phi) or not self._sat(psy) : return psy
-
-    def _sat(self, phi : formula.Formula):
-        for constraints in phi.getConstraintGonfle():
-            try:
-                self._solver.solve(constraints)
-                return True
-            except Exception as e:
-                pass
-        return False
+        return self._interpreter.sat(phi)
+        #if not self._interpreter.sat(phi) or not self._interpreter.sat(psy) : return psy
