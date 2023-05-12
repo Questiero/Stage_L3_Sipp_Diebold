@@ -1,5 +1,10 @@
+from abc import ABC, abstractmethod
 import domain
-class DistanceFunction:
+
+class DistanceFunction(ABC):
+    
     _domaine : domain.Domain
+    
+    @abstractmethod
     def dist(x,y):
-        raise NotImplemented("dist method is not implemented")
+        pass
