@@ -183,6 +183,25 @@ class LinearConstraint(constraint.Constraint):
 
         return res
     
+    def getTuple(self, variables : list) -> tuple:
+        """
+        
+        """
+        tabVar = []
+        op = self.operator
+        bound = self.bound
+        for variable in variables:
+            if not variable in self.variables: tabVar.append(0)
+            else: tabVar.append(self.variables[variable])
+
+        if(op == constraintOperator.ConstraintOperator.GEQ):
+            for i in range(0, len(tabVar)-1):
+                tabVar[i] *= -1
+            bound *= -1
+            op = constraintOperator.ConstraintOperator.LEQ
+        
+        return (tabVar, op, bound)
+    
     def __str__(self):
         s = "("
         for var, coef in self.variables.items():

@@ -25,4 +25,6 @@ class IntegerVariable(variable.Variable):
             The name of the Variable to be declared.
         '''
         for name in lname:
+            variableManager.VariableManager.verifie(name, IntegerVariable)
+        for name in lname:
             variableManager.VariableManager.add(IntegerVariable(name))
