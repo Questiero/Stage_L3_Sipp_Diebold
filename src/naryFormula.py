@@ -16,7 +16,7 @@ class NaryFormula(formula.Formula):
 
     Attributes
     ----------
-    _children: set(Formula)
+    children: set(Formula)
         The children of the current node.
     _symbol: str
         The symbol used to represent the operator syntaxically.
@@ -25,19 +25,19 @@ class NaryFormula(formula.Formula):
     def __init__(self, *formulas: formula.Formula, formulaSet: set[formula.Formula]=None):
         
         if formulaSet is None:
-            self._children = set(formulas)
+            self.children = set(formulas)
         else:
-            self._children= formulaSet
+            self.children= formulaSet
                 
-        if len(self._children) >= 2:
+        if len(self.children) >= 2:
             tempF = set()
             
-            for formul in self._children:
+            for formul in self.children:
                 if isinstance(formul, type(self)):
                     tempF.add(formul)
-                    self._children = self._children | formul._children
+                    self.children = self.children | formul.children
                     
-            self._children = self._children - tempF
+            self.children = self.children - tempF
 
         else:
             raise Exception("nary operators need at least two formulas")
@@ -53,7 +53,7 @@ class NaryFormula(formula.Formula):
             All the variables used in the n-ary Formula or its children.
         '''
         
-        tempChildren = self._children.copy()
+        tempChildren = self.children.copy()
         variables = tempChildren.pop().getVariables();
         
         for child in tempChildren:
@@ -63,7 +63,7 @@ class NaryFormula(formula.Formula):
     
     def __str__(self):
         s = "("
-        for child in self._children:
+        for child in self.children:
             s += str(child) + " " + self._symbol + " "
         toRemove = len(self._symbol) + 2
         s = s[:-toRemove] + ")"

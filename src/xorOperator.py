@@ -9,7 +9,7 @@ class Xor(binaryFormula.BinaryFormula):
 
     Attributes
     ----------
-    _children: tuple of Formulas
+    children: tuple of Formulas
         The children of the current node.
     _symbol: str
         The symbol used to represent the XOR syntaxically.
@@ -28,4 +28,4 @@ class Xor(binaryFormula.BinaryFormula):
             The simplified version of the implication operator. In this case, it's
             (a AND NOT b) OR (NOT a AND b).
         '''
-        return (self._children[0] & ~self._children[1]) | (~self._children[0] & self._children[1])
+        return (self.children[0] & ~self.children[1]) | (~self.children[0] & self.children[1])

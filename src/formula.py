@@ -12,14 +12,14 @@ class Formula(ABC):
 
     Attributes
     ----------
-    _children: 
+    children: 
         The children of the current node.
         Typing depends of the formula's arity.
     _symbol: str
         The symbol used to represent the operator syntaxically.
     '''
     
-    _children = None
+    children = None
     
     @staticmethod
     def parser(string: str):

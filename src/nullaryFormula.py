@@ -8,13 +8,13 @@ class NullaryFormula(formula.Formula):
 
     Attributes
     ----------
-    _children: None
+    children: None
         The children of the current node. Since there isn't any, it's None.
     _symbol: str
         The symbol used to represent the node syntaxically.
     '''
     
-    _children = None
+    children = None
     
     def toDNF(self) -> formula.Formula:
         '''

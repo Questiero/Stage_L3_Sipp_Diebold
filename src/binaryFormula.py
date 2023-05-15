@@ -17,7 +17,7 @@ class BinaryFormula(formula.Formula):
 
     Attributes
     ----------
-    _children: tuple of Formulas
+    children: tuple of Formulas
         The children of the current node.
     _symbol: str
         The symbol used to represent the node syntaxically.
@@ -25,7 +25,7 @@ class BinaryFormula(formula.Formula):
         
     # formulas: tuple (Formula, Formula)
     def __init__(self, formulaLeft: formula.Formula, formulaRight: formula.Formula):
-        self._children = (formulaLeft, formulaRight)
+        self.children = (formulaLeft, formulaRight)
 
     @abstractmethod
     def _simplify(self) -> formula.Formula:
@@ -52,7 +52,7 @@ class BinaryFormula(formula.Formula):
             All the variables used in the Formula.
         '''
         
-        return self._children[0].getVariables().union(self._children[1].getVariables())
+        return self.children[0].getVariables().union(self.children[1].getVariables())
     
     def toDNF(self) -> formula.Formula:
         '''
@@ -115,4 +115,4 @@ class BinaryFormula(formula.Formula):
         return self._simplify()._getAdherenceNeg(var)
     
     def __str__(self):
-        return str(self._children[0]) + self._symbol + str(self._children[1])
+        return str(self.children[0]) + self._symbol + str(self.children[1])

@@ -39,7 +39,7 @@ class LinearConstraint(constraint.Constraint):
         The operator of the constraint
     bound: Fraction
         The bound of the constraint
-    _children: None
+    children: None
         The children of the current node. Since a cosntraint doesn't have any,
         it's None.
     _symbol: None

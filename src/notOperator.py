@@ -11,7 +11,7 @@ class Not(unaryFormula.UnaryFormula):
 
     Attributes
     ----------
-    _children: Formula
+    children: Formula
         The child of the current node.
     _symbol: str
         The symbol used to represent the node syntaxically.
@@ -29,7 +29,7 @@ class Not(unaryFormula.UnaryFormula):
             The current Formula in Disjunctive Normal Form.
         '''
         
-        return self._children._toDNFNeg()
+        return self.children._toDNFNeg()
     
     def _toDNFNeg(self) -> formula.Formula:
         '''
@@ -42,7 +42,7 @@ class Not(unaryFormula.UnaryFormula):
             The current Formula in Disjunctive Normal Form under Negation.
         '''
         
-        return self._children.toDNF()
+        return self.children.toDNF()
     
     def getAdherence(self, var : variable.Variable) -> list[list[constraint.Constraint]]:
         '''
@@ -60,7 +60,7 @@ class Not(unaryFormula.UnaryFormula):
             in Disjunctive Normal Form.
         '''
         
-        return self._children._getAdherenceNeg(var)
+        return self.children._getAdherenceNeg(var)
     
     def _getAdherenceNeg(self, var : variable.Variable)  -> list[list[constraint.Constraint]]:
         '''
@@ -79,4 +79,4 @@ class Not(unaryFormula.UnaryFormula):
             in Disjunctive Normal Form under Negation.
         '''
         
-        return self._children.getAdherence(var)
+        return self.children.getAdherence(var)

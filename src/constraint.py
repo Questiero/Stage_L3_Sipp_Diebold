@@ -6,7 +6,7 @@ class Constraint(nullaryFormula.NullaryFormula):
 
     Attributes
     ----------
-    _children: None
+    children: None
         The children of the current node. Since a cosntraint doesn't have any,
         it's None.
     _symbol: None

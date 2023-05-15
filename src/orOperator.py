@@ -18,7 +18,7 @@ class Or(naryFormula.NaryFormula):
 
     Attributes
     ----------
-    _children: set(Formula) 
+    children: set(Formula) 
         The children of the current node.
     _symbol: str
         The symbol used to represent the Or operator syntaxically.
@@ -36,7 +36,7 @@ class Or(naryFormula.NaryFormula):
             The current Formula in Disjunctive Normal Form.
         '''
         
-        return Or(formulaSet = {child.toDNF() for child in self._children})
+        return Or(formulaSet = {child.toDNF() for child in self.children})
     
     def _toDNFNeg(self) -> formula.Formula:
         '''
@@ -51,7 +51,7 @@ class Or(naryFormula.NaryFormula):
         
         import andOperator
         
-        dnfChildren = {child._toDNFNeg() for child in self._children}
+        dnfChildren = {child._toDNFNeg() for child in self.children}
 			
         orChildren = set()
 			
@@ -64,11 +64,11 @@ class Or(naryFormula.NaryFormula):
         if len(orChildren) == 0:
             return andOperator.And(formulaSet = dnfChildren)
 					
-        combinations = [{orChild} for orChild in orChildren.pop()._children]
+        combinations = [{orChild} for orChild in orChildren.pop().children]
 	
         tempcomb = []
         for orChild in orChildren:
-            for elem in orChild._children:
+            for elem in orChild.children:
                 for comb in combinations:
                     tempc = comb.copy()
                     tempc.add(elem)
@@ -98,7 +98,7 @@ class Or(naryFormula.NaryFormula):
         
         res = []
         
-        for children in self._children:
+        for children in self.children:
             for reschildren in children.getAdherence(var):
                 res.append(reschildren)
                 
@@ -123,7 +123,7 @@ class Or(naryFormula.NaryFormula):
         
         res = []
         
-        for children in self._children:
+        for children in self.children:
             for reschildren in children._getAdherenceNeg(var):
                 for const in reschildren:  
                     res.append(const)

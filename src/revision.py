@@ -2,6 +2,7 @@ import formula
 import MLOSolver
 import distanceFunction
 import formulaInterpreter
+import orOperator
 
 class Revision:
     _solver : MLOSolver.MLOSolver
@@ -13,6 +14,19 @@ class Revision:
         self._distance = distance 
         self._interpreter = formulaInterpreter.FormulaInterpreter(solverInit)
 
-    def execute(self, phi : formula.Formula, psy : formula.Formula):
-        return self._interpreter.sat(phi)
-        #if not self._interpreter.sat(phi) or not self._interpreter.sat(psy) : return psy
+    def execute(self, phi : formula.Formula, mu : formula.Formula):
+        phiDNF, muDNF = phi.toDNF(), mu.toDNF()
+        return self.__executeDNF(phiDNF, muDNF)
+        
+    def __executeDNF(self, phi: formula.Formula, mu: formula.Formula):
+        
+        formulaRes = orOperator.Or()
+        
+        for miniPhi in phi.children:
+            for miniMu in mu.children:
+                formulaRes.children.append(self.__executeLiteral(miniPhi, miniMu))
+        
+        return formulaRes
+    
+    def __executeLiteral(self, phi: formula.Formula, mu: formula.Formula):
+        pass

@@ -10,7 +10,7 @@ class Top(nullaryFormula.NullaryFormula):
 
     Attributes
     ----------
-    _children: None 
+    children: None 
         The children of the current node.
     _symbol: str
         The symbol used to represent Top syntaxically.

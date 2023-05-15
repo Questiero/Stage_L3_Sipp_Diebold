@@ -18,7 +18,7 @@ class And(naryFormula.NaryFormula):
 
     Attributes
     ----------
-    _children: set[Formula]
+    children: set[Formula]
         The children of the current node.
     _symbol: str
         The symbol used to represent the And operator syntaxically.
@@ -38,7 +38,7 @@ class And(naryFormula.NaryFormula):
                 
         import orOperator
         
-        dnfChildren = {child.toDNF() for child in self._children}
+        dnfChildren = {child.toDNF() for child in self.children}
 			
         orChildren = set()
 			
@@ -51,11 +51,11 @@ class And(naryFormula.NaryFormula):
         if len(orChildren) == 0:
             return And(formulaSet = dnfChildren)
         
-        combinations = [{orChild} for orChild in orChildren.pop()._children]
+        combinations = [{orChild} for orChild in orChildren.pop().children]
     
         tempcomb = []
         for orChild in orChildren:
-            for elem in orChild._children:
+            for elem in orChild.children:
                 for comb in combinations:
                     tempc = comb.copy()
                     tempc.add(elem)
@@ -81,7 +81,7 @@ class And(naryFormula.NaryFormula):
         
         import orOperator
         
-        return orOperator.Or(formulaSet = {child._toDNFNeg() for child in self._children})
+        return orOperator.Or(formulaSet = {child._toDNFNeg() for child in self.children})
     
     def getAdherence(self, var : variable.Variable) -> list[list[constraint.Constraint]]:
         '''
@@ -101,7 +101,7 @@ class And(naryFormula.NaryFormula):
         
         res = []
         
-        for children in self._children:
+        for children in self.children:
             for reschildren in children.getAdherence(var):
                 for const in reschildren:  
                     res.append(const)
@@ -127,7 +127,7 @@ class And(naryFormula.NaryFormula):
         
         res = []
         
-        for children in self._children:
+        for children in self.children:
             for reschildren in children._getAdherenceNeg(var):
                 res.append(reschildren)
                 

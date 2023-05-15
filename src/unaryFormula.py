@@ -9,7 +9,7 @@ class UnaryFormula(formula.Formula):
 
     Attributes
     ----------
-    _children: Formula
+    children: Formula
         The child of the current node.
     _symbol: str
         The symbol used to represent the node syntaxically.
@@ -17,7 +17,7 @@ class UnaryFormula(formula.Formula):
 
     # formula: Formula
     def __init__(self, formulaInit: formula.Formula):
-        self._children = formulaInit
+        self.children = formulaInit
         
     def getVariables(self) -> set[variable.Variable]:
         '''
@@ -30,7 +30,7 @@ class UnaryFormula(formula.Formula):
             All the variables used in the Formula.
         '''
         
-        return self._children.getVariables()
+        return self.children.getVariables()
     
     def __str__(self):
-        return self._symbol + str(self._children)
+        return self._symbol + str(self.children)

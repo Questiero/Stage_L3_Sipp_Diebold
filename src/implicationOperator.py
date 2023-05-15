@@ -9,7 +9,7 @@ class Implication(binaryFormula.BinaryFormula):
 
     Attributes
     ----------
-    _children: tuple of Formulas
+    children: tuple of Formulas
         The children of the current node.
     _symbol: str
         The symbol used to represent the implication syntaxically.
@@ -29,4 +29,4 @@ class Implication(binaryFormula.BinaryFormula):
             NOT a OR b.
         '''
         
-        return ~self._children[0] | self._children[1]
+        return ~self.children[0] | self.children[1]
