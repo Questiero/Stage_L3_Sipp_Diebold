@@ -16,9 +16,9 @@ class VariableManager:
     pattern = re.compile("^[a-zA-Z]([a-zA-Z0-9_])*$")
 
     @staticmethod
-    def verifie(name : str, cls):
+    def verify(name : str, cls):
         '''
-        Static method to verifie if a Variable can be add to the VariableManager.
+        Static method to verify if a Variable can be add to the VariableManager.
     
         Attributes
         ----------
@@ -51,7 +51,7 @@ class VariableManager:
         TypeError
             If the Variable is not a Variable, or already defined with another Type.
         '''
-        
+        VariableManager.verifie(obj.name, obj.__class__)
         if(isinstance(obj, variable.Variable)):
             __class__.instance[obj.name] = obj
         else:

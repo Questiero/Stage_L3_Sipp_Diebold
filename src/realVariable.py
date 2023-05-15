@@ -30,6 +30,6 @@ class RealVariable(variable.Variable):
             The defined variable.
         '''
         for name in lname:
-            variableManager.VariableManager.verifie(name, RealVariable)
+            variableManager.VariableManager.verify(name, RealVariable)
         for name in lname:
             variableManager.VariableManager.add(RealVariable(name))
