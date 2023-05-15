@@ -15,7 +15,7 @@ class LPSolver(MLOSolver.MLOSolver):
         for variable in variables:
             if(isinstance(variable, integerVariable.IntegerVariable)): 
                 lp_solve.lpsolve('set_int', lp,variables.index(variable)+1, 1)
-                lp_solve.lpsolve('set_unbounded', lp, variables.index(variable)+1)
+            lp_solve.lpsolve('set_unbounded', lp, variables.index(variable)+1)
 
         lp_solve.lpsolve('set_obj', lp, objectif)
         for constraint in constraints:
