@@ -156,30 +156,8 @@ class LinearConstraint(constraint.Constraint):
         '''
         copyConstrainte = LinearConstraint(str(self)[1:-1])
 
-        if(self.operator == constraintOperator.ConstraintOperator.EQ): 
-            copyConstrainte2 = LinearConstraint(str(self)[1:-1])
-
-            copyConstrainte.operator = constraintOperator.ConstraintOperator.LEQ
-            copyConstrainte2.operator = constraintOperator.ConstraintOperator.LEQ
-
-            for variable in copyConstrainte2.variables.keys():
-                copyConstrainte.variables[variable] *= -1
-
-            copyConstrainte.variables[var] = Fraction(1,1)
-            copyConstrainte2.variables[var] = Fraction(1,1)
-            copyConstrainte2.bound *= -1
-            res = [[copyConstrainte], [copyConstrainte2]]
-
-        elif(self.operator == constraintOperator.ConstraintOperator.LEQ):
-            copyConstrainte.variables[var] = Fraction(1,1)
-            res = [[copyConstrainte]]
-        elif(self.operator == constraintOperator.ConstraintOperator.GEQ):
-            for variable in copyConstrainte.variables.keys():
-                copyConstrainte.variables[variable] *= -1
-            copyConstrainte.variables[var] = Fraction(1,1)
-            copyConstrainte.bound *= -1
-            copyConstrainte.operator = constraintOperator.ConstraintOperator.LEQ
-            res = [[copyConstrainte]]
+        copyConstrainte.variables[var] = Fraction(1,1)
+        res = [[copyConstrainte]]
 
         return res
     
