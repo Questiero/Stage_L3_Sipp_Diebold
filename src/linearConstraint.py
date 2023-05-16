@@ -220,7 +220,7 @@ class LinearConstraint(constraint.Constraint):
         res: Formula with only minus or equal constraint
         
         '''
-        from orOperator import Or
+        from andOperator import And
         res = LinearConstraint(str(self)[1:-1])
 
         if self.operator == constraintOperator.ConstraintOperator.GEQ :
@@ -233,6 +233,6 @@ class LinearConstraint(constraint.Constraint):
             res[0].operator = constraintOperator.ConstraintOperator.GEQ
             res.append(res[0].toLessOrEqConstraint())
             res[0].operator = constraintOperator.ConstraintOperator.LEQ
-            res = Or(set(res))
+            res = And(formulaSet=set(res))
 
         return res

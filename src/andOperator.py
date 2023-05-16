@@ -145,4 +145,4 @@ class And(naryFormula.NaryFormula):
         childrenModified = []
         for child in self.children: childrenModified.append(child.toLessOrEqConstraint())
 
-        return And(set(childrenModified))
+        return And(formulaSet= set(childrenModified))

@@ -43,4 +43,4 @@ class Implication(binaryFormula.BinaryFormula):
         childrenModified = []
         for child in self.children: childrenModified.append(child.toLessOrEqConstraint())
 
-        return Implication(set(childrenModified))
+        return Implication(childrenModified[0], childrenModified[1])

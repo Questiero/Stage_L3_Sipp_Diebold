@@ -142,4 +142,4 @@ class Or(naryFormula.NaryFormula):
         childrenModified = []
         for child in self.children: childrenModified.append(child.toLessOrEqConstraint())
 
-        return Or(set(childrenModified))
+        return Or(formulaSet=set(childrenModified))

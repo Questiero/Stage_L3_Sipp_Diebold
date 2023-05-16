@@ -42,4 +42,4 @@ class Xor(binaryFormula.BinaryFormula):
         childrenModified = []
         for child in self.children: childrenModified.append(child.toLessOrEqConstraint())
 
-        return Xor(set(childrenModified))
+        return Xor(childrenModified[0], childrenModified[1])

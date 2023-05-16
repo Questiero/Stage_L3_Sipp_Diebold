@@ -43,4 +43,4 @@ class Biconditional(binaryFormula.BinaryFormula):
         childrenModified = []
         for child in self.children: childrenModified.append(child.toLessOrEqConstraint())
 
-        return Biconditional(set(childrenModified))
+        return Biconditional(childrenModified[0], childrenModified[1])
