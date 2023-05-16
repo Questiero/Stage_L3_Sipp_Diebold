@@ -1,22 +1,38 @@
 import formula
 import MLOSolver
 import realVariable
-import unaryFormula
-import orOperator
-import constraintOperator
 
 class FormulaInterpreter:
     def __init__(self, mloSolver : MLOSolver.MLOSolver) -> None:
         self.MLOSolver = mloSolver
 
-    def __interpretFormula(self, phi : formula.Formula):
-        variables = list(phi.getVariables())
-        variables.append(realVariable.RealVariable("@"))
+    def simplifyMLC(self, phi : formula.Formula):
+        '''
+        Method used to simplify a conjonction of mix linears constraints
 
+        Attributes
+        ----------
+        phi : the formula to simplify
 
-
+        Returns
+        -------
+        res: the formula with mlc simplified
+        '''
+        return phi
 
     def sat(self, phi : formula.Formula) -> bool:
+        '''
+        Method used to verify the satisfiability of a formula
+
+        Attributes
+        ----------
+        phi : the formula
+
+        Returns
+        -------
+        res: true if the formula is satsifiable, false in the other case
+        
+        '''
         variables = list(phi.getVariables())
         e = realVariable.RealVariable("@")
         variables.append(e)
