@@ -51,7 +51,7 @@ class VariableManager:
         TypeError
             If the Variable is not a Variable, or already defined with another Type.
         '''
-        VariableManager.verifie(obj.name, obj.__class__)
+        VariableManager.verify(obj.name, obj.__class__)
         if(isinstance(obj, variable.Variable)):
             __class__.instance[obj.name] = obj
         else:

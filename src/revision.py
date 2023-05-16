@@ -3,6 +3,9 @@ import MLOSolver
 import distanceFunction
 import formulaInterpreter
 import orOperator
+import andOperator
+import unaryFormula
+import nullaryFormula
 
 class Revision:
     _solver : MLOSolver.MLOSolver
@@ -16,17 +19,35 @@ class Revision:
 
     def execute(self, phi : formula.Formula, mu : formula.Formula):
         phiDNF, muDNF = phi.toDNF(), mu.toDNF()
-        return self.__executeDNF(phiDNF, muDNF)
+        return self.__executeDNF(self.__convertExplicit(phiDNF), self.__convertExplicit(muDNF))
         
     def __executeDNF(self, phi: formula.Formula, mu: formula.Formula):
         
-        formulaRes = orOperator.Or()
+        setRes = set()
         
         for miniPhi in phi.children:
             for miniMu in mu.children:
-                formulaRes.children.append(self.__executeLiteral(miniPhi, miniMu))
-        
-        return formulaRes
+                setRes.add(self.__executeLiteral(miniPhi, miniMu))
+                
+        return orOperator.Or(formulaSet = setRes)
     
     def __executeLiteral(self, phi: formula.Formula, mu: formula.Formula):
         pass
+    
+    def __executeConstraint(self, phi: formula.Formula, mu: formula.Formula):
+        pass
+    
+    def __convertExplicit(self, phi: formula.Formula):
+        
+        if isinstance(phi, andOperator.And):
+            return orOperator.Or(phi)
+        elif isinstance(phi, unaryFormula.UnaryFormula) | isinstance(phi, nullaryFormula.NullaryFormula):
+            return orOperator.Or(andOperator.And(phi))
+        else:
+            orSet = set()
+            for miniPhi in phi.children:
+                if isinstance(miniPhi, andOperator.And):
+                    orSet.add(miniPhi)
+                else:
+                    orSet.add(andOperator.And(miniPhi))
+            return orOperator.Or(formulaSet = orSet)

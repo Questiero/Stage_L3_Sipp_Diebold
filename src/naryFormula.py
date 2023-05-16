@@ -27,9 +27,9 @@ class NaryFormula(formula.Formula):
         if formulaSet is None:
             self.children = set(formulas)
         else:
-            self.children= formulaSet
+            self.children = formulaSet
                 
-        if len(self.children) >= 2:
+        if len(self.children) >= 1:
             tempF = set()
             
             for formul in self.children:
@@ -40,7 +40,7 @@ class NaryFormula(formula.Formula):
             self.children = self.children - tempF
 
         else:
-            raise Exception("nary operators need at least two formulas")
+            raise Exception("nary operators need at least one child")
         
     def getVariables(self) -> set[variable.Variable]:
         '''
@@ -62,6 +62,10 @@ class NaryFormula(formula.Formula):
         return variables
     
     def __str__(self):
+
+        if len(self.children) == 1:
+            return str(list(self.children)[0])
+        
         s = "("
         for child in self.children:
             s += str(child) + " " + self._symbol + " "
