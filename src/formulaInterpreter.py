@@ -26,3 +26,5 @@ class FormulaInterpreter:
             if res[0] :
                 if res[1][variables.index(e)] != 0:
                     return True
+            
+        return False

@@ -82,6 +82,7 @@ class LinearConstraint(constraint.Constraint):
             self.bound = Fraction(leftRightParts[1])
         
         leftRightParts[0] = leftRightParts[0].replace("-", "+-")
+        leftRightParts[0] = leftRightParts[0].replace("++", "+")
         if leftRightParts[0].find("+-") == 0:
             leftRightParts[0] = leftRightParts[0][1:]
         splitLeft = leftRightParts[0].split("+")
