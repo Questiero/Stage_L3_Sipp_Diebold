@@ -211,3 +211,28 @@ class LinearConstraint(constraint.Constraint):
         s += str(self.bound) + ")"
         return s
             
+    def toLessOrEqConstraint(self):
+        '''
+        Method used to transforming formula to anoter formula without equality or greater constraint
+
+        Returns
+        ------
+        res: Formula with only minus or equal constraint
+        
+        '''
+        from orOperator import Or
+        res = LinearConstraint(str(self)[1:-1])
+
+        if self.operator == constraintOperator.ConstraintOperator.GEQ :
+            for variable in res.variables.keys():
+                res.variables[variable] *= -1
+            res.bound *= -1
+            res.operator = constraintOperator.ConstraintOperator.LEQ
+        elif self.operator == constraintOperator.ConstraintOperator.EQ:
+            res = [LinearConstraint(str(self)[1:-1])]
+            res[0].operator = constraintOperator.ConstraintOperator.GEQ
+            res.append(res[0].toLessOrEqConstraint())
+            res[0].operator = constraintOperator.ConstraintOperator.LEQ
+            res = Or(set(res))
+
+        return res

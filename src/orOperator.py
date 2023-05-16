@@ -129,3 +129,17 @@ class Or(naryFormula.NaryFormula):
                     res.append(const)
                     
         return [res]
+    
+    def toLessOrEqConstraint(self):
+        '''
+        Method used to transforming formula to anoter formula without equality or greater constraint
+
+        Returns
+        ------
+        res: Formula with only minus or equal constraint
+        
+        '''
+        childrenModified = []
+        for child in self.children: childrenModified.append(child.toLessOrEqConstraint())
+
+        return Or(set(childrenModified))

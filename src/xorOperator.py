@@ -29,3 +29,17 @@ class Xor(binaryFormula.BinaryFormula):
             (a AND NOT b) OR (NOT a AND b).
         '''
         return (self.children[0] & ~self.children[1]) | (~self.children[0] & self.children[1])
+    
+    def toLessOrEqConstraint(self):
+        '''
+        Method used to transforming formula to anoter formula without equality or greater constraint
+
+        Returns
+        ------
+        res: Formula with only minus or equal constraint
+        
+        '''
+        childrenModified = []
+        for child in self.children: childrenModified.append(child.toLessOrEqConstraint())
+
+        return Xor(set(childrenModified))
