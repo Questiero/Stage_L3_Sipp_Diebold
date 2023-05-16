@@ -1,6 +1,7 @@
 import formula
 import MLOSolver
 import realVariable
+import constraint
 
 class FormulaInterpreter:
     def __init__(self, mloSolver : MLOSolver.MLOSolver) -> None:
@@ -44,3 +45,15 @@ class FormulaInterpreter:
                     return True
             
         return False
+
+    def findAllSolutions(self, x) -> tuple[float, formula.Formula]:
+        pass
+
+    def findOneSolution(self, x) -> tuple[float, formula.Formula]:
+        pass
+
+    def revisionOnLitteral(self, phi : constraint.Constraint, mu : constraint.Constraint) -> tuple[float, formula.Formula]:
+        '''
+        TODO
+        '''
+        pass
