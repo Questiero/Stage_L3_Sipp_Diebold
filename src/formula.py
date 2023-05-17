@@ -143,8 +143,8 @@ class Formula(ABC):
         pass
         
     def __floordiv__(self, a):
-        import biconditionalOperator
-        return biconditionalOperator.Biconditional(self, a)
+        import equivalenceOperator
+        return equivalenceOperator.Equivalence(self, a)
     
     def __ne__(self, a):
         import xorOperator

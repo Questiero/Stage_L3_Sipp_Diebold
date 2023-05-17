@@ -3,7 +3,7 @@ import binaryFormula
 # Typing only imports
 import formula
 
-class Biconditional(binaryFormula.BinaryFormula):
+class Equivalence(binaryFormula.BinaryFormula):
     '''
      Class representing the biconditional operator.
 
@@ -43,4 +43,4 @@ class Biconditional(binaryFormula.BinaryFormula):
         childrenModified = []
         for child in self.children: childrenModified.append(child.toLessOrEqConstraint())
 
-        return Biconditional(childrenModified[0], childrenModified[1])
+        return Equivalence(childrenModified[0], childrenModified[1])
