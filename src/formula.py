@@ -142,9 +142,7 @@ class Formula(ABC):
         '''
         pass
         
-
-'''
-    def __eq__(self, a):
+    def __floordiv__(self, a):
         import biconditionalOperator
         return biconditionalOperator.Biconditional(self, a)
     
@@ -155,4 +153,3 @@ class Formula(ABC):
     def __rshift__(self, a):
         import implicationOperator
         return implicationOperator.Implication(self, a)
-'''
