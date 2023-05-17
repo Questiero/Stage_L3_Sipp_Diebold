@@ -133,8 +133,9 @@ class Formula(ABC):
         else:
             return self.children == o.children
         
+    @abstractmethod
     def __hash__(self):
-        return hash(frozenset(self.children))
+        pass
     
     @abstractmethod
     def __str__(self):

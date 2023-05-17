@@ -32,5 +32,8 @@ class UnaryFormula(Formula):
         
         return self.children.getVariables()
     
+    def __hash__(self):
+        return hash(self.children)
+    
     def __str__(self):
         return self._symbol + str(self.children)
