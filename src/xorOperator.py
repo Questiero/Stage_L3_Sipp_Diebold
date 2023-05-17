@@ -17,7 +17,7 @@ class Xor(BinaryFormula):
     
     _symbol = "XOR"
     
-    def _simplify(self) -> Formula:
+    def _eliminate(self) -> Formula:
         '''
         Method returning the simplified form for the XOR operator, using only
         Not, And and Or.In this case, it's (a AND NOT b) OR (NOT a AND b).

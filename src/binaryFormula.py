@@ -28,7 +28,7 @@ class BinaryFormula(Formula):
         self.children = (formulaLeft, formulaRight)
 
     @abstractmethod
-    def _simplify(self) -> Formula:
+    def _eliminate(self) -> Formula:
         '''
         Method returning the simplified form for the binary operator, using only
         Not, And and Or.

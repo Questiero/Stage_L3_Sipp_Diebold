@@ -17,7 +17,7 @@ class Implication(BinaryFormula):
     
     _symbol = "->"
     
-    def _simplify(self) -> Formula:
+    def _eliminate(self) -> Formula:
         '''
         Method returning the simplified form for the implication operator, using only
         Not, And and Or.In this case, it's NOT a OR b
