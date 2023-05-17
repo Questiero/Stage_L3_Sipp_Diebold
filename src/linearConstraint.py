@@ -220,3 +220,15 @@ class LinearConstraint(Constraint):
     
     def clone(self) -> LinearConstraint:
         return LinearConstraint(str(self)[1:-1])
+    
+    def __eq__(self, o) -> bool:
+        
+        if o.__class__ != self.__class__:
+            return False
+        elif (o.variables != self.variables) | (o.operator != self.operator) | (o.bound != self.bound):
+            return False
+        else:
+            return True
+        
+    def __hash__(self):
+        return hash(str(self))

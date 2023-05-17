@@ -110,9 +110,31 @@ class Formula(ABC):
         '''
         pass
     
+    @abstractmethod
+    def toLessOrEqConstraint(self):
+        '''
+        Method used to transforming formula to anoter formula without equality or greater constraint
+
+        Returns
+        ------
+        res: Formula with only minus or equal constraint
+        
+        '''
+        pass
+        
     def clone(self) -> Formula:
         clone = self.__class__(self.children)
         return clone
+    
+    def __eq__(self, o) -> bool:
+    
+        if o.__class__ != self.__class__:
+            return False
+        else:
+            return self.children == o.children
+        
+    def __hash__(self):
+        return hash(frozenset(self.children))
     
     @abstractmethod
     def __str__(self):
@@ -129,19 +151,7 @@ class Formula(ABC):
     def __invert__(self):
         import notOperator
         return notOperator.Not(self)
-    
-    @abstractmethod
-    def toLessOrEqConstraint(self):
-        '''
-        Method used to transforming formula to anoter formula without equality or greater constraint
 
-        Returns
-        ------
-        res: Formula with only minus or equal constraint
-        
-        '''
-        pass
-        
     def __floordiv__(self, a):
         import equivalenceOperator
         return equivalenceOperator.Equivalence(self, a)
