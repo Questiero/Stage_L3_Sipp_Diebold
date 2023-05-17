@@ -87,7 +87,7 @@ class FormulaInterpreter:
         constraints = []
         i = 0
         for formula in [phi, mu]:
-            for lc in getAdherence(e):
+            for lc in formula.getAdherence(e):
                 for constraint in lc:
                     constraintP = []
                     for _ in range(0,(len(variables)) *i):
@@ -125,6 +125,6 @@ class FormulaInterpreter:
         obj = [0]*len(variables)*2
         for variable in variables: obj.append(Fraction(1,len(variables)-1))
 
-        res = self.solve(variables*3, obj, constraints)
+        res = self.MLOSolver.solve(variables*3, obj, constraints)
         return (self.findOneSolution(variables, res[1]), Fraction(res[2]*(len(variables)-1)))
          
