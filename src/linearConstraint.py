@@ -1,3 +1,5 @@
+from __future__ import annotations # used to type hint the class itself
+
 import constraint
 import variableManager
 import constraintOperator
@@ -155,7 +157,7 @@ class LinearConstraint(constraint.Constraint):
             2D list containing all the constraints of the adherence of the Formula,
             in Disjunctive Normal Form under Negation.
         '''
-        copyConstrainte = LinearConstraint(str(self)[1:-1])
+        copyConstrainte = self.clone()
 
         copyConstrainte.variables[var] = Fraction(1,1)
         res = [[copyConstrainte]]
@@ -215,3 +217,6 @@ class LinearConstraint(constraint.Constraint):
             res = And(formulaSet=set(res))
 
         return res
+    
+    def clone(self) -> LinearConstraint:
+        return LinearConstraint(str(self)[1:-1])

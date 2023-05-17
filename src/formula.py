@@ -110,9 +110,9 @@ class Formula(ABC):
         '''
         pass
     
-    def copy(self):
-        cop = self.__class__(self.children)
-        return cop
+    def clone(self) -> Formula:
+        clone = self.__class__(self.children)
+        return clone
     
     @abstractmethod
     def __str__(self):
