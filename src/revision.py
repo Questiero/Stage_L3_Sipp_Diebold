@@ -6,16 +6,20 @@ from orOperator import Or
 from andOperator import And
 from unaryFormula import UnaryFormula
 from nullaryFormula import NullaryFormula
+from constants import Constants
 
 class Revision:
-    _solver : MLOSolver
-    _distance : DistanceFunction
-    _interpreter : FormulaInterpreter
+    
+    __solver : MLOSolver
+    __distance : DistanceFunction
+    __interpreter : FormulaInterpreter
+    _onlyOneSolution: bool
 
-    def __init__(self, solverInit : MLOSolver, distance : DistanceFunction):
-        self._solver = solverInit
-        self._distance = distance 
-        self._interpreter = FormulaInterpreter(solverInit)
+    def __init__(self, solverInit : MLOSolver, distance : DistanceFunction, onlyOneSolution: bool = Constants.ONLY_ONE_SOLUTION):
+        self.__solver = solverInit
+        self.__distance = distance 
+        self.__interpreter = FormulaInterpreter(solverInit)
+        self._onlyOneSolution = onlyOneSolution
 
     def execute(self, phi : Formula, mu : Formula):
         phiDNF, muDNF = phi.toDNF(), mu.toDNF()
