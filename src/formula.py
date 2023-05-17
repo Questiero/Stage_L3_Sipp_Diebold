@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 
 # Typing only imports
 from variable import Variable
-from constraint import Constraint
+import constraint
 
 class Formula(ABC):
     '''
@@ -78,7 +78,7 @@ class Formula(ABC):
         pass
 
     @abstractmethod
-    def getAdherence(self, var : Variable) -> list[list[Constraint]]:
+    def getAdherence(self, var : Variable) -> list[list[constraint.Constraint]]:
         '''
         Returns a 2D list containing all the constraints of the adherence of 
         the Formula, in Disjunctive Normal Form.
@@ -89,14 +89,14 @@ class Formula(ABC):
 
         Returns
         -------
-        res: list of list of Constraint
+        res: list of list of constraint.Constraint
             2D list containing all the constraints of discute vraiment de l'implémentationthe adherence of the Formula,
             in Disjunctive Normal Form.
         '''
         pass
 
     @abstractmethod
-    def _getAdherenceNeg(self, var : Variable)  -> list[list[Constraint]]:
+    def _getAdherenceNeg(self, var : Variable)  -> list[list[constraint.Constraint]]:
         '''
         Protected method used in the algorithm to recursivly determine the
         constraints of the adherence of the Formula, used when a Negation is in play
@@ -104,7 +104,7 @@ class Formula(ABC):
 
         Returns
         -------
-        res: list of list of Constraint
+        res: list of list of constraint.Constraint
             2D list containing all the constraints of the adherence of the Formula,
             in Disjunctive Normal Form under Negation.
         '''

@@ -16,7 +16,10 @@ class Bottom(NullaryFormula):
         The symbol used to represent Bottom syntaxically.
     '''
     
-    symbol = "BOT"
+    _symbol = "BOT"
+    
+    def __init__(self):
+        raise NotImplementedError(self.__class__.__name__ + ' is not yet implemented') 
     
     def getVariables(self) -> set[Variable]:
         '''
@@ -45,7 +48,7 @@ class Bottom(NullaryFormula):
         
         return []
     
-    def _getAdherenceNeg(self) -> list(list(Constraint)):
+    def _getAdherenceNeg(self) -> list[list[Constraint]]:
         '''
         Protected method used in the algorithm to recursivly determine the
         constraints of the adherence of Bottom, used when a Negation is in play

@@ -17,6 +17,9 @@ class Top(NullaryFormula):
     '''
     
     _symbol = "TOP"
+     
+    def __init__(self):
+        raise NotImplementedError(self.__class__.__name__ + ' is not yet implemented') 
     
     def getVariables(self) -> set[Variable]:
         '''

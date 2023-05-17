@@ -64,7 +64,7 @@ class BinaryFormula(Formula):
             The current Formula in Disjunctive Normal Form.
         '''
         
-        return self._simplify().toDNF()
+        return self._eliminate().toDNF()
     
     def _toDNFNeg(self) -> Formula:
         '''
@@ -77,7 +77,7 @@ class BinaryFormula(Formula):
             The current Formula in Disjunctive Normal Form under Negation.
         '''
         
-        return self._simplify()._toDNFNeg()
+        return self._eliminate()._toDNFNeg()
     
     def getAdherence(self, var : Variable) -> list[list[Constraint]]:
         '''
