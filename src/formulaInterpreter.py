@@ -4,6 +4,8 @@ import realVariable
 import andOperator
 import constraintOperator
 from fractions import Fraction
+import linearConstraint
+import variable
 
 class FormulaInterpreter:
     def __init__(self, mloSolver : MLOSolver.MLOSolver) -> None:
@@ -58,10 +60,21 @@ class FormulaInterpreter:
         return False
 
     def findAllSolutions(self, x) -> tuple[float, formula.Formula]:
+        '''
+        
+        '''
         pass
 
-    def findOneSolution(self, x) -> tuple[float, formula.Formula]:
-        pass
+    def findOneSolution(self, variables : dict[variable.Variable], values : dict[float]) -> tuple[float, formula.Formula]:
+        '''
+        
+        
+        '''
+        resSet = set([])
+        for i in range(0,len(variables)):
+            if variables[i].name != "@":
+                resSet = resSet.union(set([linearConstraint.LinearConstraint(str(variables[i]) + " = " + str(Fraction(values[len(variables)+i])))]))
+        return andOperator.And(formulaSet=resSet)
 
     def optimizeCouple(self, phi : andOperator.And, mu : andOperator.And) -> tuple[float, formula.Formula]:
         '''
@@ -113,6 +126,5 @@ class FormulaInterpreter:
         for variable in variables: obj.append(Fraction(1,len(variables)-1))
 
         res = self.MLOSolver.solve(variables*3, obj, constraints)
-        res = (res[0], res[1], Fraction(res[2]*(len(variables)-1)))
-
+        return (self.findOneSolution(variables, res[1]), Fraction(res[2]*(len(variables)-1)))
          
