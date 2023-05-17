@@ -1,9 +1,9 @@
-import binaryFormula
+from binaryFormula import BinaryFormula
 
 # Typing only imports
-import formula
+from formula import Formula
 
-class Equivalence(binaryFormula.BinaryFormula):
+class Equivalence(BinaryFormula):
     '''
      Class representing the biconditional operator.
 
@@ -17,7 +17,7 @@ class Equivalence(binaryFormula.BinaryFormula):
     
     _symbol = "<->"
     
-    def _simplify(self) -> formula.Formula:
+    def _simplify(self) -> Formula:
         '''
         Method returning the simplified form for the biconditional operator,
         using only Not, And and Or.In this case, it's (a AND b) OR (NOT a AND NOT b).

@@ -1,5 +1,5 @@
-import distanceFunction
-import variableTupleDomaine
-class distanceFunctionOnNumericalTuple(distanceFunction.DistanceFunction):
-    def __init__(self, domaine : variableTupleDomaine.VariableTupleDomaine):
+from distanceFunction import DistanceFunction
+from variableTupleDomaine import VariableTupleDomaine
+class distanceFunctionOnNumericalTuple(DistanceFunction):
+    def __init__(self, domaine : VariableTupleDomaine):
         self._domaine = domaine

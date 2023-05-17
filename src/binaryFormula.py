@@ -1,12 +1,12 @@
-import formula
+from formula import Formula
 
 # Typing only imports
-import variable
-import constraint
+from variable import Variable
+from constraint import Constraint
 
 from abc import abstractmethod
 
-class BinaryFormula(formula.Formula):
+class BinaryFormula(Formula):
     '''
     Abstract class, representing a binary operator.
 
@@ -24,11 +24,11 @@ class BinaryFormula(formula.Formula):
     '''
         
     # formulas: tuple (Formula, Formula)
-    def __init__(self, formulaLeft: formula.Formula, formulaRight: formula.Formula):
+    def __init__(self, formulaLeft: Formula, formulaRight: Formula):
         self.children = (formulaLeft, formulaRight)
 
     @abstractmethod
-    def _simplify(self) -> formula.Formula:
+    def _simplify(self) -> Formula:
         '''
         Method returning the simplified form for the binary operator, using only
         Not, And and Or.
@@ -41,7 +41,7 @@ class BinaryFormula(formula.Formula):
         
         pass
     
-    def getVariables(self) -> set[variable.Variable]:
+    def getVariables(self) -> set[Variable]:
         '''
         Method recurcivly returning a set containing all the variables used in
         the Formula.
@@ -54,7 +54,7 @@ class BinaryFormula(formula.Formula):
         
         return self.children[0].getVariables().union(self.children[1].getVariables())
     
-    def toDNF(self) -> formula.Formula:
+    def toDNF(self) -> Formula:
         '''
         Method returning the current Formula in Disjunctive Normal Form.
 
@@ -66,7 +66,7 @@ class BinaryFormula(formula.Formula):
         
         return self._simplify().toDNF()
     
-    def _toDNFNeg(self) -> formula.Formula:
+    def _toDNFNeg(self) -> Formula:
         '''
         Protected method used in the algorithm to recursivly determine the
         Disjunctive Normal Form, used when a Negation is in play instead of toDNF().
@@ -79,7 +79,7 @@ class BinaryFormula(formula.Formula):
         
         return self._simplify()._toDNFNeg()
     
-    def getAdherence(self, var : variable.Variable) -> list[list[constraint.Constraint]]:
+    def getAdherence(self, var : Variable) -> list[list[Constraint]]:
         '''
         Returns a 2D list containing all the constraints of the adherence of 
         the Formula, in Disjunctive Normal Form.
@@ -96,7 +96,7 @@ class BinaryFormula(formula.Formula):
         '''
         return self._simplify().getAdherence(var)
 
-    def _getAdherenceNeg(self, var : variable.Variable)  -> list[list[constraint.Constraint]]:
+    def _getAdherenceNeg(self, var : Variable)  -> list[list[Constraint]]:
         '''
         Protected method used in the algorithm to recursivly determine the
         constraints of the adherence of the Formula, used when a Negation is in play

@@ -1,17 +1,17 @@
-import formula
-import MLOSolver
-import realVariable
-import andOperator
-import constraintOperator
+from formula import Formula
+from MLOSolver import MLOSolver
+from realVariable import RealVariable
+from andOperator import And
+from constraintOperator import ConstraintOperator
 from fractions import Fraction
-import linearConstraint
-import variable
+from linearConstraint import LinearConstraint
+from variable import Variable
 
 class FormulaInterpreter:
-    def __init__(self, mloSolver : MLOSolver.MLOSolver) -> None:
+    def __init__(self, mloSolver : MLOSolver) -> None:
         self.MLOSolver = mloSolver
 
-    def simplifyMLC(self, phi : formula.Formula):
+    def simplifyMLC(self, phi : Formula):
         '''
         Method used to simplify a conjonction of mix linears constraints
 
@@ -25,7 +25,7 @@ class FormulaInterpreter:
         '''
         return phi
 
-    def sat(self, phi : formula.Formula) -> bool:
+    def sat(self, phi : Formula) -> bool:
         '''
         Method used to verify the satisfiability of a formula
 
@@ -39,7 +39,7 @@ class FormulaInterpreter:
         
         '''
         variables = list(phi.getVariables())
-        e = realVariable.RealVariable("@")
+        e = RealVariable("@")
         variables.append(e)
 
         for lc in phi.getAdherence(e):
@@ -52,20 +52,20 @@ class FormulaInterpreter:
                     else:
                         constraintP.append(0)
                 constraints.append((constraintP, constraint.operator, constraint.bound))
-            res = self.MLOSolver.solve(variables, list(map(lambda v : -1 if v == e else 0, variables)), constraints)
+            res = self.solve(variables, list(map(lambda v : -1 if v == e else 0, variables)), constraints)
             if res[0] :
                 if res[1][variables.index(e)] != 0:
                     return True
             
         return False
 
-    def findAllSolutions(self, x) -> tuple[float, formula.Formula]:
+    def findAllSolutions(self, x) -> tuple[float, Formula]:
         '''
         
         '''
         pass
 
-    def findOneSolution(self, variables : dict[variable.Variable], values : dict[float]) -> tuple[float, formula.Formula]:
+    def findOneSolution(self, variables : dict[Variable], values : dict[float]) -> tuple[float, Formula]:
         '''
         
         
@@ -73,21 +73,21 @@ class FormulaInterpreter:
         resSet = set([])
         for i in range(0,len(variables)):
             if variables[i].name != "@":
-                resSet = resSet.union(set([linearConstraint.LinearConstraint(str(variables[i]) + " = " + str(Fraction(values[len(variables)+i])))]))
-        return andOperator.And(formulaSet=resSet)
+                resSet = resSet.union(set([LinearConstraint(str(variables[i]) + " = " + str(Fraction(values[len(variables)+i])))]))
+        return And(formulaSet=resSet)
 
-    def optimizeCouple(self, phi : andOperator.And, mu : andOperator.And) -> tuple[float, formula.Formula]:
+    def optimizeCouple(self, phi : And, mu : And) -> tuple[float, Formula]:
         '''
         TODO
         '''
-        variables = list(andOperator.And(phi,mu).getVariables())
-        e = realVariable.RealVariable("@")
+        variables = list(And(phi,mu).getVariables())
+        e = RealVariable("@")
         variables.append(e)
 
         constraints = []
         i = 0
         for formula in [phi, mu]:
-            for lc in formula.getAdherence(e):
+            for lc in getAdherence(e):
                 for constraint in lc:
                     constraintP = []
                     for _ in range(0,(len(variables)) *i):
@@ -119,12 +119,12 @@ class FormulaInterpreter:
                 else:
                     constraintP.append(0)
                     constraintN.append(0)
-            constraints.append((constraintP, constraintOperator.ConstraintOperator.LEQ, 0))
-            constraints.append((constraintN, constraintOperator.ConstraintOperator.LEQ, 0))
+            constraints.append((constraintP, ConstraintOperator.LEQ, 0))
+            constraints.append((constraintN, ConstraintOperator.LEQ, 0))
 
         obj = [0]*len(variables)*2
         for variable in variables: obj.append(Fraction(1,len(variables)-1))
 
-        res = self.MLOSolver.solve(variables*3, obj, constraints)
+        res = self.solve(variables*3, obj, constraints)
         return (self.findOneSolution(variables, res[1]), Fraction(res[2]*(len(variables)-1)))
          

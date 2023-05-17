@@ -1,9 +1,9 @@
 from __future__ import annotations # used to type hint the class itself
 
-import variable
-import variableManager
+from variable import Variable
+from variableManager import VariableManager
 
-class RealVariable(variable.Variable):
+class RealVariable(Variable):
     '''
     RealVariable class, representing a Variable defined in R.
 
@@ -15,7 +15,7 @@ class RealVariable(variable.Variable):
     
     def declare(*lname: str) -> RealVariable:
         '''
-        Function used to declare a new variable.
+        Function used to declare a new 
         If this variable already exist and have another type compared to the new declaraton,
         This function will raise an Exception.
 
@@ -27,9 +27,9 @@ class RealVariable(variable.Variable):
         Returns
         -------
         Variable: variable
-            The defined variable.
+            The defined 
         '''
         for name in lname:
-            variableManager.VariableManager.verify(name, RealVariable)
+            VariableManager.verify(name, RealVariable)
         for name in lname:
-            variableManager.VariableManager.add(RealVariable(name))
+            VariableManager.add(RealVariable(name))

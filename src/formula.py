@@ -3,8 +3,8 @@ from __future__ import annotations # used to type hint the class itself
 from abc import ABC, abstractmethod
 
 # Typing only imports
-import variable
-import constraint
+from variable import Variable
+from constraint import Constraint
 
 class Formula(ABC):
     '''
@@ -40,7 +40,7 @@ class Formula(ABC):
         pass
     
     @abstractmethod
-    def getVariables(self) -> set[variable.Variable]:
+    def getVariables(self) -> set[Variable]:
         '''
         Method recurcivly returning a set containing all the variables used in
         the Formula.
@@ -78,7 +78,7 @@ class Formula(ABC):
         pass
 
     @abstractmethod
-    def getAdherence(self, var : variable.Variable) -> list[list[constraint.Constraint]]:
+    def getAdherence(self, var : Variable) -> list[list[Constraint]]:
         '''
         Returns a 2D list containing all the constraints of the adherence of 
         the Formula, in Disjunctive Normal Form.
@@ -96,7 +96,7 @@ class Formula(ABC):
         pass
 
     @abstractmethod
-    def _getAdherenceNeg(self, var : variable.Variable)  -> list[list[constraint.Constraint]]:
+    def _getAdherenceNeg(self, var : Variable)  -> list[list[Constraint]]:
         '''
         Protected method used in the algorithm to recursivly determine the
         constraints of the adherence of the Formula, used when a Negation is in play

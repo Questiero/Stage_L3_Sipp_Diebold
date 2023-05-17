@@ -1,9 +1,9 @@
-import formula
+from formula import Formula
 
 # Typing only imports
-import variable
+from variable import Variable
 
-class NaryFormula(formula.Formula):
+class NaryFormula(Formula):
     '''
     Abstract class, representing an operator with an arity equal or greater
     than 2 in PCMLC as a syntax tree.
@@ -22,7 +22,7 @@ class NaryFormula(formula.Formula):
         The symbol used to represent the operator syntaxically.
     '''
         
-    def __init__(self, *formulas: formula.Formula, formulaSet: set[formula.Formula]=None):
+    def __init__(self, *formulas: Formula, formulaSet: set[Formula]=None):
         
         if formulaSet is None:
             self.children = set(formulas)
@@ -42,7 +42,7 @@ class NaryFormula(formula.Formula):
         else:
             raise Exception("nary operators need at least one child")
         
-    def getVariables(self) -> set[variable.Variable]:
+    def getVariables(self) -> set[Variable]:
         '''
         Method recurcivly returning a set containing all the variables used in
         the n-ary Formula's children.

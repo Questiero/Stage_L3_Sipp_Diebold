@@ -1,12 +1,12 @@
-import naryFormula
+from naryFormula import NaryFormula
 # local import of And
 
 # Typing only imports
-import formula
-import constraint
-import variable
+from formula import Formula
+from constraint import Constraint
+from variable import Variable
 
-class Or(naryFormula.NaryFormula):
+class Or(NaryFormula):
     '''
     Class representing the Or operator as a relation with an arity equal or
     greater than 2 in PCMLC as a syntax tree.
@@ -26,7 +26,7 @@ class Or(naryFormula.NaryFormula):
     
     _symbol = "OR"
     
-    def toDNF(self) -> formula.Formula:
+    def toDNF(self) -> Formula:
         '''
         Method returning the current Formula in Disjunctive Normal Form.
 
@@ -38,7 +38,7 @@ class Or(naryFormula.NaryFormula):
         
         return Or(formulaSet = {child.toDNF() for child in self.children})
     
-    def _toDNFNeg(self) -> formula.Formula:
+    def _toDNFNeg(self) -> Formula:
         '''
         Protected method used in the algorithm to recursivly determine the
         Disjunctive Normal Form, used when a Negation is in play instead of toDNF().
@@ -80,7 +80,7 @@ class Or(naryFormula.NaryFormula):
             
         return Or(formulaSet = set(dnfFormula))
     
-    def getAdherence(self, var : variable.Variable) -> list[list[constraint.Constraint]]:
+    def getAdherence(self, var : Variable) -> list[list[Constraint]]:
         '''
         Returns a 2D list containing all the constraints of the adherence of 
         the Formula, in Disjunctive Normal Form.
@@ -104,7 +104,7 @@ class Or(naryFormula.NaryFormula):
                 
         return res
     
-    def _getAdherenceNeg(self, var : variable.Variable)  -> list[list[constraint.Constraint]]:
+    def _getAdherenceNeg(self, var : Variable)  -> list[list[Constraint]]:
         '''
         Protected method used in the algorithm to recursivly determine the
         constraints of the adherence of the Formula, used when a Negation is in play

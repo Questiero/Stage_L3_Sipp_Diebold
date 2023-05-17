@@ -1,9 +1,9 @@
-import binaryFormula
+from binaryFormula import BinaryFormula
 
 # Typing only imports
-import formula
+from formula import Formula
 
-class Xor(binaryFormula.BinaryFormula):
+class Xor(BinaryFormula):
     '''
      Class representing the XOR operator.
 
@@ -17,7 +17,7 @@ class Xor(binaryFormula.BinaryFormula):
     
     _symbol = "XOR"
     
-    def _simplify(self) -> formula.Formula:
+    def _simplify(self) -> Formula:
         '''
         Method returning the simplified form for the XOR operator, using only
         Not, And and Or.In this case, it's (a AND NOT b) OR (NOT a AND b).

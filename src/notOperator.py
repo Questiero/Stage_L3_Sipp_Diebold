@@ -1,11 +1,11 @@
-import unaryFormula
+from unaryFormula import UnaryFormula
 
 # Typing only imports
-import formula
-import constraint
-import variable
+from formula import Formula
+from constraint import Constraint
+from variable import Variable
 
-class Not(unaryFormula.UnaryFormula):
+class Not(UnaryFormula):
     '''
     Class representing the Not operator.
 
@@ -19,7 +19,7 @@ class Not(unaryFormula.UnaryFormula):
     
     _symbol = "NOT"
     
-    def toDNF(self) -> formula.Formula:
+    def toDNF(self) -> Formula:
         '''
         Method returning the current Formula in Disjunctive Normal Form.
 
@@ -31,7 +31,7 @@ class Not(unaryFormula.UnaryFormula):
         
         return self.children._toDNFNeg()
     
-    def _toDNFNeg(self) -> formula.Formula:
+    def _toDNFNeg(self) -> Formula:
         '''
         Protected method used in the algorithm to recursivly determine the
         Disjunctive Normal Form, used when a Negation is in play instead of toDNF().
@@ -44,7 +44,7 @@ class Not(unaryFormula.UnaryFormula):
         
         return self.children.toDNF()
     
-    def getAdherence(self, var : variable.Variable) -> list[list[constraint.Constraint]]:
+    def getAdherence(self, var : Variable) -> list[list[Constraint]]:
         '''
         Returns a 2D list containing all the constraints of the adherence of 
         the Formula, in Disjunctive Normal Form.
@@ -62,7 +62,7 @@ class Not(unaryFormula.UnaryFormula):
         
         return self.children._getAdherenceNeg(var)
     
-    def _getAdherenceNeg(self, var : variable.Variable)  -> list[list[constraint.Constraint]]:
+    def _getAdherenceNeg(self, var : Variable)  -> list[list[Constraint]]:
         '''
         Protected method used in the algorithm to recursivly determine the
         constraints of the adherence of the Formula, used when a Negation is in play

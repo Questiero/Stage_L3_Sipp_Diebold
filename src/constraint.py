@@ -1,6 +1,6 @@
-import nullaryFormula
+from nullaryFormula import NullaryFormula
 
-class Constraint(nullaryFormula.NullaryFormula):
+class Constraint(NullaryFormula):
     '''
     Abstract Constraint class, representing a Constraint in PCMLC.
 

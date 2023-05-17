@@ -1,9 +1,9 @@
 from __future__ import annotations # used to type hint the class itself
 
-import variable
-import variableManager
+from variable import Variable
+from variableManager import VariableManager
 
-class IntegerVariable(variable.Variable):
+class IntegerVariable(Variable):
     '''
     IntegerVariable class, representing a Variable defined in N.
 
@@ -15,7 +15,7 @@ class IntegerVariable(variable.Variable):
     
     def declare(*lname: str) -> None:
         '''
-        Function used to declare a new variable.
+        Function used to declare a new 
         If this variable already exist and have another type compared to the new declaraton,
         This function will raise an Exception.
 
@@ -25,6 +25,6 @@ class IntegerVariable(variable.Variable):
             The name of the Variable to be declared.
         '''
         for name in lname:
-            variableManager.VariableManager.verify(name, IntegerVariable)
+            VariableManager.verify(name, IntegerVariable)
         for name in lname:
-            variableManager.VariableManager.add(IntegerVariable(name))
+            VariableManager.add(IntegerVariable(name))

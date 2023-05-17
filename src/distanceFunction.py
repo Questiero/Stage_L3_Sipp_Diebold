@@ -1,9 +1,9 @@
 from abc import ABC, abstractmethod
-import domain
+from domain import Domain
 
 class DistanceFunction(ABC):
     
-    _domaine : domain.Domain
+    _domaine : Domain
     
     @abstractmethod
     def dist(x,y):

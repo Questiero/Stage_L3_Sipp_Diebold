@@ -1,9 +1,9 @@
-import formula
+from formula import Formula
 
 # Typing only imports
-import variable
+from variable import Variable
 
-class UnaryFormula(formula.Formula):
+class UnaryFormula(Formula):
     '''
     Abstract class, representing a unary operator.
 
@@ -16,10 +16,10 @@ class UnaryFormula(formula.Formula):
     '''
 
     # formula: Formula
-    def __init__(self, formulaInit: formula.Formula):
+    def __init__(self, formulaInit: Formula):
         self.children = formulaInit
         
-    def getVariables(self) -> set[variable.Variable]:
+    def getVariables(self) -> set[Variable]:
         '''
         Method recurcivly returning a set containing all the variables used in
         the Formula.

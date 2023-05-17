@@ -1,10 +1,10 @@
-import nullaryFormula
+from nullaryFormula import NullaryFormula
 
 # Typing only imports
-import variable
-import constraint
+from variable import Variable
+from constraint import Constraint
 
-class Top(nullaryFormula.NullaryFormula):
+class Top(NullaryFormula):
     '''
     Class representing the Top constant.
 
@@ -18,7 +18,7 @@ class Top(nullaryFormula.NullaryFormula):
     
     _symbol = "TOP"
     
-    def getVariables(self) -> set[variable.Variable]:
+    def getVariables(self) -> set[Variable]:
         '''
         Method recurcivly returning a set containing all the variables used in
         Top, so None.
@@ -31,7 +31,7 @@ class Top(nullaryFormula.NullaryFormula):
         
         return None
     
-    def getAdherence(self) ->list[list[constraint.Constraint]]:
+    def getAdherence(self) ->list[list[Constraint]]:
         '''
         Returns a 2D list containing all the constraints of the adherence of 
         Top, in Disjunctive Normal Form. In this case, an empty list.
@@ -45,7 +45,7 @@ class Top(nullaryFormula.NullaryFormula):
         
         return []
     
-    def _getAdherenceNeg(self) -> list[list[constraint.Constraint]]:
+    def _getAdherenceNeg(self) -> list[list[Constraint]]:
         '''
         Protected method used in the algorithm to recursivly determine the
         constraints of the adherence of Top, used when a Negation is in play

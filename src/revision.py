@@ -1,27 +1,27 @@
-import formula
-import MLOSolver
-import distanceFunction
-import formulaInterpreter
-import orOperator
-import andOperator
-import unaryFormula
-import nullaryFormula
+from formula import Formula
+from MLOSolver import MLOSolver
+from distanceFunction import DistanceFunction
+from formulaInterpreter import FormulaInterpreter
+from orOperator import Or
+from andOperator import And
+from unaryFormula import UnaryFormula
+from nullaryFormula import NullaryFormula
 
 class Revision:
-    _solver : MLOSolver.MLOSolver
-    _distance : distanceFunction.DistanceFunction
-    _interpreter : formulaInterpreter.FormulaInterpreter
+    _solver : MLOSolver
+    _distance : DistanceFunction
+    _interpreter : FormulaInterpreter
 
-    def __init__(self, solverInit : MLOSolver.MLOSolver, distance : distanceFunction.DistanceFunction):
+    def __init__(self, solverInit : MLOSolver, distance : DistanceFunction):
         self._solver = solverInit
         self._distance = distance 
-        self._interpreter = formulaInterpreter.FormulaInterpreter(solverInit)
+        self._interpreter = FormulaInterpreter(solverInit)
 
-    def execute(self, phi : formula.Formula, mu : formula.Formula):
+    def execute(self, phi : Formula, mu : Formula):
         phiDNF, muDNF = phi.toDNF(), mu.toDNF()
         return self.__executeDNF(self.__convertExplicit(phiDNF), self.__convertExplicit(muDNF))
         
-    def __executeDNF(self, phi: formula.Formula, mu: formula.Formula):
+    def __executeDNF(self, phi: Formula, mu: Formula):
         
         setRes = set()
         
@@ -29,25 +29,25 @@ class Revision:
             for miniMu in mu.children:
                 setRes.add(self.__executeLiteral(miniPhi, miniMu))
                 
-        return orOperator.Or(formulaSet = setRes)
+        return Or(formulaSet = setRes)
     
-    def __executeLiteral(self, phi: formula.Formula, mu: formula.Formula):
+    def __executeLiteral(self, phi: Formula, mu: Formula):
         pass
     
-    def __executeConstraint(self, phi: formula.Formula, mu: formula.Formula):
+    def __executeConstraint(self, phi: Formula, mu: Formula):
         pass
     
-    def __convertExplicit(self, phi: formula.Formula):
+    def __convertExplicit(self, phi: Formula):
         
-        if isinstance(phi, andOperator.And):
-            return orOperator.Or(phi)
-        elif isinstance(phi, unaryFormula.UnaryFormula) | isinstance(phi, nullaryFormula.NullaryFormula):
-            return orOperator.Or(andOperator.And(phi))
+        if isinstance(phi, And):
+            return Or(phi)
+        elif isinstance(phi, UnaryFormula) | isinstance(phi, NullaryFormula):
+            return Or(And(phi))
         else:
             orSet = set()
             for miniPhi in phi.children:
-                if isinstance(miniPhi, andOperator.And):
+                if isinstance(miniPhi, And):
                     orSet.add(miniPhi)
                 else:
-                    orSet.add(andOperator.And(miniPhi))
-            return orOperator.Or(formulaSet = orSet)
+                    orSet.add(And(miniPhi))
+            return Or(formulaSet = orSet)

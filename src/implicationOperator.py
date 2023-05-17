@@ -1,9 +1,9 @@
-import binaryFormula
+from binaryFormula import BinaryFormula
 
 # Typing only imports
-import formula
+from formula import Formula
 
-class Implication(binaryFormula.BinaryFormula):
+class Implication(BinaryFormula):
     '''
      Class representing the implication operator.
 
@@ -17,7 +17,7 @@ class Implication(binaryFormula.BinaryFormula):
     
     _symbol = "->"
     
-    def _simplify(self) -> formula.Formula:
+    def _simplify(self) -> Formula:
         '''
         Method returning the simplified form for the implication operator, using only
         Not, And and Or.In this case, it's NOT a OR b

@@ -1,17 +1,17 @@
 from __future__ import annotations # used to type hint the class itself
 
-import constraint
-import variableManager
-import constraintOperator
+from constraint import Constraint
+from variableManager import VariableManager
+from constraintOperator import ConstraintOperator
 
 from fractions import Fraction
 
 import re
 
 # Typing only imports
-import variable
+from variable import Variable
 
-class LinearConstraint(constraint.Constraint):
+class LinearConstraint(Constraint):
     '''
     Abstract Constraint class, representing a Constraint in PCMLC.
 
@@ -49,8 +49,8 @@ class LinearConstraint(constraint.Constraint):
         have any, it's None.
     '''
     
-    variables: dict[variable.Variable, Fraction]
-    operator: constraintOperator.ConstraintOperator
+    variables: dict[Variable, Fraction]
+    operator: ConstraintOperator
     bound: Fraction
     
     def __init__(self, string: str):
@@ -68,13 +68,13 @@ class LinearConstraint(constraint.Constraint):
         #rule 3, only accepted operators
         if string.find("<=") != -1:
             leftRightParts = string.split("<=")
-            self.operator = constraintOperator.ConstraintOperator.LEQ
+            self.operator = ConstraintOperator.LEQ
         elif string.find(">=") != -1:
             leftRightParts = string.split(">=")
-            self.operator = constraintOperator.ConstraintOperator.GEQ
+            self.operator = ConstraintOperator.GEQ
         elif string.find("=") != -1:
             leftRightParts = string.split("=")
-            self.operator = constraintOperator.ConstraintOperator.EQ
+            self.operator = ConstraintOperator.EQ
         else:
             raise SyntaxError("Operator not recognized")
 
@@ -96,22 +96,22 @@ class LinearConstraint(constraint.Constraint):
             
             if split.find("*") != -1:
                 (coefString, varName) = split.split("*")
-                var = variableManager.VariableManager.get(varName)
+                var = VariableManager.get(varName)
                 coef = Fraction(coefString)
             else:
                 if split[0] == "-":
                     coef = Fraction("-1")
-                    var = variableManager.VariableManager.get(split[1:])
+                    var = VariableManager.get(split[1:])
                 else:
                     coef = Fraction("1")
-                    var = variableManager.VariableManager.get(split)
+                    var = VariableManager.get(split)
             
             if var in self.variables:
                 raise ValueError(f"Duplicate variable {var._name} found")
             else:
                 self.variables[var] = coef
     
-    def getVariables(self) -> set[variable.Variable]:
+    def getVariables(self) -> set[Variable]:
         '''
         Method recurcivly returning a set containing all the variables used in
         the Formula.
@@ -124,7 +124,7 @@ class LinearConstraint(constraint.Constraint):
         
         return self.variables.keys()
     
-    def getAdherence(self, var : variable.Variable) -> list[list[constraint.Constraint]]:
+    def getAdherence(self, var : Variable) -> list[list[Constraint]]:
         '''
         Returns a 2D list containing all the constraints of the adherence of 
         the Formula, in Disjunctive Normal Form.
@@ -141,7 +141,7 @@ class LinearConstraint(constraint.Constraint):
         '''
         return [[self]]
 
-    def _getAdherenceNeg(self, var : variable.Variable)  -> list[list[constraint.Constraint]]:
+    def _getAdherenceNeg(self, var : Variable)  -> list[list[Constraint]]:
         '''
         Protected method used in the algorithm to recursivly determine the
         constraints of the adherence of the Formula, used when a Negation is in play
@@ -175,11 +175,11 @@ class LinearConstraint(constraint.Constraint):
             if not variable in self.variables: tabVar.append(0)
             else: tabVar.append(self.variables[variable])
 
-        if(op == constraintOperator.ConstraintOperator.GEQ):
+        if(op == ConstraintOperator.GEQ):
             for i in range(0, len(tabVar)-1):
                 tabVar[i] *= -1
             bound *= -1
-            op = constraintOperator.ConstraintOperator.LEQ
+            op = ConstraintOperator.LEQ
         
         return (tabVar, op, bound)
     
@@ -204,16 +204,16 @@ class LinearConstraint(constraint.Constraint):
         from andOperator import And
         res = LinearConstraint(str(self)[1:-1])
 
-        if self.operator == constraintOperator.ConstraintOperator.GEQ :
+        if self.operator == ConstraintOperator.GEQ :
             for variable in res.variables.keys():
                 res.variables[variable] *= -1
             res.bound *= -1
-            res.operator = constraintOperator.ConstraintOperator.LEQ
-        elif self.operator == constraintOperator.ConstraintOperator.EQ:
+            res.operator = ConstraintOperator.LEQ
+        elif self.operator == ConstraintOperator.EQ:
             res = [LinearConstraint(str(self)[1:-1])]
-            res[0].operator = constraintOperator.ConstraintOperator.GEQ
+            res[0].operator = ConstraintOperator.GEQ
             res.append(res[0].toLessOrEqConstraint())
-            res[0].operator = constraintOperator.ConstraintOperator.LEQ
+            res[0].operator = ConstraintOperator.LEQ
             res = And(formulaSet=set(res))
 
         return res

@@ -1,4 +1,4 @@
-import variable
+from variable import Variable
 import re
 
 class VariableManager:
@@ -37,7 +37,7 @@ class VariableManager:
         if name in __class__.instance and cls !=  __class__.instance[name].__class__: raise TypeError(f"{name} is already define with another type.")
 
     @staticmethod
-    def add(obj: variable.Variable):
+    def add(obj: Variable):
         '''
         Static method to add a Variable to the VariableManager.
     
@@ -52,13 +52,13 @@ class VariableManager:
             If the Variable is not a Variable, or already defined with another Type.
         '''
         VariableManager.verify(obj.name, obj.__class__)
-        if(isinstance(obj, variable.Variable)):
+        if(isinstance(obj, Variable)):
             __class__.instance[obj.name] = obj
         else:
             raise TypeError(f"{obj} is not a Variable.")
     
     @classmethod
-    def get(cls, name : str) -> variable.Variable:
+    def get(cls, name : str) -> Variable:
         '''
         Static method to get a Variable to the VariableManager.
     
@@ -75,7 +75,7 @@ class VariableManager:
         Returns
         -------
         Variable: variable
-            The defined variable.
+            The defined 
 
         '''
         

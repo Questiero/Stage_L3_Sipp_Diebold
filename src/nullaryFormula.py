@@ -1,7 +1,7 @@
-import formula
+from formula import Formula
 #local import of Not
 
-class NullaryFormula(formula.Formula):
+class NullaryFormula(Formula):
     '''
     Abstract class, representing a Node with an arity of 0, i.e. without 
     any children.
@@ -16,7 +16,7 @@ class NullaryFormula(formula.Formula):
     
     children = None
     
-    def toDNF(self) -> formula.Formula:
+    def toDNF(self) -> Formula:
         '''
         Method returning the current Formula in Disjunctive Normal Form.
         Since the arity is null, returns self.
@@ -30,7 +30,7 @@ class NullaryFormula(formula.Formula):
         
         return self
     
-    def _toDNFNeg(self) -> formula.Formula:
+    def _toDNFNeg(self) -> Formula:
         '''
         Protected method used in the algorithm to recursivly determine the
         Disjunctive Normal Form, used when a Negation is in play instead of toDNF().
