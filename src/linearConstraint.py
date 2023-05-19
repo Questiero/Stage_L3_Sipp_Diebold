@@ -221,6 +221,16 @@ class LinearConstraint(Constraint):
     def clone(self) -> LinearConstraint:
         return LinearConstraint(str(self)[1:-1])
     
+    def copyNeg(self) -> LinearConstraint:
+        
+        copyNeg = self.clone()
+
+        for key in copyNeg.variables:
+            copyNeg.variables[key] = -copyNeg.variables[key]
+        copyNeg.bound = -copyNeg.bound
+                
+        return copyNeg
+    
     def __eq__(self, o) -> bool:
         
         if o.__class__ != self.__class__:

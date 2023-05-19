@@ -6,6 +6,7 @@ from orOperator import Or
 from andOperator import And
 from unaryFormula import UnaryFormula
 from nullaryFormula import NullaryFormula
+from notOperator import Not
 from constants import Constants
 from fractions import Fraction
 
@@ -23,7 +24,7 @@ class Revision:
         self._onlyOneSolution = onlyOneSolution
 
     def execute(self, phi : Formula, mu : Formula) -> Formula:
-        phiDNF, muDNF = phi.toDNF(), mu.toDNF()
+        phiDNF, muDNF = phi.toDNF().toLessOrEqConstraint(), mu.toDNF().toLessOrEqConstraint()
         return self.__executeDNF(self.__convertExplicit(phiDNF), self.__convertExplicit(muDNF))
         
     def __executeDNF(self, phi: Formula, mu: Formula) -> Formula:
@@ -53,8 +54,11 @@ class Revision:
         if((not self.__interpreter.sat(phi)) or (not self.__interpreter.sat(mu))):
             return (Fraction("+inf"), mu) # +inf ça marche ? convention -1 ? Nouvelle classe/type ?
         
+        # second step: find dStar
+        dStar = self.__interpreter.optimizeCouple(self.__removeNot(phi), self.__removeNot(mu))[0]
         
-            
+        # third step: lambdaEpsilon
+        pass
     
     def __executeConstraint(self, phi: Formula, mu: Formula) -> tuple[Fraction, Fraction]:
         return self.__interpreter.optimizeCouple(phi, mu)
@@ -73,3 +77,21 @@ class Revision:
                 else:
                     orSet.add(And(miniPhi))
             return Or(formulaSet = orSet)
+        
+    def __removeNot(self, phi: Formula):
+        
+        orSet = set()
+        
+        for orChild in phi.children:
+            
+            andSet = set()
+            
+            for andChild in orChild:
+                if isinstance(andChild, Not):
+                    andSet.add(andChild.copyNeg())
+                else:
+                    andSet.add(andChild)
+                
+            orSet.add(And(formulaSet = andSet))
+            
+        return Or(formulaSet = orSet)
