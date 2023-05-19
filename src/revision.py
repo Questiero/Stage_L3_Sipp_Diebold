@@ -48,10 +48,16 @@ class Revision:
         return Or(formulaSet = setRes)
     
     def __executeLiteral(self, phi: Formula, mu: Formula) -> tuple[Fraction, Fraction]:
-        pass
+        
+        # first step: check if phi and mu are coherent
+        if((not self.__interpreter.sat(phi)) or (not self.__interpreter.sat(mu))):
+            return (Fraction("+inf"), mu) # +inf ça marche ? convention -1 ? Nouvelle classe/type ?
+        
+        
+            
     
     def __executeConstraint(self, phi: Formula, mu: Formula) -> tuple[Fraction, Fraction]:
-        pass
+        return self.__interpreter.optimizeCouple(phi, mu)
     
     def __convertExplicit(self, phi: Formula):
         
