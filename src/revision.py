@@ -7,6 +7,7 @@ from andOperator import And
 from unaryFormula import UnaryFormula
 from nullaryFormula import NullaryFormula
 from constants import Constants
+from fractions import Fraction
 
 class Revision:
     
@@ -21,24 +22,35 @@ class Revision:
         self.__interpreter = FormulaInterpreter(solverInit)
         self._onlyOneSolution = onlyOneSolution
 
-    def execute(self, phi : Formula, mu : Formula):
+    def execute(self, phi : Formula, mu : Formula) -> Formula:
         phiDNF, muDNF = phi.toDNF(), mu.toDNF()
         return self.__executeDNF(self.__convertExplicit(phiDNF), self.__convertExplicit(muDNF))
         
-    def __executeDNF(self, phi: Formula, mu: Formula):
+    def __executeDNF(self, phi: Formula, mu: Formula) -> Formula:
         
         setRes = set()
+        disRes = None
         
         for miniPhi in phi.children:
             for miniMu in mu.children:
-                setRes.add(self.__executeLiteral(miniPhi, miniMu))
+                
+                lit = self.__executeLiteral(phi, mu)
+                
+                if (disRes is None):
+                    disRes = lit[0]
+                    setRes.add(lit[1])
+                elif (disRes == lit[0]):
+                    setRes.add(lit[1])
+                elif (disRes > lit[0]):
+                    disRes = lit[0]
+                    setRes = {lit[1]}
                 
         return Or(formulaSet = setRes)
     
-    def __executeLiteral(self, phi: Formula, mu: Formula):
+    def __executeLiteral(self, phi: Formula, mu: Formula) -> tuple[Fraction, Fraction]:
         pass
     
-    def __executeConstraint(self, phi: Formula, mu: Formula):
+    def __executeConstraint(self, phi: Formula, mu: Formula) -> tuple[Fraction, Fraction]:
         pass
     
     def __convertExplicit(self, phi: Formula):
