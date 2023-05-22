@@ -95,20 +95,14 @@ class Revision:
                     orSet.add(And(miniPhi))
             return Or(formulaSet = orSet)
         
-    def __removeNot(self, phi: Formula):
+    def __removeNot(self, phi: And):
         
-        orSet = set()
+        andSet = set()
         
-        for orChild in phi.children:
+        for andChild in phi.children:
+            if isinstance(andChild, Not):
+                andSet.add(andChild.copyNegLitteral())
+            else:
+                andSet.add(andChild)
             
-            andSet = set()
-            
-            for andChild in orChild.children:
-                if isinstance(andChild, Not):
-                    andSet.add(andChild.copyNegLitteral())
-                else:
-                    andSet.add(andChild)
-                
-            orSet.add(And(formulaSet = andSet))
-            
-        return Or(formulaSet = orSet)
+        return And(formulaSet = andSet)
