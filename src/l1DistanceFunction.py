@@ -1,8 +1,8 @@
-from distanceFunctionOnNumericalTuple import DistanceFunctionOnNumericalTuple
+from distanceFunctionOnNumericalTuple import distanceFunctionOnNumericalTuple
 
 from fractions import Fraction
 
-class l1DistanceFunction(DistanceFunctionOnNumericalTuple):
+class l1DistanceFunction(distanceFunctionOnNumericalTuple):
     def __init__(self, *w : Fraction):
         self._fractions = w
     def dist(self, x : tuple, y :tuple):

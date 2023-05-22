@@ -6,10 +6,13 @@ from constraintOperator import ConstraintOperator
 from fractions import Fraction
 from linearConstraint import LinearConstraint
 from variable import Variable
+from distanceFunction import DistanceFunction
 
 class FormulaInterpreter:
-    def __init__(self, mloSolver : MLOSolver) -> None:
-        self.MLOSolver = mloSolver
+    def __init__(self, mloSolver : MLOSolver, distanceFunction : DistanceFunction, onlyOneSolution : bool) -> None:
+        self.__MLOSolver = mloSolver
+        self.__distanceFunction = distanceFunction
+        self.__onlyOneSolution = onlyOneSolution
 
     def simplifyMLC(self, phi : Formula):
         '''
@@ -52,7 +55,7 @@ class FormulaInterpreter:
                     else:
                         constraintP.append(0)
                 constraints.append((constraintP, constraint.operator, constraint.bound))
-            res = self.solve(variables, list(map(lambda v : -1 if v == e else 0, variables)), constraints)
+            res = self.__MLOSolver.solve(variables, list(map(lambda v : -1 if v == e else 0, variables)), constraints)
             if res[0] :
                 if res[1][variables.index(e)] != 0:
                     return True
@@ -125,6 +128,6 @@ class FormulaInterpreter:
         obj = [0]*len(variables)*2
         for variable in variables: obj.append(Fraction(1,1))
 
-        res = self.MLOSolver.solve(variables*3, obj, constraints)
+        res = self.__MLOSolver.solve(variables*3, obj, constraints)
         return (self.findOneSolution(variables, res[1]), Fraction(res[2]))
          

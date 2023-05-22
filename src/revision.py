@@ -21,8 +21,7 @@ class Revision:
     def __init__(self, solverInit : MLOSolver, distance : DistanceFunction, onlyOneSolution: bool = Constants.ONLY_ONE_SOLUTION):
         self.__solver = solverInit
         self.__distance = distance 
-        self.__interpreter = FormulaInterpreter(solverInit)
-        # self.__interpreter = FormulaInterpreter(solverInit, distance, onlyOneSolution)
+        self.__interpreter = FormulaInterpreter(solverInit, distance, onlyOneSolution)
         self._onlyOneSolution = onlyOneSolution
 
     def execute(self, phi : Formula, mu : Formula) -> Formula:
