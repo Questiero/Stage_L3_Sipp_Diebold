@@ -102,7 +102,7 @@ class Revision:
             
             andSet = set()
             
-            for andChild in orChild:
+            for andChild in orChild.children:
                 if isinstance(andChild, Not):
                     andSet.add(andChild.copyNeg())
                 else:
