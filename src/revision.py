@@ -56,7 +56,8 @@ class Revision:
             return (None, mu) # None = inf
         
         # second step: find dStar
-        dStar = self.__executeConstraint(self.__removeNot(phi), self.__removeNot(mu))[0]
+        # just for test
+        dStar, psiPrime = self.__executeConstraint(self.__removeNot(phi), self.__removeNot(mu))
         
         # third step: lambdaEpsilon
         epsilon = self.__distance._epsilon
@@ -66,13 +67,13 @@ class Revision:
             lambdaEpsilon = epsilon * math.ceil(dStar / epsilon)
             
         # fourth step: find psiPrime
-        psiPrime = None
+        #psiPrime = None
     
         # fifth step
         if dStar % epsilon != 0:
-            return (lambdaEpsilon, psiPrime + mu)
-        elif self.__interpreter.sat(psiPrime + mu):
-            return (dStar, psiPrime + mu)
+            return (lambdaEpsilon, psiPrime & mu)
+        elif self.__interpreter.sat(psiPrime & mu):
+            return (dStar, psiPrime & mu)
         else:
             pass
     
