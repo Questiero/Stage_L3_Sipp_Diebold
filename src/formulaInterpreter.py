@@ -123,8 +123,8 @@ class FormulaInterpreter:
             constraints.append((constraintN, ConstraintOperator.LEQ, 0))
 
         obj = [0]*len(variables)*2
-        for variable in variables: obj.append(Fraction(1,len(variables)-1))
+        for variable in variables: obj.append(Fraction(1,1))
 
         res = self.MLOSolver.solve(variables*3, obj, constraints)
-        return (self.findOneSolution(variables, res[1]), Fraction(res[2]*(len(variables)-1)))
+        return (self.findOneSolution(variables, res[1]), Fraction(res[2]))
          
