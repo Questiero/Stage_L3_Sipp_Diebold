@@ -79,7 +79,7 @@ class FormulaInterpreter:
                 resSet = resSet.union(set([LinearConstraint(str(variables[i]) + " = " + str(Fraction(values[len(variables)+i])))]))
         return And(formulaSet=resSet)
 
-    def optimizeCouple(self, phi : And, mu : And) -> tuple[float, Formula]:
+    def optimizeCouple(self, phi : And, mu : And) -> tuple[Fraction, Formula]:
         '''
         TODO
         '''
@@ -129,5 +129,5 @@ class FormulaInterpreter:
         for variable in variables: obj.append(Fraction(1,1))
 
         res = self.__MLOSolver.solve(variables*3, obj, constraints)
-        return (self.findOneSolution(variables, res[1]), Fraction(res[2]))
+        return (Fraction(res[2]),self.findOneSolution(variables, res[1]))
          
