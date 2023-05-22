@@ -36,7 +36,7 @@ class Revision:
         for miniPhi in phi.children:
             for miniMu in mu.children:
                 
-                lit = self.__executeLiteral(phi, mu)
+                lit = self.__executeLiteral(miniPhi, miniMu)
                 
                 if (disRes is None):
                     disRes = lit[0]
