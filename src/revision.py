@@ -68,7 +68,7 @@ class Revision:
             lambdaEpsilon = epsilon * math.ceil(dStar / epsilon)
             
         # fourth step: find psiPrime
-        #psiPrime = None
+        # TODO le système d'inéquations
     
         # fifth step
         if dStar % epsilon != 0:
@@ -76,7 +76,7 @@ class Revision:
         elif self.__interpreter.sat(psiPrime & mu):
             return (dStar, psiPrime & mu)
         else:
-            return(dStar, psiPrime & mu)
+            return(dStar, psiPrime & mu) # TODO avec système d'inéquation
     
     def __executeConstraint(self, phi: Formula, mu: Formula) -> tuple[Fraction, Formula]:
         return self.__interpreter.optimizeCouple(phi, mu)
