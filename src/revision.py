@@ -9,6 +9,7 @@ from nullaryFormula import NullaryFormula
 from notOperator import Not
 from constants import Constants
 from fractions import Fraction
+import math
 
 class Revision:
     
@@ -21,6 +22,7 @@ class Revision:
         self.__solver = solverInit
         self.__distance = distance 
         self.__interpreter = FormulaInterpreter(solverInit)
+        # self.__interpreter = FormulaInterpreter(solverInit, distance, onlyOneSolution)
         self._onlyOneSolution = onlyOneSolution
 
     def execute(self, phi : Formula, mu : Formula) -> Formula:
@@ -48,19 +50,34 @@ class Revision:
                 
         return Or(formulaSet = setRes)
     
-    def __executeLiteral(self, phi: Formula, mu: Formula) -> tuple[Fraction, Fraction]:
+    def __executeLiteral(self, phi: Formula, mu: Formula) -> tuple[Fraction, Formula]:
         
         # first step: check if phi and mu are coherent
         if((not self.__interpreter.sat(phi)) or (not self.__interpreter.sat(mu))):
-            return (Fraction("+inf"), mu) # +inf ça marche ? convention -1 ? Nouvelle classe/type ?
+            return (None, mu) # None = inf
         
         # second step: find dStar
-        dStar = self.__interpreter.optimizeCouple(self.__removeNot(phi), self.__removeNot(mu))[0]
+        dStar = self.__executeConstraint(self.__removeNot(phi), self.__removeNot(mu))[0]
         
         # third step: lambdaEpsilon
-        pass
+        epsilon = self.__distance._espilon
+        if dStar % epsilon == 0:
+            lambdaEpsilon = dStar
+        else:
+            lambdaEpsilon = epsilon * math.ceil(dStar / epsilon)
+            
+        # fourth step: find psiPrime
+        psiPrime = None
     
-    def __executeConstraint(self, phi: Formula, mu: Formula) -> tuple[Fraction, Fraction]:
+        # fifth step
+        if dStar % epsilon != 0:
+            return (lambdaEpsilon, psiPrime + mu)
+        elif self.__interpreter.sat(psiPrime + mu):
+            return (dStar, psiPrime + mu)
+        else:
+            pass
+    
+    def __executeConstraint(self, phi: Formula, mu: Formula) -> tuple[Fraction, Formula]:
         return self.__interpreter.optimizeCouple(phi, mu)
     
     def __convertExplicit(self, phi: Formula):
