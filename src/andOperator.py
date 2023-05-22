@@ -142,7 +142,9 @@ class And(NaryFormula):
         res: Formula with only minus or equal constraint
         
         '''
-        childrenModified = []
-        for child in self.children: childrenModified.append(child.toLessOrEqConstraint())
+        childrenModified = set()
+        
+        for child in self.children:
+            childrenModified.add(child.toLessOrEqConstraint())
 
-        return And(formulaSet= set(childrenModified))
+        return And(formulaSet = childrenModified)

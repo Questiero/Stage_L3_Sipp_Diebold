@@ -139,7 +139,9 @@ class Or(NaryFormula):
         res: Formula with only minus or equal constraint
         
         '''
-        childrenModified = []
-        for child in self.children: childrenModified.append(child.toLessOrEqConstraint())
+        childrenModified = set()
+        
+        for child in self.children:
+            childrenModified.add(child.toLessOrEqConstraint())
 
-        return Or(formulaSet=set(childrenModified))
+        return Or(formulaSet = childrenModified)
