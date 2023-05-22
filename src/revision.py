@@ -59,7 +59,7 @@ class Revision:
         dStar = self.__executeConstraint(self.__removeNot(phi), self.__removeNot(mu))[0]
         
         # third step: lambdaEpsilon
-        epsilon = self.__distance._espilon
+        epsilon = self.__distance._epsilon
         if dStar % epsilon == 0:
             lambdaEpsilon = dStar
         else:
