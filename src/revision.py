@@ -38,14 +38,15 @@ class Revision:
                 
                 lit = self.__executeLiteral(miniPhi, miniMu)
                 
-                if (disRes is None):
-                    disRes = lit[0]
-                    setRes.add(lit[1])
-                elif (disRes == lit[0]):
-                    setRes.add(lit[1])
-                elif (disRes > lit[0]):
-                    disRes = lit[0]
-                    setRes = {lit[1]}
+                if not (lit[0] is None):
+                    if (disRes is None):
+                        disRes = lit[0]
+                        setRes.add(lit[1])
+                    elif (disRes == lit[0]):
+                        setRes.add(lit[1])
+                    elif (disRes > lit[0]):
+                        disRes = lit[0]
+                        setRes = {lit[1]}
                 
         return Or(formulaSet = setRes)
     
@@ -53,7 +54,7 @@ class Revision:
         
         # first step: check if phi and mu are coherent
         if((not self.__interpreter.sat(phi)) or (not self.__interpreter.sat(mu))):
-            return (None, mu) # None = inf
+            return (None, mu) # None = inf /!\ BUG POSSIBLE AVEC LIGNE 41 ET TOUT
         
         # second step: find dStar
         # just for test
@@ -75,7 +76,7 @@ class Revision:
         elif self.__interpreter.sat(psiPrime & mu):
             return (dStar, psiPrime & mu)
         else:
-            pass
+            return(dStar, psiPrime & mu)
     
     def __executeConstraint(self, phi: Formula, mu: Formula) -> tuple[Fraction, Formula]:
         return self.__interpreter.optimizeCouple(phi, mu)
