@@ -231,6 +231,9 @@ class LinearConstraint(Constraint):
                 
         return copyNeg
     
+    def removeNeg(self) -> LinearConstraint:
+        return self
+    
     def __eq__(self, o) -> bool:
         
         if o.__class__ != self.__class__:

@@ -91,3 +91,10 @@ class Not(UnaryFormula):
         
         '''
         return Not(self.children.toLessOrEqConstraint())
+    
+    def removeNeg(self) -> Constraint:
+        
+        if not isinstance(self.children, Constraint):
+            raise TypeError("This method can only be called on a litteral")
+                
+        return self.children.copyNeg()
