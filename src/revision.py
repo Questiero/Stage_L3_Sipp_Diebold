@@ -38,6 +38,7 @@ class Revision:
                 
                 lit = self.__executeLiteral(miniPhi, miniMu)
                 
+                # TODO revoir les cas infinis, idk si c'est bon
                 if not (lit[0] is None):
                     if (disRes is None):
                         disRes = lit[0]
