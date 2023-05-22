@@ -25,7 +25,7 @@ class Revision:
         self._onlyOneSolution = onlyOneSolution
 
     def execute(self, phi : Formula, mu : Formula) -> Formula:
-        phiDNF, muDNF = phi.toDNF().toLessOrEqConstraint(), mu.toDNF().toLessOrEqConstraint()
+        phiDNF, muDNF = phi.toLessOrEqConstraint().toDNF(), mu.toLessOrEqConstraint().toDNF()
         return self.__executeDNF(self.__convertExplicit(phiDNF), self.__convertExplicit(muDNF))
         
     def __executeDNF(self, phi: Formula, mu: Formula) -> Formula:
@@ -100,7 +100,6 @@ class Revision:
     def __removeNot(self, phi: And):
         
         andSet = set()
-        
         for andChild in phi.children:
             if isinstance(andChild, Not):
                 andSet.add(andChild.copyNegLitteral())

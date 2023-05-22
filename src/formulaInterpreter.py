@@ -127,7 +127,11 @@ class FormulaInterpreter:
 
         obj = [0]*len(variables)*2
         for variable in variables: obj.append(Fraction(1,1))
-
         res = self.__MLOSolver.solve(variables*3, obj, constraints)
+        
+        if(not res[0]): 
+            print(phi)
+            print(mu)
+            raise Exception("Optimize couple impossible") 
         return (Fraction(res[2]),self.findOneSolution(variables, res[1]))
          
