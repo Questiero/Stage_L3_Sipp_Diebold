@@ -14,9 +14,17 @@ class LPSolver(MLOSolver):
         lp_solve.lpsolve('set_verbose', lp, lp_solve.IMPORTANT)
 
         for i in range(0,len(variables)):
-            if(isinstance(variables[i], IntegerVariable)): 
+            if(variables[i].isInteger()): 
                 lp_solve.lpsolve('set_int', lp,i+1, 1)
-            lp_solve.lpsolve('set_unbounded', lp, i+1)
+
+            haveBoundL, haveBoundR = variables[i].haveBound()
+            if(not haveBoundL and not haveBoundR):
+                lp_solve.lpsolve('set_unbounded', lp, i+1)
+            else:
+                lower, upper = variables[i].getBounds()
+                if(lower == None): lower = -1e30
+                if(upper == None): upper = 1.7976931348623157e+308
+                lp_solve.lpsolve('set_bounds', lp, i+1)
 
         lp_solve.lpsolve('set_obj', lp, objectif)
         for constraint in constraints:

@@ -1,5 +1,5 @@
 from __future__ import annotations # used to type hint the class itself
-
+from fractions import Fraction
 from abc import ABC, abstractmethod
 
 class Variable(ABC):
@@ -36,6 +36,48 @@ class Variable(ABC):
         '''
 
         pass
+
+    @abstractmethod
+    def haveBound(self) -> tuple[bool, bool]:
+        '''
+        Method use to say if the variable have lower and upper bound
+
+        Returns
+        -------
+        res: 
+            true,true if the variable have a lower and an upper bound
+            true, false if the variable have a lower and not an upper bound
+            etc...
+        '''
+        pass
+
+    @abstractmethod
+    def getBounds(self) -> tuple[Fraction, Fraction]:
+        '''
+        Method use to known bounds of the variables
+
+        Returns
+        -------
+        res: 
+            can be None, None if the variable have no limits,
+            or Fraction, Fraction.
+        '''
+        pass
+    
+    @abstractmethod
+    def isInteger(self) -> bool:
+        '''
+        Method used to known if the variable must have intergers values.
+
+        Returns
+        -------
+        res:
+            True if the variable must have intergers values
+            else False
+        '''
+        pass
+
+
     
     def __str__(self):
         return self.name
