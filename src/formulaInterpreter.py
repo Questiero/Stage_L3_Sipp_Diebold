@@ -67,8 +67,6 @@ class FormulaInterpreter:
             res = self.__MLOSolver.solve(variables, list(map(lambda v : -1 if v == self._eVar else 0, variables)), constraints)
             if res[0] :
                 if res[1][variables.index(self._eVar)] != 0:
-                    for var in variables: print(var.name)
-                    print(res)
                     return True
             
         return False
@@ -141,8 +139,6 @@ class FormulaInterpreter:
         res = self.__MLOSolver.solve(variables*3, obj, constraints)
         
         if(not res[0]): 
-            print(phi)
-            print(mu)
             raise Exception("Optimize couple impossible") 
         return (Fraction(res[2]),self.findOneSolution(variables, res[1]))
     
