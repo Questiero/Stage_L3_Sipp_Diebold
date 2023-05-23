@@ -38,23 +38,26 @@ class Revision:
                 
                 lit = self.__executeLiteral(miniPhi, miniMu)
                 
-                # TODO revoir les cas infinis, idk si c'est bon
                 if not (lit[0] is None):
                     if (disRes is None):
                         disRes = lit[0]
-                        setRes.add(lit[1])
+                        setRes = {lit[1]}
                     elif (disRes == lit[0]):
                         setRes.add(lit[1])
                     elif (disRes > lit[0]):
                         disRes = lit[0]
                         setRes = {lit[1]}
+                else:
+                    if (disRes is None):
+                        setRes.add(lit[1])
                 
         return Or(formulaSet = setRes)
     
     def __executeLiteral(self, phi: Formula, mu: Formula) -> tuple[Fraction, Formula]:
+
         # first step: check if phi and mu are coherent
         if((not self.__interpreter.sat(phi)) or (not self.__interpreter.sat(mu))):
-            return (None, mu) # None = inf /!\ BUG POSSIBLE AVEC LIGNE 41 ET TOUT
+            return (None, mu) # None = inf
         
         # second step: find dStar
         # just for test
