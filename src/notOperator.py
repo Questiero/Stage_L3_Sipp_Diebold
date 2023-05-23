@@ -101,7 +101,7 @@ class Not(UnaryFormula):
 
         for key in copyNeg.variables:
             copyNeg.variables[key] = -copyNeg.variables[key]
-        copyNeg.variables[key] = 1
+        copyNeg.variables[e] = 1
         copyNeg.bound = -copyNeg.bound
                 
         return copyNeg

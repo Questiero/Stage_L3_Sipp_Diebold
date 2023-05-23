@@ -56,9 +56,19 @@ class FormulaInterpreter:
                     else:
                         constraintP.append(0)
                 constraints.append((constraintP, constraint.operator, constraint.bound))
+            constraintP = []
+            for var in variables: 
+                if(var == self._eVar) :
+                    constraintP.append(-1)
+                else :
+                    constraintP.append(0)
+            constraints.append((constraintP, ConstraintOperator.LEQ, 0))
+                    
             res = self.__MLOSolver.solve(variables, list(map(lambda v : -1 if v == self._eVar else 0, variables)), constraints)
             if res[0] :
                 if res[1][variables.index(self._eVar)] != 0:
+                    for var in variables: print(var.name)
+                    print(res)
                     return True
             
         return False
