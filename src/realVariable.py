@@ -12,6 +12,8 @@ class RealVariable(Variable):
     ----------
     name: str
         The name of the Variable
+        Name must begin with an alphabet character. It can be followed by alphanumerical character or _.
+        Name can't have this symbole : + - * / @
     '''
     
     def declare(*lname: str) -> RealVariable:

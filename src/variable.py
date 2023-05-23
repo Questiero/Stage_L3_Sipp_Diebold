@@ -28,6 +28,8 @@ class Variable(ABC):
         ----------
         String: name
             The name of the Variable to be declared.
+            Name must begin with an alphabet character. It can be followed by alphanumerical character or _.
+            Name can't have this symbole : + - * / @
 
         Returns
         -------
