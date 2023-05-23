@@ -71,35 +71,69 @@ class FormulaInterpreter:
             
         return False
 
-    def findAllSolutions(self, x) -> tuple[float, Formula]:
+    def findAllSolutions(self, variables : dict[Variable], phi : And, mu : And) -> tuple[float, Formula]:
         '''
-        
+         Method used for find all solutions for the optimization of a couple of Formula
+
+        Attributes
+        ----------
+        variables : list of variables
+        phi : a formula (And)
+        mu : a formula (And)
+
+        Returns
+        -------
+        res: distance between phi and mu, Formula wich symbolize the optimisation between phi and mu
         '''
         pass
 
-    def findOneSolution(self, variables : dict[Variable], values : dict[float]) -> tuple[float, Formula]:
+    def findOneSolution(self, variables : dict[Variable], phi : And, mu : And) -> tuple[float, Formula]:
         '''
-        
+        Method used for find one solution for the optimization of a couple of Formula
+
+        Attributes
+        ----------
+        variables : list of variables
+        phi : a formula (And)
+        mu : a formula (And)
+
+        Returns
+        -------
+        res: distance between phi and mu, Formula wich symbolize the optimisation between phi and mu
         
         '''
+        constraints = self.__buildConstraints(variables, phi, mu)
+
+        obj = [0]*len(variables)*2
+        for variable in variables: obj.append(self.__distanceFunction.getW(variables.index(variable)))
+        res = self.__MLOSolver.solve(variables*3, obj, constraints)
+        if(not res[0]): 
+            raise Exception("Optimize couple impossible") 
+        
+        values = res[1]
         resSet = set([])
         for i in range(0,len(variables)):
             if variables[i].name != "@":
                 resSet = resSet.union(set([LinearConstraint(str(variables[i]) + " = " + str(Fraction(values[len(variables)+i])))]))
-        return And(formulaSet=resSet)
+        return (res[0], And(formulaSet=resSet))
 
-    def optimizeCouple(self, phi : And, mu : And) -> tuple[Fraction, Formula]:
+    def __buildConstraints(self, variables : dict[Variable], phi : And, mu : And) -> dict[tuple[dict[Fraction], ConstraintOperator, Fraction]]:
         '''
-        TODO
-        '''
-        variables = list(And(phi,mu).getVariables())
-        e = RealVariable("@")
-        variables.append(e)
+        Method used to build table of constraints, for the solver, linked to phi and mu
+        Attributes
+        ----------
+        variables : list of variables
+        phi : a formula (And)
+        mu : a formula (And)
 
+        Returns
+        -------
+        res: table of constraint wich simbolyze all of constraints of phi and mu
+        '''
         constraints = []
         i = 0
         for formula in [phi, mu]:
-            for lc in formula.getAdherence(e):
+            for lc in formula.getAdherence(self._eVar):
                 for constraint in lc:
                     constraintP = []
                     for _ in range(0,(len(variables)) *i):
@@ -140,14 +174,29 @@ class FormulaInterpreter:
                     constraintN.append(0)
             constraints.append((constraintP, ConstraintOperator.LEQ, 0))
             constraints.append((constraintN, ConstraintOperator.LEQ, 0))
+        return constraints
 
-        obj = [0]*len(variables)*2
-        for variable in variables: obj.append(self.__distanceFunction.getW(variables.index(variable)))
-        res = self.__MLOSolver.solve(variables*3, obj, constraints)
-        
-        if(not res[0]): 
-            raise Exception("Optimize couple impossible") 
-        return (Fraction(res[2]),self.findOneSolution(variables, res[1]))
+    def optimizeCouple(self, phi : And, mu : And) -> tuple[Fraction, Formula]:
+        '''
+        Method used for optimized a couple of Formula
+
+        Attributes
+        ----------
+        phi : a formula (And)
+        mu : a formula (And)
+
+        Returns
+        -------
+        res: distance between phi and mu, Formula wich symbolize the optimisation between phi and mu
+        '''
+        variables = list(And(phi,mu).getVariables())
+        e = RealVariable("@")
+        variables.append(e)
+
+        if self.__onlyOneSolution:
+            return self.findOneSolution(variables,phi,mu)
+        else:
+            return self.findAllSolutions(variables,phi,mu)
     
 
     def removeNot(self, phi: And):
