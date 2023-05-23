@@ -8,6 +8,7 @@ from pyparsing import Literal, Word, srange, infix_notation, OpAssoc, ParseResul
 # local import of xorOperator
 # local import of implicationOperator
 # local import of equivalenceOperator
+# local import of formulaManager
 
 # Typing only imports
 from variable import Variable
@@ -60,14 +61,14 @@ class Formula(ABC):
     @staticmethod
     def __parserEvaluator(tokens) -> Formula:
 
-        from notOperator import Not
-        from andOperator import And
-        from orOperator import Or
-        from xorOperator import Xor
-        from implicationOperator import Implication
-        from equivalenceOperator import Equivalence
-
         if isinstance(tokens, ParseResults) or isinstance(tokens, list):
+
+            from notOperator import Not
+            from andOperator import And
+            from orOperator import Or
+            from xorOperator import Xor
+            from implicationOperator import Implication
+            from equivalenceOperator import Equivalence
 
             if(len(tokens) == 1):
                 return Formula.__parserEvaluator(tokens[0])
@@ -99,17 +100,10 @@ class Formula(ABC):
                 
         elif isinstance(tokens, str):
 
-            from linearConstraint import LinearConstraint
-            
-            return LinearConstraint("x = 1")
-            print(globals())
-            tok = globals()[tokens]
+            from formulaManager import FormulaManager
 
-            if isinstance(tok, Formula):
-                return tok
-            else:
-                raise TypeError("Oop")
-            
+            return FormulaManager.getFormula(tokens)
+
 
     @property
     @abstractmethod
