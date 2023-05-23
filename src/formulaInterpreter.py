@@ -113,7 +113,14 @@ class FormulaInterpreter:
                         constraintP.append(0)
                     constraints.append((constraintP, constraint.operator, constraint.bound))
             i += 1
-
+        for i in range(0,2):
+            for var in variables:
+                if(var == self._eVar) :
+                    constraintP.append(-1)
+                else :
+                    constraintP.append(0)
+                    
+        constraints.append((constraintP, ConstraintOperator.LEQ, 0))
         for variable in variables:
             constraintP = []
             constraintN = []
