@@ -7,12 +7,14 @@ from fractions import Fraction
 from linearConstraint import LinearConstraint
 from variable import Variable
 from distanceFunction import DistanceFunction
+from notOperator import Not
 
 class FormulaInterpreter:
     def __init__(self, mloSolver : MLOSolver, distanceFunction : DistanceFunction, onlyOneSolution : bool) -> None:
         self.__MLOSolver = mloSolver
         self.__distanceFunction = distanceFunction
         self.__onlyOneSolution = onlyOneSolution
+        self._eVar = RealVariable("@")
 
     def simplifyMLC(self, phi : Formula):
         '''
@@ -42,10 +44,9 @@ class FormulaInterpreter:
         
         '''
         variables = list(phi.getVariables())
-        e = RealVariable("@")
-        variables.append(e)
+        variables.append(self._eVar)
 
-        for lc in phi.getAdherence(e):
+        for lc in phi.getAdherence(self._eVar):
             constraints = []
             for constraint in lc:
                 constraintP = []
@@ -55,9 +56,9 @@ class FormulaInterpreter:
                     else:
                         constraintP.append(0)
                 constraints.append((constraintP, constraint.operator, constraint.bound))
-            res = self.__MLOSolver.solve(variables, list(map(lambda v : -1 if v == e else 0, variables)), constraints)
+            res = self.__MLOSolver.solve(variables, list(map(lambda v : -1 if v == self._eVar else 0, variables)), constraints)
             if res[0] :
-                if res[1][variables.index(e)] != 0:
+                if res[1][variables.index(self._eVar)] != 0:
                     return True
             
         return False
@@ -134,4 +135,15 @@ class FormulaInterpreter:
             print(mu)
             raise Exception("Optimize couple impossible") 
         return (Fraction(res[2]),self.findOneSolution(variables, res[1]))
+    
+
+    def removeNot(self, phi: And):
+        andSet = set()
+        for andChild in phi.children:
+            if isinstance(andChild, Not):
+                andSet.add(andChild.copyNegLitteral(self._eVar))
+            else:
+                andSet.add(andChild)
+            
+        return And(formulaSet = andSet)
          

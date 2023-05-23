@@ -52,14 +52,13 @@ class Revision:
         return Or(formulaSet = setRes)
     
     def __executeLiteral(self, phi: Formula, mu: Formula) -> tuple[Fraction, Formula]:
-        
         # first step: check if phi and mu are coherent
         if((not self.__interpreter.sat(phi)) or (not self.__interpreter.sat(mu))):
             return (None, mu) # None = inf /!\ BUG POSSIBLE AVEC LIGNE 41 ET TOUT
         
         # second step: find dStar
         # just for test
-        dStar, psiPrime = self.__executeConstraint(self.__removeNot(phi), self.__removeNot(mu))
+        dStar, psiPrime = self.__executeConstraint(self.__interpreter.removeNot(phi), self.__interpreter.removeNot(mu))
         
         # third step: lambdaEpsilon
         epsilon = self.__distance._epsilon
@@ -96,14 +95,3 @@ class Revision:
                 else:
                     orSet.add(And(miniPhi))
             return Or(formulaSet = orSet)
-        
-    def __removeNot(self, phi: And):
-        
-        andSet = set()
-        for andChild in phi.children:
-            if isinstance(andChild, Not):
-                andSet.add(andChild.copyNegLitteral())
-            else:
-                andSet.add(andChild)
-            
-        return And(formulaSet = andSet)
