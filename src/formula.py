@@ -92,8 +92,6 @@ class Formula(ABC):
                     case "<->":
                         formulaType = Equivalence
 
-                print(tokens[2:])
-
                 return formulaType(Formula.__parserEvaluator(tokens[0]), Formula.__parserEvaluator(tokens[2:]))
 
             else:
