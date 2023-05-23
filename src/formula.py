@@ -1,10 +1,17 @@
 from __future__ import annotations # used to type hint the class itself
 
 from abc import ABC, abstractmethod
+from pyparsing import Literal, Word, srange, infix_notation, OpAssoc, ParseResults
+# local import of andOperator
+# local import of orOperator
+# local import of notOperator
+# local import of xorOperator
+# local import of implicationOperator
+# local import of equivalenceOperator
 
 # Typing only imports
 from variable import Variable
-import constraint
+# import constraint
 
 class Formula(ABC):
     '''
@@ -20,6 +27,7 @@ class Formula(ABC):
     '''
     
     children = None
+    formulaDict: dict[str, Formula] = dict()
     
     @staticmethod
     def parser(string: str):
@@ -32,8 +40,79 @@ class Formula(ABC):
             The String to parse
         '''
         
-        raise NotImplementedError("Function declare not implemented")
+        formWord = Word(srange("[a-zA-Z_]"), srange("[a-zA-Z0-9_]"))
+
+        expr = infix_notation(formWord,
+                              [(Literal("&"), 2, OpAssoc.LEFT),
+                               (Literal("|"), 2, OpAssoc.LEFT),
+                               (Literal("~"), 1, OpAssoc.RIGHT),
+                               (Literal("->"), 2, OpAssoc.LEFT),
+                               (Literal("<-/->"), 2, OpAssoc.LEFT),
+                               (Literal("<->"), 2, OpAssoc.LEFT)],
+                              lpar = "(",
+                              rpar = ")")
+
+        tokens = expr.parse_string(string)
+
+        #return tokens
+        return Formula.__parserEvaluator(tokens)
     
+    @staticmethod
+    def __parserEvaluator(tokens) -> Formula:
+
+        from notOperator import Not
+        from andOperator import And
+        from orOperator import Or
+        from xorOperator import Xor
+        from implicationOperator import Implication
+        from equivalenceOperator import Equivalence
+
+        if isinstance(tokens, ParseResults) or isinstance(tokens, list):
+
+            if(len(tokens) == 1):
+                return Formula.__parserEvaluator(tokens[0])
+            elif(len(tokens) == 2):
+                if(tokens[0] == "~"):
+                    return Not(Formula.__parserEvaluator(tokens[1]))
+            elif(len(tokens) % 2 == 1):
+                
+                formulaType = None
+
+                match tokens[1]:
+
+                    case "&":
+                        print("&")
+                        formulaType = And
+                    case "|":
+                        formulaType = Or
+                    case "<-/->":
+                        formulaType = Xor
+                    case "->":
+                        formulaType = Implication
+                    case "<->":
+                        formulaType = Equivalence
+
+                print(tokens[2:])
+
+                return formulaType(Formula.__parserEvaluator(tokens[0]), Formula.__parserEvaluator(tokens[2:]))
+
+            else:
+                raise TypeError("oop")
+                
+        elif isinstance(tokens, str):
+
+            from linearConstraint import LinearConstraint
+            
+            return LinearConstraint("x = 1")
+            print(globals())
+            tok = globals()[tokens]
+
+            if isinstance(tok, Formula):
+                return tok
+            else:
+                raise TypeError("Oop")
+            
+
     @property
     @abstractmethod
     def _symbol(self) -> str:
@@ -78,7 +157,7 @@ class Formula(ABC):
         pass
 
     @abstractmethod
-    def getAdherence(self, var : Variable) -> list[list[constraint.Constraint]]:
+    def getAdherence(self, var : Variable) -> list[list[Formula]]:
         '''
         Returns a 2D list containing all the constraints of the adherence of 
         the Formula, in Disjunctive Normal Form.
@@ -96,7 +175,7 @@ class Formula(ABC):
         pass
 
     @abstractmethod
-    def _getAdherenceNeg(self, var : Variable)  -> list[list[constraint.Constraint]]:
+    def _getAdherenceNeg(self, var : Variable)  -> list[list[Formula]]:
         '''
         Protected method used in the algorithm to recursivly determine the
         constraints of the adherence of the Formula, used when a Negation is in play

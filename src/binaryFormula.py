@@ -115,4 +115,4 @@ class BinaryFormula(Formula):
         return self._simplify()._getAdherenceNeg(var)
     
     def __str__(self):
-        return str(self.children[0]) + self._symbol + str(self.children[1])
+        return "(" + str(self.children[0]) + self._symbol + str(self.children[1]) + ")"
