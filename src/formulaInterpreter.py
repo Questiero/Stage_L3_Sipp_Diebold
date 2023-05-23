@@ -119,7 +119,7 @@ class FormulaInterpreter:
                     constraintP.append(-1)
                 else :
                     constraintP.append(0)
-                    
+
         constraints.append((constraintP, ConstraintOperator.LEQ, 0))
         for variable in variables:
             constraintP = []
@@ -142,7 +142,7 @@ class FormulaInterpreter:
             constraints.append((constraintN, ConstraintOperator.LEQ, 0))
 
         obj = [0]*len(variables)*2
-        for variable in variables: obj.append(Fraction(1,1))
+        for variable in variables: obj.append(self.__distanceFunction.getW(variables.index(variable)))
         res = self.__MLOSolver.solve(variables*3, obj, constraints)
         
         if(not res[0]): 
