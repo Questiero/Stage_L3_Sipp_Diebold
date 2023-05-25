@@ -1,14 +1,6 @@
 from __future__ import annotations # used to type hint the class itself
 
 from abc import ABC, abstractmethod
-from pyparsing import Literal, Word, srange, infix_notation, OpAssoc, ParseResults
-# local import of andOperator
-# local import of orOperator
-# local import of notOperator
-# local import of xorOperator
-# local import of implicationOperator
-# local import of equivalenceOperator
-# local import of formulaManager
 
 # Typing only imports
 from variable import Variable
@@ -29,81 +21,6 @@ class Formula(ABC):
     
     children = None
     formulaDict: dict[str, Formula] = dict()
-    
-    @staticmethod
-    def parser(string: str):
-        '''
-        Static method, allowing to parse a formula from a String
-
-        Attributes
-        ----------
-        string: String 
-            The String to parse
-        '''
-        
-        formWord = Word(srange("[a-zA-Z_]"), srange("[a-zA-Z0-9_]"))
-
-        expr = infix_notation(formWord,
-                              [(Literal("&"), 2, OpAssoc.LEFT),
-                               (Literal("|"), 2, OpAssoc.LEFT),
-                               (Literal("~"), 1, OpAssoc.RIGHT),
-                               (Literal("->"), 2, OpAssoc.LEFT),
-                               (Literal("<-/->"), 2, OpAssoc.LEFT),
-                               (Literal("<->"), 2, OpAssoc.LEFT)],
-                              lpar = "(",
-                              rpar = ")")
-
-        tokens = expr.parse_string(string)
-
-        #return tokens
-        return Formula.__parserEvaluator(tokens)
-    
-    @staticmethod
-    def __parserEvaluator(tokens) -> Formula:
-
-        if isinstance(tokens, ParseResults) or isinstance(tokens, list):
-
-            from notOperator import Not
-            from andOperator import And
-            from orOperator import Or
-            from xorOperator import Xor
-            from implicationOperator import Implication
-            from equivalenceOperator import Equivalence
-
-            if(len(tokens) == 1):
-                return Formula.__parserEvaluator(tokens[0])
-            elif(len(tokens) == 2):
-                if(tokens[0] == "~"):
-                    return Not(Formula.__parserEvaluator(tokens[1]))
-            elif(len(tokens) % 2 == 1):
-                
-                formulaType = None
-
-                match tokens[1]:
-
-                    case "&":
-                        print("&")
-                        formulaType = And
-                    case "|":
-                        formulaType = Or
-                    case "<-/->":
-                        formulaType = Xor
-                    case "->":
-                        formulaType = Implication
-                    case "<->":
-                        formulaType = Equivalence
-
-                return formulaType(Formula.__parserEvaluator(tokens[0]), Formula.__parserEvaluator(tokens[2:]))
-
-            else:
-                raise TypeError("oop")
-                
-        elif isinstance(tokens, str):
-
-            from formulaManager import FormulaManager
-
-            return FormulaManager.getFormula(tokens)
-
 
     @property
     @abstractmethod

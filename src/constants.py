@@ -1,3 +1,9 @@
 class Constants():
     
     ONLY_ONE_SOLUTION = True
+    AND_OPERATOR_PARSER = "&"
+    OR_OPERATOR_PARSER = "|"
+    NOT_OPERATOR_PARSER = "~"
+    XOR_OPERATOR_PARSER = "<-/->"
+    IMPLICATION_OPERATOR_PARSER = "->"
+    EQUIVALENCE_OPERATOR_PARSER = "<->"
