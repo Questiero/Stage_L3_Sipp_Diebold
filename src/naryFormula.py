@@ -66,9 +66,9 @@ class NaryFormula(Formula):
         if len(self.children) == 1:
             return str(list(self.children)[0])
         
-        s = "("
+        s = ""
         for child in self.children:
-            s += str(child) + " " + self._symbol + " "
+            s += "(" + str(child) + ") " + self._symbol + " "
         toRemove = len(self._symbol) + 2
-        s = s[:-toRemove] + ")"
+        s = s[:-toRemove] + ""
         return s

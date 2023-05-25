@@ -43,9 +43,7 @@ class FormulaManager():
     
     @staticmethod
     def __parserEvaluator(tokens: ParseResults) -> Formula:
-
-        print("test")
-
+        
         if isinstance(tokens, ParseResults) or isinstance(tokens, list):
 
             if(len(tokens) == 1):

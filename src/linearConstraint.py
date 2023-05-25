@@ -184,12 +184,12 @@ class LinearConstraint(Constraint):
         return (tabVar, op, bound)
     
     def __str__(self):
-        s = "("
+        s = ""
         for var, coef in self.variables.items():
             s += str(coef) + "*" + str(var) + " + "
         s = s[:-2]
         s += str(self.operator.value) + " "
-        s += str(self.bound) + ")"
+        s += str(self.bound)
         return s
             
     def toLessOrEqConstraint(self):
