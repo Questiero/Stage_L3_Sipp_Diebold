@@ -1,5 +1,5 @@
 from formula import Formula
-from pyparsing import Literal, Word, srange, infix_notation, OpAssoc, ParseResults
+from pyparsing import Literal, Word, srange, infix_notation, OpAssoc, ParseResults, ParserElement
 from notOperator import Not
 from andOperator import And
 from orOperator import Or
@@ -22,16 +22,17 @@ class FormulaManager():
         string: String 
             The String to parse
         '''
+        ParserElement.enablePackrat()
         
         formWord = Word(srange("[a-zA-Z_]"), srange("[a-zA-Z0-9_]"))
 
         expr = infix_notation(formWord,
-                              [(Literal(Constants.AND_OPERATOR_PARSER), 2, OpAssoc.LEFT),
-                               (Literal(Constants.OR_OPERATOR_PARSER), 2, OpAssoc.LEFT),
-                               (Literal(Constants.NOT_OPERATOR_PARSER), 1, OpAssoc.RIGHT),
-                               (Literal(Constants.IMPLICATION_OPERATOR_PARSER), 2, OpAssoc.LEFT),
-                               (Literal(Constants.XOR_OPERATOR_PARSER), 2, OpAssoc.LEFT),
-                               (Literal(Constants.EQUIVALENCE_OPERATOR_PARSER), 2, OpAssoc.LEFT)],
+                              [(Literal(Constants.AND_PARSER_OPERATOR), 2, OpAssoc.LEFT),
+                               (Literal(Constants.OR_PARSER_OPERATOR), 2, OpAssoc.LEFT),
+                               (Literal(Constants.NOT_PARSER_OPERATOR), 1, OpAssoc.RIGHT),
+                               (Literal(Constants.IMPLICATION_PARSER_OPERATOR), 2, OpAssoc.LEFT),
+                               (Literal(Constants.XOR_PARSER_OPERATOR), 2, OpAssoc.LEFT),
+                               (Literal(Constants.EQUIVALENCE_PARSER_OPERATOR), 2, OpAssoc.LEFT)],
                               lpar = "(",
                               rpar = ")")
 
@@ -43,12 +44,14 @@ class FormulaManager():
     @staticmethod
     def __parserEvaluator(tokens: ParseResults) -> Formula:
 
+        print("test")
+
         if isinstance(tokens, ParseResults) or isinstance(tokens, list):
 
             if(len(tokens) == 1):
                 return FormulaManager.__parserEvaluator(tokens[0])
             elif(len(tokens) == 2):
-                if(tokens[0] == Constants.NOT_OPERATOR_PARSER):
+                if(tokens[0] == Constants.NOT_PARSER_OPERATOR):
                     return Not(FormulaManager.__parserEvaluator(tokens[1]))
             elif(len(tokens) % 2 == 1):
                 
@@ -56,15 +59,15 @@ class FormulaManager():
 
                 match tokens[1]:
 
-                    case Constants.AND_OPERATOR_PARSER:
+                    case Constants.AND_PARSER_OPERATOR:
                         formulaType = And
-                    case Constants.OR_OPERATOR_PARSER:
+                    case Constants.OR_PARSER_OPERATOR:
                         formulaType = Or
-                    case Constants.XOR_OPERATOR_PARSER:
+                    case Constants.XOR_PARSER_OPERATOR:
                         formulaType = Xor
-                    case Constants.IMPLICATION_OPERATOR_PARSER:
+                    case Constants.IMPLICATION_PARSER_OPERATOR:
                         formulaType = Implication
-                    case Constants.EQUIVALENCE_OPERATOR_PARSER:
+                    case Constants.EQUIVALENCE_PARSER_OPERATOR:
                         formulaType = Equivalence
 
                 return formulaType(FormulaManager.__parserEvaluator(tokens[0]), FormulaManager.__parserEvaluator(tokens[2:]))
@@ -73,8 +76,6 @@ class FormulaManager():
                 raise TypeError("oop")
                 
         elif isinstance(tokens, str):
-
-            from formulaManager import FormulaManager
 
             return FormulaManager.getFormula(tokens)
 
