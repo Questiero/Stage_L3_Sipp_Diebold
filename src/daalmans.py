@@ -11,6 +11,7 @@ class Daalmans(Simplification):
         self._solver = solver
     
     def run(self, phi):
+        if not self._interpreter.sat(phi): return phi
         phiPrime = self.deleteConstraint(self.fixedVariables(phi))
         return self.finalVerification(phiPrime)
     
@@ -32,12 +33,15 @@ class Daalmans(Simplification):
             if v1[0] and v2[0] and v1[1][variables.index(var)] == v2[1][variables.index(var)] :
                 newPhi = LinearConstraint(str(var) + " = " + str(v1[2]))
                 for constraint in phi.getAdherence(e)[0]:
-                    constraint.replace(var,v1[2])
-                    if e in constraint.variables:
-                        del constraint.variables[e]
-                        newPhi = newPhi & ~constraint
-                    else:
-                        newPhi = newPhi & constraint
+                    try:
+                        constraint.replace(var,v1[2])
+                        if e in constraint.variables:
+                            del constraint.variables[e]
+                            newPhi = newPhi & ~constraint
+                        else:
+                            newPhi = newPhi & constraint
+                    except:
+                        pass
                 phi = newPhi
         return phi
 

@@ -111,10 +111,6 @@ class LinearConstraint(Constraint):
                 raise ValueError(f"Duplicate variable {var._name} found")
             elif var != None:
                 self.variables[var] = coef
-    
-    def removeE(self):
-        if "@" in self.variables:
-            del self.variables["@"]
 
     def getVariables(self) -> set[Variable]:
         '''
@@ -229,7 +225,8 @@ class LinearConstraint(Constraint):
     def replace(self, variable : Variable, num : Fraction):
         if variable in self.variables:
             self.bound = self.bound - num * self.variables[variable]
-            self.variables[variable] = 0
+            del self.variables[variable]
+        if len(self.variables) == 0: raise IndexError("Not enough values in constraint")
 
     def __eq__(self, o) -> bool:
         
