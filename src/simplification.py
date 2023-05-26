@@ -9,7 +9,8 @@ class Simplification(ABC):
 
     def toTab(self, formula, e):
         constraints = []
-        variables = formula.getVariables()
+        variables = list(formula.getVariables())
+        variables.append(e)
         for lc in formula.getAdherence(e):
             for constraint in lc:
                 constraintP = []
@@ -18,13 +19,11 @@ class Simplification(ABC):
                         constraintP.append(constraint.variables[variable])
                     else:
                         constraintP.append(0)
-                for var in variables:
-                    if(var == e) :
-                        constraintP.append(-1)
-                    else :
-                        constraintP.append(0)
                 constraints.append((constraintP, constraint.operator, constraint.bound))
-
+        constraintP = []
+        for var in variables:
+            if var == e: constraintP.append(-1)
+            else: constraintP.append(0)
         constraints.append((constraintP, ConstraintOperator.LEQ, 0))
 
         return constraints
