@@ -202,7 +202,7 @@ class LinearConstraint(Constraint):
         
         '''
         from andOperator import And
-        res = LinearConstraint(str(self)[1:-1])
+        res = LinearConstraint(str(self))
 
         if self.operator == ConstraintOperator.GEQ :
             for variable in res.variables.keys():
@@ -210,7 +210,7 @@ class LinearConstraint(Constraint):
             res.bound *= -1
             res.operator = ConstraintOperator.LEQ
         elif self.operator == ConstraintOperator.EQ:
-            res = [LinearConstraint(str(self)[1:-1])]
+            res = [LinearConstraint(str(self))]
             res[0].operator = ConstraintOperator.GEQ
             res.append(res[0].toLessOrEqConstraint())
             res[0].operator = ConstraintOperator.LEQ
