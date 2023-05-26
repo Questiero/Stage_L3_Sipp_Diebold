@@ -219,7 +219,7 @@ class LinearConstraint(Constraint):
         return res
     
     def clone(self) -> LinearConstraint:
-        return LinearConstraint(str(self)[1:-1])
+        return LinearConstraint(str(self))
     
     def __eq__(self, o) -> bool:
         

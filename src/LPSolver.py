@@ -34,7 +34,11 @@ class LPSolver(MLOSolver):
             elif (constraint[1] == ConstraintOperator.GEQ):
                 comp = lp_solve.GE
             lp_solve.lpsolve('add_constraint', lp, constraint[0], comp, constraint[2])
-
-        if lp_solve.lpsolve('solve', lp) != 0:
+        tmp = lp_solve.lpsolve('solve', lp)
+        if tmp not in [1,3]:
             return (False, [], 0)
+        if tmp == 3:
+            val = lp_solve.lpsolve('get_variables', lp)[0]
+            val[len(val)-1] = 10e+20
+            return (True, val, lp_solve.lpsolve('get_objective', lp))
         return (True, lp_solve.lpsolve('get_variables', lp)[0], lp_solve.lpsolve('get_objective', lp))
