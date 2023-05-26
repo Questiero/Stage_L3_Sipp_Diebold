@@ -221,6 +221,11 @@ class LinearConstraint(Constraint):
     def clone(self) -> LinearConstraint:
         return LinearConstraint(str(self))
     
+    def replace(self, variable : Variable, num : Fraction):
+        if variable in self.variables:
+            self.bound = self.bound - num * self.variables[variable]
+            self.variables[variable] = 0
+
     def __eq__(self, o) -> bool:
         
         if o.__class__ != self.__class__:

@@ -35,7 +35,7 @@ class LPSolver(MLOSolver):
                 comp = lp_solve.GE
             lp_solve.lpsolve('add_constraint', lp, constraint[0], comp, constraint[2])
         tmp = lp_solve.lpsolve('solve', lp)
-        if tmp not in [1,3]:
+        if tmp not in [0,3]:
             return (False, [], 0)
         if tmp == 3:
             val = lp_solve.lpsolve('get_variables', lp)[0]
