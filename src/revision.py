@@ -9,6 +9,7 @@ from nullaryFormula import NullaryFormula
 from notOperator import Not
 from constants import Constants
 from fractions import Fraction
+from simplification import Simplification
 import math
 
 class Revision:
@@ -18,10 +19,10 @@ class Revision:
     __interpreter : FormulaInterpreter
     _onlyOneSolution: bool
 
-    def __init__(self, solverInit : MLOSolver, distance : DistanceFunction, onlyOneSolution: bool = Constants.ONLY_ONE_SOLUTION):
+    def __init__(self, solverInit : MLOSolver, distance : DistanceFunction, simplifier : Simplification = None, onlyOneSolution: bool = Constants.ONLY_ONE_SOLUTION):
         self.__solver = solverInit
         self.__distance = distance 
-        self.__interpreter = FormulaInterpreter(solverInit, distance, onlyOneSolution)
+        self.__interpreter = FormulaInterpreter(solverInit, distance, simplifier, onlyOneSolution)
         self._onlyOneSolution = onlyOneSolution
 
     def execute(self, phi : Formula, mu : Formula) -> Formula:
@@ -51,7 +52,7 @@ class Revision:
                     if (disRes is None):
                         setRes.add(lit[1])
                 
-        return Or(formulaSet = setRes)
+        return self.__interpreter.simplifyMLC(Or(formulaSet = setRes).toDNF())
     
     def __executeLiteral(self, phi: Formula, mu: Formula) -> tuple[Fraction, Formula]:
 

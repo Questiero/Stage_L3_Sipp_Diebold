@@ -3,14 +3,16 @@ from formula import Formula
 from realVariable import RealVariable
 from linearConstraint import LinearConstraint
 from constraintOperator import ConstraintOperator
+from notOperator import Not
 
 class Daalmans(Simplification):
-    def __init__(self, solver, formulaInterpreter):
+    _interpreter = None
+    def __init__(self, solver):
         self._solver = solver
-        self._interpreter = formulaInterpreter
     
     def run(self, phi):
-        return self.deleteConstraint(self.fixedVariables(phi))
+        phiPrime = self.deleteConstraint(self.fixedVariables(phi))
+        return self.finalVerification(phiPrime)
     
     def fixedVariables(self, phi : Formula) -> Formula:
         variables = list(phi.getVariables())
@@ -31,15 +33,17 @@ class Daalmans(Simplification):
                 newPhi = LinearConstraint(str(var) + " = " + str(v1[2]))
                 for constraint in phi.getAdherence(e)[0]:
                     constraint.replace(var,v1[2])
-                    newPhi = newPhi & constraint
+                    if e in constraint.variables:
+                        del constraint.variables[e]
+                        newPhi = newPhi & ~constraint
+                    else:
+                        newPhi = newPhi & constraint
                 phi = newPhi
-
         return phi
 
     def deleteConstraint(self, phi : Formula) -> Formula:
         e = RealVariable("@")
         phiTab = phi.getAdherence(e)[0]
-        constraintUseless = []
         i = 0
 
         while i < len(phiTab):
@@ -63,7 +67,14 @@ class Daalmans(Simplification):
                 phiTab.remove(phiTab[i])
             else:
                 i += 1
-        
+        phiAnalyse = phiTab
+        phiTab = []
+        for litteral in phiAnalyse:
+            if e in litteral.variables:
+                del litteral.variables[e]
+                phiTab.append(~litteral)
+            else:
+                phiTab.append(litteral)
         return self.createPhi(phiTab, [-1])
 
     def createPhi(self, phiTab, withoutI):
@@ -81,3 +92,21 @@ class Daalmans(Simplification):
     def solve(self, variables, obj, constraints):
         return self._solver.solve(variables, obj, constraints)
 
+    def finalVerification(self, phi):
+        finalPhiTab = []
+        for formula in phi.children:
+            litteral = formula
+            if(isinstance(formula, Not)):
+                litteral = formula.children
+            isUseless = True
+            for var in litteral.variables.keys():
+                if litteral.variables[var] != 0.:
+                    isUseless = False
+            if not isUseless:
+                finalPhiTab.append(formula)
+
+        res = None
+        for formula in finalPhiTab:
+            if res == None : res = formula
+            else : res &= formula
+        return res

@@ -8,12 +8,17 @@ from linearConstraint import LinearConstraint
 from variable import Variable
 from distanceFunction import DistanceFunction
 from notOperator import Not
+from simplification import Simplification
+from orOperator import Or
 
 class FormulaInterpreter:
-    def __init__(self, mloSolver : MLOSolver, distanceFunction : DistanceFunction, onlyOneSolution : bool) -> None:
+    def __init__(self, mloSolver : MLOSolver, distanceFunction : DistanceFunction, simplification : Simplification, onlyOneSolution : bool) -> None:
         self.__MLOSolver = mloSolver
         self.__distanceFunction = distanceFunction
         self.__onlyOneSolution = onlyOneSolution
+        self.__simplifier = simplification
+        if(self.__simplifier != None):
+            self.__simplifier._interpreter = self
         self._eVar = RealVariable("@")
 
     def simplifyMLC(self, phi : Formula):
@@ -28,7 +33,13 @@ class FormulaInterpreter:
         -------
         res: the formula with mlc simplified
         '''
-        return phi
+        if self.__simplifier == None:
+            return phi
+        else:
+            orChild = []
+            for miniPhi in phi.children:
+                orChild.append(self.__simplifier.run(miniPhi))
+            return Or(formulaSet= set(orChild))
 
     def sat(self, phi : Formula) -> bool:
         '''
@@ -147,14 +158,6 @@ class FormulaInterpreter:
                         constraintP.append(0)
                     constraints.append((constraintP, constraint.operator, constraint.bound))
             i += 1
-        for i in range(0,2):
-            for var in variables:
-                if(var == self._eVar) :
-                    constraintP.append(-1)
-                else :
-                    constraintP.append(0)
-
-        constraints.append((constraintP, ConstraintOperator.LEQ, 0))
         for variable in variables:
             constraintP = []
             constraintN = []

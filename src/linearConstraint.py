@@ -96,8 +96,9 @@ class LinearConstraint(Constraint):
             
             if split.find("*") != -1:
                 (coefString, varName) = split.split("*")
-                var = VariableManager.get(varName)
-                coef = Fraction(coefString)
+                if(varName != "@"):
+                    var = VariableManager.get(varName)
+                    coef = Fraction(coefString)
             else:
                 if split[0] == "-":
                     coef = Fraction("-1")
@@ -108,9 +109,13 @@ class LinearConstraint(Constraint):
             
             if var in self.variables:
                 raise ValueError(f"Duplicate variable {var._name} found")
-            else:
+            elif var != None:
                 self.variables[var] = coef
     
+    def removeE(self):
+        if "@" in self.variables:
+            del self.variables["@"]
+
     def getVariables(self) -> set[Variable]:
         '''
         Method recurcivly returning a set containing all the variables used in
