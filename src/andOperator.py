@@ -36,14 +36,14 @@ class And(NaryFormula):
             The current Formula in Disjunctive Normal Form.
         '''
                 
-        import orOperator
+        from orOperator import Or
         
         dnfChildren = {child.toDNF() for child in self.children}
 			
         orChildren = set()
 			
         for dnfChild in dnfChildren:
-            if isinstance(dnfChild, orOperator.Or):
+            if isinstance(dnfChild, Or):
                 orChildren.add(dnfChild)
 
         dnfChildren = dnfChildren - orChildren
@@ -66,7 +66,7 @@ class And(NaryFormula):
         dnfFormula = [And(formulaSet=comb.union(dnfChildren)) for comb in combinations]
             
         #print(dnfFormula)
-        return orOperator.Or(formulaSet = set(dnfFormula))
+        return Or(formulaSet = set(dnfFormula))
     
     def _toDNFNeg(self) -> Formula:
         '''
@@ -79,9 +79,9 @@ class And(NaryFormula):
             The current Formula in Disjunctive Normal Form under Negation.
         '''
         
-        import orOperator
+        from orOperator import Or
         
-        return orOperator.Or(formulaSet = {child._toDNFNeg() for child in self.children})
+        return Or(formulaSet = {child._toDNFNeg() for child in self.children})
     
     def getAdherence(self, var : Variable) -> list[list[Constraint]]:
         '''
