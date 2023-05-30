@@ -94,7 +94,7 @@ class BinaryFormula(Formula):
             2D list containing all the constraints of discute vraiment de l'implémentationthe adherence of the Formula,
             in Disjunctive Normal Form.
         '''
-        return self._simplify().getAdherence(var)
+        return self._eliminate().getAdherence(var)
 
     def _getAdherenceNeg(self, var : Variable)  -> list[list[Constraint]]:
         '''
@@ -112,7 +112,7 @@ class BinaryFormula(Formula):
             2D list containing all the constraints of the adherence of the Formula,
             in Disjunctive Normal Form under Negation.
         '''
-        return self._simplify()._getAdherenceNeg(var)
+        return self._eliminate()._getAdherenceNeg(var)
     
     def __str__(self):
         return "(" + str(self.children[0]) + ") " + self._symbol +  " (" + str(self.children[1]) + ")"
