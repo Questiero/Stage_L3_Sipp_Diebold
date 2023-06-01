@@ -82,7 +82,7 @@ class FormulaInterpreter:
             
         return False
 
-    def findAllSolutions(self, variables : dict[Variable], phi : And, mu : And) -> tuple[float, Formula]:
+    def findAllSolutions(self, variables : dict[Variable], phi : And, mu : And) -> tuple[Fraction, Formula]:
         '''
          Method used for find all solutions for the optimization of a couple of Formula
 
@@ -98,7 +98,7 @@ class FormulaInterpreter:
         '''
         pass
 
-    def findOneSolution(self, variables : dict[Variable], phi : And, mu : And) -> tuple[float, Formula]:
+    def findOneSolution(self, variables : dict[Variable], phi : And, mu : And) -> tuple[Fraction, Formula]:
         '''
         Method used for find one solution for the optimization of a couple of Formula
 
