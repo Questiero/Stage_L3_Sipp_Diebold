@@ -85,7 +85,7 @@ class Revision:
     def __executeConstraint(self, phi: Formula, mu: Formula) -> tuple[Fraction, Formula]:
         return self.__interpreter.optimizeCouple(phi, mu)
     
-    def __convertExplicit(self, phi: Formula):
+    def __convertExplicit(self, phi: Formula) -> Formula:
         
         if isinstance(phi, And):
             return Or(phi)
