@@ -1,5 +1,4 @@
-from formula import Formula
-from variable import Variable
+from andOperator import And
 from simplification import Simplification
 from daalmans import Daalmans
 from LPSolver import LPSolver
@@ -14,10 +13,12 @@ class Projector:
     def Projector(self, simplification: Simplification = Daalmans(LPSolver())):
         self.__simplifier = simplification
 
-    def projectOn(self, phi: Formula, variables):
+    def projectOn(self, phi: And, variables):
         
         # First step: simplify
         phi = self.__simplifier.run(phi)
 
         # Second step: Find vertex
+
+        #pb avec négations ?
         
