@@ -14,5 +14,5 @@ class Projector:
     def Projector(self, simplification: Simplification = Daalmans(LPSolver())):
         self.__simplifier = simplification
 
-    def projectOn(self, phi: Formula, variables: set(Variable)):
+    def projectOn(self, phi: Formula, variables):
         pass
