@@ -17,6 +17,13 @@ class Variable(ABC):
     def __init__(self, name):
         self.name = name
 
+    @classmethod
+    def declareAnonymous(cls) -> Variable:
+        v = cls("")
+        v.name = id(v)
+        return v 
+
+
     @abstractmethod
     def declare(name : str) -> Variable:
         '''
