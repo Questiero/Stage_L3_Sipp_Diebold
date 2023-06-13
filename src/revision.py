@@ -10,7 +10,6 @@ from notOperator import Not
 from constants import Constants
 from fractions import Fraction
 from simplification import Simplification
-from projector import Projector
 import math
 
 class Revision:
@@ -18,7 +17,6 @@ class Revision:
     __solver : MLOSolver
     __distance : DistanceFunction
     __interpreter : FormulaInterpreter
-    __projector : Projector
     _onlyOneSolution: bool
 
     def __init__(self, solverInit : MLOSolver, distance : DistanceFunction, simplifier : Simplification = None, onlyOneSolution: bool = Constants.ONLY_ONE_SOLUTION):
@@ -26,21 +24,20 @@ class Revision:
         self.__distance = distance 
         self.__interpreter = FormulaInterpreter(solverInit, distance, simplifier, onlyOneSolution)
         self._onlyOneSolution = onlyOneSolution
-        self.__projector = Projector(simplifier)
 
-    def execute(self, psi : Formula, mu : Formula) -> Formula:
-        psiDNF, muDNF = psi.toLessOrEqConstraint().toDNF(), mu.toLessOrEqConstraint().toDNF()
-        return self.__executeDNF(self.__convertExplicit(psiDNF), self.__convertExplicit(muDNF))
+    def execute(self, phi : Formula, mu : Formula) -> Formula:
+        phiDNF, muDNF = phi.toLessOrEqConstraint().toDNF(), mu.toLessOrEqConstraint().toDNF()
+        return self.__executeDNF(self.__convertExplicit(phiDNF), self.__convertExplicit(muDNF))
         
-    def __executeDNF(self, psi: Formula, mu: Formula) -> Formula:
+    def __executeDNF(self, phi: Formula, mu: Formula) -> Formula:
         
         setRes = set()
         disRes = None
         
-        for minipsi in psi.children:
+        for miniPhi in phi.children:
             for miniMu in mu.children:
                 
-                lit = self.__executeLiteral(minipsi, miniMu)
+                lit = self.__executeLiteral(miniPhi, miniMu)
                 
                 if not (lit[0] is None):
                     if (disRes is None):
@@ -57,15 +54,15 @@ class Revision:
                 
         return self.__interpreter.simplifyMLC(Or(formulaSet = setRes).toDNF())
     
-    def __executeLiteral(self, psi: Formula, mu: Formula) -> tuple[Fraction, Formula]:
+    def __executeLiteral(self, phi: Formula, mu: Formula) -> tuple[Fraction, Formula]:
 
         # first step: check if phi and mu are coherent
-        if((not self.__interpreter.sat(psi)) or (not self.__interpreter.sat(mu))):
+        if((not self.__interpreter.sat(phi)) or (not self.__interpreter.sat(mu))):
             return (None, mu) # None = inf
         
         # second step: find dStar
         # just for test
-        dStar, psiPrime = self.__executeConstraint(self.__interpreter.removeNot(psi), self.__interpreter.removeNot(mu))
+        dStar, psiPrime = self.__executeConstraint(self.__interpreter.removeNot(phi), self.__interpreter.removeNot(mu))
         
         # third step: lambdaEpsilon
         epsilon = self.__distance._epsilon
@@ -75,7 +72,7 @@ class Revision:
             lambdaEpsilon = epsilon * math.ceil(dStar / epsilon)
             
         # fourth step: find psiPrime
-        psiPrime = self.__projector.projectOn(And(psi, mu, dist))
+        # TODO le système d'inéquations
     
         # fifth step
         if dStar % epsilon != 0:
@@ -85,8 +82,8 @@ class Revision:
         else:
             return(dStar, psiPrime & mu) # TODO avec système d'inéquation
     
-    def __executeConstraint(self, psi: Formula, mu: Formula) -> tuple[Fraction, Formula]:
-        return self.__interpreter.optimizeCouple(psi, mu)
+    def __executeConstraint(self, phi: Formula, mu: Formula) -> tuple[Fraction, Formula]:
+        return self.__interpreter.optimizeCouple(phi, mu)
     
     def __convertExplicit(self, phi: Formula) -> Formula:
         
