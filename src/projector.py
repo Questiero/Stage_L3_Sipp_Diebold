@@ -15,4 +15,9 @@ class Projector:
         self.__simplifier = simplification
 
     def projectOn(self, phi: Formula, variables):
-        pass
+        
+        # First step: simplify
+        phi = self.__simplifier.run(phi)
+
+        # Second step: Find vertex
+        
