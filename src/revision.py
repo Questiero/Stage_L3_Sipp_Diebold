@@ -148,4 +148,4 @@ class Revision:
             distanceConstraint.variables[z] = self.__distance.getW()
         constraintSet.add(distanceConstraint)
 
-        return self.__projector.projectOn(And(formulaSet = constraintSet), yVariables)
+        return self.__projector.projectOn(And(formulaSet = constraintSet), yVariables.keys())
