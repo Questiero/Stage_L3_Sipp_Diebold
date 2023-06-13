@@ -112,6 +112,7 @@ class Revision:
 
         constraintSet = set()
 
+        # Create x in M(psi) constraints and change variables
         for minipsi in psi.children:
             if isinstance(minipsi, Not):
                 const = minipsi.children.clone()
@@ -143,6 +144,7 @@ class Revision:
             zVariables.append(z)
 
         # TODO change when distance problem is fixed
+        # Generate distance constraint
         distanceConstraint = LinearConstraint(self.__distance.getW() + "*" + zVariables.popitem()[0] + " <= " + str(lambdaEpsilon))
         for z in zVariables:
             distanceConstraint.variables[z] = self.__distance.getW()
