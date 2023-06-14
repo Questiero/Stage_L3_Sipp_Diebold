@@ -145,9 +145,9 @@ class Revision:
 
         # TODO change when distance problem is fixed
         # Generate distance constraint
-        distanceConstraint = LinearConstraint(self.__distance.getW() + "*" + zVariables.popitem()[0] + " <= " + str(lambdaEpsilon))
+        distanceConstraint = LinearConstraint(self.__distance.getWeights() + "*" + zVariables.popitem()[0] + " <= " + str(lambdaEpsilon))
         for z in zVariables:
-            distanceConstraint.variables[z] = self.__distance.getW()
+            distanceConstraint.variables[z] = self.__distance.getWeights()
         constraintSet.add(distanceConstraint)
 
         return self.__projector.projectOn(And(formulaSet = constraintSet), yVariables.keys())

@@ -116,7 +116,7 @@ class FormulaInterpreter:
         constraints = self.__buildConstraints(variables, phi, mu)
 
         obj = [0]*len(variables)*2
-        for variable in variables: obj.append(self.__distanceFunction.getW(variables.index(variable)))
+        for variable in variables: obj.append(self.__distanceFunction.getWeights(variables.index(variable)))
         res = self.__MLOSolver.solve(variables*3, obj, constraints)
         if(not res[0]): 
             raise Exception("Optimize couple impossible") 
