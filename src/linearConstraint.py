@@ -53,9 +53,9 @@ class LinearConstraint(Constraint):
     operator: ConstraintOperator
     bound: Fraction
     
-    def __init__(self, string: str, isEmpty: bool = False):
+    def __init__(self, string: str):
 
-        if(isEmpty):
+        if(string == ""):
             self.variables = {}
             self.operator = ConstraintOperator.LEQ
             self.bound = 0
@@ -227,7 +227,7 @@ class LinearConstraint(Constraint):
         return res
     
     def clone(self) -> LinearConstraint:
-        clonedLc = LinearConstraint("", isEmpty=True)
+        clonedLc = LinearConstraint("")
         clonedLc.variables = self.variables
         clonedLc.operator = self.operator
         clonedLc.bound = self.bound
