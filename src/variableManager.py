@@ -54,6 +54,7 @@ class VariableManager:
         VariableManager.verify(obj.name, obj.__class__)
         if(isinstance(obj, Variable)):
             __class__.instance[obj.name] = obj
+            return obj
         else:
             raise TypeError(f"{obj} is not a Variable.")
     

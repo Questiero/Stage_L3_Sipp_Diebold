@@ -6,6 +6,7 @@ from orOperator import Or
 from andOperator import And
 from unaryFormula import UnaryFormula
 from nullaryFormula import NullaryFormula
+from linearConstraint import LinearConstraint
 from notOperator import Not
 from constants import Constants
 from fractions import Fraction
@@ -72,7 +73,8 @@ class Revision:
             lambdaEpsilon = epsilon * math.ceil(dStar / epsilon)
             
         # fourth step: find psiPrime
-        # TODO le système d'inéquations
+
+        # psiPrime = self.__project(psi, lambdaEpsilon)
     
         # fifth step
         if dStar % epsilon != 0:
@@ -80,7 +82,9 @@ class Revision:
         elif self.__interpreter.sat(psiPrime & mu):
             return (dStar, psiPrime & mu)
         else:
-            return(dStar, psiPrime & mu) # TODO avec système d'inéquation
+            # lambdaEpsilon = dStar + epsilon
+            # psiPrime = self.__project(psi, lambdaEpsilon)
+            return(dStar, psiPrime & mu)
     
     def __executeConstraint(self, phi: Formula, mu: Formula) -> tuple[Fraction, Formula]:
         return self.__interpreter.optimizeCouple(phi, mu)
@@ -99,3 +103,52 @@ class Revision:
                 else:
                     orSet.add(And(miniPhi))
             return Or(formulaSet = orSet)
+
+    def __project(self, psi: And, lambdaEpsilon: Fraction) -> Formula:
+        
+        yVariables = {v: v.declareAnonymous() for v in psi.getVariables()}
+
+        constraintSet = set()
+
+        # Create x in M(psi) constraints and change variables
+        for minipsi in psi.children:
+            if isinstance(minipsi, Not):
+                const = minipsi.children.clone()
+                for key in const.variables:
+                    const[yVariables[key]] = const[key]
+                    del const[key]
+                constraintSet.add(Not(const))
+            else:
+                const = minipsi.clone()
+                for key in const.variables:
+                    const[yVariables[key]] = const[key]
+                    del const[key]
+                constraintSet.add(const)
+
+        # Add distance function constraints
+        zVariables = {v: v.declareAnonymous() for v in psi.getVariables()}
+        for yVar in yVariables:
+            z = zVariables[yVar]
+            # Creating link between x, y and z
+            const = LinearConstraint(yVar.name + "<= 0")
+            const.variables[yVariables[yVar]] = 1
+            const.variables[z] = -1
+            constraintSet.add(const)
+            const = LinearConstraint(yVar.name + ">= 0")
+            const.variables[yVariables[yVar]] = 1
+            const.variables[z] = -1
+            constraintSet.add(const)
+            # Keeping z in memory
+            zVariables[yVar] = z
+
+        # TODO pas sûr de mon code, à tester
+        # Generate distance constraint
+        tempZ = zVariables.popitem()
+        distanceConstraint = LinearConstraint(tempZ[0] + " <= " + str(lambdaEpsilon))
+        distanceConstraint.variables[tempZ[1]] = self.__distance.getWeights()[tempZ[0]]
+        del distanceConstraint.variables[tempZ[0]]
+        for z in zVariables:
+            distanceConstraint.variables[z] = self.__distance.getWeights()[z]
+        constraintSet.add(distanceConstraint)
+
+        return self.__projector.projectOn(And(formulaSet = constraintSet), yVariables.keys())

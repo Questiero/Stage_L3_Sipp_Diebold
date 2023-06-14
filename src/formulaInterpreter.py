@@ -98,7 +98,7 @@ class FormulaInterpreter:
         '''
         pass
 
-    def findOneSolution(self, variables : dict[Variable], phi : And, mu : And) -> tuple[Fraction, Formula]:
+    def findOneSolution(self, variables : list[Variable], phi : And, mu : And) -> tuple[Fraction, Formula]:
         '''
         Method used for find one solution for the optimization of a couple of Formula
 
@@ -116,7 +116,8 @@ class FormulaInterpreter:
         constraints = self.__buildConstraints(variables, phi, mu)
 
         obj = [0]*len(variables)*2
-        for variable in variables: obj.append(self.__distanceFunction.getW(variables.index(variable)))
+        for variable in variables:
+            obj.append(self.__distanceFunction.getWeights()[variable]) #TODO changer ça
         res = self.__MLOSolver.solve(variables*3, obj, constraints)
         if(not res[0]): 
             raise Exception("Optimize couple impossible") 
@@ -128,7 +129,7 @@ class FormulaInterpreter:
                 resSet = resSet.union(set([LinearConstraint(str(variables[i]) + " = " + str(Fraction(values[len(variables)+i])))]))
         return (res[0], And(formulaSet=resSet))
 
-    def __buildConstraints(self, variables : dict[Variable], phi : And, mu : And) -> dict[tuple[dict[Fraction], ConstraintOperator, Fraction]]:
+    def __buildConstraints(self, variables : list[Variable], phi : And, mu : And) -> dict[tuple[dict[Fraction], ConstraintOperator, Fraction]]:
         '''
         Method used to build table of constraints, for the solver, linked to phi and mu
         Attributes
@@ -195,6 +196,7 @@ class FormulaInterpreter:
         variables = list(And(phi,mu).getVariables())
         e = RealVariable("@")
         variables.append(e)
+        self.__distanceFunction.getWeights()[e] = 0
 
         if self.__onlyOneSolution:
             return self.findOneSolution(variables,phi,mu)

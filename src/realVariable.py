@@ -15,8 +15,8 @@ class RealVariable(Variable):
         Name must begin with an alphabet character. It can be followed by alphanumerical character or _.
         Name can't have this symbole : + - * / @
     '''
-    
-    def declare(*lname: str) -> RealVariable:
+
+    def declare(*lname: str) -> list[RealVariable]:
         '''
         Function used to declare a new 
         If this variable already exist and have another type compared to the new declaraton,
@@ -32,10 +32,10 @@ class RealVariable(Variable):
         Variable: variable
             The defined 
         '''
+        vars = []
         for name in lname:
-            VariableManager.verify(name, RealVariable)
-        for name in lname:
-            VariableManager.add(RealVariable(name))
+            vars.append(VariableManager.add(RealVariable(name)))
+        return vars
 
     def haveBound(self) -> tuple[bool, bool]:
         '''
