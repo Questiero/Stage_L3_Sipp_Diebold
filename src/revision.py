@@ -141,13 +141,16 @@ class Revision:
             const.variables[z] = -1
             constraintSet.add(const)
             # Keeping z in memory
-            zVariables.append(z)
+            zVariables[yVar] = z
 
-        # TODO change when distance problem is fixed
+        # TODO pas sûr de mon code, à tester
         # Generate distance constraint
-        distanceConstraint = LinearConstraint(self.__distance.getWeights() + "*" + zVariables.popitem()[0] + " <= " + str(lambdaEpsilon))
+        tempZ = zVariables.popitem()
+        distanceConstraint = LinearConstraint(tempZ[0] + " <= " + str(lambdaEpsilon))
+        distanceConstraint.variables[tempZ[1]] = self.__distance.getWeights()[tempZ[0]]
+        del distanceConstraint.variables[tempZ[0]]
         for z in zVariables:
-            distanceConstraint.variables[z] = self.__distance.getWeights()
+            distanceConstraint.variables[z] = self.__distance.getWeights()[z]
         constraintSet.add(distanceConstraint)
 
         return self.__projector.projectOn(And(formulaSet = constraintSet), yVariables.keys())
