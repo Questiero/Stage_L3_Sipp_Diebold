@@ -10,7 +10,7 @@ class distanceFunctionOnNumericalTuple(DistanceFunction):
         self._domaine = domaine
 
     @abstractmethod
-    def getWeights(self, i : int) -> Fraction:
+    def getWeights(self) -> Fraction:
         pass
 
     @abstractmethod
