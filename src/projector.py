@@ -10,7 +10,7 @@ class Projector:
     """
     By default, used simplifier is a single Daalmans using lp_solve
     """
-    def Projector(self, simplification: Simplification = Daalmans(LPSolver())):
+    def __init__(self, simplification: Simplification = Daalmans(LPSolver())):
         self.__simplifier = simplification
 
     def projectOn(self, phi: And, variables):

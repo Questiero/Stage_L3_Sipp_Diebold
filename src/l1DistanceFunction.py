@@ -19,7 +19,7 @@ class l1DistanceFunction(distanceFunctionOnNumericalTuple):
             res += self._fractions[i] * abs(x[i] - y[i])
         return res
 
-    def getWeights(self, i : int) -> Fraction:
+    def getWeights(self) -> Fraction:
         return self._weights
 
     def getEpsilon(self) -> Fraction:

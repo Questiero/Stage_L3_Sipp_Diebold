@@ -76,7 +76,7 @@ class Revision:
             lambdaEpsilon = epsilon * math.ceil(dStar / epsilon)
             
         # fourth step: find psiPrime
-        psiPrime = self.__project(psi, lambdaEpsilon)
+        # psiPrime = self.__project(psi, lambdaEpsilon)
     
         # fifth step
         if dStar % epsilon != 0:
@@ -84,8 +84,8 @@ class Revision:
         elif self.__interpreter.sat(psiPrime & mu):
             return (dStar, psiPrime & mu)
         else:
-            lambdaEpsilon = dStar + epsilon
-            psiPrime = self.__project(psi, lambdaEpsilon)
+            # lambdaEpsilon = dStar + epsilon
+            # psiPrime = self.__project(psi, lambdaEpsilon)
             return(dStar, psiPrime & mu)
     
     def __executeConstraint(self, psi: Formula, mu: Formula) -> tuple[Fraction, Formula]:

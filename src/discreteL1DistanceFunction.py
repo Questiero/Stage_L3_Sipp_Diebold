@@ -15,7 +15,7 @@ class discreteL1DistanceFunction(distanceFunctionOnNumericalTuple):
     def dist(self, x : tuple, y : tuple):
         return self._epsilon * ceil(self._distance.dist(x,y) / self._epsilon)
     
-    def getWeights(self, i : int) -> Fraction:
+    def getWeights(self) -> Fraction:
         return self._distance.getWeights()
     
     def getEpsilon(self) -> Fraction:

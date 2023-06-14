@@ -16,7 +16,7 @@ class IntegerVariable(Variable):
         Name can't have this symbole : + - * / @
     '''
 
-    def declare(*lname: str) -> None:
+    def declare(*lname: str) -> list[IntegerVariable]:
         '''
         Function used to declare a new 
         If this variable already exist and have another type compared to the new declaraton,
@@ -27,10 +27,10 @@ class IntegerVariable(Variable):
         String: name
             The name of the Variable to be declared.
         '''
+        vars = []
         for name in lname:
-            VariableManager.verify(name, IntegerVariable)
-        for name in lname:
-            VariableManager.add(IntegerVariable(name))
+            vars.append(VariableManager.add(IntegerVariable(name)))
+        return vars
     
     def haveBound(self) -> tuple[bool, bool]:
         '''
