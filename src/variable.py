@@ -20,7 +20,7 @@ class Variable(ABC):
     @classmethod
     def declareAnonymous(cls) -> Variable:
         v = cls("")
-        v.name = id(v)
+        v.name = str(id(v))
         return v 
 
 

@@ -31,7 +31,10 @@ class Daalmans(Simplification):
             for i in range(0, len(obj)) : obj[i] *= -1
             v2 = self.solve(variablesWithE, obj, tabPhi)
             if v1[0] and v2[0] and v1[1][variables.index(var)] == v2[1][variables.index(var)] :
-                newPhi = LinearConstraint(str(var) + " = " + str(v1[2]))
+                newPhi = LinearConstraint("", isEmpty=True)
+                newPhi.variables[var] = 1
+                newPhi.operator = ConstraintOperator.EQ
+                newPhi.bound = v1[2]
                 for constraint in phi.getAdherence(e)[0]:
                     try:
                         constraint.replace(var,v1[2])

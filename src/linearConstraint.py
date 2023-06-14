@@ -53,7 +53,14 @@ class LinearConstraint(Constraint):
     operator: ConstraintOperator
     bound: Fraction
     
-    def __init__(self, string: str):
+    def __init__(self, string: str, isEmpty: bool = False):
+
+        if(isEmpty):
+            self.variables = {}
+            self.operator = ConstraintOperator.LEQ
+            self.bound = 0
+            return None
+
         self.variables = {}
         # rule 1, only accepted characters 
         unknownChar = re.match(r"[^\d a-zA-Z/\*+\-<>=\.]", string)
@@ -203,7 +210,7 @@ class LinearConstraint(Constraint):
         
         '''
         from andOperator import And
-        res = LinearConstraint(str(self))
+        res = self.clone()
 
         if self.operator == ConstraintOperator.GEQ :
             for variable in res.variables.keys():
@@ -211,7 +218,7 @@ class LinearConstraint(Constraint):
             res.bound *= -1
             res.operator = ConstraintOperator.LEQ
         elif self.operator == ConstraintOperator.EQ:
-            res = [LinearConstraint(str(self))]
+            res = [self.clone()]
             res[0].operator = ConstraintOperator.GEQ
             res.append(res[0].toLessOrEqConstraint())
             res[0].operator = ConstraintOperator.LEQ
@@ -220,7 +227,11 @@ class LinearConstraint(Constraint):
         return res
     
     def clone(self) -> LinearConstraint:
-        return LinearConstraint(str(self))
+        clonedLc = LinearConstraint("", isEmpty=True)
+        clonedLc.variables = self.variables
+        clonedLc.operator = self.operator
+        clonedLc.bound = self.bound
+        return clonedLc
     
     def replace(self, variable : Variable, num : Fraction):
         if variable in self.variables:

@@ -127,7 +127,7 @@ class FormulaInterpreter:
         for i in range(0,len(variables)):
             if variables[i].name != "@":
                 resSet = resSet.union(set([LinearConstraint(str(variables[i]) + " = " + str(Fraction(values[len(variables)+i])))]))
-        return (res[0], And(formulaSet=resSet))
+        return (res[2], And(formulaSet=resSet))
 
     def __buildConstraints(self, variables : list[Variable], phi : And, mu : And) -> dict[tuple[dict[Fraction], ConstraintOperator, Fraction]]:
         '''
