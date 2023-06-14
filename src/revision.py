@@ -146,6 +146,7 @@ class Revision:
             zVariables[yVar] = z
 
         # TODO pas sûr de mon code, à tester
+        # TODO fonction de distance, les poids ?
         # Generate distance constraint
         tempZ = zVariables.popitem()
         distanceConstraint = LinearConstraint(str(tempZ[0]) + " <= " + str(lambdaEpsilon))
