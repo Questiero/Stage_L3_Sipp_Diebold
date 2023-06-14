@@ -66,8 +66,8 @@ class Revision:
         
         # second step: find dStar
         # just for test
-        dStar = self.__executeConstraint(self.__interpreter.removeNot(psi), self.__interpreter.removeNot(mu))
-        
+        dStar = self.__executeConstraint(self.__interpreter.removeNot(psi), self.__interpreter.removeNot(mu))[0]
+
         # third step: lambdaEpsilon
         epsilon = self.__distance._epsilon
         if dStar % epsilon == 0:
@@ -110,22 +110,24 @@ class Revision:
         
         yVariables = {v: v.declareAnonymous() for v in psi.getVariables()}
 
-        constraintSet = set()
+        constraints = list()
 
         # Create x in M(psi) constraints and change variables
         for minipsi in psi.children:
             if isinstance(minipsi, Not):
                 const = minipsi.children.clone()
-                for key in const.variables:
-                    const[yVariables[key]] = const[key]
-                    del const[key]
-                constraintSet.add(Not(const))
+                iterVar = const.variables.copy()
+                for key in iterVar:
+                    const.variables[yVariables[key]] = const.variables[key]
+                    del const.variables[key]
+                constraints.append(Not(const))
             else:
                 const = minipsi.clone()
-                for key in const.variables:
-                    const[yVariables[key]] = const[key]
-                    del const[key]
-                constraintSet.add(const)
+                iterVar = const.variables.copy()
+                for key in iterVar:
+                    const.variables[yVariables[key]] = const.variables[key]
+                    del const.variables[key]
+                constraints.append(const)
 
         # Add distance function constraints
         zVariables = {v: v.declareAnonymous() for v in psi.getVariables()}
@@ -135,22 +137,22 @@ class Revision:
             const = LinearConstraint(yVar.name + "<= 0")
             const.variables[yVariables[yVar]] = 1
             const.variables[z] = -1
-            constraintSet.add(const)
+            constraints.append(const)
             const = LinearConstraint(yVar.name + ">= 0")
             const.variables[yVariables[yVar]] = 1
             const.variables[z] = -1
-            constraintSet.add(const)
+            constraints.append(const)
             # Keeping z in memory
             zVariables[yVar] = z
 
         # TODO pas sûr de mon code, à tester
         # Generate distance constraint
         tempZ = zVariables.popitem()
-        distanceConstraint = LinearConstraint(tempZ[0] + " <= " + str(lambdaEpsilon))
+        distanceConstraint = LinearConstraint(str(tempZ[0]) + " <= " + str(lambdaEpsilon))
         distanceConstraint.variables[tempZ[1]] = self.__distance.getWeights()[tempZ[0]]
         del distanceConstraint.variables[tempZ[0]]
         for z in zVariables:
             distanceConstraint.variables[z] = self.__distance.getWeights()[z]
-        constraintSet.add(distanceConstraint)
+        constraints.append(distanceConstraint)
 
-        return self.__projector.projectOn(And(formulaSet = constraintSet), yVariables.keys())
+        return self.__projector.projectOn(And(formulaSet = set(constraints)), yVariables.keys())
