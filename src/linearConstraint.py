@@ -56,9 +56,9 @@ class LinearConstraint(Constraint):
     def __init__(self, string: str):
 
         if(string == ""):
-            self.variables = {}
+            self.variables = dict()
             self.operator = ConstraintOperator.LEQ
-            self.bound = 0
+            self.bound = Fraction("0")
             return None
 
         self.variables = {}

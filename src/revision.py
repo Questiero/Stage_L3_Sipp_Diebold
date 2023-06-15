@@ -10,6 +10,7 @@ from linearConstraint import LinearConstraint
 from notOperator import Not
 from constants import Constants
 from fractions import Fraction
+from constraintOperator import ConstraintOperator
 from simplification import Simplification
 from projector import Projector
 import math
@@ -60,13 +61,13 @@ class Revision:
     
     def __executeLiteral(self, psi: Formula, mu: Formula) -> tuple[Fraction, Formula]:
 
-        # first step: check if phi and mu are coherent
+        # first step: check if psi and mu are coherent
         if((not self.__interpreter.sat(psi)) or (not self.__interpreter.sat(mu))):
             return (None, mu) # None = inf
         
         # second step: find dStar
         # just for test
-        dStar = self.__executeConstraint(self.__interpreter.removeNot(psi), self.__interpreter.removeNot(mu))[0]
+        dStar, psiPrime = self.__executeConstraint(self.__interpreter.removeNot(psi), self.__interpreter.removeNot(mu))[0]
 
         # third step: lambdaEpsilon
         epsilon = self.__distance._epsilon
@@ -76,7 +77,7 @@ class Revision:
             lambdaEpsilon = epsilon * math.ceil(dStar / epsilon)
             
         # fourth step: find psiPrime
-        psiPrime = self.__project(psi, lambdaEpsilon)
+        #psiPrime = self.__project(psi, lambdaEpsilon)
     
         # fifth step
         if dStar % epsilon != 0:
@@ -84,8 +85,8 @@ class Revision:
         elif self.__interpreter.sat(psiPrime & mu):
             return (dStar, psiPrime & mu)
         else:
-            lambdaEpsilon = dStar + epsilon
-            psiPrime = self.__project(psi, lambdaEpsilon)
+         #   lambdaEpsilon = dStar + epsilon
+          #  psiPrime = self.__project(psi, lambdaEpsilon)
             return(dStar, psiPrime & mu)
     
     def __executeConstraint(self, psi: Formula, mu: Formula) -> tuple[Fraction, Formula]:
@@ -148,12 +149,11 @@ class Revision:
         # TODO pas sûr de mon code, à tester
         # TODO fonction de distance, les poids ?
         # Generate distance constraint
-        tempZ = zVariables.popitem()
-        distanceConstraint = LinearConstraint(str(tempZ[0]) + " <= " + str(lambdaEpsilon))
-        distanceConstraint.variables[tempZ[1]] = self.__distance.getWeights()[tempZ[0]]
-        del distanceConstraint.variables[tempZ[0]]
+        distanceConstraint = LinearConstraint("")
+        distanceConstraint.operator = ConstraintOperator.LEQ
+        distanceConstraint.bound = lambdaEpsilon
         for z in zVariables:
-            distanceConstraint.variables[z] = self.__distance.getWeights()[z]
+            distanceConstraint.variables[zVariables[z]] = self.__distance.getWeights()[z]
         constraints.append(distanceConstraint)
 
         return self.__projector.projectOn(And(formulaSet = set(constraints)), yVariables.keys())
