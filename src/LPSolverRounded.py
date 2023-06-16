@@ -17,7 +17,7 @@ class LPSolverRounded(LPSolver):
         res = []
 
         res.append(LPsolverRes[0])
-        res.append([Fraction(round(x, self.__round)) for x in LPsolverRes[1]])
-        res.append(Fraction(round(LPsolverRes[2], self.__round)))
+        res.append([round(Fraction(x), self.__round) for x in LPsolverRes[1]])
+        res.append(round(Fraction(LPsolverRes[2]), self.__round))
 
         return res
