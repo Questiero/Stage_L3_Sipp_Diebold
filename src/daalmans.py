@@ -77,7 +77,7 @@ class Daalmans(Simplification):
 
             actualConstraints.add(~constraint)
             form = And(formulaSet=actualConstraints).toLessOrEqConstraint().toDNF()
-            print(form)
+            #print(form)
             if self._interpreter.sat(form) :
                 actualConstraints.add(constraint)
             actualConstraints.remove(~constraint)
