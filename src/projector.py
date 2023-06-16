@@ -119,9 +119,7 @@ class Projector:
             centroid = np.mean(points, axis=0)
             u, s, vh = np.linalg.svd(points - centroid, full_matrices=False)
             normal = vh[-1]
-
-            #normal = np.gcd.reduce(normal)
-            #print(normal)
+            normal = normal * np.linalg.norm(normal, 1)
             
             # Build constraint
             lc = LinearConstraint("")

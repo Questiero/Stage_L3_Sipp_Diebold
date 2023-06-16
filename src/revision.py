@@ -67,10 +67,6 @@ class Revision:
                 for miniMu in mu.children:
                     
                     lit = self.__executeLiteral(minipsi, miniMu)
-                    print(lit[1])
-                    print("---")
-                    print(self.__interpreter.simplifyMLC(lit[1]))
-                    print("---------------")
                     
                     if not (lit[0] is None):
                         if (disRes is None):

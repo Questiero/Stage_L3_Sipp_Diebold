@@ -20,7 +20,7 @@ phi = LinearConstraint("x >= 0") & LinearConstraint("y >= 0") & LinearConstraint
 mu = (LinearConstraint("x + y >= 6") & LinearConstraint("x - 2*y >= -6") & LinearConstraint("x + 3*y >= 12") & LinearConstraint("x + 1/5*y <= 5"))\
     |(LinearConstraint("x + 1/5*y >= 5") & LinearConstraint("3*x + y >= 16") & LinearConstraint("x - y <= 4") & LinearConstraint("x <= 6") & LinearConstraint("x + y <= 9"))
 
-rev = Revision(solver, discreteL1DistanceFunction(weights, epsilon=Fraction("1/100")), simplifier, onlyOneSolution=False)
+rev = Revision(solver, discreteL1DistanceFunction(weights), simplifier, onlyOneSolution=False)
 res = rev.execute(phi, mu)
 
 print("-------")
