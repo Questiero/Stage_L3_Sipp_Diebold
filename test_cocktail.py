@@ -27,7 +27,7 @@ phi = LinearConstraint("vol_tequila = 4") & LinearConstraint("vol_sirop = 2")\
     & LinearConstraint("vol_jusCitronVert <= 3") & cd
 mu = LinearConstraint("vol_alcool = 0") & cd
 
-rev = Revision(solv,  discreteL1DistanceFunction(weights,epsilon=1), simp, onlyOneSolution=True)
+rev = Revision(solv, discreteL1DistanceFunction(weights), simp, onlyOneSolution=True)
 res = rev.execute(phi, mu)
 
 print(str(res[0]) + "; " + str(res[1]))

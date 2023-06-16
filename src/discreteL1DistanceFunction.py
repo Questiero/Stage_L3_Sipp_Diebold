@@ -8,7 +8,7 @@ from math import ceil
 
 class discreteL1DistanceFunction(distanceFunctionOnNumericalTuple):
 
-    def __init__(self, weights : dict[Variable, Fraction], epsilon : Fraction, domaine : Domain = None):
+    def __init__(self, weights : dict[Variable, Fraction], epsilon : Fraction = Fraction("1e-6"), domaine : Domain = None):
         self._distance = l1DistanceFunction(weights, domaine)
         self._epsilon = epsilon
 

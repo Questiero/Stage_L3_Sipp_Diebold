@@ -12,10 +12,9 @@ from .simplification import Simplification
 from .orOperator import Or
 
 class FormulaInterpreter:
-    def __init__(self, mloSolver : MLOSolver, distanceFunction : DistanceFunction, simplification : Simplification, onlyOneSolution : bool) -> None:
+    def __init__(self, mloSolver : MLOSolver, distanceFunction : DistanceFunction, simplification : Simplification) -> None:
         self.__MLOSolver = mloSolver
         self.__distanceFunction = distanceFunction
-        self.__onlyOneSolution = onlyOneSolution
         self.__simplifier = simplification
         if(self.__simplifier != None):
             self.__simplifier._interpreter = self
@@ -81,22 +80,6 @@ class FormulaInterpreter:
                     return True
             
         return False
-
-    def findAllSolutions(self, variables : dict[Variable], phi : And, mu : And) -> tuple[Fraction, Formula]:
-        '''
-         Method used for find all solutions for the optimization of a couple of Formula
-
-        Attributes
-        ----------
-        variables : list of variables
-        phi : a formula (And)
-        mu : a formula (And)
-
-        Returns
-        -------
-        res: distance between phi and mu, Formula wich symbolize the optimisation between phi and mu
-        '''
-        pass
 
     def findOneSolution(self, variables : list[Variable], phi : And, mu : And) -> tuple[Fraction, Formula]:
         '''
@@ -198,11 +181,7 @@ class FormulaInterpreter:
         variables.append(e)
         self.__distanceFunction.getWeights()[e] = 0
 
-        if self.__onlyOneSolution:
-            return self.findOneSolution(variables,phi,mu)
-        else:
-            return self.findAllSolutions(variables,phi,mu)
-    
+        return self.findOneSolution(variables,phi,mu)    
 
     def removeNot(self, phi: And):
         andSet = set()

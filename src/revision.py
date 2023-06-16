@@ -17,16 +17,14 @@ import math
 
 class Revision:
     
-    __solver : MLOSolver
     __distance : DistanceFunction
     __interpreter : FormulaInterpreter
     __projector : Projector
     _onlyOneSolution: bool
 
     def __init__(self, solverInit : MLOSolver, distance : DistanceFunction, simplifier : Simplification = None, onlyOneSolution: bool = Constants.ONLY_ONE_SOLUTION):
-        self.__solver = solverInit
         self.__distance = distance 
-        self.__interpreter = FormulaInterpreter(solverInit, distance, simplifier, onlyOneSolution)
+        self.__interpreter = FormulaInterpreter(solverInit, distance, simplifier)
         self._onlyOneSolution = onlyOneSolution
         self.__projector = Projector(simplifier)
 
