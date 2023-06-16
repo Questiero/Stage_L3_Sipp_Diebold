@@ -2,8 +2,6 @@ from .LPSolver import LPSolver
 from .constraintOperator import ConstraintOperator
 from fractions import Fraction
 
-import lpsolve55 as lp_solve
-
 class LPSolverRounded(LPSolver):
 
     __round: int
