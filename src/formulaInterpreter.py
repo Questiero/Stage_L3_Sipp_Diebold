@@ -13,12 +13,13 @@ from .orOperator import Or
 from .optimizationValues import OptimizationValues
 
 class FormulaInterpreter:
-    def __init__(self, mloSolver : MLOSolver, distanceFunction : DistanceFunction, simplification : Simplification) -> None:
+    def __init__(self, mloSolver : MLOSolver, distanceFunction : DistanceFunction, simplifications : list[Simplification]) -> None:
         self.__MLOSolver = mloSolver
         self.__distanceFunction = distanceFunction
-        self.__simplifier = simplification
-        if(self.__simplifier != None):
-            self.__simplifier._interpreter = self
+        self.__simplifiers = simplifications
+        if(self.__simplifiers != None):
+            for simplifier in self.__simplifiers:
+                simplifier._interpreter = self
         self._eVar = RealVariable("@")
 
     def simplifyMLC(self, phi : Formula):
@@ -33,13 +34,16 @@ class FormulaInterpreter:
         -------
         res: the formula with mlc simplified
         '''
-        if self.__simplifier == None:
+        if self.__simplifiers == None:
             return phi
         else:
             if not isinstance(phi, Or) : phi = Or(phi)
             orChild = []
             for miniPhi in phi.children:
-                orChild.append(self.__simplifier.run(miniPhi))
+                newMiniPhi = miniPhi
+                for simplifier in self.__simplifiers:
+                    newMiniPhi = simplifier.run(newMiniPhi.toLessOrEqConstraint().toDNF())
+                orChild.append(newMiniPhi)
             return Or(formulaSet= set(orChild))
 
     def sat(self, phi : Formula) -> bool:

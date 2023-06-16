@@ -22,11 +22,11 @@ class Revision:
     __projector : Projector
     _onlyOneSolution: bool
 
-    def __init__(self, solverInit : MLOSolver, distance : DistanceFunction, simplifier : Simplification = None, onlyOneSolution: bool = Constants.ONLY_ONE_SOLUTION):
+    def __init__(self, solverInit : MLOSolver, distance : DistanceFunction, simplifiers : list[Simplification] = None, onlyOneSolution: bool = Constants.ONLY_ONE_SOLUTION):
         self.__distance = distance 
-        self.__interpreter = FormulaInterpreter(solverInit, distance, simplifier)
+        self.__interpreter = FormulaInterpreter(solverInit, distance, simplifiers)
         self._onlyOneSolution = onlyOneSolution
-        self.__projector = Projector(simplifier)
+        self.__projector = Projector(simplifiers[0])
 
     def execute(self, psi : Formula, mu : Formula) -> tuple[Fraction, Formula]:
         psiDNF, muDNF = psi.toLessOrEqConstraint().toDNF(), mu.toLessOrEqConstraint().toDNF()
