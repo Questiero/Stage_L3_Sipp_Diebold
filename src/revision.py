@@ -1,18 +1,18 @@
-from formula import Formula
-from MLOSolver import MLOSolver
-from distanceFunction import DistanceFunction
-from formulaInterpreter import FormulaInterpreter
-from orOperator import Or
-from andOperator import And
-from unaryFormula import UnaryFormula
-from nullaryFormula import NullaryFormula
-from linearConstraint import LinearConstraint
-from notOperator import Not
-from constants import Constants
+from .formula import Formula
+from .MLOSolver import MLOSolver
+from .distanceFunction import DistanceFunction
+from .formulaInterpreter import FormulaInterpreter
+from .orOperator import Or
+from .andOperator import And
+from .unaryFormula import UnaryFormula
+from .nullaryFormula import NullaryFormula
+from .linearConstraint import LinearConstraint
+from .notOperator import Not
+from .constants import Constants
 from fractions import Fraction
-from constraintOperator import ConstraintOperator
-from simplification import Simplification
-from projector import Projector
+from .constraintOperator import ConstraintOperator
+from .simplification import Simplification
+from .projector import Projector
 import math
 
 class Revision:

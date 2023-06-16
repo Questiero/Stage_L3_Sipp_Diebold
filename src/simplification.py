@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
-from andOperator import And
-from constraintOperator import ConstraintOperator
+from .andOperator import And
+from .constraintOperator import ConstraintOperator
 
 class Simplification(ABC):
     def __init__(self, formula : And):

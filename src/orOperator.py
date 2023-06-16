@@ -1,10 +1,10 @@
-from naryFormula import NaryFormula
+from .naryFormula import NaryFormula
 # local import of And
 
 # Typing only imports
-from formula import Formula
-from constraint import Constraint
-from variable import Variable
+from .formula import Formula
+from .constraint import Constraint
+from .variable import Variable
 
 class Or(NaryFormula):
     '''

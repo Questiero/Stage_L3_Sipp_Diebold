@@ -1,10 +1,10 @@
-from naryFormula import NaryFormula
+from .naryFormula import NaryFormula
 # local import of Or
 
 # Typing only imports
-from formula import Formula
-from constraint import Constraint
-from variable import Variable
+from .formula import Formula
+from .constraint import Constraint
+from .variable import Variable
 
 class And(NaryFormula):
     '''
@@ -36,7 +36,7 @@ class And(NaryFormula):
             The current Formula in Disjunctive Normal Form.
         '''
                 
-        from orOperator import Or
+        from .orOperator import Or
         
         dnfChildren = {child.toDNF() for child in self.children}
 			

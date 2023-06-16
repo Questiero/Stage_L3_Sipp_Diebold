@@ -1,8 +1,8 @@
-from formula import Formula
+from .formula import Formula
 
 # Typing only imports
-from variable import Variable
-from constraint import Constraint
+from .variable import Variable
+from .constraint import Constraint
 
 from abc import abstractmethod
 

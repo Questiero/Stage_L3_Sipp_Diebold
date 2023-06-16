@@ -1,7 +1,8 @@
 from __future__ import annotations # used to type hint the class itself
 
-from variable import Variable
-from variableManager import VariableManager
+from .variable import Variable
+from .variableManager import VariableManager
+
 from fractions import Fraction
 
 class IntegerVariable(Variable):

@@ -3,7 +3,7 @@ from __future__ import annotations # used to type hint the class itself
 from abc import ABC, abstractmethod
 
 # Typing only imports
-from variable import Variable
+from .variable import Variable
 # import constraint
 
 class Formula(ABC):
@@ -129,25 +129,25 @@ class Formula(ABC):
         pass
     
     def __or__(self, a):
-        import orOperator
-        return orOperator.Or(self, a)    
+        from .orOperator import Or
+        return Or(self, a)    
     
     def __and__(self, a):
-        import andOperator
-        return andOperator.And(self, a)
+        from .andOperator import And
+        return And(self, a)
     
     def __invert__(self):
-        import notOperator
-        return notOperator.Not(self)
+        from .notOperator import Not
+        return Not(self)
 
     def __floordiv__(self, a):
-        import equivalenceOperator
-        return equivalenceOperator.Equivalence(self, a)
+        from .equivalenceOperator import Equivalence
+        return Equivalence(self, a)
     
     def __ne__(self, a):
-        import xorOperator
-        return xorOperator.Xor(self, a)
+        from .xorOperator import Xor
+        return Xor(self, a)
     
     def __rshift__(self, a):
-        import implicationOperator
-        return implicationOperator.Implication(self, a)
+        from .implicationOperator import Implication
+        return Implication(self, a)

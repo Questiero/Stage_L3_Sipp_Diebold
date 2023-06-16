@@ -1,7 +1,7 @@
-from distanceFunctionOnNumericalTuple import distanceFunctionOnNumericalTuple
-from l1DistanceFunction import l1DistanceFunction
-from domain import Domain
-from variable import Variable
+from .distanceFunctionOnNumericalTuple import distanceFunctionOnNumericalTuple
+from .l1DistanceFunction import l1DistanceFunction
+from .domain import Domain
+from .variable import Variable
 
 from fractions import Fraction
 from math import ceil

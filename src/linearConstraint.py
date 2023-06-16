@@ -1,15 +1,15 @@
 from __future__ import annotations # used to type hint the class itself
 
-from constraint import Constraint
-from variableManager import VariableManager
-from constraintOperator import ConstraintOperator
+from .constraint import Constraint
+from .variableManager import VariableManager
+from .constraintOperator import ConstraintOperator
 
 from fractions import Fraction
 
 import re
 
 # Typing only imports
-from variable import Variable
+from .variable import Variable
 
 class LinearConstraint(Constraint):
     '''
@@ -209,7 +209,7 @@ class LinearConstraint(Constraint):
         res: Formula with only minus or equal constraint
         
         '''
-        from andOperator import And
+        from .andOperator import And
         res = self.clone()
 
         if self.operator == ConstraintOperator.GEQ :

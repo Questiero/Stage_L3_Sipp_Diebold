@@ -1,6 +1,6 @@
-from distanceFunctionOnNumericalTuple import distanceFunctionOnNumericalTuple
-from domain import Domain
-from variable import Variable
+from .distanceFunctionOnNumericalTuple import distanceFunctionOnNumericalTuple
+from .domain import Domain
+from .variable import Variable
 
 from fractions import Fraction
 

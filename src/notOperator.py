@@ -1,9 +1,9 @@
-from unaryFormula import UnaryFormula
+from .unaryFormula import UnaryFormula
 
 # Typing only imports
-from formula import Formula
-from constraint import Constraint
-from variable import Variable
+from .formula import Formula
+from .constraint import Constraint
+from .variable import Variable
 
 class Not(UnaryFormula):
     '''

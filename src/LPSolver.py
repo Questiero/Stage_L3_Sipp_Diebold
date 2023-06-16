@@ -1,6 +1,5 @@
-from MLOSolver import MLOSolver
-from constraintOperator import ConstraintOperator
-from integerVariable import IntegerVariable
+from .MLOSolver import MLOSolver
+from .constraintOperator import ConstraintOperator
 from fractions import Fraction
 
 import lpsolve55 as lp_solve

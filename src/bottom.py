@@ -1,8 +1,8 @@
-from nullaryFormula import NullaryFormula
+from .nullaryFormula import NullaryFormula
 
 # Typing only imports
-from variable import Variable
-from constraint import Constraint
+from .variable import Variable
+from .constraint import Constraint
 
 class Bottom(NullaryFormula):
     '''

@@ -1,7 +1,7 @@
-from binaryFormula import BinaryFormula
+from .binaryFormula import BinaryFormula
 
 # Typing only imports
-from formula import Formula
+from .formula import Formula
 
 class Equivalence(BinaryFormula):
     '''

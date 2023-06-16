@@ -1,4 +1,5 @@
-from variable import Variable
+from .variable import Variable
+
 import re
 
 class VariableManager:

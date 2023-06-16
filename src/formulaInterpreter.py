@@ -1,15 +1,15 @@
-from formula import Formula
-from MLOSolver import MLOSolver
-from realVariable import RealVariable
-from andOperator import And
-from constraintOperator import ConstraintOperator
+from .formula import Formula
+from .MLOSolver import MLOSolver
+from .realVariable import RealVariable
+from .andOperator import And
+from .constraintOperator import ConstraintOperator
 from fractions import Fraction
-from linearConstraint import LinearConstraint
-from variable import Variable
-from distanceFunction import DistanceFunction
-from notOperator import Not
-from simplification import Simplification
-from orOperator import Or
+from .linearConstraint import LinearConstraint
+from .variable import Variable
+from .distanceFunction import DistanceFunction
+from .notOperator import Not
+from .simplification import Simplification
+from .orOperator import Or
 
 class FormulaInterpreter:
     def __init__(self, mloSolver : MLOSolver, distanceFunction : DistanceFunction, simplification : Simplification, onlyOneSolution : bool) -> None:

@@ -1,9 +1,9 @@
-from simplification import Simplification
-from formula import Formula
-from realVariable import RealVariable
-from linearConstraint import LinearConstraint
-from constraintOperator import ConstraintOperator
-from notOperator import Not
+from .simplification import Simplification
+from .formula import Formula
+from .realVariable import RealVariable
+from .linearConstraint import LinearConstraint
+from .constraintOperator import ConstraintOperator
+from .notOperator import Not
 
 class Daalmans(Simplification):
     _interpreter = None

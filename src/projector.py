@@ -1,7 +1,7 @@
-from andOperator import And
-from simplification import Simplification
-from daalmans import Daalmans
-from LPSolver import LPSolver
+from .andOperator import And
+from .simplification import Simplification
+from .daalmans import Daalmans
+from .LPSolver import LPSolver
 
 class Projector:
 

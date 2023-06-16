@@ -1,4 +1,4 @@
-from nullaryFormula import NullaryFormula
+from .nullaryFormula import NullaryFormula
 
 class Constraint(NullaryFormula):
     '''

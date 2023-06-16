@@ -1,12 +1,12 @@
-from formula import Formula
+from .formula import Formula
 from pyparsing import Literal, Word, srange, infix_notation, OpAssoc, ParseResults, ParserElement
-from notOperator import Not
-from andOperator import And
-from orOperator import Or
-from xorOperator import Xor
-from implicationOperator import Implication
-from equivalenceOperator import Equivalence
-from constants import Constants
+from .notOperator import Not
+from .andOperator import And
+from .orOperator import Or
+from .xorOperator import Xor
+from .implicationOperator import Implication
+from .equivalenceOperator import Equivalence
+from .constants import Constants
 
 class FormulaManager():
 

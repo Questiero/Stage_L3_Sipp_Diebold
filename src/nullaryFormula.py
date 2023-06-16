@@ -1,4 +1,4 @@
-from formula import Formula
+from .formula import Formula
 #local import of Not
 
 class NullaryFormula(Formula):
