@@ -31,7 +31,7 @@ class Projector:
         # Second step: Get all variables
         variables = list(phi.getVariables())
 
-        # Second step: Get all hyperplanes
+        # Third step: Get all hyperplanes
         hyperplanes = list()
 
         for miniPhi in phi.children:
@@ -52,7 +52,7 @@ class Projector:
 
             hyperplanes.append((hypVar, c.bound))
 
-        # Third step: Get all non parallel combinations
+        # Fourth step: Get all non parallel combinations
         nonParallelCombinations = list()
 
         for hyperplaneCombination in itertools.combinations(hyperplanes, len(phi.getVariables())):
@@ -71,8 +71,9 @@ class Projector:
             if not foundParallel:
                 nonParallelCombinations.append(hyperplaneCombination)
 
-        # Fourth step: Get all vertex from combinations
+        # Fifth step: Get all vertex from combinations
 
 
-        # Fifth step: Get outside vertex
+
+        # Sixth step: Get outside vertex
         
