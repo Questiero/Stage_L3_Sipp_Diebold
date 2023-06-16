@@ -1,6 +1,6 @@
 from .andOperator import And
 from .simplification import Simplification
-from .daalmans import Daalmans
+from .caron import Caron
 from .LPSolver import LPSolver
 from .linearConstraint import LinearConstraint
 from .notOperator import Not
@@ -20,7 +20,7 @@ class Projector:
     """
     By default, used simplifier is a single Daalmans using lp_solve
     """
-    def __init__(self, simplification: Simplification = Daalmans(LPSolver())):
+    def __init__(self, simplification: list[Simplification] = [Caron(LPSolver())]):
         self.__simplifier = simplification
 
     def projectOn(self, phi: And, variables: set[Variable]):
@@ -28,7 +28,8 @@ class Projector:
         #TODO Négation ?
 
         # First step: simplify
-        phi = self.__simplifier.run(phi)
+        for simplifier in self.__simplifier:
+            phi = simplifier.run(phi)
 
         # Second step: Get all variables
         allVariables = list(phi.getVariables())
@@ -118,6 +119,9 @@ class Projector:
             centroid = np.mean(points, axis=0)
             u, s, vh = np.linalg.svd(points - centroid, full_matrices=False)
             normal = vh[-1]
+
+            #normal = np.gcd.reduce(normal)
+            #print(normal)
             
             # Build constraint
             lc = LinearConstraint("")

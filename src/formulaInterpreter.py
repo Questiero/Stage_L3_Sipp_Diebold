@@ -17,9 +17,10 @@ class FormulaInterpreter:
         self.__MLOSolver = mloSolver
         self.__distanceFunction = distanceFunction
         self.__simplifiers = simplifications
-        if(self.__simplifiers != None):
-            for simplifier in self.__simplifiers:
-                simplifier._interpreter = self
+
+        for simplifier in self.__simplifiers:
+            simplifier._interpreter = self
+            
         self._eVar = RealVariable("@")
 
     def simplifyMLC(self, phi : Formula):

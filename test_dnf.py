@@ -3,7 +3,10 @@ from src.LPSolverRounded import LPSolverRounded
 from src.revision import Revision
 from src.realVariable import RealVariable
 from src.discreteL1DistanceFunction import discreteL1DistanceFunction
+from src.caron import Caron
 from src.daalmans import Daalmans
+
+from fractions import Fraction
 
 weights = {
     RealVariable.declare("x"): 1,
@@ -11,13 +14,13 @@ weights = {
 }
 
 solver = LPSolverRounded()
-simplifier = Daalmans(solver)
+simplifier = [Caron(solver), Daalmans(solver)]
 
 phi = LinearConstraint("x >= 0") & LinearConstraint("y >= 0") & LinearConstraint("x + y <= 4")
 mu = (LinearConstraint("x + y >= 6") & LinearConstraint("x - 2*y >= -6") & LinearConstraint("x + 3*y >= 12") & LinearConstraint("x + 1/5*y <= 5"))\
     |(LinearConstraint("x + 1/5*y >= 5") & LinearConstraint("3*x + y >= 16") & LinearConstraint("x - y <= 4") & LinearConstraint("x <= 6") & LinearConstraint("x + y <= 9"))
 
-rev = Revision(solver, discreteL1DistanceFunction(weights), simplifier, onlyOneSolution=False)
+rev = Revision(solver, discreteL1DistanceFunction(weights, epsilon=Fraction("1/100")), simplifier, onlyOneSolution=False)
 res = rev.execute(phi, mu)
 
 print("-------")
