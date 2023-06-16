@@ -108,7 +108,7 @@ class Projector:
         # Seventh step: Get convex Hull
         hull = ConvexHull(projectedVertices)
 
-        print(hull.vertices)
+        print(hull.equations)
 
         # Get constraints from hull equations
         #TODO know which constraint operator to use
@@ -123,4 +123,5 @@ class Projector:
             lc.bound = round(Fraction(eq[-1]), 12)
             constraintSet.add(lc)
 
-        print(self.__simplifier.run(And(formulaSet = constraintSet)))
+        print(And(formulaSet = constraintSet))
+        return And(formulaSet = constraintSet)
