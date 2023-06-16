@@ -94,7 +94,6 @@ class Revision:
             return(self.__executeConstraint(self.__interpreter.removeNot(psi), self.__interpreter.removeNot(mu)))
 
         # second step: find dStar
-        # just for test
         dStar = self.__executeConstraint(self.__interpreter.removeNot(psi), self.__interpreter.removeNot(mu))[0]
 
         # third step: lambdaEpsilon
