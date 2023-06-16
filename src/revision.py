@@ -30,34 +30,58 @@ class Revision:
         self._onlyOneSolution = onlyOneSolution
         self.__projector = Projector(simplifier)
 
-    def execute(self, psi : Formula, mu : Formula) -> Formula:
+    def execute(self, psi : Formula, mu : Formula) -> tuple[Fraction, Formula]:
         psiDNF, muDNF = psi.toLessOrEqConstraint().toDNF(), mu.toLessOrEqConstraint().toDNF()
         return self.__executeDNF(self.__convertExplicit(psiDNF), self.__convertExplicit(muDNF))
         
-    def __executeDNF(self, psi: Formula, mu: Formula) -> Formula:
+    def __executeDNF(self, psi: Formula, mu: Formula) -> tuple[Fraction, Formula]:
         
-        setRes = set()
+        res = None
         disRes = None
-        
-        for minipsi in psi.children:
-            for miniMu in mu.children:
-                
-                lit = self.__executeLiteral(minipsi, miniMu)
-                
-                if not (lit[0] is None):
-                    if (disRes is None):
-                        disRes = lit[0]
-                        setRes = {lit[1]}
-                    elif (disRes == lit[0]):
-                        setRes.add(lit[1])
-                    elif (disRes > lit[0]):
-                        disRes = lit[0]
-                        setRes = {lit[1]}
-                else:
-                    if (disRes is None):
-                        setRes.add(lit[1])
-                
-        return self.__interpreter.simplifyMLC(Or(formulaSet = setRes).toDNF())
+
+        if(self._onlyOneSolution):
+            
+            for minipsi in psi.children:
+                for miniMu in mu.children:
+                    
+                    lit = self.__executeLiteral(minipsi, miniMu)
+                    
+                    if not (lit[0] is None):
+                        if (res is None):
+                            disRes = lit[0]
+                            res = lit[1]
+                        elif (disRes > lit[0]):
+                            disRes = lit[0]
+                            res = lit[1]
+                    else:
+                        if (disRes is None) & (res is None):
+                            res = lit[1]
+
+        else:
+
+            setRes = set()
+            
+            for minipsi in psi.children:
+                for miniMu in mu.children:
+                    
+                    lit = self.__executeLiteral(minipsi, miniMu)
+                    
+                    if not (lit[0] is None):
+                        if (disRes is None):
+                            disRes = lit[0]
+                            setRes = {lit[1]}
+                        elif (disRes == lit[0]):
+                            setRes.add(lit[1])
+                        elif (disRes > lit[0]):
+                            disRes = lit[0]
+                            setRes = {lit[1]}
+                    else:
+                        if (disRes is None):
+                            setRes.add(lit[1])
+            
+            res = self.__interpreter.simplifyMLC(Or(formulaSet = setRes).toDNF())
+
+        return (disRes, res)
     
     def __executeLiteral(self, psi: Formula, mu: Formula) -> tuple[Fraction, Formula]:
 
@@ -65,9 +89,13 @@ class Revision:
         if((not self.__interpreter.sat(psi)) or (not self.__interpreter.sat(mu))):
             return (None, mu) # None = inf
         
+        # Test if onlyOneSolution
+        if(self._onlyOneSolution):
+            return(self.__executeConstraint(self.__interpreter.removeNot(psi), self.__interpreter.removeNot(mu)))
+
         # second step: find dStar
         # just for test
-        dStar, psiPrime = self.__executeConstraint(self.__interpreter.removeNot(psi), self.__interpreter.removeNot(mu))
+        dStar = self.__executeConstraint(self.__interpreter.removeNot(psi), self.__interpreter.removeNot(mu))[0]
 
         # third step: lambdaEpsilon
         epsilon = self.__distance._epsilon
@@ -77,7 +105,7 @@ class Revision:
             lambdaEpsilon = epsilon * math.ceil(dStar / epsilon)
             
         # fourth step: find psiPrime
-        #psiPrime = self.__project(psi, lambdaEpsilon)
+        psiPrime = self.__project(psi, lambdaEpsilon)
     
         # fifth step
         if dStar % epsilon != 0:
@@ -85,8 +113,8 @@ class Revision:
         elif self.__interpreter.sat(psiPrime & mu):
             return (dStar, psiPrime & mu)
         else:
-         #   lambdaEpsilon = dStar + epsilon
-          #  psiPrime = self.__project(psi, lambdaEpsilon)
+            lambdaEpsilon = dStar + epsilon
+            psiPrime = self.__project(psi, lambdaEpsilon)
             return(dStar, psiPrime & mu)
     
     def __executeConstraint(self, psi: Formula, mu: Formula) -> tuple[Fraction, Formula]:
