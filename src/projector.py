@@ -2,8 +2,9 @@ from .andOperator import And
 from .simplification import Simplification
 from .daalmans import Daalmans
 from .LPSolver import LPSolver
-from .constraintOperator import ConstraintOperator
+from .linearConstraint import LinearConstraint
 from .notOperator import Not
+from .constraintOperator import ConstraintOperator
 
 from .variable import Variable
 
@@ -31,6 +32,7 @@ class Projector:
 
         # Second step: Get all variables
         allVariables = list(phi.getVariables())
+        variables = list(variables)
 
         # Third step: Get all hyperplanes
         hyperplanes = list()
@@ -88,23 +90,35 @@ class Projector:
                 pass
 
         vertex = np.array(vertex)
+        print(vertex)
         
         # Sixth step: project all vertex
-        variablesToProject = np.array([], dtype=bool)
+        variablesBool = np.array([], dtype=bool)
         for var in allVariables:
             if var in variables:
-                variablesToProject = np.append(variablesToProject, True)
+                variablesBool = np.append(variablesBool, True)
             else:
-                variablesToProject = np.append(variablesToProject, False)
+                variablesBool = np.append(variablesBool, False)
 
         projectedVertex = list()
         for v in vertex:
-            print(v[variablesToProject])
-            projectedVertex.append(v[variablesToProject])
+            projectedVertex.append(v[variablesBool])
 
         projectedVertex = np.array(projectedVertex)
 
-        print(projectedVertex)
-
         # Seventh step: Get convex Hull
         hull = ConvexHull(projectedVertex)
+
+        # Get constraints from hull equations
+        constraintSet = set()
+        for eq in hull.equations:
+            lc = LinearConstraint("")
+            for i in range(len(variables)):
+                coef = round(Fraction(eq[i]), 12)
+                if coef != 0:
+                    lc.variables[variables[i]] = round(Fraction(eq[i]), 12)
+            lc.operator = ConstraintOperator.EQ
+            lc.bound = round(Fraction(eq[-1]), 12)
+            constraintSet.add(lc)
+
+        print(self.__simplifier.run(And(formulaSet = constraintSet)))
