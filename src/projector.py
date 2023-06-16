@@ -110,6 +110,7 @@ class Projector:
         hull = ConvexHull(projectedVertex)
 
         # Get constraints from hull equations
+        #TODO know which constraint operator to use
         constraintSet = set()
         for eq in hull.equations:
             lc = LinearConstraint("")
