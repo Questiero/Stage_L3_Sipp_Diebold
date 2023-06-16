@@ -108,7 +108,12 @@ class Projector:
         # Seventh step: Get convex Hull
         hull = ConvexHull(projectedVertices)
 
-        print(hull.equations)
+        for simplex in hull.simplices:
+            print("-----")
+            print(projectedVertices[simplex, 0])
+            print("---")
+            print(projectedVertices[simplex, 1])
+            print("-----")
 
         # Get constraints from hull equations
         #TODO know which constraint operator to use
