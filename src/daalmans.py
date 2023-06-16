@@ -4,6 +4,9 @@ from .realVariable import RealVariable
 from .linearConstraint import LinearConstraint
 from .constraintOperator import ConstraintOperator
 from .notOperator import Not
+from.andOperator import And
+from .optimizationValues import OptimizationValues
+from.nullaryFormula import NullaryFormula
 
 class Daalmans(Simplification):
     _interpreter = None
@@ -12,108 +15,75 @@ class Daalmans(Simplification):
     
     def run(self, phi):
         if not self._interpreter.sat(phi): return phi
-        phiPrime = self.deleteConstraint(self.fixedVariables(phi))
-        return self.finalVerification(phiPrime)
+        if isinstance(phi, NullaryFormula): phi = And(phi)
+        phiPrime = self.fixedVariables(phi)
+        phiPrime = self.deleteConstraint(phiPrime)
+        return phiPrime
     
     def fixedVariables(self, phi : Formula) -> Formula:
-        variables = list(phi.getVariables())
-        variablesWithE = variables
+        variablesToAnalyse = list(phi.getVariables())
+        objectivFunction = [0] * (len(variablesToAnalyse) + 1)
+        index = 0
         e = RealVariable("@")
-        variablesWithE.append(e)
+        tabPhi = self.toTab(phi, e)
+        variables = variablesToAnalyse + [e]
+        fixedVariables = {}
 
-        for var in variables:
-            tabPhi = self.toTab(phi,e)
-            obj = []
-            for var2 in variablesWithE:
-                if var == var2: obj.append(1)
-                else: obj.append(0)
-            v1 = self.solve(variablesWithE, obj, tabPhi)
-            for i in range(0, len(obj)) : obj[i] *= -1
-            v2 = self.solve(variablesWithE, obj, tabPhi)
-            if v1[0] and v2[0] and v1[1][variables.index(var)] == v2[1][variables.index(var)] :
-                newPhi = LinearConstraint("")
-                newPhi.variables[var] = 1
-                newPhi.operator = ConstraintOperator.EQ
-                newPhi.bound = v1[2]
-                for constraint in phi.getAdherence(e)[0]:
-                    try:
-                        constraint.replace(var,v1[2])
-                        if e in constraint.variables:
-                            del constraint.variables[e]
-                            newPhi = newPhi & ~constraint
-                        else:
-                            newPhi = newPhi & constraint
-                    except:
-                        pass
-                phi = newPhi
+        # For each variable x 
+        for variable in variablesToAnalyse:
+            # We will analyse the optimal value of the variable when we wants to maximize x and minimize x
+            objectivFunction[index] = 1
+            v1 = self.solve(variables, objectivFunction, tabPhi)
+            objectivFunction[index] = -1
+            v2 = self.solve(variables, objectivFunction, tabPhi)
+            objectivFunction[index] = 0
+            if v1[0] == OptimizationValues.OPTIMAL and v2[0] == OptimizationValues.OPTIMAL and v1[1][index] == v2[1][index] :
+                # If x can have only one value, it is a fixed variable
+                fixedVariables[variable] = v1[1][index]
+
+            index += 1
+        return self.__removeVariables(phi, fixedVariables)
+
+    def __removeVariables(self, phi : Formula, fixedVariables : dict):
+        for variable in fixedVariables.keys():
+            newChildren = set()
+            for litteral in phi.children:
+                try:
+                    if isinstance(litteral, Not) :
+                        litteral.children.replace(variable, -fixedVariables[variable])
+                    else:
+                        litteral.replace(variable, fixedVariables[variable])
+                    newChildren.add(litteral)
+                except:
+                    # If the constraint is now useless, we dont keep it in the children of the formula
+                    pass
+            phi.children = newChildren
+            
+            # We adding = constraint between x and his only possible value
+            newConstraint =  LinearConstraint("")
+            newConstraint.variables[variable] = 1
+            newConstraint.operator = ConstraintOperator.EQ
+            newConstraint.bound = fixedVariables[variable]
+            phi = phi & newConstraint
         return phi
+            
 
     def deleteConstraint(self, phi : Formula) -> Formula:
-        e = RealVariable("@")
-        phiTab = phi.getAdherence(e)[0]
-        i = 0
+        actualConstraints : set
+        actualConstraints = phi.children.copy()
+        for constraint in phi.children:
+            actualConstraints.remove(constraint)
 
-        while i < len(phiTab):
-            c = phiTab[i]
-            if len(c.variables) == 1 and c.operator == ConstraintOperator.EQ:
-                try:
-                    tmpf = self.createPhi(phiTab, [i])
-                    f1 = tmpf & ~LinearConstraint(str(phiTab[i]).replace('=', '<='))
-                    f2 = tmpf & ~LinearConstraint(str(phiTab[i]).replace('=', '>='))
-                except:
-                    f1 = ~LinearConstraint(str(phiTab[i]).replace('=', '<='))
-                    f2 = ~LinearConstraint(str(phiTab[i]).replace('=', '>='))
-                res = self._interpreter.sat((~ (f1 | f2)).toLessOrEqConstraint().toDNF())
+            actualConstraints.add(~constraint)
+            if self._interpreter.sat(And(formulaSet=actualConstraints).toLessOrEqConstraint().toDNF()) :
+                actualConstraints.add(constraint)
             else:
-                try:
-                    f = self.createPhi(phiTab, [i]) & ~ phiTab[i]
-                except:
-                    f = ~ phiTab[i]
-                res = self._interpreter.sat(f.toLessOrEqConstraint().toDNF())
-            if not res:
-                phiTab.remove(phiTab[i])
-            else:
-                i += 1
-        phiAnalyse = phiTab
-        phiTab = []
-        for litteral in phiAnalyse:
-            if e in litteral.variables:
-                del litteral.variables[e]
-                phiTab.append(~litteral)
-            else:
-                phiTab.append(litteral)
-        return self.createPhi(phiTab, [-1])
+                print("delete ", constraint)
+            actualConstraints.remove(~constraint)
 
-    def createPhi(self, phiTab, withoutI):
-        phi = phiTab[0]
-        if 0 in withoutI:
-            if len(phiTab) < 2: raise Exception("Heu")
-            phi = phiTab[1] 
-        for i in range(0, len(phiTab)):
-            if not i in withoutI:
-                phi = phi & phiTab[i]
-
-        return phi
+        return And(formulaSet=actualConstraints)
 
     
     def solve(self, variables, obj, constraints):
         return self._solver.solve(variables, obj, constraints)
 
-    def finalVerification(self, phi):
-        finalPhiTab = []
-        for formula in phi.children:
-            litteral = formula
-            if(isinstance(formula, Not)):
-                litteral = formula.children
-            isUseless = True
-            for var in litteral.variables.keys():
-                if litteral.variables[var] != 0.:
-                    isUseless = False
-            if not isUseless:
-                finalPhiTab.append(formula)
-
-        res = None
-        for formula in finalPhiTab:
-            if res == None : res = formula
-            else : res &= formula
-        return res

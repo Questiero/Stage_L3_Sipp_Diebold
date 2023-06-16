@@ -10,6 +10,7 @@ from .distanceFunction import DistanceFunction
 from .notOperator import Not
 from .simplification import Simplification
 from .orOperator import Or
+from .optimizationValues import OptimizationValues
 
 class FormulaInterpreter:
     def __init__(self, mloSolver : MLOSolver, distanceFunction : DistanceFunction, simplification : Simplification) -> None:
@@ -35,6 +36,7 @@ class FormulaInterpreter:
         if self.__simplifier == None:
             return phi
         else:
+            if not isinstance(phi, Or) : phi = Or(phi)
             orChild = []
             for miniPhi in phi.children:
                 orChild.append(self.__simplifier.run(miniPhi))
@@ -73,11 +75,13 @@ class FormulaInterpreter:
                 else :
                     constraintP.append(0)
             constraints.append((constraintP, ConstraintOperator.LEQ, 0))
-                    
+
             res = self.__MLOSolver.solve(variables, list(map(lambda v : -1 if v == self._eVar else 0, variables)), constraints)
-            if res[0] :
+            if res[0] == OptimizationValues.OPTIMAL :
                 if res[1][variables.index(self._eVar)] != 0:
                     return True
+            if res[0] == OptimizationValues.UNBOUNDED:
+                return True
             
         return False
 
@@ -102,7 +106,7 @@ class FormulaInterpreter:
         for variable in variables:
             obj.append(self.__distanceFunction.getWeights()[variable])
         res = self.__MLOSolver.solve(variables*3, obj, constraints)
-        if(not res[0]): 
+        if(res[0] == OptimizationValues.INFEASIBLE): 
             raise Exception("Optimize couple impossible") 
         
         values = res[1]

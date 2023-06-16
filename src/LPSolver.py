@@ -1,7 +1,7 @@
 from .MLOSolver import MLOSolver
 from .constraintOperator import ConstraintOperator
 from fractions import Fraction
-
+from .optimizationValues import OptimizationValues
 import lpsolve55 as lp_solve
 
 class LPSolver(MLOSolver):
@@ -22,7 +22,7 @@ class LPSolver(MLOSolver):
             else:
                 lower, upper = variables[i].getBounds()
                 if(lower == None): lower = -1e30
-                if(upper == None): upper = 1.7976931348623157e+308
+                if(upper == None): upper = 1e30
                 lp_solve.lpsolve('set_bounds', lp, i+1)
 
         lp_solve.lpsolve('set_obj', lp, objectif)
@@ -35,9 +35,8 @@ class LPSolver(MLOSolver):
             lp_solve.lpsolve('add_constraint', lp, constraint[0], comp, constraint[2])
         tmp = lp_solve.lpsolve('solve', lp)
         if tmp not in [0,3]:
-            return (False, [], 0)
+            return (OptimizationValues.INFEASIBLE, [], 0)
         if tmp == 3:
             val = lp_solve.lpsolve('get_variables', lp)[0]
-            val[len(val)-1] = 10e+20
-            return (True, val, lp_solve.lpsolve('get_objective', lp))
-        return (True, lp_solve.lpsolve('get_variables', lp)[0], lp_solve.lpsolve('get_objective', lp))
+            return (OptimizationValues.UNBOUNDED, val, lp_solve.lpsolve('get_objective', lp))
+        return (OptimizationValues.OPTIMAL, lp_solve.lpsolve('get_variables', lp)[0], lp_solve.lpsolve('get_objective', lp))

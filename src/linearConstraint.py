@@ -166,7 +166,8 @@ class LinearConstraint(Constraint):
             in Disjunctive Normal Form under Negation.
         '''
         copyConstrainte = self.clone()
-
+        for variable in copyConstrainte.variables.keys():
+            copyConstrainte.variables[variable] *= -1
         copyConstrainte.variables[var] = Fraction(1,1)
         res = [[copyConstrainte]]
 
