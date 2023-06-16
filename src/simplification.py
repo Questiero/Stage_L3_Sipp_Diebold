@@ -20,8 +20,10 @@ class Simplification(ABC):
                     else:
                         constraintP.append(0)
                 constraints.append((constraintP, constraint.operator, constraint.bound))
-
-        return constraints
+        lastConstraint = []
+        for variable in variables: 
+            lastConstraint.append(-1 if variable == e else 0)
+        return constraints + [(lastConstraint, ConstraintOperator.LEQ, 0)]
 
     @abstractmethod
     def run(self) -> None:
