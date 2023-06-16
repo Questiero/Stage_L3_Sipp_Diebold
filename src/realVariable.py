@@ -16,7 +16,7 @@ class RealVariable(Variable):
         Name can't have this symbole : + - * / @
     '''
 
-    def declare(*lname: str) -> list[RealVariable]:
+    def declare(name: str) -> RealVariable:
         '''
         Function used to declare a new 
         If this variable already exist and have another type compared to the new declaraton,
@@ -26,11 +26,19 @@ class RealVariable(Variable):
         ----------
         String: name
             The name of the Variable to be declared.
+        '''
+        return VariableManager.add(RealVariable(name))
+    
+    def declareBulk(*lname: str) -> list[RealVariable]:
+        '''
+        Function used to declare a new 
+        If this variable already exist and have another type compared to the new declaraton,
+        This function will raise an Exception.
 
-        Returns
-        -------
-        Variable: variable
-            The defined 
+        Attributes
+        ----------
+        String: name
+            The name of the Variable to be declared.
         '''
         vars = []
         for name in lname:
