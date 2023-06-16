@@ -74,8 +74,8 @@ class Projector:
         #    if not foundParallel:
         #        nonParallelCombinations.append(hyperplaneCombination)
 
-        # Fifth step: Get all vertex from combinations
-        vertex = list()
+        # Fifth step: Get all vertices from combinations
+        vertices = list()
 
         for comb in nonParallelCombinations:
             a = []
@@ -85,14 +85,14 @@ class Projector:
                 b.append(float(hyperplane[1]))
 
             try:
-                vertex.append(np.linalg.solve(a, b))    
+                vertices.append(np.linalg.solve(a, b))    
             except (np.linalg.LinAlgError):
                 pass
 
-        vertex = np.array(vertex)
-        print(vertex)
+        vertices = np.array(vertices)
+        print(vertices)
         
-        # Sixth step: project all vertex
+        # Sixth step: project all vertices
         variablesBool = np.array([], dtype=bool)
         for var in allVariables:
             if var in variables:
@@ -100,14 +100,16 @@ class Projector:
             else:
                 variablesBool = np.append(variablesBool, False)
 
-        projectedVertex = list()
-        for v in vertex:
-            projectedVertex.append(v[variablesBool])
+        projectedVertices = list()
+        for v in vertices:
+            projectedVertices.append(v[variablesBool])
 
-        projectedVertex = np.array(projectedVertex)
+        projectedVertices = np.array(projectedVertices)
 
         # Seventh step: Get convex Hull
-        hull = ConvexHull(projectedVertex)
+        hull = ConvexHull(projectedVertices)
+
+        print(hull.vertices)
 
         # Get constraints from hull equations
         #TODO know which constraint operator to use
