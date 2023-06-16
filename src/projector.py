@@ -90,7 +90,6 @@ class Projector:
                 pass
 
         vertices = np.array(vertices)
-        print(vertices)
         
         # Sixth step: project all vertices
         variablesBool = np.array([], dtype=bool)
