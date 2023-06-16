@@ -72,8 +72,7 @@ class Projector:
                 nonParallelCombinations.append(hyperplaneCombination)
 
         # Fifth step: Get all vertex from combinations
-
-
+        
 
         # Sixth step: Get outside vertex
         
