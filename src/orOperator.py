@@ -49,7 +49,7 @@ class Or(NaryFormula):
             The current Formula in Disjunctive Normal Form under Negation.
         '''
         
-        from andOperator import And
+        from .andOperator import And
         
         dnfChildren = {child._toDNFNeg() for child in self.children}
 			

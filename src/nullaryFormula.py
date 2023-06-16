@@ -42,6 +42,6 @@ class NullaryFormula(Formula):
             The current Formula in Disjunctive Normal Form under Negation. Since
             the arity is null, returns Not(self).
         '''
-        from notOperator import Not
+        from .notOperator import Not
 
         return Not(self)

@@ -47,7 +47,7 @@ class Revision:
                     lit = self.__executeLiteral(minipsi, miniMu)
                     
                     if not (lit[0] is None):
-                        if (res is None):
+                        if (disRes is None):
                             disRes = lit[0]
                             res = lit[1]
                         elif (disRes > lit[0]):
