@@ -1,5 +1,5 @@
 from src.linearConstraint import LinearConstraint
-from src.LPSolver import LPSolver
+from src.LPSolverRounded import LPSolverRounded
 from src.revision import Revision
 from src.integerVariable import IntegerVariable
 from src.realVariable import RealVariable
@@ -16,7 +16,7 @@ weights = {
     RealVariable.declare("pouvoirSucrant"): 20,
 }
 
-solv = LPSolver()
+solv = LPSolverRounded()
 simp = Daalmans(solv)
 
 cd = LinearConstraint("vol_tequila >= 0") & LinearConstraint("vol_vodka >= 0")\
@@ -30,4 +30,5 @@ mu = LinearConstraint("vol_alcool = 0") & cd
 rev = Revision(solv, discreteL1DistanceFunction(weights), simp, onlyOneSolution=True)
 res = rev.execute(phi, mu)
 
+print("-------")
 print(str(res[0]) + "; " + str(res[1]))

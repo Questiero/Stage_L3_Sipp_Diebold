@@ -1,5 +1,5 @@
 from src.linearConstraint import LinearConstraint
-from src.LPSolver import LPSolver
+from src.LPSolverRounded import LPSolverRounded
 from src.revision import Revision
 from src.realVariable import RealVariable
 from src.discreteL1DistanceFunction import discreteL1DistanceFunction
@@ -10,7 +10,7 @@ weights = {
     RealVariable.declare("y"): 1,
 }
 
-solv = LPSolver()
+solv = LPSolverRounded()
 simp = Daalmans(solv)
 
 phi = LinearConstraint("x >= 0") & LinearConstraint("y >= 0") & LinearConstraint("x + y <= 4")
