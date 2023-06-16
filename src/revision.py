@@ -87,12 +87,8 @@ class Revision:
         if((not self.__interpreter.sat(psi)) or (not self.__interpreter.sat(mu))):
             return (None, mu) # None = inf
         
-        # Test if onlyOneSolution
-        if(self._onlyOneSolution):
-            return(self.__executeConstraint(self.__interpreter.removeNot(psi), self.__interpreter.removeNot(mu)))
-
         # second step: find dStar
-        dStar = self.__executeConstraint(self.__interpreter.removeNot(psi), self.__interpreter.removeNot(mu))[0]
+        dStar, psiPrime = self.__executeConstraint(self.__interpreter.removeNot(psi), self.__interpreter.removeNot(mu))
 
         # third step: lambdaEpsilon
         epsilon = self.__distance._epsilon
@@ -102,7 +98,8 @@ class Revision:
             lambdaEpsilon = epsilon * math.ceil(dStar / epsilon)
             
         # fourth step: find psiPrime
-        psiPrime = self.__project(psi, lambdaEpsilon)
+        if(not self._onlyOneSolution):
+            psiPrime = self.__project(psi, lambdaEpsilon)
     
         # fifth step
         if dStar % epsilon != 0:
