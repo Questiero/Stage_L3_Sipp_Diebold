@@ -7,6 +7,7 @@ from .notOperator import Not
 from.andOperator import And
 from .optimizationValues import OptimizationValues
 from.nullaryFormula import NullaryFormula
+from fractions import Fraction
 
 class Daalmans(Simplification):
     _interpreter = None
@@ -39,7 +40,7 @@ class Daalmans(Simplification):
             objectivFunction[index] = 0
             if v1[0] == OptimizationValues.OPTIMAL and v2[0] == OptimizationValues.OPTIMAL and v1[1][index] == v2[1][index] :
                 # If x can have only one value, it is a fixed variable
-                fixedVariables[variable] = v1[1][index]
+                fixedVariables[variable] = Fraction(v1[1][index])
 
             index += 1
         return self.__removeVariables(phi, fixedVariables)
@@ -75,10 +76,10 @@ class Daalmans(Simplification):
             actualConstraints.remove(constraint)
 
             actualConstraints.add(~constraint)
-            if self._interpreter.sat(And(formulaSet=actualConstraints).toLessOrEqConstraint().toDNF()) :
+            form = And(formulaSet=actualConstraints).toLessOrEqConstraint().toDNF()
+            print(form)
+            if self._interpreter.sat(form) :
                 actualConstraints.add(constraint)
-            else:
-                print("delete ", constraint)
             actualConstraints.remove(~constraint)
 
         return And(formulaSet=actualConstraints)
