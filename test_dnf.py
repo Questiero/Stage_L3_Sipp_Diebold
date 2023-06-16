@@ -23,5 +23,4 @@ mu = (LinearConstraint("-0.5*x + y <= 3") & LinearConstraint("5*x + y <= 25") & 
 rev = Revision(solver, discreteL1DistanceFunction(weights), simplifier, onlyOneSolution=False)
 res = rev.execute(phi, mu)
 
-print("-------")
 print(str(res[0]) + "; " + str(res[1]))
