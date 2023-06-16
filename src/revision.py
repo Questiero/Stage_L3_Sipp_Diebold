@@ -157,13 +157,19 @@ class Revision:
         for yVar in yVariables:
             z = zVariables[yVar]
             # Creating link between x, y and z
-            const = LinearConstraint(yVar.name + "<= 0")
-            const.variables[yVariables[yVar]] = 1
-            const.variables[z] = -1
+            const = LinearConstraint("")
+            const.variables[yVar] = Fraction(-1)
+            const.variables[yVariables[yVar]] = Fraction(1)
+            const.variables[z] = Fraction(-1)
+            const.operator = ConstraintOperator.LEQ
+            const.bound = Fraction(0)
             constraints.append(const)
-            const = LinearConstraint(yVar.name + ">= 0")
-            const.variables[yVariables[yVar]] = 1
-            const.variables[z] = -1
+            const = LinearConstraint("")
+            const.variables[yVar] = Fraction(1)
+            const.variables[yVariables[yVar]] = Fraction(-1)
+            const.variables[z] = Fraction(-1)
+            const.operator = ConstraintOperator.LEQ
+            const.bound = Fraction(0)
             constraints.append(const)
             # Keeping z in memory
             zVariables[yVar] = z
