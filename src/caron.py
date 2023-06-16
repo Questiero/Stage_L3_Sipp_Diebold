@@ -24,6 +24,8 @@ class Caron(Simplification):
         finalConstraints : set
         finalConstraints = phi.children.copy()
         e = RealVariable("@")
+        variables = list(phi.getVariables())
+        variables.append(e)
         for litteral in phi.children:
             constraint : LinearConstraint
             constraint = litteral.children if isinstance(litteral, Not) else litteral
@@ -31,9 +33,7 @@ class Caron(Simplification):
 
             finalConstraints.remove(litteral)
             newPhi = And(formulaSet=finalConstraints)
-            phiTab = self.toTab(newPhi, e) 
-            variables = list(newPhi.getVariables())
-            variables.append(e)
+            phiTab = self.toTab(newPhi, e, variables=variables) 
             objectif = []
             for variable in variables:
                 objectif.append(0 if not variable in constraint.variables.keys() else constraint.variables[variable]*-1)

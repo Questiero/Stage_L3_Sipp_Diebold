@@ -7,10 +7,11 @@ class Simplification(ABC):
     def __init__(self, formula : And):
         self.formula = formula
 
-    def toTab(self, formula, e):
+    def toTab(self, formula, e, variables : list = None ):
         constraints = []
-        variables = list(formula.getVariables())
-        variables.append(e)
+        if variables == None : 
+            variables = list(formula.getVariables())
+            variables.append(e)
         for lc in formula.getAdherence(e):
             for constraint in lc:
                 constraintP = []
