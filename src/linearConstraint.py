@@ -228,7 +228,7 @@ class LinearConstraint(Constraint):
     
     def clone(self) -> LinearConstraint:
         clonedLc = LinearConstraint("")
-        clonedLc.variables = self.variables
+        clonedLc.variables = self.variables.copy()
         clonedLc.operator = self.operator
         clonedLc.bound = self.bound
         return clonedLc
