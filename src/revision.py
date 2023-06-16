@@ -77,9 +77,9 @@ class Revision:
                         if (disRes is None):
                             setRes.add(lit[1])
             
-            res = Or(formulaSet = setRes).toDNF()
+            res = self.__interpreter.simplifyMLC(Or(formulaSet = setRes).toDNF())
 
-        return (disRes, self.__interpreter.simplifyMLC(res))
+        return (disRes, res) #TODO probably should simplify here, change then simplification works
     
     def __executeLiteral(self, psi: Formula, mu: Formula) -> tuple[Fraction, Formula]:
 
