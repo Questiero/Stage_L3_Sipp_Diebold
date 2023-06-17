@@ -15,7 +15,7 @@ weights = {
 }
 
 solver = LPSolverRounded()
-simplifier = [Caron(solver), Daalmans(solver)]
+simplifier = [Daalmans(solver)]
 
 psi = LinearConstraint("x >= 0") & LinearConstraint("y >= 0") & LinearConstraint("x + y <= 4")
 mu = (LinearConstraint("x + y >= 6") & LinearConstraint("5*x + y <= 25") & LinearConstraint("-0.5*x + y <= 3") & LinearConstraint("1/3*x + y >= 4"))\
@@ -25,9 +25,9 @@ rev = Revision(solver, discreteL1DistanceFunction(weights), simplifier, onlyOneS
 res = rev.execute(psi, mu)
 
 print("-------")
-#print(str(res[0]) + "; " + str(res[1]))
+print(str(res[0]) + "; " + str(res[1]))
 
 
 from src.formulaDisplay import FormulaDisplay
 display = FormulaDisplay()
-display.draw({res.toLessOrEqConstraint() : 'Greys'}, (x,y))
+display.draw({psi.toLessOrEqConstraint() : 'Greys', mu.toLessOrEqConstraint() : 'Greys', res[1].toLessOrEqConstraint() : 'Greys'}, (x,y))
