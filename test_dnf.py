@@ -18,10 +18,10 @@ solver = LPSolverRounded()
 simplifier = [Caron(solver), Daalmans(solver)]
 
 phi = LinearConstraint("x >= 0") & LinearConstraint("y >= 0") & LinearConstraint("x + y <= 4")
-#mu = (LinearConstraint("-0.5*x + y <= 3") & LinearConstraint("5*x + y <= 25") & LinearConstraint("-0.5*x + y <= 3") & LinearConstraint("x + y >= 6"))\
-#    | (LinearConstraint("5*x + y >= 25") & LinearConstraint("3*x + y >= 16") & LinearConstraint("-x + y >= -4") & LinearConstraint("x <= 6") & LinearConstraint("x + y <= 9"))
-mu = (LinearConstraint("-x-y<=-6") & LinearConstraint("-x+2*y<=6") & LinearConstraint("y>=3") & LinearConstraint("x+y<=9"))\
-    | (LinearConstraint("y <= 3") & LinearConstraint("x >= 5") & LinearConstraint("x-y<=4") & LinearConstraint("x<=6"))
+mu = (LinearConstraint("x + y >= 6") & LinearConstraint("5*x + y <= 25") & LinearConstraint("-0.5*x + y <= 3") & LinearConstraint("1/3*x + y >= 4"))\
+    | (LinearConstraint("5*x + y >= 25") & LinearConstraint("3*x + y >= 16") & LinearConstraint("-x + y >= -4") & LinearConstraint("x <= 6") & LinearConstraint("x + y <= 9"))
+#mu = (LinearConstraint("-x-y<=-6") & LinearConstraint("-x+2*y<=6") & LinearConstraint("y>=3") & LinearConstraint("x+y<=9"))\
+#    | (LinearConstraint("y <= 3") & LinearConstraint("x >= 5") & LinearConstraint("x-y<=4") & LinearConstraint("x<=6"))
 
 rev = Revision(solver, discreteL1DistanceFunction(weights), simplifier, onlyOneSolution=False)
 res = rev.execute(phi, mu)
