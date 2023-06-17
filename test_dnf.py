@@ -7,7 +7,8 @@ from src.caron import Caron
 from src.daalmans import Daalmans
 
 from fractions import Fraction
-
+x = RealVariable.declare("x")
+y = RealVariable.declare("y")
 weights = {
     RealVariable.declare("x"): 1,
     RealVariable.declare("y"): 1,
@@ -17,11 +18,17 @@ solver = LPSolverRounded()
 simplifier = [Caron(solver), Daalmans(solver)]
 
 phi = LinearConstraint("x >= 0") & LinearConstraint("y >= 0") & LinearConstraint("x + y <= 4")
-mu = (LinearConstraint("-0.5*x + y <= 3") & LinearConstraint("5*x + y <= 25") & LinearConstraint("-0.5*x + y <= 3") & LinearConstraint("x + y >= 6"))\
-    | (LinearConstraint("5*x + y >= 25") & LinearConstraint("3*x + y >= 16") & LinearConstraint("-x + y >= -4") & LinearConstraint("x <= 6") & LinearConstraint("x + y <= 9"))
+#mu = (LinearConstraint("-0.5*x + y <= 3") & LinearConstraint("5*x + y <= 25") & LinearConstraint("-0.5*x + y <= 3") & LinearConstraint("x + y >= 6"))\
+#    | (LinearConstraint("5*x + y >= 25") & LinearConstraint("3*x + y >= 16") & LinearConstraint("-x + y >= -4") & LinearConstraint("x <= 6") & LinearConstraint("x + y <= 9"))
+mu = (LinearConstraint("-x-y<=-6") & LinearConstraint("-x+2*y<=6") & LinearConstraint("y>=3") & LinearConstraint("x+y<=9"))\
+    | (LinearConstraint("y <= 3") & LinearConstraint("x >= 5") & LinearConstraint("x-y<=4") & LinearConstraint("x<=6"))
 
 rev = Revision(solver, discreteL1DistanceFunction(weights), simplifier, onlyOneSolution=False)
 res = rev.execute(phi, mu)
 
 print("-------")
 print(str(res[0]) + "; " + str(res[1]))
+
+from src.formulaDisplay import FormulaDisplay
+display = FormulaDisplay()
+display.draw({phi.toLessOrEqConstraint() : 'Greys', mu.toLessOrEqConstraint() : 'Greys', res[1].toLessOrEqConstraint().toDNF() : "Greys"}, (x,y))
