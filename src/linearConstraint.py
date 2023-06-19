@@ -3,7 +3,8 @@ from __future__ import annotations # used to type hint the class itself
 from .constraint import Constraint
 from .variableManager import VariableManager
 from .constraintOperator import ConstraintOperator
-from.formulaManager import FormulaManager
+from .formulaManager import FormulaManager
+from .constants import Constants
 
 from fractions import Fraction
 
@@ -200,7 +201,10 @@ class LinearConstraint(Constraint):
     def __str__(self):
         s = ""
         for var, coef in self.variables.items():
-            s += str(coef) + "*" + str(var) + " + "
+            if(Constants.LINEAR_CONSTRAINT_STRING_DISPLAY_MULT):
+                s += str(coef) + "*" + str(var) + " + "
+            else:
+                s += str(coef) + str(var) + " + "
         s = s[:-2]
         s += str(self.operator.value) + " "
         s += str(self.bound)

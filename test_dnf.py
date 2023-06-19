@@ -25,7 +25,7 @@ rev = Revision(solver, discreteL1DistanceFunction(weights), simplifier, onlyOneS
 res = rev.execute(psi, mu)
 
 print("-------")
-print(str(res[0]) + "; " + res[1].toLatex())
+print(str(res[0]) + "; " + str(res[1]))
 
 
 from src.formulaDisplay import FormulaDisplay
