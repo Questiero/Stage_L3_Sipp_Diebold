@@ -1,4 +1,5 @@
 from .binaryFormula import BinaryFormula
+from .constants import Constants
 
 # Typing only imports
 from .formula import Formula
@@ -43,3 +44,9 @@ class Xor(BinaryFormula):
         for child in self.children: childrenModified.append(child.toLessOrEqConstraint())
 
         return Xor(childrenModified[0], childrenModified[1])
+    
+    def __str__(self):
+        return "(" + str(self.children[0]) + ") " + Constants.XOR_STRING_OPERATOR +  " (" + str(self.children[1]) + ")"
+
+    def __str__(self):
+        return "(" + self.children[0].toLatex() + ") " + Constants.XOR_LATEX_OPERATOR +  " (" + self.children[1].toLatex() + ")"

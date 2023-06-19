@@ -14,5 +14,4 @@ class Constraint(NullaryFormula):
         have any, it's None.
     '''
     
-    _symbol = None
-    
+        

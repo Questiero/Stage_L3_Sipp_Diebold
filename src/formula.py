@@ -21,11 +21,6 @@ class Formula(ABC):
     
     children = None
     formulaDict: dict[str, Formula] = dict()
-
-    @property
-    @abstractmethod
-    def _symbol(self) -> str:
-        pass
     
     @abstractmethod
     def getVariables(self) -> set[Variable]:
@@ -126,6 +121,10 @@ class Formula(ABC):
     
     @abstractmethod
     def __str__(self):
+        pass
+
+    @abstractmethod
+    def toLatex(self):
         pass
     
     def __or__(self, a):

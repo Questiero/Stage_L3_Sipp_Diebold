@@ -1,4 +1,5 @@
 from .formula import Formula
+from .formulaManager import FormulaManager
 
 # Typing only imports
 from .variable import Variable
@@ -24,8 +25,12 @@ class BinaryFormula(Formula):
     '''
         
     # formulas: tuple (Formula, Formula)
-    def __init__(self, formulaLeft: Formula, formulaRight: Formula):
+    def __init__(self, formulaLeft: Formula, formulaRight: Formula, name: str = None):
+
         self.children = (formulaLeft, formulaRight)
+
+        if(name is not None):
+            FormulaManager.declare(name, self)
 
     @abstractmethod
     def _eliminate(self) -> Formula:
@@ -113,6 +118,3 @@ class BinaryFormula(Formula):
             in Disjunctive Normal Form under Negation.
         '''
         return self._eliminate()._getAdherenceNeg(var)
-    
-    def __str__(self):
-        return "(" + str(self.children[0]) + ") " + self._symbol +  " (" + str(self.children[1]) + ")"

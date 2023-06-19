@@ -1,4 +1,5 @@
 from .formula import Formula
+from .formulaManager import FormulaManager
 
 # Typing only imports
 from .variable import Variable
@@ -22,7 +23,7 @@ class NaryFormula(Formula):
         The symbol used to represent the operator syntaxically.
     '''
         
-    def __init__(self, *formulas: Formula, formulaSet: set[Formula]=None):
+    def __init__(self, *formulas: Formula, formulaSet: set[Formula]=None, name: str = None):
         
         if formulaSet is None:
             self.children = set(formulas)
@@ -42,6 +43,9 @@ class NaryFormula(Formula):
         else:
             raise Exception("nary operators need at least one child")
         
+        if(name is not None):
+            FormulaManager.declare(name, self)
+
     def getVariables(self) -> set[Variable]:
         '''
         Method recurcivly returning a set containing all the variables used in
@@ -60,15 +64,3 @@ class NaryFormula(Formula):
             variables = variables | child.getVariables()
             
         return variables
-    
-    def __str__(self):
-
-        if len(self.children) == 1:
-            return str(list(self.children)[0])
-        
-        s = ""
-        for child in self.children:
-            s += "(" + str(child) + ") " + self._symbol + " "
-        toRemove = len(self._symbol) + 2
-        s = s[:-toRemove] + ""
-        return s

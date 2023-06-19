@@ -1,5 +1,7 @@
 from .nullaryFormula import NullaryFormula
 
+from .constants import Constants
+
 # Typing only imports
 from .variable import Variable
 from .constraint import Constraint
@@ -15,9 +17,7 @@ class Bottom(NullaryFormula):
     _symbol: str
         The symbol used to represent Bottom syntaxically.
     '''
-    
-    _symbol = "BOT"
-    
+        
     def __init__(self):
         raise NotImplementedError(self.__class__.__name__ + ' is not yet implemented') 
     
@@ -64,4 +64,7 @@ class Bottom(NullaryFormula):
         return []
     
     def __str__(self):
-        return self._symbol;
+        return Constants.BOTTOM_STRING_OPERATOR
+    
+    def toLatex(self):
+        return Constants.BOTTOM_LATEX_OPERATOR

@@ -1,5 +1,7 @@
 from .nullaryFormula import NullaryFormula
 
+from .constants import Constants
+
 # Typing only imports
 from .variable import Variable
 from .constraint import Constraint
@@ -15,8 +17,6 @@ class Top(NullaryFormula):
     _symbol: str
         The symbol used to represent Top syntaxically.
     '''
-    
-    _symbol = "TOP"
      
     def __init__(self):
         raise NotImplementedError(self.__class__.__name__ + ' is not yet implemented') 
@@ -64,4 +64,7 @@ class Top(NullaryFormula):
         return []
     
     def __str__(self):
-        return self._symbol;
+        return Constants.TOP_STRING_OPERATOR
+    
+    def toLatex(self):
+        return Constants.TOP_LATEX_OPERATOR

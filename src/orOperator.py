@@ -1,4 +1,5 @@
 from .naryFormula import NaryFormula
+from .constants import Constants
 # local import of And
 
 # Typing only imports
@@ -145,3 +146,31 @@ class Or(NaryFormula):
             childrenModified.add(child.toLessOrEqConstraint())
 
         return Or(formulaSet = childrenModified)
+    
+    def __str__(self):
+
+        symbol = Constants.OR_STRING_OPERATOR
+
+        if len(self.children) == 1:
+            return str(list(self.children)[0])
+        
+        s = ""
+        for child in self.children:
+            s += "(" + str(child) + ") " + symbol + " "
+        toRemove = len(symbol) + 2
+        s = s[:-toRemove] + ""
+        return s
+    
+    def toLatex(self):
+
+        symbol = Constants.OR_LATEX_OPERATOR
+
+        if len(self.children) == 1:
+            return list(self.children)[0].toLatex()
+        
+        s = ""
+        for child in self.children:
+            s += "(" + child.toLatex() + ") " + symbol + " "
+        toRemove = len(symbol) + 2
+        s = s[:-toRemove] + ""
+        return s

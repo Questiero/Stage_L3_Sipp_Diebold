@@ -1,11 +1,5 @@
 from .formula import Formula
 from pyparsing import Literal, Word, srange, infix_notation, OpAssoc, ParseResults, ParserElement
-from .notOperator import Not
-from .andOperator import And
-from .orOperator import Or
-from .xorOperator import Xor
-from .implicationOperator import Implication
-from .equivalenceOperator import Equivalence
 from .constants import Constants
 
 class FormulaManager():
@@ -50,6 +44,7 @@ class FormulaManager():
                 return FormulaManager.__parserEvaluator(tokens[0])
             elif(len(tokens) == 2):
                 if(tokens[0] == Constants.NOT_PARSER_OPERATOR):
+                    from .notOperator import Not
                     return Not(FormulaManager.__parserEvaluator(tokens[1]))
             elif(len(tokens) % 2 == 1):
                 
@@ -58,14 +53,19 @@ class FormulaManager():
                 match tokens[1]:
 
                     case Constants.AND_PARSER_OPERATOR:
+                        from .andOperator import And
                         formulaType = And
                     case Constants.OR_PARSER_OPERATOR:
+                        from .orOperator import Or
                         formulaType = Or
                     case Constants.XOR_PARSER_OPERATOR:
+                        from .xorOperator import Xor
                         formulaType = Xor
                     case Constants.IMPLICATION_PARSER_OPERATOR:
+                        from .implicationOperator import Implication
                         formulaType = Implication
                     case Constants.EQUIVALENCE_PARSER_OPERATOR:
+                        from .equivalenceOperator import Equivalence
                         formulaType = Equivalence
 
                 return formulaType(FormulaManager.__parserEvaluator(tokens[0]), FormulaManager.__parserEvaluator(tokens[2:]))

@@ -1,4 +1,5 @@
 from .unaryFormula import UnaryFormula
+from .constants import Constants
 
 # Typing only imports
 from .formula import Formula
@@ -16,9 +17,7 @@ class Not(UnaryFormula):
     _symbol: str
         The symbol used to represent the node syntaxically.
     '''
-    
-    _symbol = "NOT"
-    
+        
     def toDNF(self) -> Formula:
         '''
         Method returning the current Formula in Disjunctive Normal Form.
@@ -105,3 +104,9 @@ class Not(UnaryFormula):
         copyNeg.bound = -copyNeg.bound
                 
         return copyNeg
+    
+    def __str__(self):
+        return Constants.NOT_STRING_OPERATOR + "(" + str(self.children) + ")"
+    
+    def toLatex(self):
+        return Constants.NOT_LATEX_OPERATOR + "(" + self.children.toLatex + ")"

@@ -3,6 +3,7 @@ from __future__ import annotations # used to type hint the class itself
 from .constraint import Constraint
 from .variableManager import VariableManager
 from .constraintOperator import ConstraintOperator
+from.formulaManager import FormulaManager
 
 from fractions import Fraction
 
@@ -53,7 +54,7 @@ class LinearConstraint(Constraint):
     operator: ConstraintOperator
     bound: Fraction
     
-    def __init__(self, string: str):
+    def __init__(self, string: str, name: str = None):
 
         if(string == ""):
             self.variables = dict()
@@ -118,6 +119,10 @@ class LinearConstraint(Constraint):
                 raise ValueError(f"Duplicate variable {var._name} found")
             elif var != None:
                 self.variables[var] = coef
+
+        # Declare if name
+        if(name is not None):
+            FormulaManager.declare(name, self)
 
     def getVariables(self) -> set[Variable]:
         '''
@@ -199,6 +204,21 @@ class LinearConstraint(Constraint):
         s = s[:-2]
         s += str(self.operator.value) + " "
         s += str(self.bound)
+        return s
+    
+    def toLatex(self):
+        s = ""
+        for var, coef in self.variables.items():
+            if (int(coef) == coef):
+                s += str(coef) + str(var) + " + "
+            else:
+                s += "\\frac{" + str(coef.numerator) + "}{" + str(coef.denominator) + "} " + str(var) + " + "
+        s = s[:-2]
+        s += str(self.operator.getLatexOperator()) + " "
+        if (int(self.bound) == self.bound):
+            s +=  str(self.bound)
+        else:
+            s +=  "\\frac{" + str(self.bound.numerator) + "}{" + str(self.bound.denominator) + "}"
         return s
             
     def toLessOrEqConstraint(self):

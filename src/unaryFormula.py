@@ -1,4 +1,5 @@
 from .formula import Formula
+from .formulaManager import FormulaManager
 
 # Typing only imports
 from .variable import Variable
@@ -16,8 +17,12 @@ class UnaryFormula(Formula):
     '''
 
     # formula: Formula
-    def __init__(self, formulaInit: Formula):
+    def __init__(self, formulaInit: Formula, name: str = None):
+        
         self.children = formulaInit
+
+        if(name is not None):
+            FormulaManager.declare(name, self)
         
     def getVariables(self) -> set[Variable]:
         '''
@@ -34,6 +39,3 @@ class UnaryFormula(Formula):
     
     def __hash__(self):
         return hash(self.children)
-    
-    def __str__(self):
-        return self._symbol + "(" + str(self.children) + ")"
