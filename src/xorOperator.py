@@ -48,5 +48,5 @@ class Xor(BinaryFormula):
     def __str__(self):
         return "(" + str(self.children[0]) + ") " + Constants.XOR_STRING_OPERATOR +  " (" + str(self.children[1]) + ")"
 
-    def __str__(self):
+    def toLatex(self):
         return "(" + self.children[0].toLatex() + ") " + Constants.XOR_LATEX_OPERATOR +  " (" + self.children[1].toLatex() + ")"

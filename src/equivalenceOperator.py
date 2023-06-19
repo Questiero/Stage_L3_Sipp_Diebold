@@ -49,5 +49,5 @@ class Equivalence(BinaryFormula):
     def __str__(self):
         return "(" + str(self.children[0]) + ") " + Constants.EQUIVALENCE_STRING_OPERATOR +  " (" + str(self.children[1]) + ")"
 
-    def __str__(self):
+    def toLatex(self):
         return "(" + self.children[0].toLatex() + ") " + Constants.EQUIVALENCE_LATEX_OPERATOR +  " (" + self.children[1].toLatex() + ")"
