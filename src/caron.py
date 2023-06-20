@@ -21,8 +21,8 @@ class Caron(Simplification):
         return self._deleteConstraint(phi)
     
     def _deleteConstraint(self, phi : Formula):
-        finalConstraints : set
-        finalConstraints = phi.children.copy()
+        finalConstraints : list
+        finalConstraints = list(phi.children.copy())
         e = RealVariable("@")
         variables = list(phi.getVariables())
         variables.append(e)
@@ -32,7 +32,7 @@ class Caron(Simplification):
             
 
             finalConstraints.remove(litteral)
-            newPhi = And(formulaSet=finalConstraints)
+            newPhi = And(*finalConstraints)
             phiTab = self.toTab(newPhi, e, variables=variables) 
             objectif = []
             for variable in variables:
@@ -45,13 +45,13 @@ class Caron(Simplification):
                     sum = 0
                     for i in range(0,len(variables)): 
                         if variables[i] in constraint.variables: sum += xStar[i]*constraint.variables[variables[i]]
-                    mustBeDeleted = mustBeDeleted or (sum <= constraint.bound)
+                    mustBeDeleted = (sum <= constraint.bound)
                 else:
                     sum = 0
                     for i in range(0,len(variables)): 
                         if variables[i] in constraint.variables: sum += xStar[i]*constraint.variables[variables[i]]*-1
-                    mustBeDeleted = mustBeDeleted or (sum <= constraint.bound)
-                if not mustBeDeleted: finalConstraints.add(litteral)
-            else : finalConstraints.add(litteral)
+                    mustBeDeleted = (sum < constraint.bound)
+                if not mustBeDeleted: finalConstraints.append(litteral)
+            else : finalConstraints.append(litteral)
 
-        return And(formulaSet=finalConstraints)
+        return And(*finalConstraints)

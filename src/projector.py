@@ -31,7 +31,7 @@ class Projector:
 
         # First step: simplify
         for simplifier in self.__simplifier:
-            phi = simplifier.run(phi)
+            phi = simplifier.run(phi.toLessOrEqConstraint().toDNF())
 
         # Second step: Get all variables
         allVariables = list(phi.getVariables())
