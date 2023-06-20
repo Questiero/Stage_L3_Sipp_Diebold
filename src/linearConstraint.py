@@ -59,7 +59,7 @@ class LinearConstraint(Constraint):
 
         if(string == ""):
             self.variables = dict()
-            self.operator = ConstraintOperator.LEQ
+            self.operator = None
             self.bound = Fraction("0")
             return None
 
@@ -231,7 +231,7 @@ class LinearConstraint(Constraint):
                 s += "\\frac{" + str(coef.numerator) + "}{" + str(coef.denominator) + "} "
             
             s+= str(var) + " + "
-            
+
         s = s[:-2]
         s += str(self.operator.getLatexOperator()) + " "
         if (int(self.bound) == self.bound):

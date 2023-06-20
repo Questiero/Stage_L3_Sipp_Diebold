@@ -27,6 +27,8 @@ class Projector:
 
         #TODO Négation ?
 
+        constraintSet = set()
+
         # First step: simplify
         for simplifier in self.__simplifier:
             phi = simplifier.run(phi)
@@ -93,9 +95,13 @@ class Projector:
         vertices = np.array(vertices)
         
         # Sixth step: project all vertices
+
         variablesBool = np.array([], dtype=bool)
+        newVar = np.array([])
         for var in allVariables:
             if var in variables:
+                variables = np.delete(variables, np.where(variables == var))
+                newVar = np.append(newVar, var)
                 variablesBool = np.append(variablesBool, True)
             else:
                 variablesBool = np.append(variablesBool, False)
@@ -104,69 +110,118 @@ class Projector:
         for v in vertices:
             projectedVertices.append(v[variablesBool])
 
+        variables = newVar
+
         projectedVertices = np.array(projectedVertices)
 
         # Seventh step: Get convex Hull
         try:
             hull = ConvexHull(projectedVertices)
         except:
+
+            # Remove fixed dimensions
+
+            transposed = np.transpose(projectedVertices)
+
+            index = 0
+
+            toRemoveIndex = []
+            toRemoveVar = []
+
+            for dim in transposed:
+
+                foundDifferent = False
+
+                for c in dim:
+                    if not(c == dim[0]):
+                        foundDifferent = True
+                        break
+
+                if not foundDifferent:
+
+                    toRemoveIndex.append(index)
+                    toRemoveVar.append(variables[index])
+                    
+                    lc = LinearConstraint("")
+                    lc.variables[variables[index]] = Fraction(1)
+                    lc.operator = ConstraintOperator.EQ
+                    lc.bound = round(Fraction(dim[0]), 12)
+
+                    constraintSet.add(lc.clone())
+                
+                index += 1
             
-            # If project on one dimension
-            max, projectedVertices = projectedVertices[-1][0], projectedVertices[:-1]
-            min = max
+            transposed = np.delete(transposed, toRemoveIndex, axis = 0)
+            variables = [i for i in variables if i not in toRemoveVar]
 
-            for vertex in projectedVertices:
-                val = vertex[0]
-                if val >= max:
-                    max = val
-                elif val <= min:
-                    min = val
-                
-            minLc = LinearConstraint("")
-            minLc.variables[variables[0]] = Fraction(1)
-            minLc.operator = ConstraintOperator.GEQ
-            minLc.bound = round(Fraction(min), 12)
+            projectedVertices = np.transpose(transposed)
 
-            maxLc = LinearConstraint("")
-            maxLc.variables[variables[0]] = Fraction(1)
-            maxLc.operator = ConstraintOperator.LEQ
-            maxLc.bound = round(Fraction(max), 12)
+            hull = ConvexHull(projectedVertices)
 
-            constraintSet = {minLc, maxLc}
+        finally:
 
-        else:
-            # Eighth step: Get constraints from hull simplices
-            constraintSet = set()
-            for simplex in hull.simplices:
+            if projectedVertices.shape[1] == 1:
 
-                # Get centroid and normal
-                points = projectedVertices[simplex]
-                centroid = np.mean(points, axis=0)
-                u, s, vh = np.linalg.svd(points - centroid, full_matrices=False)
-                normal = vh[-1]
-                normal = normal * np.linalg.norm(normal, 1)
-                
-                # Build constraint
-                lc = LinearConstraint("")
-                for i in range(len(normal)):
-                    if normal[i] != 0:
-                        lc.variables[variables[i]] = round(Fraction(normal[i]), 12)
-                lc.bound = round(Fraction(np.sum(normal * centroid)), 12)
+                # If project on one dimension
+                max = projectedVertices[-1][0]
+                min = max
 
+                # If only one dimension, do something
                 for vertex in projectedVertices:
+                    val = vertex[0]
+                    if val >= max:
+                        max = val
+                    elif val <= min:
+                        min = val
+                    
+                minLc = LinearConstraint("")
+                minLc.variables[variables[0]] = Fraction(1)
+                minLc.operator = ConstraintOperator.GEQ
+                minLc.bound = round(Fraction(min), 12)
+                constraintSet.add(minLc)
 
-                    sum = Fraction("0")
-                    for i in range(len(variables)):
-                        coef = lc.variables.get(variables[i])
-                        if coef:
-                            sum += vertex[i]*coef
-                    if(sum < lc.bound):
-                        lc.operator = ConstraintOperator.LEQ
-                    elif(sum > lc.bound):
-                        lc.operator = ConstraintOperator.GEQ
-                    else:
+                maxLc = LinearConstraint("")
+                maxLc.variables[variables[0]] = Fraction(1)
+                maxLc.operator = ConstraintOperator.LEQ
+                maxLc.bound = round(Fraction(max), 12)
+                constraintSet.add(maxLc)
+
+            else:
+
+                # Else, eighth step: Get constraints from hull simplices
+                for simplex in hull.simplices:
+
+                    # Get centroid and normal
+                    points = projectedVertices[simplex]
+                    centroid = np.mean(points, axis=0)
+                    u, s, vh = np.linalg.svd(points - centroid, full_matrices=False)
+                    normal = vh[-1]
+                    normal = normal * np.linalg.norm(normal, 1)
+                    
+                    # Build constraint
+                    lc = LinearConstraint("")
+                    for i in range(len(normal)):
+                        if normal[i] != 0:
+                            lc.variables[variables[i]] = round(Fraction(normal[i]), 12)
+                    lc.bound = round(Fraction(np.sum(normal * centroid)), 12)
+
+                    for vertex in projectedVertices:
+
+                        sum = Fraction("0")
+                        for i in range(len(variables)):
+                            coef = lc.variables.get(variables[i])
+                            if coef:
+                                sum += vertex[i]*coef
+                        if(sum < lc.bound):
+                            lc.operator = ConstraintOperator.LEQ
+                            break
+                        elif(sum > lc.bound):
+                            lc.operator = ConstraintOperator.GEQ
+                            break
+                        
+                    if lc.operator is None:
                         lc.operator = ConstraintOperator.EQ
 
-                constraintSet.add(lc)
-        finally:
+                    constraintSet.add(lc)
+
             return And(formulaSet = constraintSet)
