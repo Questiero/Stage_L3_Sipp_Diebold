@@ -199,12 +199,20 @@ class LinearConstraint(Constraint):
         return (tabVar, op, bound)
     
     def __str__(self):
+
         s = ""
+
         for var, coef in self.variables.items():
+            if coef == -1:
+                s += "-"
+            elif coef != 1:
+                s += str(coef)  
+
             if(Constants.LINEAR_CONSTRAINT_STRING_DISPLAY_MULT):
-                s += str(coef) + "*" + str(var) + " + "
+                s += "*" + str(var) + " + "
             else:
-                s += str(coef) + str(var) + " + "
+                s += str(var) + " + "
+
         s = s[:-2]
         s += str(self.operator.value) + " "
         s += str(self.bound)
@@ -213,10 +221,17 @@ class LinearConstraint(Constraint):
     def toLatex(self):
         s = ""
         for var, coef in self.variables.items():
+
             if (int(coef) == coef):
-                s += str(coef) + str(var) + " + "
+                if coef == -1:
+                    s += "-"
+                elif coef != 1:
+                    s += str(coef) 
             else:
-                s += "\\frac{" + str(coef.numerator) + "}{" + str(coef.denominator) + "} " + str(var) + " + "
+                s += "\\frac{" + str(coef.numerator) + "}{" + str(coef.denominator) + "} "
+            
+            s+= str(var) + " + "
+            
         s = s[:-2]
         s += str(self.operator.getLatexOperator()) + " "
         if (int(self.bound) == self.bound):
