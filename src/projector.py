@@ -107,41 +107,66 @@ class Projector:
         projectedVertices = np.array(projectedVertices)
 
         # Seventh step: Get convex Hull
-        hull = ConvexHull(projectedVertices)
-        
-        # Eighth step: Get constraints from hull simplices
-        #TODO know which constraint operator to use
-        constraintSet = set()
-        for simplex in hull.simplices:
-
-            # Get centroid and normal
-            points = projectedVertices[simplex]
-            centroid = np.mean(points, axis=0)
-            u, s, vh = np.linalg.svd(points - centroid, full_matrices=False)
-            normal = vh[-1]
-            normal = normal * np.linalg.norm(normal, 1)
+        try:
+            hull = ConvexHull(projectedVertices)
+        except:
             
-            # Build constraint
-            lc = LinearConstraint("")
-            for i in range(len(normal)):
-                if normal[i] != 0:
-                    lc.variables[variables[i]] = round(Fraction(normal[i]), 12)
-            lc.bound = round(Fraction(np.sum(normal * centroid)), 12)
+            # If project on one dimension
+            max, projectedVertices = projectedVertices[-1][0], projectedVertices[:-1]
+            min = max
 
             for vertex in projectedVertices:
+                val = vertex[0]
+                if val >= max:
+                    max = val
+                elif val <= min:
+                    min = val
+                
+            minLc = LinearConstraint("")
+            minLc.variables[variables[0]] = Fraction(1)
+            minLc.operator = ConstraintOperator.GEQ
+            minLc.bound = round(Fraction(min), 12)
 
-                sum = Fraction("0")
-                for i in range(len(variables)):
-                    coef = lc.variables.get(variables[i])
-                    if coef:
-                        sum += vertex[i]*coef
-                if(sum < lc.bound):
-                    lc.operator = ConstraintOperator.LEQ
-                elif(sum > lc.bound):
-                    lc.operator = ConstraintOperator.GEQ
-                else:
-                    lc.operator = ConstraintOperator.EQ
+            maxLc = LinearConstraint("")
+            maxLc.variables[variables[0]] = Fraction(1)
+            maxLc.operator = ConstraintOperator.LEQ
+            maxLc.bound = round(Fraction(max), 12)
 
-            constraintSet.add(lc)
+            constraintSet = {minLc, maxLc}
 
-        return And(formulaSet = constraintSet)
+        else:
+            # Eighth step: Get constraints from hull simplices
+            constraintSet = set()
+            for simplex in hull.simplices:
+
+                # Get centroid and normal
+                points = projectedVertices[simplex]
+                centroid = np.mean(points, axis=0)
+                u, s, vh = np.linalg.svd(points - centroid, full_matrices=False)
+                normal = vh[-1]
+                normal = normal * np.linalg.norm(normal, 1)
+                
+                # Build constraint
+                lc = LinearConstraint("")
+                for i in range(len(normal)):
+                    if normal[i] != 0:
+                        lc.variables[variables[i]] = round(Fraction(normal[i]), 12)
+                lc.bound = round(Fraction(np.sum(normal * centroid)), 12)
+
+                for vertex in projectedVertices:
+
+                    sum = Fraction("0")
+                    for i in range(len(variables)):
+                        coef = lc.variables.get(variables[i])
+                        if coef:
+                            sum += vertex[i]*coef
+                    if(sum < lc.bound):
+                        lc.operator = ConstraintOperator.LEQ
+                    elif(sum > lc.bound):
+                        lc.operator = ConstraintOperator.GEQ
+                    else:
+                        lc.operator = ConstraintOperator.EQ
+
+                constraintSet.add(lc)
+        finally:
+            return And(formulaSet = constraintSet)
