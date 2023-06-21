@@ -214,7 +214,7 @@ class LinearConstraint(Constraint):
             else:
                 s += "+ " + coefString
 
-            if(Constants.LINEAR_CONSTRAINT_STRING_DISPLAY_MULT):
+            if(Constants.LINEAR_CONSTRAINT_STRING_DISPLAY_MULT & (coefString != "")):
                 s += "*" + str(var) + " "
             else:
                 s += str(var) + " "
