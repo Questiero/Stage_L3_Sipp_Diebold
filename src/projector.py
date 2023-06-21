@@ -13,6 +13,8 @@ import numpy as np
 from scipy.spatial import ConvexHull
 from fractions import Fraction
 
+np.set_printoptions(threshold=np.inf)
+
 class Projector:
 
     __simplifier: Simplification
@@ -27,11 +29,18 @@ class Projector:
 
         #TODO Négation ?
 
+        print("---")
+        print(phi)
+        print("---")
+
         constraintSet = set()
 
         # First step: simplify
         for simplifier in self.__simplifier:
             phi = simplifier.run(phi.toLessOrEqConstraint().toDNF())
+
+        print(phi)
+        print("---")
 
         # Second step: Get all variables
         allVariables = list(phi.getVariables())
@@ -58,24 +67,26 @@ class Projector:
 
             hyperplanes.append((hypVar, c.bound))
 
+        print(hyperplanes)
+
         # Fourth step: Get all non parallel combinations
         nonParallelCombinations = list(itertools.combinations(hyperplanes, len(phi.getVariables())))
 
-#       for hyperplaneCombination in itertools.combinations(hyperplanes, len(phi.getVariables())):
+#        for hyperplaneCombination in itertools.combinations(hyperplanes, len(phi.getVariables())):
 #               
-#           foundParallel = False
+#            foundParallel = False
 #       
-#           for combinationPair in itertools.combinations(hyperplaneCombination, 2):
+#            for combinationPair in itertools.combinations(hyperplaneCombination, 2):
 #       
-#               x = combinationPair[0][0]
-#               y = combinationPair[1][0]
+#                x = combinationPair[0][0]
+#                y = combinationPair[1][0]
 #       
-#               if (np.dot(x,y)*np.dot(x,y) == np.dot(x,x)*np.dot(y,y)):
-#                   foundParallel = True
-#                   break
-#       
-#           if not foundParallel:
-#               nonParallelCombinations.append(hyperplaneCombination)
+#                if (np.dot(x,y)*np.dot(x,y) == np.dot(x,x)*np.dot(y,y)):
+#                    foundParallel = True
+#                    break
+#        
+#            if not foundParallel:
+#                nonParallelCombinations.append(hyperplaneCombination)
 
         # Fifth step: Get all vertices from combinations
         vertices = list()
@@ -88,11 +99,12 @@ class Projector:
                 b.append(float(hyperplane[1]))
 
             try:
-                vertices.append(np.linalg.solve(a, b))    
+                vertices.append(np.linalg.solve(a, b))
             except (np.linalg.LinAlgError):
                 pass
 
-        vertices = np.array(vertices)
+        vertices = np.unique(np.array(vertices), axis=0)
+        print(vertices)
         
         # Sixth step: project all vertices
 
@@ -221,6 +233,8 @@ class Projector:
                         
                     if lc.operator is None:
                         lc.operator = ConstraintOperator.EQ
+
+                    print(str(simplex) + ": " + str(sum) + ": " + str(lc))
 
                     constraintSet.add(lc)
 

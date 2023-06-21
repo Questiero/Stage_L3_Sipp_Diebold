@@ -5,15 +5,16 @@ from src.integerVariable import IntegerVariable
 from src.realVariable import RealVariable
 from src.discreteL1DistanceFunction import discreteL1DistanceFunction
 from src.caron import Caron
+from fractions import Fraction
 
 weights = {
-    IntegerVariable.declare("quant_rondelleCitron"): 1,
-    RealVariable.declare("vol_tequila"): 1,
-    RealVariable.declare("vol_sirop"): 1,
-    RealVariable.declare("vol_jusCitronVert"): 1,
-    RealVariable.declare("vol_vodka"): 1,
-    RealVariable.declare("vol_alcool"): 20,
-    RealVariable.declare("pouvoirSucrant"): 20,
+    IntegerVariable.declare("quant_rondelleCitron"): Fraction(1),
+    RealVariable.declare("vol_tequila"): Fraction(1),
+    RealVariable.declare("vol_sirop"): Fraction(1),
+    RealVariable.declare("vol_jusCitronVert"): Fraction(1),
+    RealVariable.declare("vol_vodka"): Fraction(1),
+    RealVariable.declare("vol_alcool"): Fraction(20),
+    RealVariable.declare("pouvoirSucrant"): Fraction(20),
 }
 
 solver = LPSolverRounded()

@@ -6,11 +6,13 @@ from src.discreteL1DistanceFunction import discreteL1DistanceFunction
 from src.caron import Caron
 
 from fractions import Fraction
+
 x = RealVariable.declare("x")
 y = RealVariable.declare("y")
+
 weights = {
-    RealVariable.declare("x"): 1,
-    RealVariable.declare("y"): 1,
+    RealVariable.declare("x"): Fraction(1),
+    RealVariable.declare("y"): Fraction(1),
 }
 
 solver = LPSolverRounded()
