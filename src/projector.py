@@ -101,7 +101,7 @@ class Projector:
             try:
                 vertices.append(np.linalg.solve(a, b))
             except (np.linalg.LinAlgError):
-                pass
+                continue
 
         vertices = np.unique(np.array(vertices), axis=0)
         print(vertices)
