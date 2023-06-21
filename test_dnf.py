@@ -26,7 +26,6 @@ res = rev.execute(psi, mu)
 print("-------")
 print(str(res[0]) + "; " + str(res[1]))
 
-
-from src.formulaDisplay import FormulaDisplay
-display = FormulaDisplay()
-display.draw({psi.toLessOrEqConstraint() : 'Greys', mu.toLessOrEqConstraint() : 'Greys', res[1].toLessOrEqConstraint() : 'Greys'}, (x,y))
+#from src.formulaDisplay import FormulaDisplay
+#display = FormulaDisplay()
+#display.draw({psi.toLessOrEqConstraint() : 'Greys', mu.toLessOrEqConstraint() : 'Greys', res[1].toLessOrEqConstraint() : 'Greys'}, (x,y))

@@ -27,7 +27,7 @@ psi = LinearConstraint("vol_tequila = 4") & LinearConstraint("vol_sirop = 2")\
     & LinearConstraint("vol_jusCitronVert <= 3") & cd
 mu = LinearConstraint("vol_alcool = 0") & cd
 
-rev = Revision(solver, discreteL1DistanceFunction(weights), simplifier, onlyOneSolution=True)
+rev = Revision(solver, discreteL1DistanceFunction(weights), simplifier, onlyOneSolution=False)
 res = rev.execute(psi, mu)
 
 print("-------")
