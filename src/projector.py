@@ -44,26 +44,32 @@ class Projector:
 
         # Second step: Get all variables
         allVariables = list(phi.getVariables())
+        allVariables.sort(key = lambda v:v.name)
         variables = list(variables)
+        variables.sort(key = lambda v: v.name)
 
         # Third step: Get all hyperplanes
         hyperplanes = list()
 
         for miniPhi in phi.children:
 
-            hypVar = np.array([])
+            hypVar = [np.array([])]
 
             if (isinstance(miniPhi, Not)):
                 c = miniPhi.children.clone()
             else:
                 c = miniPhi.clone()
             
+            s = ""
             for var in allVariables:
+                s += str(var) + ", "
                 v = c.variables.get(var)
                 if (v):
                     hypVar = np.append(hypVar, v)
                 else:
                     hypVar = np.append(hypVar, Fraction(0))
+
+            print(s)
 
             hyperplanes.append((hypVar, c.bound))
 
@@ -125,6 +131,7 @@ class Projector:
         variables = newVar
 
         projectedVertices = np.array(projectedVertices)
+        print(projectedVertices)
 
         # Seventh step: Get convex Hull
         try:
