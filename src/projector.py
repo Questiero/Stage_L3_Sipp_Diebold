@@ -44,9 +44,9 @@ class Projector:
 
         # Second step: Get all variables
         allVariables = list(phi.getVariables())
-        allVariables.sort(key = lambda v:v.name)
+        allVariables.sort(key = lambda v: v.name[::-1])
         variables = list(variables)
-        variables.sort(key = lambda v: v.name)
+        variables.sort(key = lambda v: v.name[::-1])
 
         # Third step: Get all hyperplanes
         hyperplanes = list()
@@ -98,8 +98,10 @@ class Projector:
         vertices = list()
 
         for comb in nonParallelCombinations:
+
             a = []
             b = []
+
             for hyperplane in comb:
                 a.append([float(x) for x in hyperplane[0]])
                 b.append(float(hyperplane[1]))
@@ -111,6 +113,7 @@ class Projector:
 
         vertices = np.unique(np.array(vertices), axis=0)
         print(vertices)
+        print(len(vertices))
         
         # Sixth step: project all vertices
 

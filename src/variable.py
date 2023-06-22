@@ -18,9 +18,12 @@ class Variable(ABC):
         self.name = name
 
     @classmethod
-    def declareAnonymous(cls) -> Variable:
+    def declareAnonymous(cls, ending = None) -> Variable:
         v = cls("")
-        v.name = str(id(v))
+        name = str(id(v))
+        if ending:
+            name += ending
+        v.name = name
         return v 
 
 

@@ -137,7 +137,7 @@ class Revision:
 
     def __project(self, psi: And, lambdaEpsilon: Fraction) -> Formula:
         
-        yVariables = {v: v.__class__.declareAnonymous() for v in psi.getVariables()}
+        yVariables = {v: v.__class__.declareAnonymous(ending = ("z" + str(v.name))) for v in psi.getVariables()}
 
         constraints = list()
 
@@ -159,7 +159,7 @@ class Revision:
                 constraints.append(const)
 
         # Add distance function constraints
-        zVariables = {v: v.__class__.declareAnonymous() for v in psi.getVariables()}
+        zVariables = {v: v.__class__.declareAnonymous(ending = ("z" + str(v.name))) for v in psi.getVariables()}
         for yVar in yVariables:
             z = zVariables[yVar]
             # Creating link between x, y and z
