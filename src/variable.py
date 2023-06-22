@@ -26,7 +26,6 @@ class Variable(ABC):
         v.name = name
         return v 
 
-
     @abstractmethod
     def declare(name : str) -> Variable:
         '''

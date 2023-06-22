@@ -6,6 +6,7 @@ from .orOperator import Or
 from .andOperator import And
 from .unaryFormula import UnaryFormula
 from .nullaryFormula import NullaryFormula
+from .naryFormula import NaryFormula
 from .linearConstraint import LinearConstraint
 from .notOperator import Not
 from .constants import Constants
@@ -105,7 +106,7 @@ class Revision:
             
         # fourth step: find psiPrime (only if not onlyOneSolution)
         if(not self._onlyOneSolution):
-            psiPrime = self.__project(psi, lambdaEpsilon)
+            psiPrime = self.__expand(psi, lambdaEpsilon)
     
         # fifth step
         if dStar % epsilon != 0:
@@ -114,7 +115,7 @@ class Revision:
             return (dStar, psiPrime & mu)
         else:
             lambdaEpsilon = dStar + epsilon
-            psiPrime = self.__project(psi, lambdaEpsilon)
+            psiPrime = self.__expand(psi, lambdaEpsilon)
             return(dStar, psiPrime & mu)
     
     def __executeConstraint(self, psi: Formula, mu: Formula) -> tuple[Fraction, Formula]:
@@ -135,9 +136,9 @@ class Revision:
                     orSet.add(And(miniPhi))
             return Or(formulaSet = orSet)
 
-    def __project(self, psi: And, lambdaEpsilon: Fraction) -> Formula:
+    def __expand(self, psi: Formula, lambdaEpsilon: Fraction) -> Formula:
         
-        yVariables = {v: v.__class__.declareAnonymous(ending = ("z" + str(v.name))) for v in psi.getVariables()}
+        yVariables = {v: v.__class__.declareAnonymous(ending = ("y" + str(v.name))) for v in psi.getVariables()}
 
         constraints = list()
 
@@ -190,4 +191,43 @@ class Revision:
             distanceConstraint.variables[zVariables[z]] = self.__distance.getWeights()[z]
         constraints.append(distanceConstraint)
 
-        return self.__projector.projectOn(And(formulaSet = set(constraints)), yVariables.keys())
+        try:
+            return self.__projector.projectOn(And(formulaSet = set(constraints)), yVariables.keys())
+        except:
+            
+            if isinstance(psi, NaryFormula):
+                return And(formulaSet = {self.__expandLiteral(c, lambdaEpsilon) for c in psi.children})
+            else:
+                return self.__expandLiteral(psi, lambdaEpsilon)
+
+    def __expandLiteral(self, psi: Formula, lambdaEpsilon: Fraction):
+        
+        if isinstance(psi, Not):
+
+            lc = psi.children.clone()
+            
+            match lc.operator:
+                case ConstraintOperator.LEQ:
+                    lc.bound += lambdaEpsilon
+                case ConstraintOperator.GEQ:
+                    lc.bound -= lambdaEpsilon
+                case ConstraintOperator.EQ:
+                    return And(formulaSet = {Not(self.__expandLiteral(c)) for c in psi.toLessOrEqConstraint().children})
+
+            return Not(lc)
+
+        else:
+
+            lc = psi.clone()
+
+            match lc.operator:
+                case ConstraintOperator.LEQ:
+                    lc.bound += lambdaEpsilon
+                case ConstraintOperator.GEQ:
+                    lc.bound -= lambdaEpsilon
+                case ConstraintOperator.EQ:
+                    return And(formulaSet = {self.__expandLiteral(c) for c in psi.toLessOrEqConstraint().children})
+
+            lc.bound += lambdaEpsilon
+
+            return lc

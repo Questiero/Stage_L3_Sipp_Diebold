@@ -76,26 +76,31 @@ class Projector:
         print(hyperplanes)
 
         # Fourth step: Get all non parallel combinations
-        nonParallelCombinations = list(itertools.combinations(hyperplanes, len(phi.getVariables())))
+        nonParallelCombinations = list()
+        print(len(nonParallelCombinations))
 
-#        for hyperplaneCombination in itertools.combinations(hyperplanes, len(phi.getVariables())):
-#               
-#            foundParallel = False
-#       
-#            for combinationPair in itertools.combinations(hyperplaneCombination, 2):
-#       
-#                x = combinationPair[0][0]
-#                y = combinationPair[1][0]
-#       
-#                if (np.dot(x,y)*np.dot(x,y) == np.dot(x,x)*np.dot(y,y)):
-#                    foundParallel = True
-#                    break
-#        
-#            if not foundParallel:
-#                nonParallelCombinations.append(hyperplaneCombination)
+        for hyperplaneCombination in itertools.combinations(hyperplanes, len(phi.getVariables())):
+               
+            foundParallel = False
+       
+            for combinationPair in itertools.combinations(hyperplaneCombination, 2):
+       
+                x = combinationPair[0][0]
+                y = combinationPair[1][0]
+       
+                if (np.dot(x,y)**2 == np.dot(x,x)*np.dot(y,y)):
+                    foundParallel = True
+                    break
+        
+            if not foundParallel:
+                nonParallelCombinations.append(hyperplaneCombination)
+
+        print(len(nonParallelCombinations))
 
         # Fifth step: Get all vertices from combinations
         vertices = list()
+
+        i = 0
 
         for comb in nonParallelCombinations:
 
@@ -109,11 +114,16 @@ class Projector:
             try:
                 vertices.append(np.linalg.solve(a, b))
             except (np.linalg.LinAlgError):
+                print(str(i) + "Ah")
+                i += 1
                 continue
 
         vertices = np.unique(np.array(vertices), axis=0)
         print(vertices)
         print(len(vertices))
+
+        if len(vertices) == 0:
+            raise RuntimeError("Couldn't find any vertex")
         
         # Sixth step: project all vertices
 

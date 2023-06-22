@@ -20,9 +20,9 @@ class Constants():
     TOP_STRING_OPERATOR = "TOP"
     BOTTOM_STRING_OPERATOR = "BOT"
 
-    AND_LATEX_OPERATOR = "\\wedge"
-    OR_LATEX_OPERATOR = "\\vee"
-    NOT_LATEX_OPERATOR = "\\neg"
+    AND_LATEX_OPERATOR = "\\land"
+    OR_LATEX_OPERATOR = "\\lor"
+    NOT_LATEX_OPERATOR = "\\lnot"
     XOR_LATEX_OPERATOR = "\\oplus"
     IMPLICATION_LATEX_OPERATOR = "\\rightarrow"
     EQUIVALENCE_LATEX_OPERATOR = "\\leftrightarrow"

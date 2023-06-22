@@ -14,7 +14,7 @@ weights = {
 }
 
 solver = LPSolverRounded()
-simplifier = [Caron(solver)]
+simplifier = [Caron(solver), Daalmans(solver)]
 
 cd = LinearConstraint("vol_tequila >= 0") & LinearConstraint("0.35*vol_tequila - vol_alcool = 0")\
     & LinearConstraint("0.6*vol_sirop + 0.2 * vol_tequila - pouvoirSucrant = 0")
