@@ -191,43 +191,4 @@ class Revision:
             distanceConstraint.variables[zVariables[z]] = self.__distance.getWeights()[z]
         constraints.append(distanceConstraint)
 
-        try:
-            return self.__projector.projectOn(And(formulaSet = set(constraints)), yVariables.keys())
-        except:
-            
-            if isinstance(psi, NaryFormula):
-                return And(formulaSet = {self.__expandLiteral(c, lambdaEpsilon) for c in psi.children})
-            else:
-                return self.__expandLiteral(psi, lambdaEpsilon)
-
-    def __expandLiteral(self, psi: Formula, lambdaEpsilon: Fraction):
-        
-        if isinstance(psi, Not):
-
-            lc = psi.children.clone()
-            
-            match lc.operator:
-                case ConstraintOperator.LEQ:
-                    lc.bound += lambdaEpsilon
-                case ConstraintOperator.GEQ:
-                    lc.bound -= lambdaEpsilon
-                case ConstraintOperator.EQ:
-                    return And(formulaSet = {Not(self.__expandLiteral(c)) for c in psi.toLessOrEqConstraint().children})
-
-            return Not(lc)
-
-        else:
-
-            lc = psi.clone()
-
-            match lc.operator:
-                case ConstraintOperator.LEQ:
-                    lc.bound += lambdaEpsilon
-                case ConstraintOperator.GEQ:
-                    lc.bound -= lambdaEpsilon
-                case ConstraintOperator.EQ:
-                    return And(formulaSet = {self.__expandLiteral(c) for c in psi.toLessOrEqConstraint().children})
-
-            lc.bound += lambdaEpsilon
-
-            return lc
+        return self.__projector.projectOn(And(formulaSet = set(constraints)), yVariables.keys())
