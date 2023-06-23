@@ -128,17 +128,7 @@ class Projector:
         print(len(vertices))
 
         if len(vertices) == 0:
-
-            lc = LinearConstraint("")
-            lc.variables[variables[0]] = Fraction("1")
-
-            lc.operator = ConstraintOperator.LEQ
-            lc.bound = np.inf
-
-            constraintSet.add(lc)
-
-            return And(formulaSet = constraintSet)
-
+            raise RuntimeError("Couldn't find any vertex")
         
         # Sixth step: project all vertices
 
