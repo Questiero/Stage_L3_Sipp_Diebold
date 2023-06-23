@@ -304,21 +304,25 @@ class FormulaDisplay:
        
         plt.show()
 
-    def displayv3(self, phi: Formula, variables: set[Variable]):
+    def displayv3(self, formulas: dict[Formula, object], variables: set[Variable]):
         
-        phi = phi.toDNF()
-
-        if isinstance(phi, Or):
-            for miniPhi in phi.children:
-                self.__displayConjunction(miniPhi.toLessOrEqConstraint(), variables)
-        if isinstance(phi, And):
-            self.__displayConjunction(phi.toLessOrEqConstraint(), variables)
-        else:
-            print("Non.")
+        for phi in formulas.keys():
+            key = phi
+            phi = phi.toDNF()
+            try:
+                if isinstance(phi, Or):
+                    for miniPhi in phi.children:
+                        self.__displayConjunction(miniPhi.toLessOrEqConstraint(), variables, formulas[key])
+                if isinstance(phi, And):
+                    self.__displayConjunction(phi.toLessOrEqConstraint(), variables, formulas[key])
+                else:
+                    print("Non.")
+            except:
+                print("can't display : ", key)
 
         plt.show()
 
-    def __displayConjunction(self, phi: Formula, variables: set[Variable]):
+    def __displayConjunction(self, phi: Formula, variables: set[Variable], color):
 
         constraintSet = set()
 
@@ -358,29 +362,6 @@ class FormulaDisplay:
 
         # Fourth step: Get all non parallel combinations
         nonParallelCombinations = itertools.combinations(hyperplanes, len(phi.getVariables()))
-
-#        for hyperplaneCombination in itertools.combinations(hyperplanes, len(phi.getVariables())):
-#               
-#            foundParallel = False
-#       
-#            for combinationPair in itertools.combinations(hyperplaneCombination, 2):
-#       
-#                x = combinationPair[0][0]
-#                y = combinationPair[1][0]
-#
-#                #print([float(a) for a in x])
-#                #print([float(a) for a in y])
-#                #print(np.dot(x,y)**2)
-#                #print(np.dot(x,x)*np.dot(y,y))
-#                #print("-")
-#       
-#                if (np.dot(x,y)**2 == np.dot(x,x)*np.dot(y,y)):
-#                    foundParallel = True
-#                    #print("Bh")
-#                    break
-#        
-#            if not foundParallel:
-#                nonParallelCombinations.append(hyperplaneCombination)
 
         # Fifth step: Get all vertices from combinations
         vertices = list()
@@ -502,4 +483,4 @@ class FormulaDisplay:
 
             # CA CA MARCHE QUE POUR UN TRUC QUI A 3 POINTS OU PLUS, FAIT UN CHECK ICI SUR LE NOMBRE DE PROJECTEDVERTICES JE PENSE
             for simplex in hull.simplices:
-                plt.plot(projectedVertices[simplex, 0], projectedVertices[simplex, 1], 'k-')
+                plt.plot(projectedVertices[simplex, 0], projectedVertices[simplex, 1], color)
