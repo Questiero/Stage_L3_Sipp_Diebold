@@ -4,6 +4,7 @@ from src.revision import Revision
 from src.realVariable import RealVariable
 from src.discreteL1DistanceFunction import discreteL1DistanceFunction
 from src.caron import Caron
+from src.daalmans import Daalmans
 from fractions import Fraction
 
 weights = {

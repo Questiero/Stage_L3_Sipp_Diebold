@@ -73,29 +73,34 @@ class Projector:
 
             hyperplanes.append((hypVar, c.bound))
 
-        print(hyperplanes)
+        for h in hyperplanes:
+            print([float(a) for a in h[0]])
 
         # Fourth step: Get all non parallel combinations
-        nonParallelCombinations = list()
-        print(len(nonParallelCombinations))
+        nonParallelCombinations = itertools.combinations(hyperplanes, len(phi.getVariables()))
 
-        for hyperplaneCombination in itertools.combinations(hyperplanes, len(phi.getVariables())):
-               
-            foundParallel = False
-       
-            for combinationPair in itertools.combinations(hyperplaneCombination, 2):
-       
-                x = combinationPair[0][0]
-                y = combinationPair[1][0]
-       
-                if (np.dot(x,y)**2 == np.dot(x,x)*np.dot(y,y)):
-                    foundParallel = True
-                    break
-        
-            if not foundParallel:
-                nonParallelCombinations.append(hyperplaneCombination)
-
-        print(len(nonParallelCombinations))
+#        for hyperplaneCombination in itertools.combinations(hyperplanes, len(phi.getVariables())):
+#               
+#            foundParallel = False
+#       
+#            for combinationPair in itertools.combinations(hyperplaneCombination, 2):
+#       
+#                x = combinationPair[0][0]
+#                y = combinationPair[1][0]
+#
+#                #print([float(a) for a in x])
+#                #print([float(a) for a in y])
+#                #print(np.dot(x,y)**2)
+#                #print(np.dot(x,x)*np.dot(y,y))
+#                #print("-")
+#       
+#                if (np.dot(x,y)**2 == np.dot(x,x)*np.dot(y,y)):
+#                    foundParallel = True
+#                    #print("Bh")
+#                    break
+#        
+#            if not foundParallel:
+#                nonParallelCombinations.append(hyperplaneCombination)
 
         # Fifth step: Get all vertices from combinations
         vertices = list()
@@ -123,7 +128,17 @@ class Projector:
         print(len(vertices))
 
         if len(vertices) == 0:
-            raise RuntimeError("Couldn't find any vertex")
+
+            lc = LinearConstraint("")
+            lc.variables[variables[0]] = Fraction("1")
+
+            lc.operator = ConstraintOperator.LEQ
+            lc.bound = np.inf
+
+            constraintSet.add(lc)
+
+            return And(formulaSet = constraintSet)
+
         
         # Sixth step: project all vertices
 
