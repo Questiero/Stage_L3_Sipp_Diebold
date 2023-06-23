@@ -73,13 +73,14 @@ class Daalmans(Simplification):
         actualConstraints : set
         actualConstraints = phi.children.copy()
         for constraint in phi.children:
+            neg = ~constraint.clone()
             actualConstraints.remove(constraint)
 
-            actualConstraints.add(~constraint)
+            actualConstraints.add(neg)
             form = And(formulaSet=actualConstraints).toLessOrEqConstraint().toDNF()
             if self._interpreter.sat(form) :
                 actualConstraints.add(constraint)
-            actualConstraints.remove(~constraint)
+            actualConstraints.remove(neg)
 
         return And(formulaSet=actualConstraints)
 
