@@ -148,7 +148,7 @@ class Projector:
 
         variables = newVar
 
-        projectedVertices = np.array(projectedVertices)
+        projectedVertices = np.unique(np.array(projectedVertices), axis=0)
         print(projectedVertices)
 
         # Seventh step: Get convex Hull
@@ -228,6 +228,8 @@ class Projector:
                 # Else, eighth step: Get constraints from hull simplices
                 for simplex in hull.simplices:
 
+                    print(simplex)
+
                     # Get centroid and normal
                     points = projectedVertices[simplex]
                     centroid = np.mean(points, axis=0)
@@ -248,15 +250,20 @@ class Projector:
                         for i in range(len(variables)):
                             coef = lc.variables.get(variables[i])
                             if coef:
+                                #print(coef)
+                                #print(vertex)
                                 sum += vertex[i]*coef
+                                #print(sum)
                         if(sum < lc.bound):
+                            print("<" + str(sum))
                             lc.operator = ConstraintOperator.LEQ
                             break
                         elif(sum > lc.bound):
+                            print(">" + str(sum))
                             lc.operator = ConstraintOperator.GEQ
                             break
                         
-                    if lc.operator is None:
+                    if sum is None:
                         lc.operator = ConstraintOperator.EQ
 
                     print(str(simplex) + ": " + str(sum) + ": " + str(lc))

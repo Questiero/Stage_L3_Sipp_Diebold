@@ -133,10 +133,13 @@ class FormulaDisplay:
         plt.show()
                     
     def displayv2(self, formulas : dict[Formula, object], variablesParam : tuple[Variable, Variable]) -> None :
+        
         fig, ax = plt.subplots()
         ax.set_xlim([0,7])
         ax.set_ylim([0,7])
+
         variables = set()
+
         for orPhi in formulas.keys():
             # Second step: Get all variables
             allVariables = orPhi.getVariables()
@@ -291,10 +294,212 @@ class FormulaDisplay:
                             points.append(vertex)
             for vertex in points:
                     ax.scatter(vertex[1 if variablesList.index(variablesParam[0]) == 1 else 0],vertex[1 if variablesList.index(variablesParam[1]) == 1 else 0], color = formulas[key])
+            
             from matplotlib.patches import Polygon
             try:
                 points.append(points[0])
                 p = Polygon(points, color=formulas[key])
                 ax.add_patch(p)  
             except: pass
+       
         plt.show()
+
+    def displayv3(self, phi: Formula, variables: set[Variable]):
+        
+        phi = phi.toDNF()
+
+        if isinstance(phi, Or):
+            for miniPhi in phi.children:
+                self.__displayConjunction(miniPhi.toLessOrEqConstraint(), variables)
+        if isinstance(phi, And):
+            self.__displayConjunction(phi.toLessOrEqConstraint(), variables)
+        else:
+            print("Non.")
+
+        plt.show()
+
+    def __displayConjunction(self, phi: Formula, variables: set[Variable]):
+
+        constraintSet = set()
+
+        # Second step: Get all variables
+        allVariables = list(phi.getVariables())
+        allVariables.sort(key = lambda v: v.name[::-1])
+        variables = list(variables)
+        variables.sort(key = lambda v: v.name[::-1])
+
+        # Third step: Get all hyperplanes
+        hyperplanes = list()
+
+        for miniPhi in phi.children:
+
+            hypVar = [np.array([])]
+
+            if (isinstance(miniPhi, Not)):
+                c = miniPhi.children.clone()
+            else:
+                c = miniPhi.clone()
+            
+            s = ""
+            for var in allVariables:
+                s += str(var) + ", "
+                v = c.variables.get(var)
+                if (v):
+                    hypVar = np.append(hypVar, v)
+                else:
+                    hypVar = np.append(hypVar, Fraction(0))
+
+            print(s)
+
+            hyperplanes.append((hypVar, c.bound))
+
+        for h in hyperplanes:
+            print([float(a) for a in h[0]])
+
+        # Fourth step: Get all non parallel combinations
+        nonParallelCombinations = itertools.combinations(hyperplanes, len(phi.getVariables()))
+
+#        for hyperplaneCombination in itertools.combinations(hyperplanes, len(phi.getVariables())):
+#               
+#            foundParallel = False
+#       
+#            for combinationPair in itertools.combinations(hyperplaneCombination, 2):
+#       
+#                x = combinationPair[0][0]
+#                y = combinationPair[1][0]
+#
+#                #print([float(a) for a in x])
+#                #print([float(a) for a in y])
+#                #print(np.dot(x,y)**2)
+#                #print(np.dot(x,x)*np.dot(y,y))
+#                #print("-")
+#       
+#                if (np.dot(x,y)**2 == np.dot(x,x)*np.dot(y,y)):
+#                    foundParallel = True
+#                    #print("Bh")
+#                    break
+#        
+#            if not foundParallel:
+#                nonParallelCombinations.append(hyperplaneCombination)
+
+        # Fifth step: Get all vertices from combinations
+        vertices = list()
+
+        i = 0
+
+        for comb in nonParallelCombinations:
+
+            a = []
+            b = []
+
+            for hyperplane in comb:
+                a.append([float(x) for x in hyperplane[0]])
+                b.append(float(hyperplane[1]))
+
+            try:
+                vertices.append(np.linalg.solve(a, b))
+            except (np.linalg.LinAlgError):
+                #print(str(i) + "Ah")
+                i += 1
+                continue
+
+        vertices = np.unique(np.array(vertices), axis=0)
+
+        tempVertices = []
+
+        for vertex in vertices:
+
+            found = False
+            for miniPhi in phi.children:
+
+                sum = Fraction("0")
+                for var in miniPhi.variables:
+                    sum += miniPhi.variables[var] * round(Fraction(vertex[variables.index(var)]), 12)
+
+                if sum > miniPhi.bound:
+                    print(sum)
+                    print(vertex)
+                    print(miniPhi)
+                    found = True
+                    break
+
+            if not found:
+                tempVertices.append(vertex)
+
+        vertices = np.array(tempVertices)
+        print(vertices)
+        print(len(vertices))
+
+        if len(vertices) == 0:
+            raise RuntimeError("Couldn't find any vertex")
+        
+        # Sixth step: project all vertices
+
+        variablesBool = np.array([], dtype=bool)
+        newVar = np.array([])
+        for var in allVariables:
+            if var in variables:
+                variables = np.delete(variables, np.where(variables == var))
+                newVar = np.append(newVar, var)
+                variablesBool = np.append(variablesBool, True)
+            else:
+                variablesBool = np.append(variablesBool, False)
+
+        projectedVertices = list()
+        for v in vertices:
+            projectedVertices.append(v[variablesBool])
+
+        variables = newVar
+
+        projectedVertices = np.unique(np.array(projectedVertices), axis=0)
+        print(projectedVertices)
+
+        # Seventh step: Get convex Hull
+        try:
+            hull = ConvexHull(projectedVertices)
+        except:
+
+            # Remove fixed dimensions
+
+            transposed = np.transpose(projectedVertices)
+
+            index = 0
+
+            toRemoveIndex = []
+            toRemoveVar = []
+
+            for dim in transposed:
+
+                foundDifferent = False
+
+                for c in dim:
+                    if not(c == dim[0]):
+                        foundDifferent = True
+                        break
+
+                if not foundDifferent:
+
+                    toRemoveIndex.append(index)
+                    toRemoveVar.append(variables[index])
+                    
+                    lc = LinearConstraint("")
+                    lc.variables[variables[index]] = Fraction(1)
+                    lc.operator = ConstraintOperator.EQ
+                    lc.bound = round(Fraction(dim[0]), 12)
+
+                    constraintSet.add(lc.clone())
+                
+                index += 1
+            
+            transposed = np.delete(transposed, toRemoveIndex, axis = 0)
+            variables = [i for i in variables if i not in toRemoveVar]
+
+            projectedVertices = np.transpose(transposed)
+
+            hull = ConvexHull(projectedVertices)
+
+        finally:
+
+            # CA CA MARCHE QUE POUR UN TRUC QUI A 3 POINTS OU PLUS, FAIT UN CHECK ICI SUR LE NOMBRE DE PROJECTEDVERTICES JE PENSE
+            for simplex in hull.simplices:
+                plt.plot(projectedVertices[simplex, 0], projectedVertices[simplex, 1], 'k-')
