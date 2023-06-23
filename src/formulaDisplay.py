@@ -500,6 +500,5 @@ class FormulaDisplay:
 
         finally:
 
-            # CA CA MARCHE QUE POUR UN TRUC QUI A 3 POINTS OU PLUS, FAIT UN CHECK ICI SUR LE NOMBRE DE PROJECTEDVERTICES JE PENSE
             for simplex in hull.simplices:
                 plt.plot(projectedVertices[simplex, 0], projectedVertices[simplex, 1], 'k-')

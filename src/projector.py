@@ -124,6 +124,30 @@ class Projector:
                 continue
 
         vertices = np.unique(np.array(vertices), axis=0)
+
+        tempVertices = []
+
+        for vertex in vertices:
+
+            found = False
+            for miniPhi in phi.children:
+
+                sum = Fraction("0")
+                for var in miniPhi.variables:
+                    sum += miniPhi.variables[var] * round(Fraction(vertex[allVariables.index(var)]), 12)
+
+                if sum > miniPhi.bound:
+                    print(sum)
+                    print(vertex)
+                    print(miniPhi)
+                    found = True
+                    break
+
+            if not found:
+                tempVertices.append(vertex)
+
+        vertices = np.array(tempVertices)
+
         print(vertices)
         print(len(vertices))
 
@@ -150,6 +174,7 @@ class Projector:
 
         projectedVertices = np.unique(np.array(projectedVertices), axis=0)
         print(projectedVertices)
+        print("Ah")
 
         # Seventh step: Get convex Hull
         try:

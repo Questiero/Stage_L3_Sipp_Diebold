@@ -193,8 +193,7 @@ class Revision:
 
         try:
             return self.__projector.projectOn(And(formulaSet = set(constraints)), yVariables.keys())
-        except:
-            
+        except RuntimeError:
             if isinstance(psi, NaryFormula):
                 return And(formulaSet = {self.__expandLiteral(c, lambdaEpsilon) for c in psi.children})
             else:
