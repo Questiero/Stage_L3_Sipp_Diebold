@@ -4,7 +4,6 @@ from src.revision import Revision
 from src.integerVariable import IntegerVariable
 from src.realVariable import RealVariable
 from src.discreteL1DistanceFunction import discreteL1DistanceFunction
-from src.caron import Caron
 from src.daalmans import Daalmans
 from fractions import Fraction
 
@@ -19,7 +18,7 @@ weights = {
 }
 
 solver = LPSolverRounded()
-simplifier = [Caron(solver), Daalmans(solver)]
+simplifier = [Daalmans(solver)]
 
 cd = LinearConstraint("vol_tequila >= 0") & LinearConstraint("vol_vodka >= 0")\
     & LinearConstraint("0.35*vol_tequila + 0.45*vol_vodka  - vol_alcool = 0")\

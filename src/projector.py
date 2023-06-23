@@ -119,7 +119,7 @@ class Projector:
             try:
                 vertices.append(np.linalg.solve(a, b))
             except (np.linalg.LinAlgError):
-                print(str(i) + "Ah")
+                #print(str(i) + "Ah")
                 i += 1
                 continue
 
