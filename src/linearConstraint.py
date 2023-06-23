@@ -175,6 +175,7 @@ class LinearConstraint(Constraint):
         for variable in copyConstrainte.variables.keys():
             copyConstrainte.variables[variable] *= -1
         copyConstrainte.variables[var] = Fraction(1,1)
+        copyConstrainte.bound *= -1
         res = [[copyConstrainte]]
 
         return res
