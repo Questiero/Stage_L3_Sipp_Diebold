@@ -27,8 +27,6 @@ class Projector:
 
     def projectOn(self, phi: And, variables: set[Variable]):
 
-        #TODO Négation ?
-
         constraintSet = set()
 
         # First step: simplify
