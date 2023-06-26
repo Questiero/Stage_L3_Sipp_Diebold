@@ -39,14 +39,6 @@ class FormulaDisplay:
 
         plt.show()
 
-
-    def sort_tuples_by_sum(lst):
-        # create a new list of tuples where the first element is the sum of each tuple and the second element is the original tuple
-        sum_tuples = [(sum(t), t) for t in lst]
-        # sort the new list based on the first element (the sum)
-        sorted_sum_tuples = sorted(sum_tuples, key=lambda x: x[0])
-        # extract and return only the original tuples from the sorted list
-        return [t[1] for t in sorted_sum_tuples]
     def __displayConjunction(self, phi: Formula, variables: set[Variable], color):
 
         constraintSet = set()
