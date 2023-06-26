@@ -27,8 +27,9 @@ class FormulaDisplay:
                     for miniPhi in phi.children:
                         try:
                             self.__displayConjunction(miniPhi.toLessOrEqConstraint(), variables, formulas[key])
-                        except:
+                        except Exception as e:
                             print("can't display : ", key)
+                            print("error : ", e)
                 if isinstance(phi, And):
                     self.__displayConjunction(phi.toLessOrEqConstraint(), variables, formulas[key])
                 else:
@@ -47,7 +48,6 @@ class FormulaDisplay:
         allVariables.sort(key = lambda v: v.name[::-1])
         variables = list(variables)
         variables.sort(key = lambda v: v.name[::-1])
-
         # Third step: Get all hyperplanes
         hyperplanes = list()
 
@@ -101,13 +101,20 @@ class FormulaDisplay:
         for vertex in vertices:
 
             found = False
-            for miniPhi in phi.children:
+            for miniPhi2 in phi.children:
+                if (isinstance(miniPhi2, Not)):
+                    constraint = miniPhi2.children.clone()
+                    for var in constraint.variables.keys():
+                        constraint.variables[var] *= -1
+                    constraint.bound *= -1
+                else:
+                    constraint = miniPhi2.clone()
 
                 sum = Fraction("0")
-                for var in miniPhi.variables:
-                    sum += miniPhi.variables[var] * round(Fraction(vertex[variables.index(var)]), 12)
+                for var in constraint.variables:
+                    sum += constraint.variables[var] * round(Fraction(vertex[variables.index(var)]), 12)
 
-                if sum > miniPhi.bound:
+                if sum > constraint.bound:
                     found = True
                     break
 

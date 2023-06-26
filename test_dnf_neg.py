@@ -29,3 +29,7 @@ print("-------")
 print(res[0], ";", res[1])
 
 print("Satisfiable ?", simplifier[0]._interpreter.sat(res[1].toLessOrEqConstraint().toDNF()))
+
+from src.formulaDisplay import FormulaDisplay
+display = FormulaDisplay()
+display.display({psi.toLessOrEqConstraint() : 'blue', mu.toLessOrEqConstraint() : 'green', res[1].toLessOrEqConstraint() : 'red'}, [x,y])
