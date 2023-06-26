@@ -28,14 +28,17 @@ class FormulaDisplay:
                         try:
                             self.__displayConjunction(miniPhi.toLessOrEqConstraint(), variables, formulas[key])
                         except Exception as e:
-                            print("can't display : ", key)
-                            print("error : ", e)
+                            #print("can't display : ", key)
+                            #print("error : ", e)
+                            pass
                 if isinstance(phi, And):
                     self.__displayConjunction(phi.toLessOrEqConstraint(), variables, formulas[key])
                 else:
-                    print("Non.")
+                    #print("Non.")
+                    pass
             except:
-                print("can't display : ", key)
+                #print("can't display : ", key)
+                pass
 
         plt.show()
 
