@@ -473,10 +473,10 @@ class FormulaDisplay:
             if(len(projectedVertices) >= 3):
                 # CA CA MARCHE QUE POUR UN TRUC QUI A 3 POINTS OU PLUS, FAIT UN CHECK ICI SUR LE NOMBRE DE PROJECTEDVERTICES JE PENSE
                 for simplex in hull.simplices:
-                    plt.plot(projectedVertices[simplex, 0], projectedVertices[simplex, 1], color)
+                    plt.plot(projectedVertices[simplex, 0], projectedVertices[simplex, 1], color, marker='o')
             elif(len(projectedVertices) == 2) :
                     test = [[projectedVertices[0][0], projectedVertices[1][0]], [projectedVertices[0][1], projectedVertices[1][1]]]
                     plt.plot(test[0],test[1], color=color, marker='o')
                     plt.plot(test[0],test[1], color=color)
             elif(len(projectedVertices) == 1):
-                pass #TO DO
+                plt.plot([vertex[0]], [vertex[1]], color=color, marker='o')
