@@ -243,12 +243,15 @@ class Projector:
                         u, s, vh = np.linalg.svd(points - centroid, full_matrices=False)
                         normal = vh[-1]
                         normal = normal * np.linalg.norm(normal, 1)
+                        normal = [round(Fraction(n), 12) for n in normal]
+
+
                         
                         # Build constraint
                         lc = LinearConstraint("")
                         for i in range(len(normal)):
                             if normal[i] != 0:
-                                lc.variables[variables[i]] = round(Fraction(normal[i]), 12)
+                                lc.variables[variables[i]] = normal[i]
                         lc.bound = round(Fraction(np.sum(normal * centroid)), 12)
 
                         s = ""
@@ -300,6 +303,7 @@ class Projector:
         u, s, vh = np.linalg.svd(points - centroid, full_matrices=False)
         normal = vh[-1]
         normal = normal * np.linalg.norm(normal, 1)
+        normal = [round(Fraction(n), 12) for n in normal]
         
         constraintSet = set()
 
@@ -307,7 +311,7 @@ class Projector:
         lc = LinearConstraint("")
         for i in range(len(normal)):
             if normal[i] != 0:
-                lc.variables[variables[i]] = round(Fraction(normal[i]), 12)
+                lc.variables[variables[i]] = normal[i]
         lc.bound = round(Fraction(np.sum(normal * centroid)), 12)
         lc.operator = ConstraintOperator.EQ
 
