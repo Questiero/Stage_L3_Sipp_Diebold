@@ -30,4 +30,4 @@ print(str(res[0]) + "; " + str(res[1]))
 
 from src.formulaDisplay import FormulaDisplay
 display = FormulaDisplay()
-display.displayv3(res[1].toLessOrEqConstraint(), [x,y])
+display.displayv3({psi.toLessOrEqConstraint() : 'blue', mu.toLessOrEqConstraint() : 'green', res[1].toLessOrEqConstraint() : 'red'}, [x,y])

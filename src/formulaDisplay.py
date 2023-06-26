@@ -312,7 +312,10 @@ class FormulaDisplay:
             try:
                 if isinstance(phi, Or):
                     for miniPhi in phi.children:
-                        self.__displayConjunction(miniPhi.toLessOrEqConstraint(), variables, formulas[key])
+                        try:
+                            self.__displayConjunction(miniPhi.toLessOrEqConstraint(), variables, formulas[key])
+                        except:
+                            print("can't display : ", key)
                 if isinstance(phi, And):
                     self.__displayConjunction(phi.toLessOrEqConstraint(), variables, formulas[key])
                 else:
@@ -353,12 +356,7 @@ class FormulaDisplay:
                 else:
                     hypVar = np.append(hypVar, Fraction(0))
 
-            print(s)
-
             hyperplanes.append((hypVar, c.bound))
-
-        for h in hyperplanes:
-            print([float(a) for a in h[0]])
 
         # Fourth step: Get all non parallel combinations
         nonParallelCombinations = itertools.combinations(hyperplanes, len(phi.getVariables()))
@@ -367,7 +365,6 @@ class FormulaDisplay:
         vertices = list()
 
         i = 0
-
         for comb in nonParallelCombinations:
 
             a = []
@@ -398,9 +395,6 @@ class FormulaDisplay:
                     sum += miniPhi.variables[var] * round(Fraction(vertex[variables.index(var)]), 12)
 
                 if sum > miniPhi.bound:
-                    print(sum)
-                    print(vertex)
-                    print(miniPhi)
                     found = True
                     break
 
@@ -408,8 +402,6 @@ class FormulaDisplay:
                 tempVertices.append(vertex)
 
         vertices = np.array(tempVertices)
-        print(vertices)
-        print(len(vertices))
 
         if len(vertices) == 0:
             raise RuntimeError("Couldn't find any vertex")
@@ -433,8 +425,6 @@ class FormulaDisplay:
         variables = newVar
 
         projectedVertices = np.unique(np.array(projectedVertices), axis=0)
-        print(projectedVertices)
-
         # Seventh step: Get convex Hull
         try:
             hull = ConvexHull(projectedVertices)
@@ -480,6 +470,13 @@ class FormulaDisplay:
             hull = ConvexHull(projectedVertices)
 
         finally:
-
-            for simplex in hull.simplices:
-                plt.plot(projectedVertices[simplex, 0], projectedVertices[simplex, 1], color)
+            if(len(projectedVertices) >= 3):
+                # CA CA MARCHE QUE POUR UN TRUC QUI A 3 POINTS OU PLUS, FAIT UN CHECK ICI SUR LE NOMBRE DE PROJECTEDVERTICES JE PENSE
+                for simplex in hull.simplices:
+                    plt.plot(projectedVertices[simplex, 0], projectedVertices[simplex, 1], color)
+            elif(len(projectedVertices) == 2) :
+                    test = [[projectedVertices[0][0], projectedVertices[1][0]], [projectedVertices[0][1], projectedVertices[1][1]]]
+                    plt.plot(test[0],test[1], color=color, marker='o')
+                    plt.plot(test[0],test[1], color=color)
+            elif(len(projectedVertices) == 1):
+                pass #TO DO
