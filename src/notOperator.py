@@ -5,6 +5,7 @@ from .constants import Constants
 from .formula import Formula
 from .constraint import Constraint
 from .variable import Variable
+from.constraintOperator import ConstraintOperator
 
 class Not(UnaryFormula):
     '''
@@ -100,7 +101,8 @@ class Not(UnaryFormula):
 
         for key in copyNeg.variables:
             copyNeg.variables[key] = -copyNeg.variables[key]
-        copyNeg.variables[e] = 1
+        if copyNeg.operator == ConstraintOperator.GEQ: copyNeg.variables[e] = -1
+        else: copyNeg.variables[e] = 1
         copyNeg.bound = -copyNeg.bound
                 
         return copyNeg

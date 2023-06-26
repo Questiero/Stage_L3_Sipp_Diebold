@@ -29,18 +29,11 @@ class Projector:
 
         #TODO Négation ?
 
-        print("---")
-        print(phi)
-        print("---")
-
         constraintSet = set()
 
         # First step: simplify
         for simplifier in self.__simplifier:
             phi = simplifier.run(phi.toLessOrEqConstraint().toDNF())
-
-        print(phi)
-        print("---")
 
         # Second step: Get all variables
         allVariables = list(phi.getVariables())
@@ -69,12 +62,7 @@ class Projector:
                 else:
                     hypVar = np.append(hypVar, Fraction(0))
 
-            print(s)
-
             hyperplanes.append((hypVar, c.bound))
-
-        for h in hyperplanes:
-            print([float(a) for a in h[0]])
 
         # Fourth step: Get all non parallel combinations
         nonParallelCombinations = itertools.combinations(hyperplanes, len(phi.getVariables()))
@@ -137,9 +125,6 @@ class Projector:
                     sum += miniPhi.variables[var] * round(Fraction(vertex[allVariables.index(var)]), 12)
 
                 if sum > miniPhi.bound:
-                    print(sum)
-                    print(vertex)
-                    print(miniPhi)
                     found = True
                     break
 
@@ -147,9 +132,6 @@ class Projector:
                 tempVertices.append(vertex)
 
         vertices = np.array(tempVertices)
-
-        print(vertices)
-        print(len(vertices))
 
         if len(vertices) == 0:
             raise RuntimeError("Couldn't find any vertex")
@@ -173,8 +155,6 @@ class Projector:
         variables = newVar
 
         projectedVertices = np.unique(np.array(projectedVertices), axis=0)
-        print(projectedVertices)
-        print("Ah")
 
         # Seventh step: Get convex Hull
         try:
@@ -253,8 +233,6 @@ class Projector:
                 # Else, eighth step: Get constraints from hull simplices
                 for simplex in hull.simplices:
 
-                    print(simplex)
-
                     # Get centroid and normal
                     points = projectedVertices[simplex]
                     centroid = np.mean(points, axis=0)
@@ -280,18 +258,14 @@ class Projector:
                                 sum += vertex[i]*coef
                                 #print(sum)
                         if(sum < lc.bound):
-                            print("<" + str(sum))
                             lc.operator = ConstraintOperator.LEQ
                             break
                         elif(sum > lc.bound):
-                            print(">" + str(sum))
                             lc.operator = ConstraintOperator.GEQ
                             break
                         
                     if sum is None:
                         lc.operator = ConstraintOperator.EQ
-
-                    print(str(simplex) + ": " + str(sum) + ": " + str(lc))
 
                     constraintSet.add(lc)
 

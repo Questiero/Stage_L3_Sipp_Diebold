@@ -105,6 +105,14 @@ class FormulaInterpreter:
         res: distance between phi and mu, Formula wich symbolize the optimisation between phi and mu
         
         '''
+        variablesTest = []
+        neg = None
+        for var in variables:
+            if var.name == '@':
+                neg = var
+            else: variablesTest.append(var)
+        variablesTest.append(neg)
+        variables = variablesTest
         constraints = self.__buildConstraints(variables, phi, mu)
 
         obj = [0]*len(variables)*2
@@ -194,6 +202,11 @@ class FormulaInterpreter:
 
     def removeNot(self, phi: And):
         andSet = set()
+        negConstraint = LinearConstraint("")
+        negConstraint.variables[self._eVar] = -1
+        negConstraint.bound = 0
+        negConstraint.operator = ConstraintOperator.LEQ
+        andSet.add(negConstraint)
         for andChild in phi.children:
             if isinstance(andChild, Not):
                 andSet.add(andChild.copyNegLitteral(self._eVar))
