@@ -39,6 +39,14 @@ class FormulaDisplay:
 
         plt.show()
 
+
+    def sort_tuples_by_sum(lst):
+        # create a new list of tuples where the first element is the sum of each tuple and the second element is the original tuple
+        sum_tuples = [(sum(t), t) for t in lst]
+        # sort the new list based on the first element (the sum)
+        sorted_sum_tuples = sorted(sum_tuples, key=lambda x: x[0])
+        # extract and return only the original tuples from the sorted list
+        return [t[1] for t in sorted_sum_tuples]
     def __displayConjunction(self, phi: Formula, variables: set[Variable], color):
 
         constraintSet = set()
@@ -192,8 +200,15 @@ class FormulaDisplay:
         finally:
             if(len(projectedVertices) >= 3):
                 # CA CA MARCHE QUE POUR UN TRUC QUI A 3 POINTS OU PLUS, FAIT UN CHECK ICI SUR LE NOMBRE DE PROJECTEDVERTICES JE PENSE
+                test = []
+                test2 = []
                 for simplex in hull.simplices:
                     plt.plot(projectedVertices[simplex, 0], projectedVertices[simplex, 1], color, marker='o')
+                for ver in projectedVertices:
+                    test.append(ver[0])
+                    test2.append(ver[1])
+
+                plt.fill(test, test2, color, alpha=0.3)
             elif(len(projectedVertices) == 2) :
                     test = [[projectedVertices[0][0], projectedVertices[1][0]], [projectedVertices[0][1], projectedVertices[1][1]]]
                     plt.plot(test[0],test[1], color=color, marker='o')
