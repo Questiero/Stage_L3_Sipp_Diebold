@@ -204,7 +204,7 @@ class FormulaDisplay:
                 test2 = []
                 for simplex in hull.simplices:
                     plt.plot(projectedVertices[simplex, 0], projectedVertices[simplex, 1], color, marker='o')
-                for ver in projectedVertices:
+                for ver in projectedVertices[hull.vertices]:
                     test.append(ver[0])
                     test2.append(ver[1])
 
