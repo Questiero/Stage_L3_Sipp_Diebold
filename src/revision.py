@@ -86,6 +86,8 @@ class Revision:
             
             res = Or(formulaSet = setRes).toDNF()
 
+        print(res.toLessOrEqConstraint().toDNF())
+
         return (disRes, self.__interpreter.simplifyMLC(res.toLessOrEqConstraint().toDNF()))
     
     def __executeLiteral(self, psi: Formula, mu: Formula) -> tuple[Fraction, Formula]:
