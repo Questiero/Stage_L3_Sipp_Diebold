@@ -187,7 +187,7 @@ class FormulaInterpreter:
         '''
         variables = list(And(phi,mu).getVariables())
         e = RealVariable("@")
-        variables.append(e)
+        if not e in variables: variables.append(e)
         self.__distanceFunction.getWeights()[e] = 0
 
         return self.findOneSolution(variables,phi,mu)    
