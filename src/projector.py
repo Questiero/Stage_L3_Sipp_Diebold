@@ -29,18 +29,11 @@ class Projector:
 
         #TODO Négation ?
 
-        print("---")
-        print(phi)
-        print("---")
-
         constraintSet = set()
 
         # First step: simplify
         for simplifier in self.__simplifier:
             phi = simplifier.run(phi.toLessOrEqConstraint().toDNF())
-
-        print(phi)
-        print("---")
 
         # Second step: Get all variables
         allVariables = list(phi.getVariables())
@@ -101,8 +94,6 @@ class Projector:
         # Fifth step: Get all vertices from combinations
         vertices = list()
 
-        i = 0
-
         for comb in nonParallelCombinations:
 
             a = []
@@ -115,8 +106,6 @@ class Projector:
             try:
                 vertices.append(np.linalg.solve(a, b))
             except (np.linalg.LinAlgError):
-                #print(str(i) + "Ah")
-                i += 1
                 continue
 
         vertices = np.unique(np.array(vertices), axis=0)
