@@ -60,16 +60,12 @@ class Projector:
             else:
                 c = miniPhi.clone()
             
-            s = ""
             for var in allVariables:
-                s += str(var) + ", "
                 v = c.variables.get(var)
                 if (v):
                     hypVar = np.append(hypVar, v)
                 else:
                     hypVar = np.append(hypVar, Fraction(0))
-
-            print(s)
 
             hyperplanes.append((hypVar, c.bound))
 
@@ -174,7 +170,6 @@ class Projector:
 
         projectedVertices = np.unique(np.array(projectedVertices), axis=0)
         print(projectedVertices)
-        print("Ah")
 
         # Seventh step: Get convex Hull
         try:
@@ -250,49 +245,101 @@ class Projector:
 
             else:
 
-                # Else, eighth step: Get constraints from hull simplices
-                for simplex in hull.simplices:
+                if len(projectedVertices) >= 3:
 
-                    print(simplex)
+                    # Else, eighth step: Get constraints from hull simplices
+                    for simplex in hull.simplices:
 
-                    # Get centroid and normal
-                    points = projectedVertices[simplex]
-                    centroid = np.mean(points, axis=0)
-                    u, s, vh = np.linalg.svd(points - centroid, full_matrices=False)
-                    normal = vh[-1]
-                    normal = normal * np.linalg.norm(normal, 1)
-                    
-                    # Build constraint
-                    lc = LinearConstraint("")
-                    for i in range(len(normal)):
-                        if normal[i] != 0:
-                            lc.variables[variables[i]] = round(Fraction(normal[i]), 12)
-                    lc.bound = round(Fraction(np.sum(normal * centroid)), 12)
-
-                    for vertex in projectedVertices:
-
-                        sum = Fraction("0")
-                        for i in range(len(variables)):
-                            coef = lc.variables.get(variables[i])
-                            if coef:
-                                #print(coef)
-                                #print(vertex)
-                                sum += round(Fraction(vertex[i]), 12)*coef
-                                #print(sum)
-                        if(sum < lc.bound):
-                            print("<" + str(sum))
-                            lc.operator = ConstraintOperator.LEQ
-                            break
-                        elif(sum > lc.bound):
-                            print(">" + str(sum))
-                            lc.operator = ConstraintOperator.GEQ
-                            break
+                        # Get centroid and normal
+                        points = projectedVertices[simplex]
+                        centroid = np.mean(points, axis=0)
+                        u, s, vh = np.linalg.svd(points - centroid, full_matrices=False)
+                        normal = vh[-1]
+                        normal = normal * np.linalg.norm(normal, 1)
                         
-                    if sum is None:
-                        lc.operator = ConstraintOperator.EQ
+                        # Build constraint
+                        lc = LinearConstraint("")
+                        for i in range(len(normal)):
+                            if normal[i] != 0:
+                                lc.variables[variables[i]] = round(Fraction(normal[i]), 12)
+                        lc.bound = round(Fraction(np.sum(normal * centroid)), 12)
 
-                    print(str(simplex) + ": " + str(sum) + ": " + str(lc))
+                        s = ""
+                        for vertex in projectedVertices:
 
-                    constraintSet.add(lc)
+                            sum = Fraction("0")
+                            for i in range(len(variables)):
+                                coef = lc.variables.get(variables[i])
+                                if coef:
+                                    #print(coef)
+                                    #print(vertex)
+                                    sum += round(Fraction(vertex[i]), 12)*coef
+                                    #print(sum)
+                            if(sum < lc.bound):
+                                s+= "< " + str(lc.bound)
+                                lc.operator = ConstraintOperator.LEQ
+                                break
+                            elif(sum > lc.bound):
+                                s += "> " + str(lc.bound)
+                                lc.operator = ConstraintOperator.GEQ
+                                break
+                            
+                        if sum is None:
+                            lc.operator = ConstraintOperator.EQ
+
+                        print(simplex, ":", sum, s, ":", lc)
+
+                        constraintSet.add(lc)
+
+                elif len(projectedVertices) == 2:
+
+                    self.__createConstraintSegment(projectedVertices[0], projectedVertices[1], variables)
+
+                elif len(projectedVertices) == 1:
+
+                    self.__createConstraintPoint(projectedVertices[0], variables)
+
+                else:
+                    print("Euuuuh")           
 
             return And(formulaSet = constraintSet)
+        
+
+    def __createConstraintSegment(self, x, y, variables):
+        
+        # Get centroid and normal
+        points = np.array([x, y])
+        centroid = np.mean(points, axis=0)
+        u, s, vh = np.linalg.svd(points - centroid, full_matrices=False)
+        normal = vh[-1]
+        normal = normal * np.linalg.norm(normal, 1)
+        
+        constraintSet = set()
+
+        # Build constraint
+        lc = LinearConstraint("")
+        for i in range(len(normal)):
+            if normal[i] != 0:
+                lc.variables[variables[i]] = round(Fraction(normal[i]), 12)
+        lc.bound = round(Fraction(np.sum(normal * centroid)), 12)
+        lc.operator = ConstraintOperator.EQ
+
+        constraintSet.add(lc)
+
+        for point in points:
+            constraintSet.add(self.__createConstraintPoint(point, variables))
+
+        return And(formulaSet=constraintSet)
+    
+    def __createConstraintPoint(self, point, variables):
+
+        lc = LinearConstraint("")
+
+        for i in range(len(point)):
+
+            lc.variables[variables[i]] = Fraction(1)
+            lc.bound = round(Fraction(point[i]), 12)
+
+        lc.operator = ConstraintOperator.EQ
+
+        return lc
