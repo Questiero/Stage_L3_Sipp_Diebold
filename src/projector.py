@@ -27,20 +27,11 @@ class Projector:
 
     def projectOn(self, phi: And, variables: set[Variable]):
 
-        #TODO Négation ?
-
-        print("---")
-        print(phi)
-        print("---")
-
         constraintSet = set()
 
         # First step: simplify
         for simplifier in self.__simplifier:
             phi = simplifier.run(phi.toLessOrEqConstraint().toDNF())
-
-        print(phi)
-        print("---")
 
         # Second step: Get all variables
         allVariables = list(phi.getVariables())
@@ -101,8 +92,6 @@ class Projector:
         # Fifth step: Get all vertices from combinations
         vertices = list()
 
-        i = 0
-
         for comb in nonParallelCombinations:
 
             a = []
@@ -115,8 +104,6 @@ class Projector:
             try:
                 vertices.append(np.linalg.solve(a, b))
             except (np.linalg.LinAlgError):
-                #print(str(i) + "Ah")
-                i += 1
                 continue
 
         vertices = np.unique(np.array(vertices), axis=0)
@@ -128,16 +115,31 @@ class Projector:
             found = False
             for miniPhi in phi.children:
 
-                sum = Fraction("0")
-                for var in miniPhi.variables:
-                    sum += miniPhi.variables[var] * round(Fraction(vertex[allVariables.index(var)]), 12)
+                if isinstance(miniPhi, Not):
 
-                if sum > miniPhi.bound:
-                    print(sum)
-                    print(vertex)
-                    print(miniPhi)
-                    found = True
-                    break
+                    sum = Fraction("0")
+                    for var in miniPhi.children.variables:
+                        sum += miniPhi.children.variables[var] * round(Fraction(vertex[allVariables.index(var)]), 12)
+
+                    if sum < miniPhi.children.bound:
+                        print(sum)
+                        print(vertex)
+                        print(miniPhi)
+                        found = True
+                        break
+
+                else:
+
+                    sum = Fraction("0")
+                    for var in miniPhi.variables:
+                        sum += miniPhi.variables[var] * round(Fraction(vertex[allVariables.index(var)]), 12)
+
+                    if sum > miniPhi.bound:
+                        print(sum)
+                        print(vertex)
+                        print(miniPhi)
+                        found = True
+                        break
 
             if not found:
                 tempVertices.append(vertex)
@@ -256,12 +258,15 @@ class Projector:
                         u, s, vh = np.linalg.svd(points - centroid, full_matrices=False)
                         normal = vh[-1]
                         normal = normal * np.linalg.norm(normal, 1)
+                        normal = [round(Fraction(n), 12) for n in normal]
+
+
                         
                         # Build constraint
                         lc = LinearConstraint("")
                         for i in range(len(normal)):
                             if normal[i] != 0:
-                                lc.variables[variables[i]] = round(Fraction(normal[i]), 12)
+                                lc.variables[variables[i]] = normal[i]
                         lc.bound = round(Fraction(np.sum(normal * centroid)), 12)
 
                         s = ""
@@ -313,6 +318,7 @@ class Projector:
         u, s, vh = np.linalg.svd(points - centroid, full_matrices=False)
         normal = vh[-1]
         normal = normal * np.linalg.norm(normal, 1)
+        normal = [round(Fraction(n), 12) for n in normal]
         
         constraintSet = set()
 
@@ -320,7 +326,7 @@ class Projector:
         lc = LinearConstraint("")
         for i in range(len(normal)):
             if normal[i] != 0:
-                lc.variables[variables[i]] = round(Fraction(normal[i]), 12)
+                lc.variables[variables[i]] = normal[i]
         lc.bound = round(Fraction(np.sum(normal * centroid)), 12)
         lc.operator = ConstraintOperator.EQ
 
