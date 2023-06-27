@@ -42,6 +42,22 @@ class FormulaDisplay:
 
         plt.show()
 
+    def __test(self, phi:Formula, variables:list[Variable], values:list[Fraction]):
+        res : bool
+        res = True
+        for litteral in phi.children:
+            constraint = litteral
+            if isinstance(litteral, Not):
+                constraint = litteral.children
+            sum = 0
+            for i in range(0, len(values)):
+                sum += values[i] * constraint.variables[variables[i]] if variables[i] in constraint.getVariables() else 0
+            if isinstance(litteral, Not):
+                res = res and sum > constraint.bound
+            else:
+                 res = res and sum <= constraint.bound
+        return res
+
     def __displayConjunction(self, phi: Formula, variables: set[Variable], color):
 
         constraintSet = set()
@@ -198,7 +214,12 @@ class FormulaDisplay:
                 test = []
                 test2 = []
                 for simplex in hull.simplices:
-                    plt.plot(projectedVertices[simplex, 0], projectedVertices[simplex, 1], color, marker='o')
+                    x = (projectedVertices[simplex, 0][0] + projectedVertices[simplex, 0][1])/2
+                    y = (projectedVertices[simplex, 1][0] + projectedVertices[simplex, 1][1])/2
+                    if self.__test(phi, variables, (x,y)):
+                        plt.plot(projectedVertices[simplex, 0], projectedVertices[simplex, 1], color, marker='o')
+                    else:
+                        plt.plot(projectedVertices[simplex, 0], projectedVertices[simplex, 1], color, marker='o', linestyle='dashed')
                 for ver in projectedVertices[hull.vertices]:
                     test.append(ver[0])
                     test2.append(ver[1])
