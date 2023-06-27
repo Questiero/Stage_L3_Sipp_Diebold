@@ -227,7 +227,11 @@ class FormulaDisplay:
                 plt.fill(test, test2, color, alpha=0.3)
             elif(len(projectedVertices) == 2) :
                     test = [[projectedVertices[0][0], projectedVertices[1][0]], [projectedVertices[0][1], projectedVertices[1][1]]]
-                    plt.plot(test[0],test[1], color=color, marker='o')
-                    plt.plot(test[0],test[1], color=color)
+                    x = (test[0][0] + test[1][0])/2
+                    y = (test[0][1] + test[1][1])/2
+                    if self.__test(phi, variables, (x,y)):
+                        plt.plot(test[0],test[1], color=color, marker='o')
+                    else:
+                        plt.plot(test[0],test[1], color=color, marker='o', linestyle='dashed')
             elif(len(projectedVertices) == 1):
                 plt.plot([vertex[0]], [vertex[1]], color=color, marker='o')
