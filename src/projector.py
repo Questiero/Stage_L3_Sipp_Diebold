@@ -115,16 +115,31 @@ class Projector:
             found = False
             for miniPhi in phi.children:
 
-                sum = Fraction("0")
-                for var in miniPhi.variables:
-                    sum += miniPhi.variables[var] * round(Fraction(vertex[allVariables.index(var)]), 12)
+                if isinstance(miniPhi, Not):
 
-                if sum > miniPhi.bound:
-                    print(sum)
-                    print(vertex)
-                    print(miniPhi)
-                    found = True
-                    break
+                    sum = Fraction("0")
+                    for var in miniPhi.children.variables:
+                        sum += miniPhi.children.variables[var] * round(Fraction(vertex[allVariables.index(var)]), 12)
+
+                    if sum < miniPhi.children.bound:
+                        print(sum)
+                        print(vertex)
+                        print(miniPhi)
+                        found = True
+                        break
+
+                else:
+
+                    sum = Fraction("0")
+                    for var in miniPhi.variables:
+                        sum += miniPhi.variables[var] * round(Fraction(vertex[allVariables.index(var)]), 12)
+
+                    if sum > miniPhi.bound:
+                        print(sum)
+                        print(vertex)
+                        print(miniPhi)
+                        found = True
+                        break
 
             if not found:
                 tempVertices.append(vertex)
