@@ -1,7 +1,7 @@
-from __future__ import annotations # used to type hint the class itself
+from __future__ import annotations
 
 from .constraint import Constraint
-from ....variable.variableManager import VariableManager
+from ....variable import VariableManager
 from .constraintOperator import ConstraintOperator
 from ...formulaManager import FormulaManager
 from ....constants import Constants

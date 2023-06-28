@@ -1,10 +1,12 @@
-from .nullaryFormula import NullaryFormula
+from __future__ import annotations
+
+from . import NullaryFormula
 
 from ...constants import Constants
 
 # Typing only imports
-from ...variable.variable import Variable
-from .constraint.constraint import Constraint
+from ...variable import Variable
+from .constraint import Constraint
 
 class Top(NullaryFormula):
     '''

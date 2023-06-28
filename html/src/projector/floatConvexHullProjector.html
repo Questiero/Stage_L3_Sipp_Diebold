@@ -26,14 +26,13 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from .projector import Projector
-from ..formula.naryFormula.andOperator import And
+<pre><code class="python">from __future__ import annotations
+
+from ..formula import And, LinearConstraint, Not, ConstraintOperator
 from ..simplificator import Simplificator, Caron
-from ..mlo_solver.LPSolver import LPSolver
-from ..formula.nullaryFormula.constraint.linearConstraint import LinearConstraint
-from ..formula.unaryFormula.notOperator import Not
-from ..formula.nullaryFormula.constraint.constraintOperator import ConstraintOperator
-from ..variable.variable import Variable
+from .projector import Projector
+from ..mlo_solver import LPSolver
+from ..variable import Variable
 
 import itertools
 import numpy as np
@@ -395,7 +394,7 @@ class FloatConvexHullProjector (Projector):
 <dl>
 <dt id="src.projector.floatConvexHullProjector.FloatConvexHullProjector"><code class="flex name class">
 <span>class <span class="ident">FloatConvexHullProjector</span></span>
-<span>(</span><span>rounding: int = 12, simplification: list[<a title="src.simplificator.simplificator.Simplificator" href="../simplificator/simplificator.html#src.simplificator.simplificator.Simplificator">Simplificator</a>] = [&lt;src.simplificator.caron.Caron object&gt;])</span>
+<span>(</span><span>rounding: int = 12, simplification: list[Simplificator] = [&lt;src.simplificator.caron.Caron object&gt;])</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Helper class that provides a standard way to create an ABC using
@@ -753,7 +752,7 @@ inheritance.</p></div>
 <h3>Methods</h3>
 <dl>
 <dt id="src.projector.floatConvexHullProjector.FloatConvexHullProjector.projectOn"><code class="name flex">
-<span>def <span class="ident">projectOn</span></span>(<span>self, phi: <a title="src.formula.naryFormula.andOperator.And" href="../formula/naryFormula/andOperator.html#src.formula.naryFormula.andOperator.And">And</a>, variables: set[<a title="src.variable.variable.Variable" href="../variable/variable.html#src.variable.variable.Variable">Variable</a>])</span>
+<span>def <span class="ident">projectOn</span></span>(<span>self, phi: And, variables: set[Variable])</span>
 </code></dt>
 <dd>
 <div class="desc"></div>

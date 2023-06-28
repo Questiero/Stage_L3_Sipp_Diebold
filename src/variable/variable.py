@@ -1,4 +1,5 @@
-from __future__ import annotations # used to type hint the class itself
+from __future__ import annotations
+
 from fractions import Fraction
 from abc import ABC, abstractmethod
 

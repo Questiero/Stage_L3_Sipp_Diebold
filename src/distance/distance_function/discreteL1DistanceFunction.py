@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from .distanceFunctionOnNumericalTuple import distanceFunctionOnNumericalTuple
 from .l1DistanceFunction import l1DistanceFunction
 from ..domain import Domain

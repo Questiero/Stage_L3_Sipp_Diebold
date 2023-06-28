@@ -26,7 +26,9 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from .binaryFormula import BinaryFormula
+<pre><code class="python">from __future__ import annotations
+
+from .binaryFormula import BinaryFormula
 from ...constants import Constants
 
 # Typing only imports
@@ -90,7 +92,7 @@ class Implication(BinaryFormula):
 <dl>
 <dt id="src.formula.binaryFormula.implicationOperator.Implication"><code class="flex name class">
 <span>class <span class="ident">Implication</span></span>
-<span>(</span><span>formulaLeft: <a title="src.formula.formula.Formula" href="../formula.html#src.formula.formula.Formula">Formula</a>, formulaRight: <a title="src.formula.formula.Formula" href="../formula.html#src.formula.formula.Formula">Formula</a>, name: str = None)</span>
+<span>(</span><span>formulaLeft: Formula, formulaRight: Formula, name: str = None)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Class representing the implication operator.</p>

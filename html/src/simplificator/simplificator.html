@@ -26,10 +26,11 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from abc import ABC, abstractmethod
+<pre><code class="python">from __future__ import annotations
 
-from ..formula.naryFormula.andOperator import And
-from ..formula.nullaryFormula.constraint.constraintOperator import ConstraintOperator
+from ..formula import And, ConstraintOperator
+
+from abc import ABC, abstractmethod
 
 class Simplificator(ABC):
     def __init__(self, formula : And):
@@ -71,7 +72,7 @@ class Simplificator(ABC):
 <dl>
 <dt id="src.simplificator.simplificator.Simplificator"><code class="flex name class">
 <span>class <span class="ident">Simplificator</span></span>
-<span>(</span><span>formula: <a title="src.formula.naryFormula.andOperator.And" href="../formula/naryFormula/andOperator.html#src.formula.naryFormula.andOperator.And">And</a>)</span>
+<span>(</span><span>formula: And)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Helper class that provides a standard way to create an ABC using

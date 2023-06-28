@@ -1,16 +1,13 @@
-from .formula import Formula
-from .mlo_solver.MLOSolver import MLOSolver
-from .variable.realVariable import RealVariable
-from .formula.naryFormula.andOperator import And
-from .formula.nullaryFormula.constraint.constraintOperator import ConstraintOperator
-from fractions import Fraction
-from .formula.nullaryFormula.constraint.linearConstraint import LinearConstraint
-from .variable.variable import Variable
+from __future__ import annotations
+
+from .formula import Formula, Or, Not, LinearConstraint, ConstraintOperator, And
+from .variable import Variable, RealVariable
+from .mlo_solver import OptimizationValues
+from .mlo_solver import MLOSolver
 from .distance import DistanceFunction
-from .formula.unaryFormula.notOperator import Not
 from .simplificator import Simplificator
-from .formula.naryFormula.orOperator import Or
-from .mlo_solver.optimizationValues import OptimizationValues
+
+from fractions import Fraction
 
 class FormulaInterpreter:
     def __init__(self, mloSolver : MLOSolver, distanceFunction : DistanceFunction, simplifications : list[Simplificator]) -> None:

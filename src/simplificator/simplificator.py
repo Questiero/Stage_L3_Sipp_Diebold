@@ -1,7 +1,8 @@
-from abc import ABC, abstractmethod
+from __future__ import annotations
 
-from ..formula.naryFormula.andOperator import And
-from ..formula.nullaryFormula.constraint.constraintOperator import ConstraintOperator
+from ..formula import And, ConstraintOperator
+
+from abc import ABC, abstractmethod
 
 class Simplificator(ABC):
     def __init__(self, formula : And):

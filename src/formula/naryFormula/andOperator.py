@@ -1,11 +1,13 @@
+from __future__ import annotations
+
 from .naryFormula import NaryFormula
 from ...constants import Constants
 # local import of Or
 
 # Typing only imports
 from .. import Formula
-from ..nullaryFormula.constraint.constraint import Constraint
-from ...variable.variable import Variable
+from ..nullaryFormula import Constraint
+from ...variable import Variable
 
 class And(NaryFormula):
     '''

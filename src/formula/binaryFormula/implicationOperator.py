@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from .binaryFormula import BinaryFormula
 from ...constants import Constants
 

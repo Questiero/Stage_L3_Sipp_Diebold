@@ -1,9 +1,11 @@
+from __future__ import annotations
+
 from ..formula import Formula
 from ..formulaManager import FormulaManager
 
 # Typing only imports
-from ...variable.variable import Variable
-from ..nullaryFormula.constraint.constraint import Constraint
+from ...variable import Variable
+from ..nullaryFormula import Constraint
 
 from abc import abstractmethod
 

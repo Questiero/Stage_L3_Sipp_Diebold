@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from .. import Formula
 from ..formulaManager import FormulaManager
 

@@ -26,17 +26,13 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from .simplificator import Simplificator
-from ..formula import Formula
-from ..variable.realVariable import RealVariable
-from ..formula.nullaryFormula.constraint.linearConstraint import LinearConstraint
-from ..formula.nullaryFormula.constraint.constraintOperator import ConstraintOperator
-from ..formula.unaryFormula.notOperator import Not
-from..formula.naryFormula.andOperator import And
-from ..mlo_solver.optimizationValues import OptimizationValues
-from..formula.nullaryFormula.nullaryFormula import NullaryFormula
-from fractions import Fraction
-from ..mlo_solver.MLOSolver import MLOSolver
+<pre><code class="python">from __future__ import annotations
+
+from ..formula import Formula, LinearConstraint, Not, And, NullaryFormula
+from .simplificator import Simplificator
+from ..variable import RealVariable
+from ..mlo_solver import MLOSolver, OptimizationValues
+
 
 class Caron(Simplificator):
     _interpreter = None
@@ -96,7 +92,7 @@ class Caron(Simplificator):
 <dl>
 <dt id="src.simplificator.caron.Caron"><code class="flex name class">
 <span>class <span class="ident">Caron</span></span>
-<span>(</span><span>solver: <a title="src.mlo_solver.MLOSolver.MLOSolver" href="../mlo_solver/MLOSolver.html#src.mlo_solver.MLOSolver.MLOSolver">MLOSolver</a>)</span>
+<span>(</span><span>solver: MLOSolver)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Helper class that provides a standard way to create an ABC using

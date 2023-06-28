@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from .distanceFunction import DistanceFunction
 from ..domain import VariableTupleDomaine
 from fractions import Fraction

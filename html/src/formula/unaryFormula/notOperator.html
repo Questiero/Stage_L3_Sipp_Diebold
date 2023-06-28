@@ -26,14 +26,16 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from .unaryFormula import UnaryFormula
+<pre><code class="python">from __future__ import annotations
+
+from .unaryFormula import UnaryFormula
 from ...constants import Constants
 
 # Typing only imports
 from .. import Formula
 from ..nullaryFormula.constraint.constraint import Constraint
 from ...variable.variable import Variable
-from..nullaryFormula.constraint.constraintOperator import ConstraintOperator
+from ..nullaryFormula.constraint.constraintOperator import ConstraintOperator
 
 class Not(UnaryFormula):
     &#39;&#39;&#39;
@@ -151,7 +153,7 @@ class Not(UnaryFormula):
 <dl>
 <dt id="src.formula.unaryFormula.notOperator.Not"><code class="flex name class">
 <span>class <span class="ident">Not</span></span>
-<span>(</span><span>formulaInit: <a title="src.formula.formula.Formula" href="../formula.html#src.formula.formula.Formula">Formula</a>, name: str = None)</span>
+<span>(</span><span>formulaInit: Formula, name: str = None)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Class representing the Not operator.</p>
@@ -277,7 +279,7 @@ class Not(UnaryFormula):
 <h3>Methods</h3>
 <dl>
 <dt id="src.formula.unaryFormula.notOperator.Not.copyNegLitteral"><code class="name flex">
-<span>def <span class="ident">copyNegLitteral</span></span>(<span>self, e: <a title="src.variable.variable.Variable" href="../../variable/variable.html#src.variable.variable.Variable">Variable</a>) ‑> <a title="src.formula.nullaryFormula.constraint.constraint.Constraint" href="../nullaryFormula/constraint/constraint.html#src.formula.nullaryFormula.constraint.constraint.Constraint">Constraint</a></span>
+<span>def <span class="ident">copyNegLitteral</span></span>(<span>self, e: Variable) ‑> <a title="src.formula.nullaryFormula.constraint.constraint.Constraint" href="../nullaryFormula/constraint/constraint.html#src.formula.nullaryFormula.constraint.constraint.Constraint">Constraint</a></span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -302,7 +304,7 @@ class Not(UnaryFormula):
 </details>
 </dd>
 <dt id="src.formula.unaryFormula.notOperator.Not.getAdherence"><code class="name flex">
-<span>def <span class="ident">getAdherence</span></span>(<span>self, var: <a title="src.variable.variable.Variable" href="../../variable/variable.html#src.variable.variable.Variable">Variable</a>) ‑> list[list[<a title="src.formula.nullaryFormula.constraint.constraint.Constraint" href="../nullaryFormula/constraint/constraint.html#src.formula.nullaryFormula.constraint.constraint.Constraint">Constraint</a>]]</span>
+<span>def <span class="ident">getAdherence</span></span>(<span>self, var: Variable) ‑> list[list[<a title="src.formula.nullaryFormula.constraint.constraint.Constraint" href="../nullaryFormula/constraint/constraint.html#src.formula.nullaryFormula.constraint.constraint.Constraint">Constraint</a>]]</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Returns a 2D list containing all the constraints of the adherence of

@@ -26,20 +26,19 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from . import Formula
-from..variable.variable import Variable
+<pre><code class="python">from __future__ import annotations
+
+from . import Formula
+from .naryFormula import And, Or
+from .unaryFormula import Not
+from ..variable.variable import Variable
+from ..mlo_solver.LPSolverRounded import LPSolverRounded
+
 import matplotlib.pyplot as plt
 import numpy as np
-from ..mlo_solver.LPSolverRounded import LPSolverRounded
-from .unaryFormula.notOperator import Not
 from fractions import Fraction
-from .nullaryFormula.nullaryFormula import NullaryFormula
-from .naryFormula.andOperator import And
-from .naryFormula.orOperator import Or
 import itertools
 from scipy.spatial import ConvexHull
-from .nullaryFormula.constraint.linearConstraint import LinearConstraint
-from .nullaryFormula.constraint.constraintOperator import ConstraintOperator
 
 class FormulaDisplay:
     def __init__(self):
@@ -425,7 +424,7 @@ class FormulaDisplay:
 <h3>Methods</h3>
 <dl>
 <dt id="src.formula.formulaDisplay.FormulaDisplay.display"><code class="name flex">
-<span>def <span class="ident">display</span></span>(<span>self, formulas: dict[<a title="src.formula.formula.Formula" href="formula.html#src.formula.formula.Formula">Formula</a>, object], variables: set[<a title="src.variable.variable.Variable" href="../variable/variable.html#src.variable.variable.Variable">Variable</a>])</span>
+<span>def <span class="ident">display</span></span>(<span>self, formulas: dict[Formula, object], variables: set[Variable])</span>
 </code></dt>
 <dd>
 <div class="desc"></div>

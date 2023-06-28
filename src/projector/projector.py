@@ -1,5 +1,7 @@
-from ..formula.naryFormula.andOperator import And
-from ..variable.variable import Variable
+from __future__ import annotations
+
+from ..formula import And
+from ..variable import Variable
 
 from abc import ABC, abstractmethod
 

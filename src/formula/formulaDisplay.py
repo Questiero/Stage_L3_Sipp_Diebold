@@ -1,17 +1,16 @@
+from __future__ import annotations
+
 from . import Formula
-from..variable.variable import Variable
+from .naryFormula import And, Or
+from .unaryFormula import Not
+from ..variable.variable import Variable
+from ..mlo_solver.LPSolverRounded import LPSolverRounded
+
 import matplotlib.pyplot as plt
 import numpy as np
-from ..mlo_solver.LPSolverRounded import LPSolverRounded
-from .unaryFormula.notOperator import Not
 from fractions import Fraction
-from .nullaryFormula.nullaryFormula import NullaryFormula
-from .naryFormula.andOperator import And
-from .naryFormula.orOperator import Or
 import itertools
 from scipy.spatial import ConvexHull
-from .nullaryFormula.constraint.linearConstraint import LinearConstraint
-from .nullaryFormula.constraint.constraintOperator import ConstraintOperator
 
 class FormulaDisplay:
     def __init__(self):

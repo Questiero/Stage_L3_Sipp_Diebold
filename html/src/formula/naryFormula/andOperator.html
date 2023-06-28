@@ -26,14 +26,16 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from .naryFormula import NaryFormula
+<pre><code class="python">from __future__ import annotations
+
+from .naryFormula import NaryFormula
 from ...constants import Constants
 # local import of Or
 
 # Typing only imports
 from .. import Formula
-from ..nullaryFormula.constraint.constraint import Constraint
-from ...variable.variable import Variable
+from ..nullaryFormula import Constraint
+from ...variable import Variable
 
 class And(NaryFormula):
     &#39;&#39;&#39;
@@ -216,7 +218,7 @@ class And(NaryFormula):
 <dl>
 <dt id="src.formula.naryFormula.andOperator.And"><code class="flex name class">
 <span>class <span class="ident">And</span></span>
-<span>(</span><span>*formulas: <a title="src.formula.formula.Formula" href="../formula.html#src.formula.formula.Formula">Formula</a>, formulaSet: set[<a title="src.formula.formula.Formula" href="../formula.html#src.formula.formula.Formula">Formula</a>] = None, name: str = None)</span>
+<span>(</span><span>*formulas: Formula, formulaSet: set[Formula] = None, name: str = None)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Class representing the And operator as a relation with an arity equal or
@@ -413,7 +415,7 @@ greater than 2 in PCMLC as a syntax tree.</p>
 <h3>Methods</h3>
 <dl>
 <dt id="src.formula.naryFormula.andOperator.And.getAdherence"><code class="name flex">
-<span>def <span class="ident">getAdherence</span></span>(<span>self, var: <a title="src.variable.variable.Variable" href="../../variable/variable.html#src.variable.variable.Variable">Variable</a>) ‑> list[list[<a title="src.formula.nullaryFormula.constraint.constraint.Constraint" href="../nullaryFormula/constraint/constraint.html#src.formula.nullaryFormula.constraint.constraint.Constraint">Constraint</a>]]</span>
+<span>def <span class="ident">getAdherence</span></span>(<span>self, var: Variable) ‑> list[list[<a title="src.formula.nullaryFormula.constraint.constraint.Constraint" href="../nullaryFormula/constraint/constraint.html#src.formula.nullaryFormula.constraint.constraint.Constraint">Constraint</a>]]</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Returns a 2D list containing all the constraints of the adherence of

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from ...variable.variable import Variable
 from .domain import Domain
 

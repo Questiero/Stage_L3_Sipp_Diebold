@@ -1,6 +1,9 @@
+from __future__ import annotations
+
 from .formula import Formula
-from pyparsing import Literal, Word, srange, infix_notation, OpAssoc, ParseResults, ParserElement
 from ..constants import Constants
+
+from pyparsing import Literal, Word, srange, infix_notation, OpAssoc, ParseResults, ParserElement
 
 class FormulaManager():
 

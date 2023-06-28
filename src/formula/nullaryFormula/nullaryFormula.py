@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from .. import Formula
 #local import of Not
 

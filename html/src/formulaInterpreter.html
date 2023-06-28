@@ -26,19 +26,16 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from .formula import Formula
-from .mlo_solver.MLOSolver import MLOSolver
-from .variable.realVariable import RealVariable
-from .formula.naryFormula.andOperator import And
-from .formula.nullaryFormula.constraint.constraintOperator import ConstraintOperator
-from fractions import Fraction
-from .formula.nullaryFormula.constraint.linearConstraint import LinearConstraint
-from .variable.variable import Variable
+<pre><code class="python">from __future__ import annotations
+
+from .formula import Formula, Or, Not, LinearConstraint, ConstraintOperator, And
+from .variable import Variable, RealVariable
+from .mlo_solver import OptimizationValues
+from .mlo_solver import MLOSolver
 from .distance import DistanceFunction
-from .formula.unaryFormula.notOperator import Not
 from .simplificator import Simplificator
-from .formula.naryFormula.orOperator import Or
-from .mlo_solver.optimizationValues import OptimizationValues
+
+from fractions import Fraction
 
 class FormulaInterpreter:
     def __init__(self, mloSolver : MLOSolver, distanceFunction : DistanceFunction, simplifications : list[Simplificator]) -&gt; None:
@@ -256,7 +253,7 @@ class FormulaInterpreter:
 <dl>
 <dt id="src.formulaInterpreter.FormulaInterpreter"><code class="flex name class">
 <span>class <span class="ident">FormulaInterpreter</span></span>
-<span>(</span><span>mloSolver: <a title="src.mlo_solver.MLOSolver.MLOSolver" href="mlo_solver/MLOSolver.html#src.mlo_solver.MLOSolver.MLOSolver">MLOSolver</a>, distanceFunction: <a title="src.distance.distance_function.distanceFunction.DistanceFunction" href="distance/distance_function/distanceFunction.html#src.distance.distance_function.distanceFunction.DistanceFunction">DistanceFunction</a>, simplifications: list[<a title="src.simplificator.simplificator.Simplificator" href="simplificator/simplificator.html#src.simplificator.simplificator.Simplificator">Simplificator</a>])</span>
+<span>(</span><span>mloSolver: MLOSolver, distanceFunction: DistanceFunction, simplifications: list[Simplificator])</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -470,7 +467,7 @@ class FormulaInterpreter:
 <h3>Methods</h3>
 <dl>
 <dt id="src.formulaInterpreter.FormulaInterpreter.findOneSolution"><code class="name flex">
-<span>def <span class="ident">findOneSolution</span></span>(<span>self, variables: list[<a title="src.variable.variable.Variable" href="variable/variable.html#src.variable.variable.Variable">Variable</a>], phi: <a title="src.formula.naryFormula.andOperator.And" href="formula/naryFormula/andOperator.html#src.formula.naryFormula.andOperator.And">And</a>, mu: <a title="src.formula.naryFormula.andOperator.And" href="formula/naryFormula/andOperator.html#src.formula.naryFormula.andOperator.And">And</a>) ‑> tuple[fractions.Fraction, <a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a>]</span>
+<span>def <span class="ident">findOneSolution</span></span>(<span>self, variables: list[Variable], phi: And, mu: And) ‑> tuple[fractions.Fraction, <a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a>]</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Method used for find one solution for the optimization of a couple of Formula</p>
@@ -533,7 +530,7 @@ class FormulaInterpreter:
 </details>
 </dd>
 <dt id="src.formulaInterpreter.FormulaInterpreter.optimizeCouple"><code class="name flex">
-<span>def <span class="ident">optimizeCouple</span></span>(<span>self, phi: <a title="src.formula.naryFormula.andOperator.And" href="formula/naryFormula/andOperator.html#src.formula.naryFormula.andOperator.And">And</a>, mu: <a title="src.formula.naryFormula.andOperator.And" href="formula/naryFormula/andOperator.html#src.formula.naryFormula.andOperator.And">And</a>) ‑> tuple[fractions.Fraction, <a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a>]</span>
+<span>def <span class="ident">optimizeCouple</span></span>(<span>self, phi: And, mu: And) ‑> tuple[fractions.Fraction, <a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a>]</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Method used for optimized a couple of Formula</p>
@@ -575,7 +572,7 @@ class FormulaInterpreter:
 </details>
 </dd>
 <dt id="src.formulaInterpreter.FormulaInterpreter.removeNot"><code class="name flex">
-<span>def <span class="ident">removeNot</span></span>(<span>self, phi: <a title="src.formula.naryFormula.andOperator.And" href="formula/naryFormula/andOperator.html#src.formula.naryFormula.andOperator.And">And</a>)</span>
+<span>def <span class="ident">removeNot</span></span>(<span>self, phi: And)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -600,7 +597,7 @@ class FormulaInterpreter:
 </details>
 </dd>
 <dt id="src.formulaInterpreter.FormulaInterpreter.sat"><code class="name flex">
-<span>def <span class="ident">sat</span></span>(<span>self, phi: <a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a>) ‑> bool</span>
+<span>def <span class="ident">sat</span></span>(<span>self, phi: Formula) ‑> bool</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Method used to verify the satisfiability of a formula</p>
@@ -663,7 +660,7 @@ class FormulaInterpreter:
 </details>
 </dd>
 <dt id="src.formulaInterpreter.FormulaInterpreter.simplifyMLC"><code class="name flex">
-<span>def <span class="ident">simplifyMLC</span></span>(<span>self, phi: <a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a>)</span>
+<span>def <span class="ident">simplifyMLC</span></span>(<span>self, phi: Formula)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Method used to simplify a conjonction of mix linears constraints</p>

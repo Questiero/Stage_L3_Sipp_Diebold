@@ -26,8 +26,11 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from .LPSolver import LPSolver
-from ..formula.nullaryFormula.constraint.constraintOperator import ConstraintOperator
+<pre><code class="python">from __future__ import annotations
+
+from .LPSolver import LPSolver
+from ..formula.nullaryFormula.constraint import ConstraintOperator
+
 from fractions import Fraction
 
 class LPSolverRounded(LPSolver):
@@ -96,7 +99,7 @@ inheritance.</p></div>
 <h3>Methods</h3>
 <dl>
 <dt id="src.mlo_solver.LPSolverRounded.LPSolverRounded.solve"><code class="name flex">
-<span>def <span class="ident">solve</span></span>(<span>self, variables: list, objectif: dict, constraints: dict[tuple[dict[fractions.Fraction], <a title="src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator" href="../formula/nullaryFormula/constraint/constraintOperator.html#src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator">ConstraintOperator</a>, fractions.Fraction]]) ‑> tuple</span>
+<span>def <span class="ident">solve</span></span>(<span>self, variables: list, objectif: dict, constraints: dict[tuple[dict[Fraction], ConstraintOperator, Fraction]]) ‑> tuple</span>
 </code></dt>
 <dd>
 <div class="desc"></div>

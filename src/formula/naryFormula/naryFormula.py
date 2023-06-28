@@ -1,8 +1,10 @@
+from __future__ import annotations
+
 from .. import Formula
 from ..formulaManager import FormulaManager
 
 # Typing only imports
-from ...variable.variable import Variable
+from ...variable import Variable
 
 class NaryFormula(Formula):
     '''

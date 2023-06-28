@@ -1,7 +1,10 @@
-from .MLOSolver import MLOSolver
+from __future__ import annotations
+
 from ..formula.nullaryFormula.constraint.constraintOperator import ConstraintOperator
-from fractions import Fraction
 from .optimizationValues import OptimizationValues
+from .MLOSolver import MLOSolver
+
+from fractions import Fraction
 import lpsolve55 as lp_solve
 
 class LPSolver(MLOSolver):

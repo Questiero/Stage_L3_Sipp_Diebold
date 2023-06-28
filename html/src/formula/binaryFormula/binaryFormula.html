@@ -26,12 +26,14 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from ..formula import Formula
+<pre><code class="python">from __future__ import annotations
+
+from ..formula import Formula
 from ..formulaManager import FormulaManager
 
 # Typing only imports
-from ...variable.variable import Variable
-from ..nullaryFormula.constraint.constraint import Constraint
+from ...variable import Variable
+from ..nullaryFormula import Constraint
 
 from abc import abstractmethod
 
@@ -157,7 +159,7 @@ class BinaryFormula(Formula):
 <dl>
 <dt id="src.formula.binaryFormula.binaryFormula.BinaryFormula"><code class="flex name class">
 <span>class <span class="ident">BinaryFormula</span></span>
-<span>(</span><span>formulaLeft: <a title="src.formula.formula.Formula" href="../formula.html#src.formula.formula.Formula">Formula</a>, formulaRight: <a title="src.formula.formula.Formula" href="../formula.html#src.formula.formula.Formula">Formula</a>, name: str = None)</span>
+<span>(</span><span>formulaLeft: Formula, formulaRight: Formula, name: str = None)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Abstract class, representing a binary operator.</p>
@@ -299,7 +301,7 @@ class BinaryFormula(Formula):
 <h3>Methods</h3>
 <dl>
 <dt id="src.formula.binaryFormula.binaryFormula.BinaryFormula.getAdherence"><code class="name flex">
-<span>def <span class="ident">getAdherence</span></span>(<span>self, var: <a title="src.variable.variable.Variable" href="../../variable/variable.html#src.variable.variable.Variable">Variable</a>) ‑> list[list[<a title="src.formula.nullaryFormula.constraint.constraint.Constraint" href="../nullaryFormula/constraint/constraint.html#src.formula.nullaryFormula.constraint.constraint.Constraint">Constraint</a>]]</span>
+<span>def <span class="ident">getAdherence</span></span>(<span>self, var: Variable) ‑> list[list[<a title="src.formula.nullaryFormula.constraint.constraint.Constraint" href="../nullaryFormula/constraint/constraint.html#src.formula.nullaryFormula.constraint.constraint.Constraint">Constraint</a>]]</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Returns a 2D list containing all the constraints of the adherence of

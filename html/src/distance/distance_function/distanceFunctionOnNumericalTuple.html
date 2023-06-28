@@ -26,7 +26,9 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from .distanceFunction import DistanceFunction
+<pre><code class="python">from __future__ import annotations
+
+from .distanceFunction import DistanceFunction
 from ..domain import VariableTupleDomaine
 from fractions import Fraction
 
@@ -57,7 +59,7 @@ class distanceFunctionOnNumericalTuple(DistanceFunction):
 <dl>
 <dt id="src.distance.distance_function.distanceFunctionOnNumericalTuple.distanceFunctionOnNumericalTuple"><code class="flex name class">
 <span>class <span class="ident">distanceFunctionOnNumericalTuple</span></span>
-<span>(</span><span>domaine: <a title="src.distance.domain.variableTupleDomaine.VariableTupleDomaine" href="../domain/variableTupleDomaine.html#src.distance.domain.variableTupleDomaine.VariableTupleDomaine">VariableTupleDomaine</a>)</span>
+<span>(</span><span>domaine: VariableTupleDomaine)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Helper class that provides a standard way to create an ABC using

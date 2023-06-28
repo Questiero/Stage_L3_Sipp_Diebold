@@ -26,8 +26,10 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from ..formula.naryFormula.andOperator import And
-from ..variable.variable import Variable
+<pre><code class="python">from __future__ import annotations
+
+from ..formula import And
+from ..variable import Variable
 
 from abc import ABC, abstractmethod
 
@@ -74,7 +76,7 @@ inheritance.</p></div>
 <h3>Methods</h3>
 <dl>
 <dt id="src.projector.projector.Projector.projectOn"><code class="name flex">
-<span>def <span class="ident">projectOn</span></span>(<span>self, phi: <a title="src.formula.naryFormula.andOperator.And" href="../formula/naryFormula/andOperator.html#src.formula.naryFormula.andOperator.And">And</a>, variables: set[<a title="src.variable.variable.Variable" href="../variable/variable.html#src.variable.variable.Variable">Variable</a>])</span>
+<span>def <span class="ident">projectOn</span></span>(<span>self, phi: And, variables: set[Variable])</span>
 </code></dt>
 <dd>
 <div class="desc"></div>

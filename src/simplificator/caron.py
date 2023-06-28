@@ -1,14 +1,10 @@
+from __future__ import annotations
+
+from ..formula import Formula, LinearConstraint, Not, And, NullaryFormula
 from .simplificator import Simplificator
-from ..formula import Formula
-from ..variable.realVariable import RealVariable
-from ..formula.nullaryFormula.constraint.linearConstraint import LinearConstraint
-from ..formula.nullaryFormula.constraint.constraintOperator import ConstraintOperator
-from ..formula.unaryFormula.notOperator import Not
-from..formula.naryFormula.andOperator import And
-from ..mlo_solver.optimizationValues import OptimizationValues
-from..formula.nullaryFormula.nullaryFormula import NullaryFormula
-from fractions import Fraction
-from ..mlo_solver.MLOSolver import MLOSolver
+from ..variable import RealVariable
+from ..mlo_solver import MLOSolver, OptimizationValues
+
 
 class Caron(Simplificator):
     _interpreter = None

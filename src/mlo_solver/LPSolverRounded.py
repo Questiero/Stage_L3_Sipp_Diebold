@@ -1,5 +1,8 @@
+from __future__ import annotations
+
 from .LPSolver import LPSolver
-from ..formula.nullaryFormula.constraint.constraintOperator import ConstraintOperator
+from ..formula.nullaryFormula.constraint import ConstraintOperator
+
 from fractions import Fraction
 
 class LPSolverRounded(LPSolver):

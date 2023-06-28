@@ -26,15 +26,17 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from .formula import Formula
-from .mlo_solver.MLOSolver import MLOSolver
-from .distance import DistanceFunction
+<pre><code class="python">from __future__ import annotations
+
+from .formula import Formula, Or, And, UnaryFormula, NullaryFormula, LinearConstraint, Not, ConstraintOperator
 from .formulaInterpreter import FormulaInterpreter
-from .formula import Or, And, UnaryFormula, NullaryFormula, LinearConstraint, Not, ConstraintOperator
+from .mlo_solver import MLOSolver
+from .distance import DistanceFunction
 from .constants import Constants
-from fractions import Fraction
 from .simplificator import Simplificator
 from .projector import Projector
+
+from fractions import Fraction
 import math
 
 class Revision:
@@ -261,7 +263,7 @@ class Revision:
 <dl>
 <dt id="src.revision.Revision"><code class="flex name class">
 <span>class <span class="ident">Revision</span></span>
-<span>(</span><span>solverInit: <a title="src.mlo_solver.MLOSolver.MLOSolver" href="mlo_solver/MLOSolver.html#src.mlo_solver.MLOSolver.MLOSolver">MLOSolver</a>, distance: <a title="src.distance.distance_function.distanceFunction.DistanceFunction" href="distance/distance_function/distanceFunction.html#src.distance.distance_function.distanceFunction.DistanceFunction">DistanceFunction</a>, simplifiers: list[<a title="src.simplificator.simplificator.Simplificator" href="simplificator/simplificator.html#src.simplificator.simplificator.Simplificator">Simplificator</a>] = [], onlyOneSolution: bool = False, projector: <a title="src.projector.projector.Projector" href="projector/projector.html#src.projector.projector.Projector">Projector</a> = None)</span>
+<span>(</span><span>solverInit: MLOSolver, distance: DistanceFunction, simplifiers: list[Simplificator] = [], onlyOneSolution: bool = False, projector: Projector = None)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -484,7 +486,7 @@ class Revision:
 <h3>Methods</h3>
 <dl>
 <dt id="src.revision.Revision.execute"><code class="name flex">
-<span>def <span class="ident">execute</span></span>(<span>self, psi: <a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a>, mu: <a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a>) ‑> tuple[fractions.Fraction, <a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a>]</span>
+<span>def <span class="ident">execute</span></span>(<span>self, psi: Formula, mu: Formula) ‑> tuple[fractions.Fraction, <a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a>]</span>
 </code></dt>
 <dd>
 <div class="desc"></div>

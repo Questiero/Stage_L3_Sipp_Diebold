@@ -26,9 +26,12 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from .formula import Formula
-from pyparsing import Literal, Word, srange, infix_notation, OpAssoc, ParseResults, ParserElement
+<pre><code class="python">from __future__ import annotations
+
+from .formula import Formula
 from ..constants import Constants
+
+from pyparsing import Literal, Word, srange, infix_notation, OpAssoc, ParseResults, ParserElement
 
 class FormulaManager():
 
@@ -227,7 +230,7 @@ class FormulaManager():
 <h3>Static methods</h3>
 <dl>
 <dt id="src.formula.formulaManager.FormulaManager.declare"><code class="name flex">
-<span>def <span class="ident">declare</span></span>(<span>name: str, formul: <a title="src.formula.formula.Formula" href="formula.html#src.formula.formula.Formula">Formula</a>) ‑> <a title="src.formula.formula.Formula" href="formula.html#src.formula.formula.Formula">Formula</a></span>
+<span>def <span class="ident">declare</span></span>(<span>name: str, formul: Formula) ‑> <a title="src.formula.formula.Formula" href="formula.html#src.formula.formula.Formula">Formula</a></span>
 </code></dt>
 <dd>
 <div class="desc"></div>

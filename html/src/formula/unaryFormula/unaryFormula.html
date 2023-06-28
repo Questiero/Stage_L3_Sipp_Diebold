@@ -26,7 +26,9 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from .. import Formula
+<pre><code class="python">from __future__ import annotations
+
+from .. import Formula
 from ..formulaManager import FormulaManager
 
 # Typing only imports
@@ -78,7 +80,7 @@ class UnaryFormula(Formula):
 <dl>
 <dt id="src.formula.unaryFormula.unaryFormula.UnaryFormula"><code class="flex name class">
 <span>class <span class="ident">UnaryFormula</span></span>
-<span>(</span><span>formulaInit: <a title="src.formula.formula.Formula" href="../formula.html#src.formula.formula.Formula">Formula</a>, name: str = None)</span>
+<span>(</span><span>formulaInit: Formula, name: str = None)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Abstract class, representing a unary operator.</p>

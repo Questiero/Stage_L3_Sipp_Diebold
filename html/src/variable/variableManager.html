@@ -26,7 +26,9 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from .variable import Variable
+<pre><code class="python">from __future__ import annotations
+
+from .variable import Variable
 
 import re
 
@@ -262,7 +264,7 @@ A dictionnary of all instances of Variables</p></div>
 <h3>Static methods</h3>
 <dl>
 <dt id="src.variable.variableManager.VariableManager.add"><code class="name flex">
-<span>def <span class="ident">add</span></span>(<span>obj: <a title="src.variable.variable.Variable" href="variable.html#src.variable.variable.Variable">Variable</a>)</span>
+<span>def <span class="ident">add</span></span>(<span>obj: Variable)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Static method to add a Variable to the VariableManager.</p>

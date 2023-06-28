@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from ..nullaryFormula import NullaryFormula
 
 class Constraint(NullaryFormula):

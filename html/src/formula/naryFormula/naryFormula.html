@@ -26,11 +26,13 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from .. import Formula
+<pre><code class="python">from __future__ import annotations
+
+from .. import Formula
 from ..formulaManager import FormulaManager
 
 # Typing only imports
-from ...variable.variable import Variable
+from ...variable import Variable
 
 class NaryFormula(Formula):
     &#39;&#39;&#39;
@@ -103,7 +105,7 @@ class NaryFormula(Formula):
 <dl>
 <dt id="src.formula.naryFormula.naryFormula.NaryFormula"><code class="flex name class">
 <span>class <span class="ident">NaryFormula</span></span>
-<span>(</span><span>*formulas: <a title="src.formula.formula.Formula" href="../formula.html#src.formula.formula.Formula">Formula</a>, formulaSet: set[<a title="src.formula.formula.Formula" href="../formula.html#src.formula.formula.Formula">Formula</a>] = None, name: str = None)</span>
+<span>(</span><span>*formulas: Formula, formulaSet: set[Formula] = None, name: str = None)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Abstract class, representing an operator with an arity equal or greater

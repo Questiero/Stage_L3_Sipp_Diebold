@@ -1,11 +1,10 @@
-from .projector import Projector
-from ..formula.naryFormula.andOperator import And
+from __future__ import annotations
+
+from ..formula import And, LinearConstraint, Not, ConstraintOperator
 from ..simplificator import Simplificator, Caron
-from ..mlo_solver.LPSolver import LPSolver
-from ..formula.nullaryFormula.constraint.linearConstraint import LinearConstraint
-from ..formula.unaryFormula.notOperator import Not
-from ..formula.nullaryFormula.constraint.constraintOperator import ConstraintOperator
-from ..variable.variable import Variable
+from .projector import Projector
+from ..mlo_solver import LPSolver
+from ..variable import Variable
 
 import itertools
 import numpy as np

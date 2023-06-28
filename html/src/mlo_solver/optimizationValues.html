@@ -26,7 +26,9 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">import enum
+<pre><code class="python">from __future__ import annotations
+
+import enum
 
 class OptimizationValues(enum.Enum):
     INFEASIBLE = -1

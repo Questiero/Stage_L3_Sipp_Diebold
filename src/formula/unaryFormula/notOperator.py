@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from .unaryFormula import UnaryFormula
 from ...constants import Constants
 
@@ -5,7 +7,7 @@ from ...constants import Constants
 from .. import Formula
 from ..nullaryFormula.constraint.constraint import Constraint
 from ...variable.variable import Variable
-from..nullaryFormula.constraint.constraintOperator import ConstraintOperator
+from ..nullaryFormula.constraint.constraintOperator import ConstraintOperator
 
 class Not(UnaryFormula):
     '''

@@ -1,12 +1,14 @@
-from .formula import Formula
-from .mlo_solver.MLOSolver import MLOSolver
-from .distance import DistanceFunction
+from __future__ import annotations
+
+from .formula import Formula, Or, And, UnaryFormula, NullaryFormula, LinearConstraint, Not, ConstraintOperator
 from .formulaInterpreter import FormulaInterpreter
-from .formula import Or, And, UnaryFormula, NullaryFormula, LinearConstraint, Not, ConstraintOperator
+from .mlo_solver import MLOSolver
+from .distance import DistanceFunction
 from .constants import Constants
-from fractions import Fraction
 from .simplificator import Simplificator
 from .projector import Projector
+
+from fractions import Fraction
 import math
 
 class Revision:
