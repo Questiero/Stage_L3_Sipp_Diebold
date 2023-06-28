@@ -1,11 +1,11 @@
-from src.linearConstraint import LinearConstraint
-from src.LPSolverRounded import LPSolverRounded
+from src.formula.nullaryFormula.constraint.linearConstraint import LinearConstraint
+from src.mlo_solver.LPSolverRounded import LPSolverRounded
 from src.revision import Revision
-from src.realVariable import RealVariable
-from src.discreteL1DistanceFunction import discreteL1DistanceFunction
-from src.daalmans import Daalmans
+from src.variable.realVariable import RealVariable
+from src.distance_function.discreteL1DistanceFunction import discreteL1DistanceFunction
+from src.simplification.daalmans import Daalmans
 from src.constants import Constants
-from src.floatConvexHullProjector import FloatConvexHullProjector
+from src.projector.floatConvexHullProjector import FloatConvexHullProjector
 
 from fractions import Fraction
 x = RealVariable.declare("x")
@@ -33,6 +33,6 @@ print(str(res[0]) + "; " + str(res[1]))
 
 print("Satisfiable ?", simplifier[0]._interpreter.sat(res[1].toLessOrEqConstraint().toDNF()))
 
-from src.formulaDisplay import FormulaDisplay
+from src.formula.formulaDisplay import FormulaDisplay
 display = FormulaDisplay()
 display.display({psi.toLessOrEqConstraint() : 'blue', mu.toLessOrEqConstraint() : 'green', res[1].toLessOrEqConstraint() : 'red'}, [x,y])

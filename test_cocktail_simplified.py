@@ -1,11 +1,11 @@
-from src.linearConstraint import LinearConstraint
-from src.LPSolverRounded import LPSolverRounded
+from src.formula.nullaryFormula.constraint.linearConstraint import LinearConstraint
+from src.mlo_solver.LPSolverRounded import LPSolverRounded
 from src.revision import Revision
-from src.realVariable import RealVariable
-from src.discreteL1DistanceFunction import discreteL1DistanceFunction
-from src.daalmans import Daalmans
+from src.variable.realVariable import RealVariable
+from src.distance_function.discreteL1DistanceFunction import discreteL1DistanceFunction
+from src.simplification.daalmans import Daalmans
 from fractions import Fraction
-from src.floatConvexHullProjector import FloatConvexHullProjector
+from src.projector.floatConvexHullProjector import FloatConvexHullProjector
 
 weights = {
     RealVariable.declare("vol_tequila"): Fraction(1),

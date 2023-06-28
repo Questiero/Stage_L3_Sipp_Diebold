@@ -1,0 +1,539 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>src.revision API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>src.revision</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">from .formula import Formula
+from .mlo_solver.MLOSolver import MLOSolver
+from .distance_function.distanceFunction import DistanceFunction
+from .formulaInterpreter import FormulaInterpreter
+from .formula.naryFormula.orOperator import Or
+from .formula.naryFormula.andOperator import And
+from .formula.unaryFormula.unaryFormula import UnaryFormula
+from .formula.nullaryFormula.nullaryFormula import NullaryFormula
+from .formula.nullaryFormula.constraint.linearConstraint import LinearConstraint
+from .formula.unaryFormula.notOperator import Not
+from .constants import Constants
+from fractions import Fraction
+from .formula.nullaryFormula.constraint.constraintOperator import ConstraintOperator
+from .simplification.simplification import Simplification
+from .projector import Projector
+import math
+
+class Revision:
+    
+    __distance : DistanceFunction
+    __interpreter : FormulaInterpreter
+    __projector : Projector
+    _onlyOneSolution: bool
+
+    def __init__(self, solverInit : MLOSolver, distance : DistanceFunction, simplifiers : list[Simplification] = [], onlyOneSolution: bool = Constants.ONLY_ONE_SOLUTION, projector: Projector = None):
+        self.__distance = distance 
+        self.__interpreter = FormulaInterpreter(solverInit, distance, simplifiers)
+        self._onlyOneSolution = onlyOneSolution
+
+        self.__projector = projector
+
+    def execute(self, psi : Formula, mu : Formula) -&gt; tuple[Fraction, Formula]:
+        psiDNF, muDNF = psi.toLessOrEqConstraint().toDNF(), mu.toLessOrEqConstraint().toDNF()
+        return self.__executeDNF(self.__convertExplicit(psiDNF), self.__convertExplicit(muDNF))
+        
+    def __executeDNF(self, psi: Formula, mu: Formula) -&gt; tuple[Fraction, Formula]:
+        
+        res = None
+        disRes = None
+
+        if(self._onlyOneSolution):
+            
+            for minipsi in psi.children:
+                for miniMu in mu.children:
+                    
+                    lit = self.__executeLiteral(minipsi, miniMu)
+
+                    if not (lit[0] is None):
+                        if (disRes is None):
+                            disRes = lit[0]
+                            res = lit[1]
+                        elif (disRes &gt; lit[0]):
+                            disRes = lit[0]
+                            res = lit[1]
+                    else:
+                        if (disRes is None) &amp; (res is None):
+                            res = lit[1]
+
+        else:
+
+            setRes = set()
+            
+            for minipsi in psi.children:
+                for miniMu in mu.children:
+                    
+                    lit = self.__executeLiteral(minipsi, miniMu)
+                    print(&#34;---&#34;)
+                    print(str(lit[0]) + &#34;; &#34; + str(lit[1]))
+                    
+                    if not (lit[0] is None):
+                        if (disRes is None):
+                            disRes = lit[0]
+                            setRes = {lit[1]}
+                        elif (disRes == lit[0]):
+                            setRes.add(lit[1])
+                        elif (disRes &gt; lit[0]):
+                            disRes = lit[0]
+                            setRes = {lit[1]}
+                    else:
+                        if (disRes is None):
+                            setRes.add(lit[1])
+            
+            res = Or(formulaSet = setRes).toDNF()
+
+        return (disRes, self.__interpreter.simplifyMLC(res.toLessOrEqConstraint().toDNF()))
+    
+    def __executeLiteral(self, psi: Formula, mu: Formula) -&gt; tuple[Fraction, Formula]:
+
+        # first step: check if psi and mu are coherent
+        if((not self.__interpreter.sat(psi)) or (not self.__interpreter.sat(mu))):
+            return (None, mu) # None = inf
+        
+        # second step: find dStar (and psiPrime if onlyOneSoltuion)
+        dStar, psiPrime = self.__executeConstraint(self.__interpreter.removeNot(psi), self.__interpreter.removeNot(mu))
+
+        # third step: lambdaEpsilon
+        epsilon = self.__distance._epsilon
+        if dStar % epsilon == 0:
+            lambdaEpsilon = dStar
+        else:
+            lambdaEpsilon = epsilon * math.ceil(dStar / epsilon)
+            
+        # fourth step: find psiPrime (only if not onlyOneSolution)
+        if(not self._onlyOneSolution):
+            psiPrime = self.__expand(psi, lambdaEpsilon)
+    
+        # fifth step
+        if dStar % epsilon != 0:
+            return (lambdaEpsilon, psiPrime &amp; mu)
+        elif self.__interpreter.sat(psiPrime &amp; mu):
+            return (dStar, psiPrime &amp; mu)
+        else:
+            lambdaEpsilon = dStar + epsilon
+            psiPrime = self.__expand(psi, lambdaEpsilon)
+            return(dStar, psiPrime &amp; mu)
+    
+    def __executeConstraint(self, psi: Formula, mu: Formula) -&gt; tuple[Fraction, Formula]:
+        return self.__interpreter.optimizeCouple(psi, mu)
+    
+    def __convertExplicit(self, phi: Formula) -&gt; Formula:
+        
+        if isinstance(phi, And):
+            return Or(phi)
+        elif isinstance(phi, UnaryFormula) | isinstance(phi, NullaryFormula):
+            return Or(And(phi))
+        else:
+            orSet = set()
+            for miniPhi in phi.children:
+                if isinstance(miniPhi, And):
+                    orSet.add(miniPhi)
+                else:
+                    orSet.add(And(miniPhi))
+            return Or(formulaSet = orSet)
+
+    def __expand(self, psi: Formula, lambdaEpsilon: Fraction) -&gt; Formula:
+        
+        yVariables = {v: v.__class__.declareAnonymous(ending = (&#34;y&#34; + str(v.name))) for v in psi.getVariables()}
+
+        constraints = list()
+
+        # Create x in M(psi) constraints and change variables
+        for minipsi in psi.children:
+            if isinstance(minipsi, Not):
+                const = minipsi.children.clone()
+                iterVar = const.variables.copy()
+                for key in iterVar:
+                    const.variables[yVariables[key]] = const.variables[key]
+                    del const.variables[key]
+                constraints.append(Not(const))
+            else:
+                const = minipsi.clone()
+                iterVar = const.variables.copy()
+                for key in iterVar:
+                    const.variables[yVariables[key]] = const.variables[key]
+                    del const.variables[key]
+                constraints.append(const)
+
+        # Add distance function constraints
+        zVariables = {v: v.__class__.declareAnonymous(ending = (&#34;z&#34; + str(v.name))) for v in psi.getVariables()}
+        for yVar in yVariables:
+            z = zVariables[yVar]
+            # Creating link between x, y and z
+            const = LinearConstraint(&#34;&#34;)
+            const.variables[yVar] = Fraction(-1)
+            const.variables[yVariables[yVar]] = Fraction(1)
+            const.variables[z] = Fraction(-1)
+            const.operator = ConstraintOperator.LEQ
+            const.bound = Fraction(0)
+            constraints.append(const)
+            const = LinearConstraint(&#34;&#34;)
+            const.variables[yVar] = Fraction(1)
+            const.variables[yVariables[yVar]] = Fraction(-1)
+            const.variables[z] = Fraction(-1)
+            const.operator = ConstraintOperator.LEQ
+            const.bound = Fraction(0)
+            constraints.append(const)
+            # Keeping z in memory
+            zVariables[yVar] = z
+
+        # TODO pas sûr de mon code, à tester
+        # TODO fonction de distance, les poids ?
+        # Generate distance constraint
+        distanceConstraint = LinearConstraint(&#34;&#34;)
+        distanceConstraint.operator = ConstraintOperator.LEQ
+        distanceConstraint.bound = lambdaEpsilon
+        for z in zVariables:
+            distanceConstraint.variables[zVariables[z]] = self.__distance.getWeights()[z]
+        constraints.append(distanceConstraint)
+
+        return self.__projector.projectOn(And(formulaSet = set(constraints)), yVariables.keys())
+
+        #try:
+        #    return self.__projector.projectOn(And(formulaSet = set(constraints)), yVariables.keys())
+        #except RuntimeError:
+        #    if isinstance(psi, NaryFormula):
+        #        return And(formulaSet = {self.__expandLiteral(c, lambdaEpsilon) for c in psi.children})
+        #    else:
+        #        return self.__expandLiteral(psi, lambdaEpsilon)
+
+    def __expandLiteral(self, psi: Formula, lambdaEpsilon: Fraction):
+        
+        if isinstance(psi, Not):
+
+            lc = psi.children.clone()
+            
+            match lc.operator:
+                case ConstraintOperator.LEQ:
+                    lc.bound += lambdaEpsilon
+                case ConstraintOperator.GEQ:
+                    lc.bound -= lambdaEpsilon
+                case ConstraintOperator.EQ:
+                    return And(formulaSet = {Not(self.__expandLiteral(c)) for c in psi.toLessOrEqConstraint().children})
+
+            return Not(lc)
+
+        else:
+
+            lc = psi.clone()
+
+            match lc.operator:
+                case ConstraintOperator.LEQ:
+                    lc.bound += lambdaEpsilon
+                case ConstraintOperator.GEQ:
+                    lc.bound -= lambdaEpsilon
+                case ConstraintOperator.EQ:
+                    return And(formulaSet = {self.__expandLiteral(c) for c in psi.toLessOrEqConstraint().children})
+
+            return lc</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="src.revision.Revision"><code class="flex name class">
+<span>class <span class="ident">Revision</span></span>
+<span>(</span><span>solverInit: <a title="src.mlo_solver.MLOSolver.MLOSolver" href="mlo_solver/MLOSolver.html#src.mlo_solver.MLOSolver.MLOSolver">MLOSolver</a>, distance: <a title="src.distance_function.distanceFunction.DistanceFunction" href="distance_function/distanceFunction.html#src.distance_function.distanceFunction.DistanceFunction">DistanceFunction</a>, simplifiers: list[<a title="src.simplification.simplification.Simplification" href="simplification/simplification.html#src.simplification.simplification.Simplification">Simplification</a>] = [], onlyOneSolution: bool = False, projector: <a title="src.projector.projector.Projector" href="projector/projector.html#src.projector.projector.Projector">Projector</a> = None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Revision:
+    
+    __distance : DistanceFunction
+    __interpreter : FormulaInterpreter
+    __projector : Projector
+    _onlyOneSolution: bool
+
+    def __init__(self, solverInit : MLOSolver, distance : DistanceFunction, simplifiers : list[Simplification] = [], onlyOneSolution: bool = Constants.ONLY_ONE_SOLUTION, projector: Projector = None):
+        self.__distance = distance 
+        self.__interpreter = FormulaInterpreter(solverInit, distance, simplifiers)
+        self._onlyOneSolution = onlyOneSolution
+
+        self.__projector = projector
+
+    def execute(self, psi : Formula, mu : Formula) -&gt; tuple[Fraction, Formula]:
+        psiDNF, muDNF = psi.toLessOrEqConstraint().toDNF(), mu.toLessOrEqConstraint().toDNF()
+        return self.__executeDNF(self.__convertExplicit(psiDNF), self.__convertExplicit(muDNF))
+        
+    def __executeDNF(self, psi: Formula, mu: Formula) -&gt; tuple[Fraction, Formula]:
+        
+        res = None
+        disRes = None
+
+        if(self._onlyOneSolution):
+            
+            for minipsi in psi.children:
+                for miniMu in mu.children:
+                    
+                    lit = self.__executeLiteral(minipsi, miniMu)
+
+                    if not (lit[0] is None):
+                        if (disRes is None):
+                            disRes = lit[0]
+                            res = lit[1]
+                        elif (disRes &gt; lit[0]):
+                            disRes = lit[0]
+                            res = lit[1]
+                    else:
+                        if (disRes is None) &amp; (res is None):
+                            res = lit[1]
+
+        else:
+
+            setRes = set()
+            
+            for minipsi in psi.children:
+                for miniMu in mu.children:
+                    
+                    lit = self.__executeLiteral(minipsi, miniMu)
+                    print(&#34;---&#34;)
+                    print(str(lit[0]) + &#34;; &#34; + str(lit[1]))
+                    
+                    if not (lit[0] is None):
+                        if (disRes is None):
+                            disRes = lit[0]
+                            setRes = {lit[1]}
+                        elif (disRes == lit[0]):
+                            setRes.add(lit[1])
+                        elif (disRes &gt; lit[0]):
+                            disRes = lit[0]
+                            setRes = {lit[1]}
+                    else:
+                        if (disRes is None):
+                            setRes.add(lit[1])
+            
+            res = Or(formulaSet = setRes).toDNF()
+
+        return (disRes, self.__interpreter.simplifyMLC(res.toLessOrEqConstraint().toDNF()))
+    
+    def __executeLiteral(self, psi: Formula, mu: Formula) -&gt; tuple[Fraction, Formula]:
+
+        # first step: check if psi and mu are coherent
+        if((not self.__interpreter.sat(psi)) or (not self.__interpreter.sat(mu))):
+            return (None, mu) # None = inf
+        
+        # second step: find dStar (and psiPrime if onlyOneSoltuion)
+        dStar, psiPrime = self.__executeConstraint(self.__interpreter.removeNot(psi), self.__interpreter.removeNot(mu))
+
+        # third step: lambdaEpsilon
+        epsilon = self.__distance._epsilon
+        if dStar % epsilon == 0:
+            lambdaEpsilon = dStar
+        else:
+            lambdaEpsilon = epsilon * math.ceil(dStar / epsilon)
+            
+        # fourth step: find psiPrime (only if not onlyOneSolution)
+        if(not self._onlyOneSolution):
+            psiPrime = self.__expand(psi, lambdaEpsilon)
+    
+        # fifth step
+        if dStar % epsilon != 0:
+            return (lambdaEpsilon, psiPrime &amp; mu)
+        elif self.__interpreter.sat(psiPrime &amp; mu):
+            return (dStar, psiPrime &amp; mu)
+        else:
+            lambdaEpsilon = dStar + epsilon
+            psiPrime = self.__expand(psi, lambdaEpsilon)
+            return(dStar, psiPrime &amp; mu)
+    
+    def __executeConstraint(self, psi: Formula, mu: Formula) -&gt; tuple[Fraction, Formula]:
+        return self.__interpreter.optimizeCouple(psi, mu)
+    
+    def __convertExplicit(self, phi: Formula) -&gt; Formula:
+        
+        if isinstance(phi, And):
+            return Or(phi)
+        elif isinstance(phi, UnaryFormula) | isinstance(phi, NullaryFormula):
+            return Or(And(phi))
+        else:
+            orSet = set()
+            for miniPhi in phi.children:
+                if isinstance(miniPhi, And):
+                    orSet.add(miniPhi)
+                else:
+                    orSet.add(And(miniPhi))
+            return Or(formulaSet = orSet)
+
+    def __expand(self, psi: Formula, lambdaEpsilon: Fraction) -&gt; Formula:
+        
+        yVariables = {v: v.__class__.declareAnonymous(ending = (&#34;y&#34; + str(v.name))) for v in psi.getVariables()}
+
+        constraints = list()
+
+        # Create x in M(psi) constraints and change variables
+        for minipsi in psi.children:
+            if isinstance(minipsi, Not):
+                const = minipsi.children.clone()
+                iterVar = const.variables.copy()
+                for key in iterVar:
+                    const.variables[yVariables[key]] = const.variables[key]
+                    del const.variables[key]
+                constraints.append(Not(const))
+            else:
+                const = minipsi.clone()
+                iterVar = const.variables.copy()
+                for key in iterVar:
+                    const.variables[yVariables[key]] = const.variables[key]
+                    del const.variables[key]
+                constraints.append(const)
+
+        # Add distance function constraints
+        zVariables = {v: v.__class__.declareAnonymous(ending = (&#34;z&#34; + str(v.name))) for v in psi.getVariables()}
+        for yVar in yVariables:
+            z = zVariables[yVar]
+            # Creating link between x, y and z
+            const = LinearConstraint(&#34;&#34;)
+            const.variables[yVar] = Fraction(-1)
+            const.variables[yVariables[yVar]] = Fraction(1)
+            const.variables[z] = Fraction(-1)
+            const.operator = ConstraintOperator.LEQ
+            const.bound = Fraction(0)
+            constraints.append(const)
+            const = LinearConstraint(&#34;&#34;)
+            const.variables[yVar] = Fraction(1)
+            const.variables[yVariables[yVar]] = Fraction(-1)
+            const.variables[z] = Fraction(-1)
+            const.operator = ConstraintOperator.LEQ
+            const.bound = Fraction(0)
+            constraints.append(const)
+            # Keeping z in memory
+            zVariables[yVar] = z
+
+        # TODO pas sûr de mon code, à tester
+        # TODO fonction de distance, les poids ?
+        # Generate distance constraint
+        distanceConstraint = LinearConstraint(&#34;&#34;)
+        distanceConstraint.operator = ConstraintOperator.LEQ
+        distanceConstraint.bound = lambdaEpsilon
+        for z in zVariables:
+            distanceConstraint.variables[zVariables[z]] = self.__distance.getWeights()[z]
+        constraints.append(distanceConstraint)
+
+        return self.__projector.projectOn(And(formulaSet = set(constraints)), yVariables.keys())
+
+        #try:
+        #    return self.__projector.projectOn(And(formulaSet = set(constraints)), yVariables.keys())
+        #except RuntimeError:
+        #    if isinstance(psi, NaryFormula):
+        #        return And(formulaSet = {self.__expandLiteral(c, lambdaEpsilon) for c in psi.children})
+        #    else:
+        #        return self.__expandLiteral(psi, lambdaEpsilon)
+
+    def __expandLiteral(self, psi: Formula, lambdaEpsilon: Fraction):
+        
+        if isinstance(psi, Not):
+
+            lc = psi.children.clone()
+            
+            match lc.operator:
+                case ConstraintOperator.LEQ:
+                    lc.bound += lambdaEpsilon
+                case ConstraintOperator.GEQ:
+                    lc.bound -= lambdaEpsilon
+                case ConstraintOperator.EQ:
+                    return And(formulaSet = {Not(self.__expandLiteral(c)) for c in psi.toLessOrEqConstraint().children})
+
+            return Not(lc)
+
+        else:
+
+            lc = psi.clone()
+
+            match lc.operator:
+                case ConstraintOperator.LEQ:
+                    lc.bound += lambdaEpsilon
+                case ConstraintOperator.GEQ:
+                    lc.bound -= lambdaEpsilon
+                case ConstraintOperator.EQ:
+                    return And(formulaSet = {self.__expandLiteral(c) for c in psi.toLessOrEqConstraint().children})
+
+            return lc</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="src.revision.Revision.execute"><code class="name flex">
+<span>def <span class="ident">execute</span></span>(<span>self, psi: <a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a>, mu: <a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a>) ‑> tuple[fractions.Fraction, <a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a>]</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def execute(self, psi : Formula, mu : Formula) -&gt; tuple[Fraction, Formula]:
+    psiDNF, muDNF = psi.toLessOrEqConstraint().toDNF(), mu.toLessOrEqConstraint().toDNF()
+    return self.__executeDNF(self.__convertExplicit(psiDNF), self.__convertExplicit(muDNF))</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="src" href="index.html">src</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="src.revision.Revision" href="#src.revision.Revision">Revision</a></code></h4>
+<ul class="">
+<li><code><a title="src.revision.Revision.execute" href="#src.revision.Revision.execute">execute</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

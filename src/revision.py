@@ -1,17 +1,17 @@
 from .formula import Formula
-from .MLOSolver import MLOSolver
-from .distanceFunction import DistanceFunction
+from .mlo_solver.MLOSolver import MLOSolver
+from .distance_function.distanceFunction import DistanceFunction
 from .formulaInterpreter import FormulaInterpreter
-from .orOperator import Or
-from .andOperator import And
-from .unaryFormula import UnaryFormula
-from .nullaryFormula import NullaryFormula
-from .linearConstraint import LinearConstraint
-from .notOperator import Not
+from .formula.naryFormula.orOperator import Or
+from .formula.naryFormula.andOperator import And
+from .formula.unaryFormula.unaryFormula import UnaryFormula
+from .formula.nullaryFormula.nullaryFormula import NullaryFormula
+from .formula.nullaryFormula.constraint.linearConstraint import LinearConstraint
+from .formula.unaryFormula.notOperator import Not
 from .constants import Constants
 from fractions import Fraction
-from .constraintOperator import ConstraintOperator
-from .simplification import Simplification
+from .formula.nullaryFormula.constraint.constraintOperator import ConstraintOperator
+from .simplification.simplification import Simplification
 from .projector import Projector
 import math
 
