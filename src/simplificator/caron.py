@@ -1,4 +1,4 @@
-from .simplification import Simplification
+from .simplificator import Simplificator
 from ..formula import Formula
 from ..variable.realVariable import RealVariable
 from ..formula.nullaryFormula.constraint.linearConstraint import LinearConstraint
@@ -10,7 +10,7 @@ from..formula.nullaryFormula.nullaryFormula import NullaryFormula
 from fractions import Fraction
 from ..mlo_solver.MLOSolver import MLOSolver
 
-class Caron(Simplification):
+class Caron(Simplificator):
     _interpreter = None
     def __init__(self, solver : MLOSolver):
         self._solver = solver

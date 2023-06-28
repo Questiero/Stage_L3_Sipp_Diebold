@@ -3,7 +3,7 @@ from src.mlo_solver import LPSolverRounded
 from src.revision import Revision
 from src.variable import RealVariable
 from src.distance import discreteL1DistanceFunction
-from src.simplification import Daalmans
+from src.simplificator import Daalmans
 from src.projector import FloatConvexHullProjector
 
 weights = {

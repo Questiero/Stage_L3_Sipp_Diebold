@@ -5,7 +5,7 @@ from .formulaInterpreter import FormulaInterpreter
 from .formula import Or, And, UnaryFormula, NullaryFormula, LinearConstraint, Not, ConstraintOperator
 from .constants import Constants
 from fractions import Fraction
-from .simplification import Simplification
+from .simplificator import Simplificator
 from .projector import Projector
 import math
 
@@ -16,7 +16,7 @@ class Revision:
     __projector : Projector
     _onlyOneSolution: bool
 
-    def __init__(self, solverInit : MLOSolver, distance : DistanceFunction, simplifiers : list[Simplification] = [], onlyOneSolution: bool = Constants.ONLY_ONE_SOLUTION, projector: Projector = None):
+    def __init__(self, solverInit : MLOSolver, distance : DistanceFunction, simplifiers : list[Simplificator] = [], onlyOneSolution: bool = Constants.ONLY_ONE_SOLUTION, projector: Projector = None):
         self.__distance = distance 
         self.__interpreter = FormulaInterpreter(solverInit, distance, simplifiers)
         self._onlyOneSolution = onlyOneSolution

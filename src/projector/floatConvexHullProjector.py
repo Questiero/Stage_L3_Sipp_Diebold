@@ -1,7 +1,6 @@
 from .projector import Projector
 from ..formula.naryFormula.andOperator import And
-from ..simplification.simplification import Simplification
-from ..simplification.caron import Caron
+from ..simplificator import Simplificator, Caron
 from ..mlo_solver.LPSolver import LPSolver
 from ..formula.nullaryFormula.constraint.linearConstraint import LinearConstraint
 from ..formula.unaryFormula.notOperator import Not
@@ -18,12 +17,12 @@ np.set_printoptions(threshold=np.inf)
 class FloatConvexHullProjector (Projector):
 
     __rounding: int
-    __simplifier: Simplification
+    __simplifier: Simplificator
 
     """
     By default, used simplifier is a single Caron using lp_solve
     """
-    def __init__(self, rounding: int = 12, simplification: list[Simplification] = [Caron(LPSolver())]):
+    def __init__(self, rounding: int = 12, simplification: list[Simplificator] = [Caron(LPSolver())]):
         self.__rounding = rounding
         self.__simplifier = simplification
 

@@ -8,12 +8,12 @@ from .formula.nullaryFormula.constraint.linearConstraint import LinearConstraint
 from .variable.variable import Variable
 from .distance import DistanceFunction
 from .formula.unaryFormula.notOperator import Not
-from .simplification import Simplification
+from .simplificator import Simplificator
 from .formula.naryFormula.orOperator import Or
 from .mlo_solver.optimizationValues import OptimizationValues
 
 class FormulaInterpreter:
-    def __init__(self, mloSolver : MLOSolver, distanceFunction : DistanceFunction, simplifications : list[Simplification]) -> None:
+    def __init__(self, mloSolver : MLOSolver, distanceFunction : DistanceFunction, simplifications : list[Simplificator]) -> None:
         self.__MLOSolver = mloSolver
         self.__distanceFunction = distanceFunction
         self.__simplifiers = simplifications

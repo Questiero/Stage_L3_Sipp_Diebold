@@ -36,12 +36,12 @@ from .formula.nullaryFormula.constraint.linearConstraint import LinearConstraint
 from .variable.variable import Variable
 from .distance import DistanceFunction
 from .formula.unaryFormula.notOperator import Not
-from .simplification import Simplification
+from .simplificator import Simplificator
 from .formula.naryFormula.orOperator import Or
 from .mlo_solver.optimizationValues import OptimizationValues
 
 class FormulaInterpreter:
-    def __init__(self, mloSolver : MLOSolver, distanceFunction : DistanceFunction, simplifications : list[Simplification]) -&gt; None:
+    def __init__(self, mloSolver : MLOSolver, distanceFunction : DistanceFunction, simplifications : list[Simplificator]) -&gt; None:
         self.__MLOSolver = mloSolver
         self.__distanceFunction = distanceFunction
         self.__simplifiers = simplifications
@@ -256,7 +256,7 @@ class FormulaInterpreter:
 <dl>
 <dt id="src.formulaInterpreter.FormulaInterpreter"><code class="flex name class">
 <span>class <span class="ident">FormulaInterpreter</span></span>
-<span>(</span><span>mloSolver: <a title="src.mlo_solver.MLOSolver.MLOSolver" href="mlo_solver/MLOSolver.html#src.mlo_solver.MLOSolver.MLOSolver">MLOSolver</a>, distanceFunction: <a title="src.distance.distance_function.distanceFunction.DistanceFunction" href="distance/distance_function/distanceFunction.html#src.distance.distance_function.distanceFunction.DistanceFunction">DistanceFunction</a>, simplifications: list[<a title="src.simplification.simplification.Simplification" href="simplification/simplification.html#src.simplification.simplification.Simplification">Simplification</a>])</span>
+<span>(</span><span>mloSolver: <a title="src.mlo_solver.MLOSolver.MLOSolver" href="mlo_solver/MLOSolver.html#src.mlo_solver.MLOSolver.MLOSolver">MLOSolver</a>, distanceFunction: <a title="src.distance.distance_function.distanceFunction.DistanceFunction" href="distance/distance_function/distanceFunction.html#src.distance.distance_function.distanceFunction.DistanceFunction">DistanceFunction</a>, simplifications: list[<a title="src.simplificator.simplificator.Simplificator" href="simplificator/simplificator.html#src.simplificator.simplificator.Simplificator">Simplificator</a>])</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -265,7 +265,7 @@ class FormulaInterpreter:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class FormulaInterpreter:
-    def __init__(self, mloSolver : MLOSolver, distanceFunction : DistanceFunction, simplifications : list[Simplification]) -&gt; None:
+    def __init__(self, mloSolver : MLOSolver, distanceFunction : DistanceFunction, simplifications : list[Simplificator]) -&gt; None:
         self.__MLOSolver = mloSolver
         self.__distanceFunction = distanceFunction
         self.__simplifiers = simplifications

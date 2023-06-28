@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 from ..formula.naryFormula.andOperator import And
 from ..formula.nullaryFormula.constraint.constraintOperator import ConstraintOperator
 
-class Simplification(ABC):
+class Simplificator(ABC):
     def __init__(self, formula : And):
         self.formula = formula
 
