@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from .domain import Domain
+from ..domain import Domain
 
 class DistanceFunction(ABC):
     

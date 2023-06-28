@@ -1,4 +1,4 @@
-from ..variable.variable import Variable
+from ...variable.variable import Variable
 from .domain import Domain
 
 class VariableTupleDomaine(Domain):

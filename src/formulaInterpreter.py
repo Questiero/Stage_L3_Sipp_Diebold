@@ -6,9 +6,9 @@ from .formula.nullaryFormula.constraint.constraintOperator import ConstraintOper
 from fractions import Fraction
 from .formula.nullaryFormula.constraint.linearConstraint import LinearConstraint
 from .variable.variable import Variable
-from .distance_function.distanceFunction import DistanceFunction
+from .distance import DistanceFunction
 from .formula.unaryFormula.notOperator import Not
-from .simplification.simplification import Simplification
+from .simplification import Simplification
 from .formula.naryFormula.orOperator import Or
 from .mlo_solver.optimizationValues import OptimizationValues
 

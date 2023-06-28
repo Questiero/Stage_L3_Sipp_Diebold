@@ -1,5 +1,5 @@
 from .distanceFunction import DistanceFunction
-from .variableTupleDomaine import VariableTupleDomaine
+from ..domain import VariableTupleDomaine
 from fractions import Fraction
 
 from abc import abstractmethod
