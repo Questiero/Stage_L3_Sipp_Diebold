@@ -1,3 +1,7 @@
+"""
+Holà \\(\\mathcal{K}\\)
+"""
+
 from .distance import *
 from .formula import *
 from .mlo_solver import *
