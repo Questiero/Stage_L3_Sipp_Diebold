@@ -1,5 +1,6 @@
 """
-Holà \\(\\mathcal{K}\\)
+Holà \\(\\mathcal{K}\\)\n
+`src.formula.nullaryFormula`
 """
 
 from .distance import *
