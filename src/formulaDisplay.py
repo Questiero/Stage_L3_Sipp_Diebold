@@ -28,8 +28,8 @@ class FormulaDisplay:
                         try:
                             self.__displayConjunction(miniPhi.toLessOrEqConstraint(), variables, formulas[key])
                         except Exception as e:
-                            #print("can't display : ", key)
-                            #print("error : ", e)
+                            print("can't display : ", miniPhi)
+                            print("error : ", e)
                             pass
                 if isinstance(phi, And):
                     self.__displayConjunction(phi.toLessOrEqConstraint(), variables, formulas[key])
@@ -204,11 +204,13 @@ class FormulaDisplay:
             transposed = np.delete(transposed, toRemoveIndex, axis = 0)
             variables = [i for i in variables if i not in toRemoveVar]
 
-            projectedVertices = np.transpose(transposed)
+            projectedVertices = np.transpose(transposed, axis=0)
 
             hull = ConvexHull(projectedVertices)
 
         finally:
+            if (len(projectedVertices) == 2) & (len(projectedVertices[0]) == 1): 
+                projectedVertices = [[projectedVertices[0][0], projectedVertices[1][0]]]
             if(len(projectedVertices) >= 3):
                 # CA CA MARCHE QUE POUR UN TRUC QUI A 3 POINTS OU PLUS, FAIT UN CHECK ICI SUR LE NOMBRE DE PROJECTEDVERTICES JE PENSE
                 test = []
@@ -227,11 +229,6 @@ class FormulaDisplay:
                 plt.fill(test, test2, color, alpha=0.3)
             elif(len(projectedVertices) == 2) :
                     test = [[projectedVertices[0][0], projectedVertices[1][0]], [projectedVertices[0][1], projectedVertices[1][1]]]
-                    x = (test[0][0] + test[1][0])/2
-                    y = (test[0][1] + test[1][1])/2
-                    if self.__test(phi, variables, (x,y)):
-                        plt.plot(test[0],test[1], color=color, marker='o')
-                    else:
-                        plt.plot(test[0],test[1], color=color, marker='o', linestyle='dashed')
+                    plt.plot(test[0],test[1], color=color, marker='o')
             elif(len(projectedVertices) == 1):
                 plt.plot([vertex[0]], [vertex[1]], color=color, marker='o')
