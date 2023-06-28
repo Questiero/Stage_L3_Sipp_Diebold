@@ -34,9 +34,9 @@ from .formula.nullaryFormula.constraint.constraintOperator import ConstraintOper
 from fractions import Fraction
 from .formula.nullaryFormula.constraint.linearConstraint import LinearConstraint
 from .variable.variable import Variable
-from .distance_function.distanceFunction import DistanceFunction
+from .distance import DistanceFunction
 from .formula.unaryFormula.notOperator import Not
-from .simplification.simplification import Simplification
+from .simplification import Simplification
 from .formula.naryFormula.orOperator import Or
 from .mlo_solver.optimizationValues import OptimizationValues
 
@@ -256,7 +256,7 @@ class FormulaInterpreter:
 <dl>
 <dt id="src.formulaInterpreter.FormulaInterpreter"><code class="flex name class">
 <span>class <span class="ident">FormulaInterpreter</span></span>
-<span>(</span><span>mloSolver: <a title="src.mlo_solver.MLOSolver.MLOSolver" href="mlo_solver/MLOSolver.html#src.mlo_solver.MLOSolver.MLOSolver">MLOSolver</a>, distanceFunction: <a title="src.distance_function.distanceFunction.DistanceFunction" href="distance_function/distanceFunction.html#src.distance_function.distanceFunction.DistanceFunction">DistanceFunction</a>, simplifications: list[<a title="src.simplification.simplification.Simplification" href="simplification/simplification.html#src.simplification.simplification.Simplification">Simplification</a>])</span>
+<span>(</span><span>mloSolver: <a title="src.mlo_solver.MLOSolver.MLOSolver" href="mlo_solver/MLOSolver.html#src.mlo_solver.MLOSolver.MLOSolver">MLOSolver</a>, distanceFunction: <a title="src.distance.distance_function.distanceFunction.DistanceFunction" href="distance/distance_function/distanceFunction.html#src.distance.distance_function.distanceFunction.DistanceFunction">DistanceFunction</a>, simplifications: list[<a title="src.simplification.simplification.Simplification" href="simplification/simplification.html#src.simplification.simplification.Simplification">Simplification</a>])</span>
 </code></dt>
 <dd>
 <div class="desc"></div>

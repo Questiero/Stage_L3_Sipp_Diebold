@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
-<title>src.mlo_solver API documentation</title>
+<title>src.distance.domain.variableTupleDomaine API documentation</title>
 <meta name="description" content="" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
@@ -19,45 +19,52 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>src.mlo_solver</code></h1>
+<h1 class="title">Module <code>src.distance.domain.variableTupleDomaine</code></h1>
 </header>
 <section id="section-intro">
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from .MLOSolver import MLOSolver
-from .LPSolver import LPSolver
-from .LPSolverRounded import LPSolverRounded
-from .optimizationValues import OptimizationValues</code></pre>
+<pre><code class="python">from ...variable.variable import Variable
+from .domain import Domain
+
+class VariableTupleDomaine(Domain):
+    def __init__(self, *variable : Variable):
+        self._variable = variable</code></pre>
 </details>
 </section>
 <section>
-<h2 class="section-title" id="header-submodules">Sub-modules</h2>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
 <dl>
-<dt><code class="name"><a title="src.mlo_solver.LPSolver" href="LPSolver.html">src.mlo_solver.LPSolver</a></code></dt>
+<dt id="src.distance.domain.variableTupleDomaine.VariableTupleDomaine"><code class="flex name class">
+<span>class <span class="ident">VariableTupleDomaine</span></span>
+<span>(</span><span>*variable: <a title="src.variable.variable.Variable" href="../../variable/variable.html#src.variable.variable.Variable">Variable</a>)</span>
+</code></dt>
 <dd>
-<div class="desc"></div>
-</dd>
-<dt><code class="name"><a title="src.mlo_solver.LPSolverRounded" href="LPSolverRounded.html">src.mlo_solver.LPSolverRounded</a></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt><code class="name"><a title="src.mlo_solver.MLOSolver" href="MLOSolver.html">src.mlo_solver.MLOSolver</a></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt><code class="name"><a title="src.mlo_solver.optimizationValues" href="optimizationValues.html">src.mlo_solver.optimizationValues</a></code></dt>
-<dd>
-<div class="desc"></div>
+<div class="desc"><p>Helper class that provides a standard way to create an ABC using
+inheritance.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class VariableTupleDomaine(Domain):
+    def __init__(self, *variable : Variable):
+        self._variable = variable</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="src.distance.domain.domain.Domain" href="domain.html#src.distance.domain.domain.Domain">Domain</a></li>
+<li>abc.ABC</li>
+</ul>
 </dd>
 </dl>
-</section>
-<section>
-</section>
-<section>
-</section>
-<section>
 </section>
 </article>
 <nav id="sidebar">
@@ -68,15 +75,14 @@ from .optimizationValues import OptimizationValues</code></pre>
 <ul id="index">
 <li><h3>Super-module</h3>
 <ul>
-<li><code><a title="src" href="../index.html">src</a></code></li>
+<li><code><a title="src.distance.domain" href="index.html">src.distance.domain</a></code></li>
 </ul>
 </li>
-<li><h3><a href="#header-submodules">Sub-modules</a></h3>
+<li><h3><a href="#header-classes">Classes</a></h3>
 <ul>
-<li><code><a title="src.mlo_solver.LPSolver" href="LPSolver.html">src.mlo_solver.LPSolver</a></code></li>
-<li><code><a title="src.mlo_solver.LPSolverRounded" href="LPSolverRounded.html">src.mlo_solver.LPSolverRounded</a></code></li>
-<li><code><a title="src.mlo_solver.MLOSolver" href="MLOSolver.html">src.mlo_solver.MLOSolver</a></code></li>
-<li><code><a title="src.mlo_solver.optimizationValues" href="optimizationValues.html">src.mlo_solver.optimizationValues</a></code></li>
+<li>
+<h4><code><a title="src.distance.domain.variableTupleDomaine.VariableTupleDomaine" href="#src.distance.domain.variableTupleDomaine.VariableTupleDomaine">VariableTupleDomaine</a></code></h4>
+</li>
 </ul>
 </li>
 </ul>

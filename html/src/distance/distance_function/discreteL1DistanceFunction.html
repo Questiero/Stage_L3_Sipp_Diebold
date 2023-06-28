@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
-<title>src.mlo_solver API documentation</title>
+<title>src.distance.distance_function.discreteL1DistanceFunction API documentation</title>
 <meta name="description" content="" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
@@ -19,45 +19,122 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>src.mlo_solver</code></h1>
+<h1 class="title">Module <code>src.distance.distance_function.discreteL1DistanceFunction</code></h1>
 </header>
 <section id="section-intro">
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from .MLOSolver import MLOSolver
-from .LPSolver import LPSolver
-from .LPSolverRounded import LPSolverRounded
-from .optimizationValues import OptimizationValues</code></pre>
+<pre><code class="python">from .distanceFunctionOnNumericalTuple import distanceFunctionOnNumericalTuple
+from .l1DistanceFunction import l1DistanceFunction
+from ..domain import Domain
+from ...variable import Variable
+
+from fractions import Fraction
+from math import ceil
+
+class discreteL1DistanceFunction(distanceFunctionOnNumericalTuple):
+
+    def __init__(self, weights : dict[Variable, Fraction], epsilon : Fraction = Fraction(&#34;1e-6&#34;), domaine : Domain = None):
+        self._distance = l1DistanceFunction(weights, domaine)
+        self._epsilon = epsilon
+
+    def dist(self, x : tuple, y : tuple):
+        return self._epsilon * ceil(self._distance.dist(x,y) / self._epsilon)
+    
+    def getWeights(self) -&gt; Fraction:
+        return self._distance.getWeights()
+    
+    def getEpsilon(self) -&gt; Fraction:
+        return self._epsilon</code></pre>
 </details>
 </section>
 <section>
-<h2 class="section-title" id="header-submodules">Sub-modules</h2>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
 <dl>
-<dt><code class="name"><a title="src.mlo_solver.LPSolver" href="LPSolver.html">src.mlo_solver.LPSolver</a></code></dt>
+<dt id="src.distance.distance_function.discreteL1DistanceFunction.discreteL1DistanceFunction"><code class="flex name class">
+<span>class <span class="ident">discreteL1DistanceFunction</span></span>
+<span>(</span><span>weights: dict[<a title="src.variable.variable.Variable" href="../../variable/variable.html#src.variable.variable.Variable">Variable</a>, fractions.Fraction], epsilon: fractions.Fraction = Fraction(1, 1000000), domaine: <a title="src.distance.domain.domain.Domain" href="../domain/domain.html#src.distance.domain.domain.Domain">Domain</a> = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Helper class that provides a standard way to create an ABC using
+inheritance.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class discreteL1DistanceFunction(distanceFunctionOnNumericalTuple):
+
+    def __init__(self, weights : dict[Variable, Fraction], epsilon : Fraction = Fraction(&#34;1e-6&#34;), domaine : Domain = None):
+        self._distance = l1DistanceFunction(weights, domaine)
+        self._epsilon = epsilon
+
+    def dist(self, x : tuple, y : tuple):
+        return self._epsilon * ceil(self._distance.dist(x,y) / self._epsilon)
+    
+    def getWeights(self) -&gt; Fraction:
+        return self._distance.getWeights()
+    
+    def getEpsilon(self) -&gt; Fraction:
+        return self._epsilon</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="src.distance.distance_function.distanceFunctionOnNumericalTuple.distanceFunctionOnNumericalTuple" href="distanceFunctionOnNumericalTuple.html#src.distance.distance_function.distanceFunctionOnNumericalTuple.distanceFunctionOnNumericalTuple">distanceFunctionOnNumericalTuple</a></li>
+<li><a title="src.distance.distance_function.distanceFunction.DistanceFunction" href="distanceFunction.html#src.distance.distance_function.distanceFunction.DistanceFunction">DistanceFunction</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="src.distance.distance_function.discreteL1DistanceFunction.discreteL1DistanceFunction.dist"><code class="name flex">
+<span>def <span class="ident">dist</span></span>(<span>self, x: tuple, y: tuple)</span>
+</code></dt>
 <dd>
 <div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def dist(self, x : tuple, y : tuple):
+    return self._epsilon * ceil(self._distance.dist(x,y) / self._epsilon)</code></pre>
+</details>
 </dd>
-<dt><code class="name"><a title="src.mlo_solver.LPSolverRounded" href="LPSolverRounded.html">src.mlo_solver.LPSolverRounded</a></code></dt>
+<dt id="src.distance.distance_function.discreteL1DistanceFunction.discreteL1DistanceFunction.getEpsilon"><code class="name flex">
+<span>def <span class="ident">getEpsilon</span></span>(<span>self) ‑> fractions.Fraction</span>
+</code></dt>
 <dd>
 <div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getEpsilon(self) -&gt; Fraction:
+    return self._epsilon</code></pre>
+</details>
 </dd>
-<dt><code class="name"><a title="src.mlo_solver.MLOSolver" href="MLOSolver.html">src.mlo_solver.MLOSolver</a></code></dt>
+<dt id="src.distance.distance_function.discreteL1DistanceFunction.discreteL1DistanceFunction.getWeights"><code class="name flex">
+<span>def <span class="ident">getWeights</span></span>(<span>self) ‑> fractions.Fraction</span>
+</code></dt>
 <dd>
 <div class="desc"></div>
-</dd>
-<dt><code class="name"><a title="src.mlo_solver.optimizationValues" href="optimizationValues.html">src.mlo_solver.optimizationValues</a></code></dt>
-<dd>
-<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getWeights(self) -&gt; Fraction:
+    return self._distance.getWeights()</code></pre>
+</details>
 </dd>
 </dl>
-</section>
-<section>
-</section>
-<section>
-</section>
-<section>
+</dd>
+</dl>
 </section>
 </article>
 <nav id="sidebar">
@@ -68,15 +145,19 @@ from .optimizationValues import OptimizationValues</code></pre>
 <ul id="index">
 <li><h3>Super-module</h3>
 <ul>
-<li><code><a title="src" href="../index.html">src</a></code></li>
+<li><code><a title="src.distance.distance_function" href="index.html">src.distance.distance_function</a></code></li>
 </ul>
 </li>
-<li><h3><a href="#header-submodules">Sub-modules</a></h3>
+<li><h3><a href="#header-classes">Classes</a></h3>
 <ul>
-<li><code><a title="src.mlo_solver.LPSolver" href="LPSolver.html">src.mlo_solver.LPSolver</a></code></li>
-<li><code><a title="src.mlo_solver.LPSolverRounded" href="LPSolverRounded.html">src.mlo_solver.LPSolverRounded</a></code></li>
-<li><code><a title="src.mlo_solver.MLOSolver" href="MLOSolver.html">src.mlo_solver.MLOSolver</a></code></li>
-<li><code><a title="src.mlo_solver.optimizationValues" href="optimizationValues.html">src.mlo_solver.optimizationValues</a></code></li>
+<li>
+<h4><code><a title="src.distance.distance_function.discreteL1DistanceFunction.discreteL1DistanceFunction" href="#src.distance.distance_function.discreteL1DistanceFunction.discreteL1DistanceFunction">discreteL1DistanceFunction</a></code></h4>
+<ul class="">
+<li><code><a title="src.distance.distance_function.discreteL1DistanceFunction.discreteL1DistanceFunction.dist" href="#src.distance.distance_function.discreteL1DistanceFunction.discreteL1DistanceFunction.dist">dist</a></code></li>
+<li><code><a title="src.distance.distance_function.discreteL1DistanceFunction.discreteL1DistanceFunction.getEpsilon" href="#src.distance.distance_function.discreteL1DistanceFunction.discreteL1DistanceFunction.getEpsilon">getEpsilon</a></code></li>
+<li><code><a title="src.distance.distance_function.discreteL1DistanceFunction.discreteL1DistanceFunction.getWeights" href="#src.distance.distance_function.discreteL1DistanceFunction.discreteL1DistanceFunction.getWeights">getWeights</a></code></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
