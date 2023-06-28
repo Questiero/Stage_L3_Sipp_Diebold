@@ -5,6 +5,7 @@ from .LPSolver import LPSolver
 from .linearConstraint import LinearConstraint
 from .notOperator import Not
 from .constraintOperator import ConstraintOperator
+from .constants import Constants
 
 from .variable import Variable
 
@@ -119,7 +120,7 @@ class Projector:
 
                     sum = Fraction("0")
                     for var in miniPhi.children.variables:
-                        sum += miniPhi.children.variables[var] * round(Fraction(vertex[allVariables.index(var)]), 12)
+                        sum += miniPhi.children.variables[var] * round(Fraction(vertex[allVariables.index(var)]), Constants.PROJECTOR_ROUNDING)
 
                     if sum < miniPhi.children.bound:
                         print(sum)
@@ -132,7 +133,7 @@ class Projector:
 
                     sum = Fraction("0")
                     for var in miniPhi.variables:
-                        sum += miniPhi.variables[var] * round(Fraction(vertex[allVariables.index(var)]), 12)
+                        sum += miniPhi.variables[var] * round(Fraction(vertex[allVariables.index(var)]), Constants.PROJECTOR_ROUNDING)
 
                     if sum > miniPhi.bound:
                         print(sum)
@@ -204,7 +205,7 @@ class Projector:
                     lc = LinearConstraint("")
                     lc.variables[variables[index]] = Fraction(1)
                     lc.operator = ConstraintOperator.EQ
-                    lc.bound = round(Fraction(dim[0]), 12)
+                    lc.bound = round(Fraction(dim[0]), Constants.PROJECTOR_ROUNDING)
 
                     constraintSet.add(lc.clone())
                 
@@ -236,13 +237,13 @@ class Projector:
                 minLc = LinearConstraint("")
                 minLc.variables[variables[0]] = Fraction(1)
                 minLc.operator = ConstraintOperator.GEQ
-                minLc.bound = round(Fraction(min), 12)
+                minLc.bound = round(Fraction(min), Constants.PROJECTOR_ROUNDING)
                 constraintSet.add(minLc)
 
                 maxLc = LinearConstraint("")
                 maxLc.variables[variables[0]] = Fraction(1)
                 maxLc.operator = ConstraintOperator.LEQ
-                maxLc.bound = round(Fraction(max), 12)
+                maxLc.bound = round(Fraction(max), Constants.PROJECTOR_ROUNDING)
                 constraintSet.add(maxLc)
 
             else:
@@ -258,16 +259,20 @@ class Projector:
                         u, s, vh = np.linalg.svd(points - centroid, full_matrices=False)
                         normal = vh[-1]
                         normal = normal * np.linalg.norm(normal, 1)
-                        normal = [round(Fraction(n), 12) for n in normal]
-
-
+                        normal = [round(Fraction(n), Constants.PROJECTOR_ROUNDING) for n in normal]
                         
+                        fractionPoints = list()
+                        print(points)
+
+                        for p in points:
+                            pass
+
                         # Build constraint
                         lc = LinearConstraint("")
                         for i in range(len(normal)):
                             if normal[i] != 0:
                                 lc.variables[variables[i]] = normal[i]
-                        lc.bound = round(Fraction(np.sum(normal * centroid)), 12)
+                        lc.bound = round(Fraction(np.sum(normal * centroid)), Constants.PROJECTOR_ROUNDING)
 
                         s = ""
                         for vertex in projectedVertices:
@@ -278,7 +283,7 @@ class Projector:
                                 if coef:
                                     #print(coef)
                                     #print(vertex)
-                                    sum += round(Fraction(vertex[i]), 12)*coef
+                                    sum += round(Fraction(vertex[i]), Constants.PROJECTOR_ROUNDING)*coef
                                     #print(sum)
                             if(sum < lc.bound):
                                 s+= "< " + str(lc.bound)
@@ -318,7 +323,7 @@ class Projector:
         u, s, vh = np.linalg.svd(points - centroid, full_matrices=False)
         normal = vh[-1]
         normal = normal * np.linalg.norm(normal, 1)
-        normal = [round(Fraction(n), 12) for n in normal]
+        normal = [round(Fraction(n), Constants.PROJECTOR_ROUNDING) for n in normal]
         
         constraintSet = set()
 
@@ -327,7 +332,7 @@ class Projector:
         for i in range(len(normal)):
             if normal[i] != 0:
                 lc.variables[variables[i]] = normal[i]
-        lc.bound = round(Fraction(np.sum(normal * centroid)), 12)
+        lc.bound = round(Fraction(np.sum(normal * centroid)), Constants.PROJECTOR_ROUNDING)
         lc.operator = ConstraintOperator.EQ
 
         constraintSet.add(lc)
@@ -344,7 +349,7 @@ class Projector:
         for i in range(len(point)):
 
             lc.variables[variables[i]] = Fraction(1)
-            lc.bound = round(Fraction(point[i]), 12)
+            lc.bound = round(Fraction(point[i]), Constants.PROJECTOR_ROUNDING)
 
         lc.operator = ConstraintOperator.EQ
 

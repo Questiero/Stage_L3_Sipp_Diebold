@@ -6,7 +6,6 @@ from .orOperator import Or
 from .andOperator import And
 from .unaryFormula import UnaryFormula
 from .nullaryFormula import NullaryFormula
-from .naryFormula import NaryFormula
 from .linearConstraint import LinearConstraint
 from .notOperator import Not
 from .constants import Constants

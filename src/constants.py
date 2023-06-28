@@ -2,6 +2,8 @@ class Constants():
     
     ONLY_ONE_SOLUTION = False
 
+    PROJECTOR_ROUNDING = 10
+
     AND_PARSER_OPERATOR = "&"
     OR_PARSER_OPERATOR = "|"
     NOT_PARSER_OPERATOR = "~"
