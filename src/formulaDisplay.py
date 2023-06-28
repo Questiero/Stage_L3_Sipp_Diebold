@@ -168,46 +168,7 @@ class FormulaDisplay:
         try:
             hull = ConvexHull(projectedVertices)
         except:
-
-            # Remove fixed dimensions
-
-            transposed = np.transpose(projectedVertices)
-
-            index = 0
-
-            toRemoveIndex = []
-            toRemoveVar = []
-
-            for dim in transposed:
-
-                foundDifferent = False
-
-                for c in dim:
-                    if not(c == dim[0]):
-                        foundDifferent = True
-                        break
-
-                if not foundDifferent:
-
-                    toRemoveIndex.append(index)
-                    toRemoveVar.append(variables[index])
-                    
-                    lc = LinearConstraint("")
-                    lc.variables[variables[index]] = Fraction(1)
-                    lc.operator = ConstraintOperator.EQ
-                    lc.bound = round(Fraction(dim[0]), 12)
-
-                    constraintSet.add(lc.clone())
-                
-                index += 1
-            
-            transposed = np.delete(transposed, toRemoveIndex, axis = 0)
-            variables = [i for i in variables if i not in toRemoveVar]
-
-            projectedVertices = np.transpose(transposed, axis=0)
-
-            hull = ConvexHull(projectedVertices)
-
+            pass
         finally:
             if (len(projectedVertices) == 2) & (len(projectedVertices[0]) == 1): 
                 projectedVertices = [[projectedVertices[0][0], projectedVertices[1][0]]]
