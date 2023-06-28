@@ -62,7 +62,7 @@ class FormulaManager():
                         from .binaryFormula.xorOperator import Xor
                         formulaType = Xor
                     case Constants.IMPLICATION_PARSER_OPERATOR:
-                        from ..implicationOperator import Implication
+                        from .binaryFormula.implicationOperator import Implication
                         formulaType = Implication
                     case Constants.EQUIVALENCE_PARSER_OPERATOR:
                         from .binaryFormula.equivalenceOperator import Equivalence
