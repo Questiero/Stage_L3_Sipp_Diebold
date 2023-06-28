@@ -13,7 +13,6 @@ from fractions import Fraction
 from .constraintOperator import ConstraintOperator
 from .simplification import Simplification
 from .projector import Projector
-from .caron import Caron
 import math
 
 class Revision:
@@ -23,14 +22,12 @@ class Revision:
     __projector : Projector
     _onlyOneSolution: bool
 
-    def __init__(self, solverInit : MLOSolver, distance : DistanceFunction, simplifiers : list[Simplification] = [], onlyOneSolution: bool = Constants.ONLY_ONE_SOLUTION):
+    def __init__(self, solverInit : MLOSolver, distance : DistanceFunction, simplifiers : list[Simplification] = [], onlyOneSolution: bool = Constants.ONLY_ONE_SOLUTION, projector: Projector = None):
         self.__distance = distance 
         self.__interpreter = FormulaInterpreter(solverInit, distance, simplifiers)
         self._onlyOneSolution = onlyOneSolution
 
-        simp = Caron(solverInit)
-        simp._interpreter = self.__interpreter
-        self.__projector = Projector([simp])
+        self.__projector = projector
 
     def execute(self, psi : Formula, mu : Formula) -> tuple[Fraction, Formula]:
         psiDNF, muDNF = psi.toLessOrEqConstraint().toDNF(), mu.toLessOrEqConstraint().toDNF()
