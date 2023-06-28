@@ -302,11 +302,11 @@ class FloatConvexHullProjector (Projector):
 
                 elif len(projectedVertices) == 2:
 
-                    self.__createConstraintSegment(projectedVertices[0], projectedVertices[1], variables)
+                    constraintSet.add(self.__createConstraintSegment(projectedVertices[0], projectedVertices[1], variables))
 
                 elif len(projectedVertices) == 1:
 
-                    self.__createConstraintPoint(projectedVertices[0], variables)
+                    constraintSet.add(self.__createConstraintPoint(projectedVertices[0], variables))
 
                 else:
                     print("Euuuuh")           
