@@ -100,7 +100,7 @@ class FormulaManager():
         ----------
         name: String 
             The name of the `src.formula.formula.Formula` to declare.
-            If the name is already in use, the old `src.formula.formula.Formula` will be forgotten and replaced by the newly declared one.
+            If the name is already in use, the old `src.formula.formula.Formula` will be forgotten and replaced by the newly declared one.\n
             For now, no restriction on the name is given but that should change in the near future.
         
             
