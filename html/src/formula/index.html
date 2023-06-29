@@ -82,6 +82,15 @@ The operators could be customized in <code><a title="src.constants" href="../con
 </ul>
 </li>
 </ul>
+<h3 id="exemple-of-declaration">Exemple of declaration</h3>
+<pre><code class="language-py">IntegerVariable.declare(&quot;x&quot;)
+
+a = Not(LinearConstraint(&quot;x &lt;= 7/9&quot;))
+b = LinearConstraint(&quot;2.4*x &gt;= 4&quot;)
+
+And(formulaName = &quot;phi&quot;, a, b)
+Implication(formulaName = &quot;psi&quot;, ~(a | b), ~b)
+</code></pre>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -115,6 +124,19 @@ The operators could be customized in `src.constants` but, by default we have:
     * `-&gt;` for the implication operator, represented by `src.formula.binaryFormula.implicationOperator.Implication`\n
     * `&lt;-&gt;` for the equivalence operator, represented by `src.formula.binaryFormula.equivalenceOperator.Equivalence`\n
     * `&lt;+&gt;` for the xor operator, represented by `src.formula.binaryFormula.xorOperator.Xor`\n
+
+### Exemple of declaration
+
+```py
+IntegerVariable.declare(&#34;x&#34;)
+
+a = Not(LinearConstraint(&#34;x &lt;= 7/9&#34;))
+b = LinearConstraint(&#34;2.4*x &gt;= 4&#34;)
+
+And(formulaName = &#34;phi&#34;, a, b)
+Implication(formulaName = &#34;psi&#34;, ~(a | b), ~b)
+```
+
 &#34;&#34;&#34;
 
 from .formula import Formula
@@ -172,7 +194,10 @@ from .naryFormula import *</code></pre>
 <h1>Index</h1>
 <div class="toc">
 <ul>
-<li><a href="#declaration-of-a-new-formula">Declaration of a new Formula</a></li>
+<li><a href="#declaration-of-a-new-formula">Declaration of a new Formula</a><ul>
+<li><a href="#exemple-of-declaration">Exemple of declaration</a></li>
+</ul>
+</li>
 </ul>
 </div>
 <ul id="index">

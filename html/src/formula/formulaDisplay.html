@@ -40,13 +40,29 @@ import numpy as np
 from fractions import Fraction
 import itertools
 from scipy.spatial import ConvexHull
-
 class FormulaDisplay:
+    &#39;&#39;&#39;
+    FormulaDisplay class, using for get a visualisation of a Formula.
+
+    Attributes
+    ----------
+        _solver : MLOSolver
+            A solver that used by the display
+    &#39;&#39;&#39;
     def __init__(self):
         self._solver = LPSolverRounded()
 
-    def display(self, formulas: dict[Formula, object], variables: set[Variable]):
-        
+    def display(self, formulas: dict[Formula, str], variables: set[Variable]):
+        &#39;&#39;&#39;
+        Function used to display a formula in dnf form.
+
+        Params
+        ----------
+        formulas : dict[Formula, str]
+            Dictionary witch link a formula with a color
+        variables: set[Variable]
+            List of variables witch will be displayed
+        &#39;&#39;&#39;
         for phi in formulas.keys():
             key = phi
             phi = phi.toDNF()
@@ -71,6 +87,18 @@ class FormulaDisplay:
         plt.show()
 
     def __test(self, phi:Formula, variables:list[Variable], values:list[Fraction]):
+        &#39;&#39;&#39;
+        Function used to test if an interpretion satisfer une formule(oui bon là c&#39;est pas anglais faut changer).
+
+        Params
+        ----------
+        phi:
+            A formula
+        variables: set[Variable]
+            List of variables 
+        values : list[Fraction]
+            List of values for each formulas
+        &#39;&#39;&#39;
         res : bool
         res = True
         for litteral in phi.children:
@@ -87,8 +115,6 @@ class FormulaDisplay:
         return res
 
     def __displayConjunction(self, phi: Formula, variables: set[Variable], color):
-
-        constraintSet = set()
 
         # Second step: Get all variables
         allVariables = list(phi.getVariables())
@@ -236,17 +262,38 @@ class FormulaDisplay:
 <span>class <span class="ident">FormulaDisplay</span></span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>FormulaDisplay class, using for get a visualisation of a Formula.</p>
+<h2 id="attributes">Attributes</h2>
+<pre><code>_solver : MLOSolver
+    A solver that used by the display
+</code></pre></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class FormulaDisplay:
+    &#39;&#39;&#39;
+    FormulaDisplay class, using for get a visualisation of a Formula.
+
+    Attributes
+    ----------
+        _solver : MLOSolver
+            A solver that used by the display
+    &#39;&#39;&#39;
     def __init__(self):
         self._solver = LPSolverRounded()
 
-    def display(self, formulas: dict[Formula, object], variables: set[Variable]):
-        
+    def display(self, formulas: dict[Formula, str], variables: set[Variable]):
+        &#39;&#39;&#39;
+        Function used to display a formula in dnf form.
+
+        Params
+        ----------
+        formulas : dict[Formula, str]
+            Dictionary witch link a formula with a color
+        variables: set[Variable]
+            List of variables witch will be displayed
+        &#39;&#39;&#39;
         for phi in formulas.keys():
             key = phi
             phi = phi.toDNF()
@@ -271,6 +318,18 @@ class FormulaDisplay:
         plt.show()
 
     def __test(self, phi:Formula, variables:list[Variable], values:list[Fraction]):
+        &#39;&#39;&#39;
+        Function used to test if an interpretion satisfer une formule(oui bon là c&#39;est pas anglais faut changer).
+
+        Params
+        ----------
+        phi:
+            A formula
+        variables: set[Variable]
+            List of variables 
+        values : list[Fraction]
+            List of values for each formulas
+        &#39;&#39;&#39;
         res : bool
         res = True
         for litteral in phi.children:
@@ -287,8 +346,6 @@ class FormulaDisplay:
         return res
 
     def __displayConjunction(self, phi: Formula, variables: set[Variable], color):
-
-        constraintSet = set()
 
         # Second step: Get all variables
         allVariables = list(phi.getVariables())
@@ -425,16 +482,30 @@ class FormulaDisplay:
 <h3>Methods</h3>
 <dl>
 <dt id="src.formula.formulaDisplay.FormulaDisplay.display"><code class="name flex">
-<span>def <span class="ident">display</span></span>(<span>self, formulas: dict[Formula, object], variables: set[Variable])</span>
+<span>def <span class="ident">display</span></span>(<span>self, formulas: dict[Formula, str], variables: set[Variable])</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Function used to display a formula in dnf form.</p>
+<h2 id="params">Params</h2>
+<p>formulas : dict[Formula, str]
+Dictionary witch link a formula with a color
+variables: set[Variable]
+List of variables witch will be displayed</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def display(self, formulas: dict[Formula, object], variables: set[Variable]):
-    
+<pre><code class="python">def display(self, formulas: dict[Formula, str], variables: set[Variable]):
+    &#39;&#39;&#39;
+    Function used to display a formula in dnf form.
+
+    Params
+    ----------
+    formulas : dict[Formula, str]
+        Dictionary witch link a formula with a color
+    variables: set[Variable]
+        List of variables witch will be displayed
+    &#39;&#39;&#39;
     for phi in formulas.keys():
         key = phi
         phi = phi.toDNF()

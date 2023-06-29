@@ -27,6 +27,19 @@ The operators could be customized in `src.constants` but, by default we have:
     * `->` for the implication operator, represented by `src.formula.binaryFormula.implicationOperator.Implication`\n
     * `<->` for the equivalence operator, represented by `src.formula.binaryFormula.equivalenceOperator.Equivalence`\n
     * `<+>` for the xor operator, represented by `src.formula.binaryFormula.xorOperator.Xor`\n
+
+### Exemple of declaration
+
+```py
+IntegerVariable.declare("x")
+
+a = Not(LinearConstraint("x <= 7/9"))
+b = LinearConstraint("2.4*x >= 4")
+
+And(formulaName = "phi", a, b)
+Implication(formulaName = "psi", ~(a | b), ~b)
+```
+
 """
 
 from .formula import Formula

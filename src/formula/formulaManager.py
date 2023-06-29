@@ -13,9 +13,10 @@ from pyparsing import Literal, Word, srange, infix_notation, OpAssoc, ParseResul
 
 class FormulaManager():
     """
-    
+    Class compiling multiple tools used to declare any `src.formula.formula.Formula` in a more intuitive way.
     """
 
+    #: A way to store all known and named `src.formula.formula.Formula` so they could be accessed again more easily.
     formulaDict: dict[str, Formula] = dict()
 
     @staticmethod
@@ -90,9 +91,25 @@ class FormulaManager():
             return FormulaManager.getFormula(tokens)
 
     @staticmethod
-    def declare(name: str, formul: Formula) -> Formula:
-        FormulaManager.formulaDict[name] = formul
-        return formul
+    def declare(name: str, formula: Formula) -> Formula:
+        """
+        Function allowing the user to easily declare and name a new `src.formula.formula.Formula` for it to be stored in
+        `src.formula.formulaManager.FormulaManager.formulaDict`.
+
+        Attributes
+        ----------
+        name: String 
+            The name of the `src.formula.formula.Formula` to declare.
+            If the name is already in use, the old `src.formula.formula.Formula` will be forgotten and replaced by the newly declared one.
+            For now, no restriction on the name is given but that should change in the near future.
+        
+            
+        formula: `src.formula.formula.Formula`
+            The `src.formula.formula.Formula` to declare and name.
+        """
+
+        FormulaManager.formulaDict[name] = formula
+        return formula
 
     @staticmethod
     def getFormula(name: str) -> Formula:

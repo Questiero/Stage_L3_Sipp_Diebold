@@ -46,9 +46,10 @@ from pyparsing import Literal, Word, srange, infix_notation, OpAssoc, ParseResul
 
 class FormulaManager():
     &#34;&#34;&#34;
-    
+    Class compiling multiple tools used to declare any `src.formula.formula.Formula` in a more intuitive way.
     &#34;&#34;&#34;
 
+    #: A way to store all known and named `src.formula.formula.Formula` so they could be accessed again more easily.
     formulaDict: dict[str, Formula] = dict()
 
     @staticmethod
@@ -123,9 +124,25 @@ class FormulaManager():
             return FormulaManager.getFormula(tokens)
 
     @staticmethod
-    def declare(name: str, formul: Formula) -&gt; Formula:
-        FormulaManager.formulaDict[name] = formul
-        return formul
+    def declare(name: str, formula: Formula) -&gt; Formula:
+        &#34;&#34;&#34;
+        Function allowing the user to easily declare and name a new `src.formula.formula.Formula` for it to be stored in
+        `src.formula.formulaManager.FormulaManager.formulaDict`.
+
+        Attributes
+        ----------
+        name: String 
+            The name of the `src.formula.formula.Formula` to declare.
+            If the name is already in use, the old `src.formula.formula.Formula` will be forgotten and replaced by the newly declared one.
+            For now, no restriction on the name is given but that should change in the near future.
+        
+            
+        formula: `src.formula.formula.Formula`
+            The `src.formula.formula.Formula` to declare and name.
+        &#34;&#34;&#34;
+
+        FormulaManager.formulaDict[name] = formula
+        return formula
 
     @staticmethod
     def getFormula(name: str) -&gt; Formula:
@@ -145,16 +162,17 @@ class FormulaManager():
 <span>class <span class="ident">FormulaManager</span></span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Class compiling multiple tools used to declare any <code><a title="src.formula.formula.Formula" href="formula.html#src.formula.formula.Formula">Formula</a></code> in a more intuitive way.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class FormulaManager():
     &#34;&#34;&#34;
-    
+    Class compiling multiple tools used to declare any `src.formula.formula.Formula` in a more intuitive way.
     &#34;&#34;&#34;
 
+    #: A way to store all known and named `src.formula.formula.Formula` so they could be accessed again more easily.
     formulaDict: dict[str, Formula] = dict()
 
     @staticmethod
@@ -229,9 +247,25 @@ class FormulaManager():
             return FormulaManager.getFormula(tokens)
 
     @staticmethod
-    def declare(name: str, formul: Formula) -&gt; Formula:
-        FormulaManager.formulaDict[name] = formul
-        return formul
+    def declare(name: str, formula: Formula) -&gt; Formula:
+        &#34;&#34;&#34;
+        Function allowing the user to easily declare and name a new `src.formula.formula.Formula` for it to be stored in
+        `src.formula.formulaManager.FormulaManager.formulaDict`.
+
+        Attributes
+        ----------
+        name: String 
+            The name of the `src.formula.formula.Formula` to declare.
+            If the name is already in use, the old `src.formula.formula.Formula` will be forgotten and replaced by the newly declared one.
+            For now, no restriction on the name is given but that should change in the near future.
+        
+            
+        formula: `src.formula.formula.Formula`
+            The `src.formula.formula.Formula` to declare and name.
+        &#34;&#34;&#34;
+
+        FormulaManager.formulaDict[name] = formula
+        return formula
 
     @staticmethod
     def getFormula(name: str) -&gt; Formula:
@@ -241,24 +275,50 @@ class FormulaManager():
 <dl>
 <dt id="src.formula.formulaManager.FormulaManager.formulaDict"><code class="name">var <span class="ident">formulaDict</span> : dict[str, <a title="src.formula.formula.Formula" href="formula.html#src.formula.formula.Formula">Formula</a>]</code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>A way to store all known and named <code><a title="src.formula.formula.Formula" href="formula.html#src.formula.formula.Formula">Formula</a></code> so they could be accessed again more easily.</p></div>
 </dd>
 </dl>
 <h3>Static methods</h3>
 <dl>
 <dt id="src.formula.formulaManager.FormulaManager.declare"><code class="name flex">
-<span>def <span class="ident">declare</span></span>(<span>name: str, formul: Formula) ‑> <a title="src.formula.formula.Formula" href="formula.html#src.formula.formula.Formula">Formula</a></span>
+<span>def <span class="ident">declare</span></span>(<span>name: str, formula: Formula) ‑> <a title="src.formula.formula.Formula" href="formula.html#src.formula.formula.Formula">Formula</a></span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Function allowing the user to easily declare and name a new <code><a title="src.formula.formula.Formula" href="formula.html#src.formula.formula.Formula">Formula</a></code> for it to be stored in
+<code><a title="src.formula.formulaManager.FormulaManager.formulaDict" href="#src.formula.formulaManager.FormulaManager.formulaDict">FormulaManager.formulaDict</a></code>.</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>name</code></strong> :&ensp;<code>String </code></dt>
+<dd>The name of the <code><a title="src.formula.formula.Formula" href="formula.html#src.formula.formula.Formula">Formula</a></code> to declare.
+If the name is already in use, the old <code><a title="src.formula.formula.Formula" href="formula.html#src.formula.formula.Formula">Formula</a></code> will be forgotten and replaced by the newly declared one.
+For now, no restriction on the name is given but that should change in the near future.</dd>
+<dt><strong><code>formula</code></strong> :&ensp;<code><a title="src.formula.formula.Formula" href="formula.html#src.formula.formula.Formula">Formula</a></code></dt>
+<dd>The <code><a title="src.formula.formula.Formula" href="formula.html#src.formula.formula.Formula">Formula</a></code> to declare and name.</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@staticmethod
-def declare(name: str, formul: Formula) -&gt; Formula:
-    FormulaManager.formulaDict[name] = formul
-    return formul</code></pre>
+def declare(name: str, formula: Formula) -&gt; Formula:
+    &#34;&#34;&#34;
+    Function allowing the user to easily declare and name a new `src.formula.formula.Formula` for it to be stored in
+    `src.formula.formulaManager.FormulaManager.formulaDict`.
+
+    Attributes
+    ----------
+    name: String 
+        The name of the `src.formula.formula.Formula` to declare.
+        If the name is already in use, the old `src.formula.formula.Formula` will be forgotten and replaced by the newly declared one.
+        For now, no restriction on the name is given but that should change in the near future.
+    
+        
+    formula: `src.formula.formula.Formula`
+        The `src.formula.formula.Formula` to declare and name.
+    &#34;&#34;&#34;
+
+    FormulaManager.formulaDict[name] = formula
+    return formula</code></pre>
 </details>
 </dd>
 <dt id="src.formula.formulaManager.FormulaManager.getFormula"><code class="name flex">
