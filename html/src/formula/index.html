@@ -59,7 +59,7 @@ Please note that they have an optional argument <code>name</code> that we'll tal
 <p>Use <code><a title="src.formula.formulaManager.FormulaManager.parser" href="formulaManager.html#src.formula.formulaManager.FormulaManager.parser">FormulaManager.parser()</a></code> to declare a formula using a parser with customizable operators.
 While more intuitive due to the less restrictive scope of usable operators, this method of declaring formulas assume you
 previously named them, either via the <code>name</code> attribute in their constructor or thanks to <code><a title="src.formula.formulaManager.FormulaManager.declare" href="formulaManager.html#src.formula.formulaManager.FormulaManager.declare">FormulaManager.declare()</a></code>.
-The operators could be customized in <code><a title="src.constants" href="../constants.html">src.constants</a></code> but, by default we have:</p>
+The operators could be customized in <code><a title="src.constants.Constants" href="../constants.html#src.constants.Constants">Constants</a></code> but are by default:</p>
 <ul>
 <li>
 <p><code>&amp;</code> for the and operator, represented by <code><a title="src.formula.naryFormula.andOperator.And" href="naryFormula/andOperator.html#src.formula.naryFormula.andOperator.And">And</a></code></p>
@@ -107,6 +107,7 @@ To declare a new `src.formula.formula.Formula`, you have multiple options:\n
 Please note that they have an optional argument `name` that we&#39;ll talk about in the point after next.\n
 
 * Use Python&#39;s built-in (but restrictive) operators between two existing formulas, namely:\n
+
     * `&amp;` for the and operator, represented by `src.formula.naryFormula.andOperator.And`\n
     * `|` for the or operator, represented by `src.formula.naryFormula.orOperator.Or`\n
     * `~` for the not operator, represented by `src.formula.unaryFormula.notOperator.Not`\n
@@ -117,7 +118,8 @@ Please note that they have an optional argument `name` that we&#39;ll talk about
 * Use `src.formula.formulaManager.FormulaManager.parser` to declare a formula using a parser with customizable operators.
 While more intuitive due to the less restrictive scope of usable operators, this method of declaring formulas assume you 
 previously named them, either via the `name` attribute in their constructor or thanks to `src.formula.formulaManager.FormulaManager.declare`.
-The operators could be customized in `src.constants` but, by default we have:
+The operators could be customized in `src.constants.Constants` but are by default:
+
     * `&amp;` for the and operator, represented by `src.formula.naryFormula.andOperator.And`\n
     * `|` for the or operator, represented by `src.formula.naryFormula.orOperator.Or`\n
     * `~` for the not operator, represented by `src.formula.unaryFormula.notOperator.Not`\n

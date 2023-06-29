@@ -55,7 +55,19 @@ class FormulaManager():
     @staticmethod
     def parser(string: str):
         &#39;&#39;&#39;
-        Static method, allowing to parse a formula from a String
+        Function allowing the user to intuitively parse a `src.formula.formula.Formula` from a string, using an infixed notation 
+        and customizable operators.
+
+        While more intuitive due to the less restrictive scope of usable operators, this method of declaring formulas assume you 
+        previously named them, either via the `name` attribute in their constructor or thanks to `src.formula.formulaManager.FormulaManager.declare`.
+        The operators could be customized in `src.constants.Constants` but are by default:\n
+
+        * `&amp;` for the and operator, represented by `src.formula.naryFormula.andOperator.And`\n
+        * `|` for the or operator, represented by `src.formula.naryFormula.orOperator.Or`\n
+        * `~` for the not operator, represented by `src.formula.unaryFormula.notOperator.Not`\n
+        * `-&gt;` for the implication operator, represented by `src.formula.binaryFormula.implicationOperator.Implication`\n
+        * `&lt;-&gt;` for the equivalence operator, represented by `src.formula.binaryFormula.equivalenceOperator.Equivalence`\n
+        * `&lt;+&gt;` for the xor operator, represented by `src.formula.binaryFormula.xorOperator.Xor`\n
 
         Attributes
         ----------
@@ -121,7 +133,7 @@ class FormulaManager():
                 
         elif isinstance(tokens, str):
 
-            return FormulaManager.getFormula(tokens)
+            return FormulaManager.formulaDict[tokens]
 
     @staticmethod
     def declare(name: str, formula: Formula) -&gt; Formula:
@@ -142,11 +154,7 @@ class FormulaManager():
         &#34;&#34;&#34;
 
         FormulaManager.formulaDict[name] = formula
-        return formula
-
-    @staticmethod
-    def getFormula(name: str) -&gt; Formula:
-        return FormulaManager.formulaDict[name]</code></pre>
+        return formula</code></pre>
 </details>
 </section>
 <section>
@@ -178,7 +186,19 @@ class FormulaManager():
     @staticmethod
     def parser(string: str):
         &#39;&#39;&#39;
-        Static method, allowing to parse a formula from a String
+        Function allowing the user to intuitively parse a `src.formula.formula.Formula` from a string, using an infixed notation 
+        and customizable operators.
+
+        While more intuitive due to the less restrictive scope of usable operators, this method of declaring formulas assume you 
+        previously named them, either via the `name` attribute in their constructor or thanks to `src.formula.formulaManager.FormulaManager.declare`.
+        The operators could be customized in `src.constants.Constants` but are by default:\n
+
+        * `&amp;` for the and operator, represented by `src.formula.naryFormula.andOperator.And`\n
+        * `|` for the or operator, represented by `src.formula.naryFormula.orOperator.Or`\n
+        * `~` for the not operator, represented by `src.formula.unaryFormula.notOperator.Not`\n
+        * `-&gt;` for the implication operator, represented by `src.formula.binaryFormula.implicationOperator.Implication`\n
+        * `&lt;-&gt;` for the equivalence operator, represented by `src.formula.binaryFormula.equivalenceOperator.Equivalence`\n
+        * `&lt;+&gt;` for the xor operator, represented by `src.formula.binaryFormula.xorOperator.Xor`\n
 
         Attributes
         ----------
@@ -244,7 +264,7 @@ class FormulaManager():
                 
         elif isinstance(tokens, str):
 
-            return FormulaManager.getFormula(tokens)
+            return FormulaManager.formulaDict[tokens]
 
     @staticmethod
     def declare(name: str, formula: Formula) -&gt; Formula:
@@ -265,11 +285,7 @@ class FormulaManager():
         &#34;&#34;&#34;
 
         FormulaManager.formulaDict[name] = formula
-        return formula
-
-    @staticmethod
-    def getFormula(name: str) -&gt; Formula:
-        return FormulaManager.formulaDict[name]</code></pre>
+        return formula</code></pre>
 </details>
 <h3>Class variables</h3>
 <dl>
@@ -323,25 +339,35 @@ def declare(name: str, formula: Formula) -&gt; Formula:
     return formula</code></pre>
 </details>
 </dd>
-<dt id="src.formula.formulaManager.FormulaManager.getFormula"><code class="name flex">
-<span>def <span class="ident">getFormula</span></span>(<span>name: str) ‑> <a title="src.formula.formula.Formula" href="formula.html#src.formula.formula.Formula">Formula</a></span>
-</code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@staticmethod
-def getFormula(name: str) -&gt; Formula:
-    return FormulaManager.formulaDict[name]</code></pre>
-</details>
-</dd>
 <dt id="src.formula.formulaManager.FormulaManager.parser"><code class="name flex">
 <span>def <span class="ident">parser</span></span>(<span>string: str)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Static method, allowing to parse a formula from a String</p>
+<div class="desc"><p>Function allowing the user to intuitively parse a <code><a title="src.formula.formula.Formula" href="formula.html#src.formula.formula.Formula">Formula</a></code> from a string, using an infixed notation
+and customizable operators.</p>
+<p>While more intuitive due to the less restrictive scope of usable operators, this method of declaring formulas assume you
+previously named them, either via the <code>name</code> attribute in their constructor or thanks to <code><a title="src.formula.formulaManager.FormulaManager.declare" href="#src.formula.formulaManager.FormulaManager.declare">FormulaManager.declare()</a></code>.
+The operators could be customized in <code><a title="src.constants.Constants" href="../constants.html#src.constants.Constants">Constants</a></code> but are by default:</p>
+<ul>
+<li>
+<p><code>&amp;</code> for the and operator, represented by <code><a title="src.formula.naryFormula.andOperator.And" href="naryFormula/andOperator.html#src.formula.naryFormula.andOperator.And">And</a></code></p>
+</li>
+<li>
+<p><code>|</code> for the or operator, represented by <code><a title="src.formula.naryFormula.orOperator.Or" href="naryFormula/orOperator.html#src.formula.naryFormula.orOperator.Or">Or</a></code></p>
+</li>
+<li>
+<p><code>~</code> for the not operator, represented by <code><a title="src.formula.unaryFormula.notOperator.Not" href="unaryFormula/notOperator.html#src.formula.unaryFormula.notOperator.Not">Not</a></code></p>
+</li>
+<li>
+<p><code>-&gt;</code> for the implication operator, represented by <code><a title="src.formula.binaryFormula.implicationOperator.Implication" href="binaryFormula/implicationOperator.html#src.formula.binaryFormula.implicationOperator.Implication">Implication</a></code></p>
+</li>
+<li>
+<p><code>&lt;-&gt;</code> for the equivalence operator, represented by <code><a title="src.formula.binaryFormula.equivalenceOperator.Equivalence" href="binaryFormula/equivalenceOperator.html#src.formula.binaryFormula.equivalenceOperator.Equivalence">Equivalence</a></code></p>
+</li>
+<li>
+<p><code>&lt;+&gt;</code> for the xor operator, represented by <code><a title="src.formula.binaryFormula.xorOperator.Xor" href="binaryFormula/xorOperator.html#src.formula.binaryFormula.xorOperator.Xor">Xor</a></code></p>
+</li>
+</ul>
 <h2 id="attributes">Attributes</h2>
 <dl>
 <dt><strong><code>string</code></strong> :&ensp;<code>String </code></dt>
@@ -354,7 +380,19 @@ def getFormula(name: str) -&gt; Formula:
 <pre><code class="python">@staticmethod
 def parser(string: str):
     &#39;&#39;&#39;
-    Static method, allowing to parse a formula from a String
+    Function allowing the user to intuitively parse a `src.formula.formula.Formula` from a string, using an infixed notation 
+    and customizable operators.
+
+    While more intuitive due to the less restrictive scope of usable operators, this method of declaring formulas assume you 
+    previously named them, either via the `name` attribute in their constructor or thanks to `src.formula.formulaManager.FormulaManager.declare`.
+    The operators could be customized in `src.constants.Constants` but are by default:\n
+
+    * `&amp;` for the and operator, represented by `src.formula.naryFormula.andOperator.And`\n
+    * `|` for the or operator, represented by `src.formula.naryFormula.orOperator.Or`\n
+    * `~` for the not operator, represented by `src.formula.unaryFormula.notOperator.Not`\n
+    * `-&gt;` for the implication operator, represented by `src.formula.binaryFormula.implicationOperator.Implication`\n
+    * `&lt;-&gt;` for the equivalence operator, represented by `src.formula.binaryFormula.equivalenceOperator.Equivalence`\n
+    * `&lt;+&gt;` for the xor operator, represented by `src.formula.binaryFormula.xorOperator.Xor`\n
 
     Attributes
     ----------
@@ -404,7 +442,6 @@ def parser(string: str):
 <ul class="">
 <li><code><a title="src.formula.formulaManager.FormulaManager.declare" href="#src.formula.formulaManager.FormulaManager.declare">declare</a></code></li>
 <li><code><a title="src.formula.formulaManager.FormulaManager.formulaDict" href="#src.formula.formulaManager.FormulaManager.formulaDict">formulaDict</a></code></li>
-<li><code><a title="src.formula.formulaManager.FormulaManager.getFormula" href="#src.formula.formulaManager.FormulaManager.getFormula">getFormula</a></code></li>
 <li><code><a title="src.formula.formulaManager.FormulaManager.parser" href="#src.formula.formulaManager.FormulaManager.parser">parser</a></code></li>
 </ul>
 </li>

@@ -10,6 +10,7 @@ To declare a new `src.formula.formula.Formula`, you have multiple options:\n
 Please note that they have an optional argument `name` that we'll talk about in the point after next.\n
 
 * Use Python's built-in (but restrictive) operators between two existing formulas, namely:\n
+
     * `&` for the and operator, represented by `src.formula.naryFormula.andOperator.And`\n
     * `|` for the or operator, represented by `src.formula.naryFormula.orOperator.Or`\n
     * `~` for the not operator, represented by `src.formula.unaryFormula.notOperator.Not`\n
@@ -20,7 +21,8 @@ Please note that they have an optional argument `name` that we'll talk about in 
 * Use `src.formula.formulaManager.FormulaManager.parser` to declare a formula using a parser with customizable operators.
 While more intuitive due to the less restrictive scope of usable operators, this method of declaring formulas assume you 
 previously named them, either via the `name` attribute in their constructor or thanks to `src.formula.formulaManager.FormulaManager.declare`.
-The operators could be customized in `src.constants` but, by default we have:
+The operators could be customized in `src.constants.Constants` but are by default:
+
     * `&` for the and operator, represented by `src.formula.naryFormula.andOperator.And`\n
     * `|` for the or operator, represented by `src.formula.naryFormula.orOperator.Or`\n
     * `~` for the not operator, represented by `src.formula.unaryFormula.notOperator.Not`\n
