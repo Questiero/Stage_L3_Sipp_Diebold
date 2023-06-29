@@ -60,8 +60,8 @@ class FloatConvexHullProjector (Projector):
 
             hyperplanes.append((hypVar, c.bound))
 
-        for h in hyperplanes:
-            print([float(a) for a in h[0]])
+        #for h in hyperplanes:
+            #print([float(a) for a in h[0]])
 
         # Fourth step: Get all non parallel combinations
         nonParallelCombinations = itertools.combinations(hyperplanes, len(phi.getVariables()))
@@ -75,15 +75,15 @@ class FloatConvexHullProjector (Projector):
 #                x = combinationPair[0][0]
 #                y = combinationPair[1][0]
 #
-#                #print([float(a) for a in x])
-#                #print([float(a) for a in y])
-#                #print(np.dot(x,y)**2)
-#                #print(np.dot(x,x)*np.dot(y,y))
-#                #print("-")
+#                ##print([float(a) for a in x])
+#                ##print([float(a) for a in y])
+#                ##print(np.dot(x,y)**2)
+#                ##print(np.dot(x,x)*np.dot(y,y))
+#                ##print("-")
 #       
 #                if (np.dot(x,y)**2 == np.dot(x,x)*np.dot(y,y)):
 #                    foundParallel = True
-#                    #print("Bh")
+#                    ##print("Bh")
 #                    break
 #        
 #            if not foundParallel:
@@ -122,9 +122,9 @@ class FloatConvexHullProjector (Projector):
                         sum += miniPhi.children.variables[var] * round(Fraction(vertex[allVariables.index(var)]), self.__rounding)
 
                     if sum < miniPhi.children.bound:
-                        print(sum)
-                        print(vertex)
-                        print(miniPhi)
+                        #print(sum)
+                        #print(vertex)
+                        #print(miniPhi)
                         found = True
                         break
 
@@ -135,9 +135,9 @@ class FloatConvexHullProjector (Projector):
                         sum += miniPhi.variables[var] * round(Fraction(vertex[allVariables.index(var)]), self.__rounding)
 
                     if sum > miniPhi.bound:
-                        print(sum)
-                        print(vertex)
-                        print(miniPhi)
+                        #print(sum)
+                        #print(vertex)
+                        #print(miniPhi)
                         found = True
                         break
 
@@ -146,8 +146,8 @@ class FloatConvexHullProjector (Projector):
 
         vertices = np.array(tempVertices)
 
-        print(vertices)
-        print(len(vertices))
+        #print(vertices)
+        #print(len(vertices))
 
         if len(vertices) == 0:
             raise RuntimeError("Couldn't find any vertex")
@@ -171,7 +171,7 @@ class FloatConvexHullProjector (Projector):
         variables = newVar
 
         projectedVertices = np.unique(np.array(projectedVertices), axis=0)
-        print(projectedVertices)
+        #print(projectedVertices)
 
         # Seventh step: Get convex Hull
         try:
@@ -261,7 +261,7 @@ class FloatConvexHullProjector (Projector):
                         normal = [round(Fraction(n), self.__rounding) for n in normal]
                         
                         fractionPoints = list()
-                        print(points)
+                        #print(points)
 
                         for p in points:
                             pass
@@ -280,10 +280,10 @@ class FloatConvexHullProjector (Projector):
                             for i in range(len(variables)):
                                 coef = lc.variables.get(variables[i])
                                 if coef:
-                                    #print(coef)
-                                    #print(vertex)
+                                    ##print(coef)
+                                    ##print(vertex)
                                     sum += round(Fraction(vertex[i]), self.__rounding)*coef
-                                    #print(sum)
+                                    ##print(sum)
                             if(sum < lc.bound):
                                 s+= "< " + str(lc.bound)
                                 lc.operator = ConstraintOperator.LEQ
@@ -296,7 +296,7 @@ class FloatConvexHullProjector (Projector):
                         if sum is None:
                             lc.operator = ConstraintOperator.EQ
 
-                        print(simplex, ":", sum, s, ":", lc)
+                        #print(simplex, ":", sum, s, ":", lc)
 
                         constraintSet.add(lc)
 

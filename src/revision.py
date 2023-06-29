@@ -60,8 +60,8 @@ class Revision:
                 for miniMu in mu.children:
                     
                     lit = self.__executeLiteral(minipsi, miniMu)
-                    print("---")
-                    print(str(lit[0]) + "; " + str(lit[1]))
+                    #print("---")
+                    #print(str(lit[0]) + "; " + str(lit[1]))
                     
                     if not (lit[0] is None):
                         if (disRes is None):

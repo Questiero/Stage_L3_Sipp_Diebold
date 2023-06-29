@@ -217,8 +217,9 @@ class LinearConstraint(Constraint):
             else:
                 s += str(var) + " "
 
-        if (s[0] == "+"):
-            s = s[2:]
+        if (s != ""):
+            if(s[0] == "+"):
+                s = s[2:]
         s += str(self.operator.value) + " "
         s += str(self.bound)
         return s
