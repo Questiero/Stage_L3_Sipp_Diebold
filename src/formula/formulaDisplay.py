@@ -11,13 +11,29 @@ import numpy as np
 from fractions import Fraction
 import itertools
 from scipy.spatial import ConvexHull
-
 class FormulaDisplay:
+    '''
+    FormulaDisplay class, using for get a visualisation of a Formula.
+
+    Attributes
+    ----------
+        _solver : MLOSolver
+            A solver that used by the display
+    '''
     def __init__(self):
         self._solver = LPSolverRounded()
 
-    def display(self, formulas: dict[Formula, object], variables: set[Variable]):
-        
+    def display(self, formulas: dict[Formula, str], variables: set[Variable]):
+        '''
+        Function used to display a formula in dnf form.
+
+        Params
+        ----------
+        formulas : dict[Formula, str]
+            Dictionary witch link a formula with a color
+        variables: set[Variable]
+            List of variables witch will be displayed
+        '''
         for phi in formulas.keys():
             key = phi
             phi = phi.toDNF()
@@ -42,6 +58,18 @@ class FormulaDisplay:
         plt.show()
 
     def __test(self, phi:Formula, variables:list[Variable], values:list[Fraction]):
+        '''
+        Function used to test if an interpretion satisfer une formule(oui bon là c'est pas anglais faut changer).
+
+        Params
+        ----------
+        phi:
+            A formula
+        variables: set[Variable]
+            List of variables 
+        values : list[Fraction]
+            List of values for each formulas
+        '''
         res : bool
         res = True
         for litteral in phi.children:
@@ -58,8 +86,6 @@ class FormulaDisplay:
         return res
 
     def __displayConjunction(self, phi: Formula, variables: set[Variable], color):
-
-        constraintSet = set()
 
         # Second step: Get all variables
         allVariables = list(phi.getVariables())
