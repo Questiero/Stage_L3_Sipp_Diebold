@@ -1,6 +1,6 @@
 class Constants():
     
-    ONLY_ONE_SOLUTION = False
+    ONLY_ONE_SOLUTION = True
 
     AND_PARSER_OPERATOR = "&"
     OR_PARSER_OPERATOR = "|"

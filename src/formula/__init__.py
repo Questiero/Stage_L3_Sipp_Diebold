@@ -1,7 +1,7 @@
 """
 Representation of logical formulas and multiple tools to use them, abstracted depending on the operator's formula.\n
 
-## Declaration of a new Formula
+## Declaration of a new `src.formula.formula.Formula`
 
 To declare a new `src.formula.formula.Formula`, you have multiple options:\n
 

@@ -1,10 +1,12 @@
 from src.formula import LinearConstraint
 from src.mlo_solver import LPSolverRounded
 from src.revision import Revision
-from src.variable import RealVariable
+from src.variable import RealVariable, IntegerVariable
 from src.distance import discreteL1DistanceFunction
 from src.simplificator import Daalmans
 from src.projector import FloatConvexHullProjector
+
+from fractions import Fraction
 
 weights = {
     IntegerVariable.declare("quant_rondelleCitron"): Fraction(1),

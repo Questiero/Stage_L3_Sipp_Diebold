@@ -6,6 +6,8 @@ from src.distance import discreteL1DistanceFunction
 from src.simplificator import Daalmans
 from src.projector import FloatConvexHullProjector
 
+from fractions import Fraction
+
 weights = {
     RealVariable.declare("vol_tequila"): Fraction(1),
     RealVariable.declare("vol_sirop"): Fraction(1),

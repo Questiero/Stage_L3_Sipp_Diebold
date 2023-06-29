@@ -1,3 +1,15 @@
+"""
+Representation of variables and useful tools to use them.
+Variable are split depending on what type of variables they represent, namely `src.variable.integerVariable.IntegerVariable`
+and `src.variable.realVariable.RealVariable`, but the abstract class `src.variable.variable.Variable` should allow the user to
+implement their own variables if they so choose.
+
+## Declaration of a new `src.variable.variable.Variable`
+
+To declare a new `src.variable.variable.Variable`
+
+"""
+
 from .variable import Variable
 from .integerVariable import IntegerVariable
 from .realVariable import RealVariable
