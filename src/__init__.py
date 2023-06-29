@@ -1,6 +1,7 @@
 """
-Holà \\(\\mathcal{K}\\)\n
-`src.formula.nullaryFormula`
+This module is an implementation of a logical belief revision operator, built with scalability in mind.
+By design choice, each class is split into its own file, i.e. it's own sub-module, and overall mimick Java's conventions.
+
 """
 
 from .distance import *

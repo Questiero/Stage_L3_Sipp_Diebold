@@ -18,7 +18,6 @@ class Formula(ABC):
     '''
     
     children = None
-    formulaDict: dict[str, Formula] = dict()
     
     @abstractmethod
     def getVariables(self) -> set[Variable]:

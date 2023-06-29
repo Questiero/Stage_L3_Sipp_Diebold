@@ -47,7 +47,6 @@ class Formula(ABC):
     &#39;&#39;&#39;
     
     children = None
-    formulaDict: dict[str, Formula] = dict()
     
     @abstractmethod
     def getVariables(self) -&gt; set[Variable]:
@@ -215,7 +214,6 @@ Typing depends of the formula's arity.</dd>
     &#39;&#39;&#39;
     
     children = None
-    formulaDict: dict[str, Formula] = dict()
     
     @abstractmethod
     def getVariables(self) -&gt; set[Variable]:
@@ -360,10 +358,6 @@ Typing depends of the formula's arity.</dd>
 <h3>Class variables</h3>
 <dl>
 <dt id="src.formula.formula.Formula.children"><code class="name">var <span class="ident">children</span></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt id="src.formula.formula.Formula.formulaDict"><code class="name">var <span class="ident">formulaDict</span> : dict[str, <a title="src.formula.formula.Formula" href="#src.formula.formula.Formula">Formula</a>]</code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -544,7 +538,6 @@ def toLessOrEqConstraint(self):
 <ul class="">
 <li><code><a title="src.formula.formula.Formula.children" href="#src.formula.formula.Formula.children">children</a></code></li>
 <li><code><a title="src.formula.formula.Formula.clone" href="#src.formula.formula.Formula.clone">clone</a></code></li>
-<li><code><a title="src.formula.formula.Formula.formulaDict" href="#src.formula.formula.Formula.formulaDict">formulaDict</a></code></li>
 <li><code><a title="src.formula.formula.Formula.getAdherence" href="#src.formula.formula.Formula.getAdherence">getAdherence</a></code></li>
 <li><code><a title="src.formula.formula.Formula.getVariables" href="#src.formula.formula.Formula.getVariables">getVariables</a></code></li>
 <li><code><a title="src.formula.formula.Formula.toDNF" href="#src.formula.formula.Formula.toDNF">toDNF</a></code></li>

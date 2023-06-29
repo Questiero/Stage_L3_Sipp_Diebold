@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
 <title>src.formula.formulaManager API documentation</title>
-<meta name="description" content="" />
+<meta name="description" content="This class allows the user to easily declare a new `src.formula.formula.Formula` thanks to
+`src.formula.formulaManager.FormulaManager.parser` and …" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
 <link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
@@ -23,11 +24,20 @@
 <h1 class="title">Module <code>src.formula.formulaManager</code></h1>
 </header>
 <section id="section-intro">
+<p>This class allows the user to easily declare a new <code><a title="src.formula.formula.Formula" href="formula.html#src.formula.formula.Formula">Formula</a></code> thanks to
+<code><a title="src.formula.formulaManager.FormulaManager.parser" href="#src.formula.formulaManager.FormulaManager.parser">FormulaManager.parser()</a></code> and store in memory all previously named formulas,
+either via their constructor or the function <code><a title="src.formula.formulaManager.FormulaManager.declare" href="#src.formula.formulaManager.FormulaManager.declare">FormulaManager.declare()</a></code>.</p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from __future__ import annotations
+<pre><code class="python">&#34;&#34;&#34;
+This class allows the user to easily declare a new `src.formula.formula.Formula` thanks to
+`src.formula.formulaManager.FormulaManager.parser` and store in memory all previously named formulas,
+either via their constructor or the function `src.formula.formulaManager.FormulaManager.declare`.
+&#34;&#34;&#34;
+
+from __future__ import annotations
 
 from .formula import Formula
 from ..constants import Constants
@@ -35,6 +45,9 @@ from ..constants import Constants
 from pyparsing import Literal, Word, srange, infix_notation, OpAssoc, ParseResults, ParserElement
 
 class FormulaManager():
+    &#34;&#34;&#34;
+    
+    &#34;&#34;&#34;
 
     formulaDict: dict[str, Formula] = dict()
 
@@ -138,6 +151,9 @@ class FormulaManager():
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class FormulaManager():
+    &#34;&#34;&#34;
+    
+    &#34;&#34;&#34;
 
     formulaDict: dict[str, Formula] = dict()
 

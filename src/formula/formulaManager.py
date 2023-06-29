@@ -1,3 +1,9 @@
+"""
+This class allows the user to easily declare a new `src.formula.formula.Formula` thanks to
+`src.formula.formulaManager.FormulaManager.parser` and store in memory all previously named formulas,
+either via their constructor or the function `src.formula.formulaManager.FormulaManager.declare`.
+"""
+
 from __future__ import annotations
 
 from .formula import Formula
@@ -6,6 +12,9 @@ from ..constants import Constants
 from pyparsing import Literal, Word, srange, infix_notation, OpAssoc, ParseResults, ParserElement
 
 class FormulaManager():
+    """
+    
+    """
 
     formulaDict: dict[str, Formula] = dict()
 

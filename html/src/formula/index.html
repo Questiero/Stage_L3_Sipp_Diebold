@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
 <title>src.formula API documentation</title>
-<meta name="description" content="" />
+<meta name="description" content="Representation of logical formulas and multiple tools to use them, abstracted depending on the operator&#39;s formula …" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
 <link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
@@ -23,11 +23,101 @@
 <h1 class="title">Module <code>src.formula</code></h1>
 </header>
 <section id="section-intro">
+<p>Representation of logical formulas and multiple tools to use them, abstracted depending on the operator's formula.</p>
+<h2 id="declaration-of-a-new-formula">Declaration of a new Formula</h2>
+<p>To declare a new <code><a title="src.formula.formula.Formula" href="formula.html#src.formula.formula.Formula">Formula</a></code>, you have multiple options:</p>
+<ul>
+<li>
+<p>Use the usual class constructors. Depending on the operator's arity, the arguments that are expected might change
+(namely, those represents the arguments of the operators and, as such, a different number of them could be expected).
+Please note that they have an optional argument <code>name</code> that we'll talk about in the point after next.</p>
+</li>
+<li>
+<p>Use Python's built-in (but restrictive) operators between two existing formulas, namely:</p>
+<ul>
+<li>
+<p><code>&amp;</code> for the and operator, represented by <code><a title="src.formula.naryFormula.andOperator.And" href="naryFormula/andOperator.html#src.formula.naryFormula.andOperator.And">And</a></code></p>
+</li>
+<li>
+<p><code>|</code> for the or operator, represented by <code><a title="src.formula.naryFormula.orOperator.Or" href="naryFormula/orOperator.html#src.formula.naryFormula.orOperator.Or">Or</a></code></p>
+</li>
+<li>
+<p><code>~</code> for the not operator, represented by <code><a title="src.formula.unaryFormula.notOperator.Not" href="unaryFormula/notOperator.html#src.formula.unaryFormula.notOperator.Not">Not</a></code></p>
+</li>
+<li>
+<p><code>&gt;&gt;</code> for the implication operator, represented by <code><a title="src.formula.binaryFormula.implicationOperator.Implication" href="binaryFormula/implicationOperator.html#src.formula.binaryFormula.implicationOperator.Implication">Implication</a></code></p>
+</li>
+<li>
+<p><code>//</code> for the equivalence operator, represented by <code><a title="src.formula.binaryFormula.equivalenceOperator.Equivalence" href="binaryFormula/equivalenceOperator.html#src.formula.binaryFormula.equivalenceOperator.Equivalence">Equivalence</a></code></p>
+</li>
+<li>
+<p><code>!=</code> for the xor operator, represented by <code><a title="src.formula.binaryFormula.xorOperator.Xor" href="binaryFormula/xorOperator.html#src.formula.binaryFormula.xorOperator.Xor">Xor</a></code></p>
+</li>
+</ul>
+</li>
+<li>
+<p>Use <code><a title="src.formula.formulaManager.FormulaManager.parser" href="formulaManager.html#src.formula.formulaManager.FormulaManager.parser">FormulaManager.parser()</a></code> to declare a formula using a parser with customizable operators.
+While more intuitive due to the less restrictive scope of usable operators, this method of declaring formulas assume you
+previously named them, either via the <code>name</code> attribute in their constructor or thanks to <code><a title="src.formula.formulaManager.FormulaManager.declare" href="formulaManager.html#src.formula.formulaManager.FormulaManager.declare">FormulaManager.declare()</a></code>.
+The operators could be customized in <code><a title="src.constants" href="../constants.html">src.constants</a></code> but, by default we have:</p>
+<ul>
+<li>
+<p><code>&amp;</code> for the and operator, represented by <code><a title="src.formula.naryFormula.andOperator.And" href="naryFormula/andOperator.html#src.formula.naryFormula.andOperator.And">And</a></code></p>
+</li>
+<li>
+<p><code>|</code> for the or operator, represented by <code><a title="src.formula.naryFormula.orOperator.Or" href="naryFormula/orOperator.html#src.formula.naryFormula.orOperator.Or">Or</a></code></p>
+</li>
+<li>
+<p><code>~</code> for the not operator, represented by <code><a title="src.formula.unaryFormula.notOperator.Not" href="unaryFormula/notOperator.html#src.formula.unaryFormula.notOperator.Not">Not</a></code></p>
+</li>
+<li>
+<p><code>-&gt;</code> for the implication operator, represented by <code><a title="src.formula.binaryFormula.implicationOperator.Implication" href="binaryFormula/implicationOperator.html#src.formula.binaryFormula.implicationOperator.Implication">Implication</a></code></p>
+</li>
+<li>
+<p><code>&lt;-&gt;</code> for the equivalence operator, represented by <code><a title="src.formula.binaryFormula.equivalenceOperator.Equivalence" href="binaryFormula/equivalenceOperator.html#src.formula.binaryFormula.equivalenceOperator.Equivalence">Equivalence</a></code></p>
+</li>
+<li>
+<p><code>&lt;+&gt;</code> for the xor operator, represented by <code><a title="src.formula.binaryFormula.xorOperator.Xor" href="binaryFormula/xorOperator.html#src.formula.binaryFormula.xorOperator.Xor">Xor</a></code></p>
+</li>
+</ul>
+</li>
+</ul>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from .formula import Formula
+<pre><code class="python">&#34;&#34;&#34;
+Representation of logical formulas and multiple tools to use them, abstracted depending on the operator&#39;s formula.\n
+
+## Declaration of a new Formula
+
+To declare a new `src.formula.formula.Formula`, you have multiple options:\n
+
+* Use the usual class constructors. Depending on the operator&#39;s arity, the arguments that are expected might change
+(namely, those represents the arguments of the operators and, as such, a different number of them could be expected).
+Please note that they have an optional argument `name` that we&#39;ll talk about in the point after next.\n
+
+* Use Python&#39;s built-in (but restrictive) operators between two existing formulas, namely:\n
+    * `&amp;` for the and operator, represented by `src.formula.naryFormula.andOperator.And`\n
+    * `|` for the or operator, represented by `src.formula.naryFormula.orOperator.Or`\n
+    * `~` for the not operator, represented by `src.formula.unaryFormula.notOperator.Not`\n
+    * `&gt;&gt;` for the implication operator, represented by `src.formula.binaryFormula.implicationOperator.Implication`\n
+    * `//` for the equivalence operator, represented by `src.formula.binaryFormula.equivalenceOperator.Equivalence`\n
+    * `!=` for the xor operator, represented by `src.formula.binaryFormula.xorOperator.Xor`\n
+
+* Use `src.formula.formulaManager.FormulaManager.parser` to declare a formula using a parser with customizable operators.
+While more intuitive due to the less restrictive scope of usable operators, this method of declaring formulas assume you 
+previously named them, either via the `name` attribute in their constructor or thanks to `src.formula.formulaManager.FormulaManager.declare`.
+The operators could be customized in `src.constants` but, by default we have:
+    * `&amp;` for the and operator, represented by `src.formula.naryFormula.andOperator.And`\n
+    * `|` for the or operator, represented by `src.formula.naryFormula.orOperator.Or`\n
+    * `~` for the not operator, represented by `src.formula.unaryFormula.notOperator.Not`\n
+    * `-&gt;` for the implication operator, represented by `src.formula.binaryFormula.implicationOperator.Implication`\n
+    * `&lt;-&gt;` for the equivalence operator, represented by `src.formula.binaryFormula.equivalenceOperator.Equivalence`\n
+    * `&lt;+&gt;` for the xor operator, represented by `src.formula.binaryFormula.xorOperator.Xor`\n
+&#34;&#34;&#34;
+
+from .formula import Formula
 from .formulaManager import FormulaManager
 from .formulaDisplay import FormulaDisplay
 
@@ -54,7 +144,8 @@ from .naryFormula import *</code></pre>
 </dd>
 <dt><code class="name"><a title="src.formula.formulaManager" href="formulaManager.html">src.formula.formulaManager</a></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>This class allows the user to easily declare a new <code><a title="src.formula.formula.Formula" href="formula.html#src.formula.formula.Formula">Formula</a></code> thanks to
+<code><a title="src.formula.formulaManager.FormulaManager.parser" href="formulaManager.html#src.formula.formulaManager.FormulaManager.parser">FormulaManager.parser()</a></code> and …</p></div>
 </dd>
 <dt><code class="name"><a title="src.formula.naryFormula" href="naryFormula/index.html">src.formula.naryFormula</a></code></dt>
 <dd>
@@ -80,7 +171,9 @@ from .naryFormula import *</code></pre>
 <nav id="sidebar">
 <h1>Index</h1>
 <div class="toc">
-<ul></ul>
+<ul>
+<li><a href="#declaration-of-a-new-formula">Declaration of a new Formula</a></li>
+</ul>
 </div>
 <ul id="index">
 <li><h3>Super-module</h3>

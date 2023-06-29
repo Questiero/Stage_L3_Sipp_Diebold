@@ -1,3 +1,34 @@
+"""
+Representation of logical formulas and multiple tools to use them, abstracted depending on the operator's formula.\n
+
+## Declaration of a new Formula
+
+To declare a new `src.formula.formula.Formula`, you have multiple options:\n
+
+* Use the usual class constructors. Depending on the operator's arity, the arguments that are expected might change
+(namely, those represents the arguments of the operators and, as such, a different number of them could be expected).
+Please note that they have an optional argument `name` that we'll talk about in the point after next.\n
+
+* Use Python's built-in (but restrictive) operators between two existing formulas, namely:\n
+    * `&` for the and operator, represented by `src.formula.naryFormula.andOperator.And`\n
+    * `|` for the or operator, represented by `src.formula.naryFormula.orOperator.Or`\n
+    * `~` for the not operator, represented by `src.formula.unaryFormula.notOperator.Not`\n
+    * `>>` for the implication operator, represented by `src.formula.binaryFormula.implicationOperator.Implication`\n
+    * `//` for the equivalence operator, represented by `src.formula.binaryFormula.equivalenceOperator.Equivalence`\n
+    * `!=` for the xor operator, represented by `src.formula.binaryFormula.xorOperator.Xor`\n
+
+* Use `src.formula.formulaManager.FormulaManager.parser` to declare a formula using a parser with customizable operators.
+While more intuitive due to the less restrictive scope of usable operators, this method of declaring formulas assume you 
+previously named them, either via the `name` attribute in their constructor or thanks to `src.formula.formulaManager.FormulaManager.declare`.
+The operators could be customized in `src.constants` but, by default we have:
+    * `&` for the and operator, represented by `src.formula.naryFormula.andOperator.And`\n
+    * `|` for the or operator, represented by `src.formula.naryFormula.orOperator.Or`\n
+    * `~` for the not operator, represented by `src.formula.unaryFormula.notOperator.Not`\n
+    * `->` for the implication operator, represented by `src.formula.binaryFormula.implicationOperator.Implication`\n
+    * `<->` for the equivalence operator, represented by `src.formula.binaryFormula.equivalenceOperator.Equivalence`\n
+    * `<+>` for the xor operator, represented by `src.formula.binaryFormula.xorOperator.Xor`\n
+"""
+
 from .formula import Formula
 from .formulaManager import FormulaManager
 from .formulaDisplay import FormulaDisplay
