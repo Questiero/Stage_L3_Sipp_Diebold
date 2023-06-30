@@ -1,3 +1,8 @@
+"""
+Class used to store all non-anonymous user-declared `src.variable.variable.Variable`
+and allow easy retrieving of already defined ones.
+"""
+
 from __future__ import annotations
 
 from .variable import Variable
