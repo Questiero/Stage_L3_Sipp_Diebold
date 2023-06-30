@@ -6,7 +6,7 @@ from .MLOSolver import MLOSolver
 
 from fractions import Fraction
 import numpy as np
-from scipy.optimize import milp, Bounds, LinearConstraint, NonlinearConstraint
+from scipy.optimize import milp, Bounds, LinearConstraint
 
 class ScipySolver(MLOSolver) :
     def __init__(self):
@@ -14,8 +14,15 @@ class ScipySolver(MLOSolver) :
         
     def solve(self, variables : list, objectif : dict, constraints : dict[tuple[dict[Fraction], ConstraintOperator, Fraction]]) -> tuple:
         integers = []
+        boundsLower = []
+        boundsUpper = []
         for variable in variables: 
             integers.append(variable.isInteger())
+            lower, upper = variable.getBounds()
+            if(lower == None): lower = -np.inf
+            if(upper == None): upper = np.inf
+            boundsLower.append(lower)
+            boundsUpper.append(upper)
         tab = []
         limitInf = []
         limitUp = []
@@ -32,7 +39,7 @@ class ScipySolver(MLOSolver) :
                 limitUp.append(constraint[2])
 
         lc = LinearConstraint(tab, limitInf, limitUp)
-        result = milp(c=objectif, integrality=integers, constraints=lc)
+        result = milp(c=objectif, integrality=integers, constraints=lc, bounds=Bounds(boundsLower, boundsUpper))
         res : tuple
         if result.status == 0:
             res = (OptimizationValues.OPTIMAL, list(result.x), result.fun)
