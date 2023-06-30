@@ -89,8 +89,8 @@ class Revision:
                 for miniMu in mu.children:
                     
                     lit = self.__executeLiteral(minipsi, miniMu)
-                    print(&#34;---&#34;)
-                    print(str(lit[0]) + &#34;; &#34; + str(lit[1]))
+                    #print(&#34;---&#34;)
+                    #print(str(lit[0]) + &#34;; &#34; + str(lit[1]))
                     
                     if not (lit[0] is None):
                         if (disRes is None):
@@ -264,7 +264,7 @@ class Revision:
 <dl>
 <dt id="src.revision.Revision"><code class="flex name class">
 <span>class <span class="ident">Revision</span></span>
-<span>(</span><span>solverInit: MLOSolver, distance: DistanceFunction, simplifiers: list[Simplificator] = [], onlyOneSolution: bool = False, projector: Projector = None)</span>
+<span>(</span><span>solverInit: MLOSolver, distance: DistanceFunction, simplifiers: list[Simplificator] = [], onlyOneSolution: bool = True, projector: Projector = None)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -321,8 +321,8 @@ class Revision:
                 for miniMu in mu.children:
                     
                     lit = self.__executeLiteral(minipsi, miniMu)
-                    print(&#34;---&#34;)
-                    print(str(lit[0]) + &#34;; &#34; + str(lit[1]))
+                    #print(&#34;---&#34;)
+                    #print(str(lit[0]) + &#34;; &#34; + str(lit[1]))
                     
                     if not (lit[0] is None):
                         if (disRes is None):

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
 <title>src.variable.variable API documentation</title>
-<meta name="description" content="" />
+<meta name="description" content="Abstract class, representing a variable." />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
 <link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
@@ -23,32 +23,67 @@
 <h1 class="title">Module <code>src.variable.variable</code></h1>
 </header>
 <section id="section-intro">
+<p>Abstract class, representing a variable.</p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from __future__ import annotations
+<pre><code class="python">&#34;&#34;&#34;
+Abstract class, representing a variable.
+&#34;&#34;&#34;
+
+from __future__ import annotations
 
 from fractions import Fraction
 from abc import ABC, abstractmethod
 
 class Variable(ABC):
     &#39;&#39;&#39;
-    Abstract Variable class.
-
-    Attributes
-    ----------
-    name: str
-        The name of the Variable
+    Abstract class, representing a variables.
     &#39;&#39;&#39;
     
+    #: Name of the variable, by which they are identified.
     name : str = &#34;&#34;
 
     def __init__(self, name):
         self.name = name
 
     @classmethod
-    def declareAnonymous(cls, ending = None) -&gt; Variable:
+    def declareAnonymous(cls, ending: str = None) -&gt; Variable:
+        &#34;&#34;&#34;
+        Function allowing the user to declar an anonymous variable meant to be used inside algorithms without risking any
+        naming conflit with the standardly defined variables.\n
+        Anonymous variables aren&#39;t stored in `src.variable.variableManager.VariableManager.instance` and, as such,
+        can&#39;t be used in `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint`&#39;s constructor.\n
+
+        Since they can&#39;t be used in the usual constructor, one must first declare an empty
+        `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint` before adding them manualy.
+
+        To prevent naming conflicts with regular variables, an anonymous variable&#39;s name always start with
+        it&#39;s object&#39;s id. The user can also specify an ending to an anonymous variable name.
+
+        # Usage exemple
+
+        ```py
+            lc = LinearConstraint(&#34;&#34;)
+
+            for i in range(5):
+                lc.variables[IntegerVariable.declareAnonymous(&#34;anonymous&#34;)] = 1
+
+            lc.operator = ConstraintOperator.LEQ
+            lc.bound = Fraction(&#34;5/2&#34;)
+
+            print(lc)
+            &gt;&gt;&gt; 1949361817056anonymous + 1949361816720anonymous + 1949372682384anonymous + 1949435231104anonymous + 1949435231200anonymous &lt;= 5/2
+        ```
+
+        Attributes
+        ----------
+        ending: str
+            The string to concatenate at the end of an anonymous variable&#39;s name, after its object id.
+
+        &#34;&#34;&#34;
+
         v = cls(&#34;&#34;)
         name = str(id(v))
         if ending:
@@ -147,33 +182,58 @@ class Variable(ABC):
 <span>(</span><span>name)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Abstract Variable class.</p>
-<h2 id="attributes">Attributes</h2>
-<dl>
-<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
-<dd>The name of the Variable</dd>
-</dl></div>
+<div class="desc"><p>Abstract class, representing a variables.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Variable(ABC):
     &#39;&#39;&#39;
-    Abstract Variable class.
-
-    Attributes
-    ----------
-    name: str
-        The name of the Variable
+    Abstract class, representing a variables.
     &#39;&#39;&#39;
     
+    #: Name of the variable, by which they are identified.
     name : str = &#34;&#34;
 
     def __init__(self, name):
         self.name = name
 
     @classmethod
-    def declareAnonymous(cls, ending = None) -&gt; Variable:
+    def declareAnonymous(cls, ending: str = None) -&gt; Variable:
+        &#34;&#34;&#34;
+        Function allowing the user to declar an anonymous variable meant to be used inside algorithms without risking any
+        naming conflit with the standardly defined variables.\n
+        Anonymous variables aren&#39;t stored in `src.variable.variableManager.VariableManager.instance` and, as such,
+        can&#39;t be used in `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint`&#39;s constructor.\n
+
+        Since they can&#39;t be used in the usual constructor, one must first declare an empty
+        `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint` before adding them manualy.
+
+        To prevent naming conflicts with regular variables, an anonymous variable&#39;s name always start with
+        it&#39;s object&#39;s id. The user can also specify an ending to an anonymous variable name.
+
+        # Usage exemple
+
+        ```py
+            lc = LinearConstraint(&#34;&#34;)
+
+            for i in range(5):
+                lc.variables[IntegerVariable.declareAnonymous(&#34;anonymous&#34;)] = 1
+
+            lc.operator = ConstraintOperator.LEQ
+            lc.bound = Fraction(&#34;5/2&#34;)
+
+            print(lc)
+            &gt;&gt;&gt; 1949361817056anonymous + 1949361816720anonymous + 1949372682384anonymous + 1949435231104anonymous + 1949435231200anonymous &lt;= 5/2
+        ```
+
+        Attributes
+        ----------
+        ending: str
+            The string to concatenate at the end of an anonymous variable&#39;s name, after its object id.
+
+        &#34;&#34;&#34;
+
         v = cls(&#34;&#34;)
         name = str(id(v))
         if ending:
@@ -270,22 +330,80 @@ class Variable(ABC):
 <dl>
 <dt id="src.variable.variable.Variable.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Name of the variable, by which they are identified.</p></div>
 </dd>
 </dl>
 <h3>Static methods</h3>
 <dl>
 <dt id="src.variable.variable.Variable.declareAnonymous"><code class="name flex">
-<span>def <span class="ident">declareAnonymous</span></span>(<span>ending=None) ‑> <a title="src.variable.variable.Variable" href="#src.variable.variable.Variable">Variable</a></span>
+<span>def <span class="ident">declareAnonymous</span></span>(<span>ending: str = None) ‑> <a title="src.variable.variable.Variable" href="#src.variable.variable.Variable">Variable</a></span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Function allowing the user to declar an anonymous variable meant to be used inside algorithms without risking any
+naming conflit with the standardly defined variables.</p>
+<p>Anonymous variables aren't stored in <code><a title="src.variable.variableManager.VariableManager.instance" href="variableManager.html#src.variable.variableManager.VariableManager.instance">VariableManager.instance</a></code> and, as such,
+can't be used in <code><a title="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint" href="../formula/nullaryFormula/constraint/linearConstraint.html#src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint">LinearConstraint</a></code>'s constructor.</p>
+<p>Since they can't be used in the usual constructor, one must first declare an empty
+<code><a title="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint" href="../formula/nullaryFormula/constraint/linearConstraint.html#src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint">LinearConstraint</a></code> before adding them manualy.</p>
+<p>To prevent naming conflicts with regular variables, an anonymous variable's name always start with
+it's object's id. The user can also specify an ending to an anonymous variable name.</p>
+<h1 id="usage-exemple">Usage exemple</h1>
+<pre><code class="language-py">    lc = LinearConstraint(&quot;&quot;)
+
+    for i in range(5):
+        lc.variables[IntegerVariable.declareAnonymous(&quot;anonymous&quot;)] = 1
+
+    lc.operator = ConstraintOperator.LEQ
+    lc.bound = Fraction(&quot;5/2&quot;)
+
+    print(lc)
+    &gt;&gt;&gt; 1949361817056anonymous + 1949361816720anonymous + 1949372682384anonymous + 1949435231104anonymous + 1949435231200anonymous &lt;= 5/2
+</code></pre>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>ending</code></strong> :&ensp;<code>str</code></dt>
+<dd>The string to concatenate at the end of an anonymous variable's name, after its object id.</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@classmethod
-def declareAnonymous(cls, ending = None) -&gt; Variable:
+def declareAnonymous(cls, ending: str = None) -&gt; Variable:
+    &#34;&#34;&#34;
+    Function allowing the user to declar an anonymous variable meant to be used inside algorithms without risking any
+    naming conflit with the standardly defined variables.\n
+    Anonymous variables aren&#39;t stored in `src.variable.variableManager.VariableManager.instance` and, as such,
+    can&#39;t be used in `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint`&#39;s constructor.\n
+
+    Since they can&#39;t be used in the usual constructor, one must first declare an empty
+    `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint` before adding them manualy.
+
+    To prevent naming conflicts with regular variables, an anonymous variable&#39;s name always start with
+    it&#39;s object&#39;s id. The user can also specify an ending to an anonymous variable name.
+
+    # Usage exemple
+
+    ```py
+        lc = LinearConstraint(&#34;&#34;)
+
+        for i in range(5):
+            lc.variables[IntegerVariable.declareAnonymous(&#34;anonymous&#34;)] = 1
+
+        lc.operator = ConstraintOperator.LEQ
+        lc.bound = Fraction(&#34;5/2&#34;)
+
+        print(lc)
+        &gt;&gt;&gt; 1949361817056anonymous + 1949361816720anonymous + 1949372682384anonymous + 1949435231104anonymous + 1949435231200anonymous &lt;= 5/2
+    ```
+
+    Attributes
+    ----------
+    ending: str
+        The string to concatenate at the end of an anonymous variable&#39;s name, after its object id.
+
+    &#34;&#34;&#34;
+
     v = cls(&#34;&#34;)
     name = str(id(v))
     if ending:

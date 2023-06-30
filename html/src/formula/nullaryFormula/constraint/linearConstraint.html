@@ -246,8 +246,9 @@ class LinearConstraint(Constraint):
             else:
                 s += str(var) + &#34; &#34;
 
-        if (s[0] == &#34;+&#34;):
-            s = s[2:]
+        if (s != &#34;&#34;):
+            if(s[0] == &#34;+&#34;):
+                s = s[2:]
         s += str(self.operator.value) + &#34; &#34;
         s += str(self.bound)
         return s
@@ -589,8 +590,9 @@ it's None.</dd>
             else:
                 s += str(var) + &#34; &#34;
 
-        if (s[0] == &#34;+&#34;):
-            s = s[2:]
+        if (s != &#34;&#34;):
+            if(s[0] == &#34;+&#34;):
+                s = s[2:]
         s += str(self.operator.value) + &#34; &#34;
         s += str(self.bound)
         return s

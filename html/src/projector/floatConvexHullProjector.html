@@ -89,8 +89,8 @@ class FloatConvexHullProjector (Projector):
 
             hyperplanes.append((hypVar, c.bound))
 
-        for h in hyperplanes:
-            print([float(a) for a in h[0]])
+        #for h in hyperplanes:
+            #print([float(a) for a in h[0]])
 
         # Fourth step: Get all non parallel combinations
         nonParallelCombinations = itertools.combinations(hyperplanes, len(phi.getVariables()))
@@ -104,15 +104,15 @@ class FloatConvexHullProjector (Projector):
 #                x = combinationPair[0][0]
 #                y = combinationPair[1][0]
 #
-#                #print([float(a) for a in x])
-#                #print([float(a) for a in y])
-#                #print(np.dot(x,y)**2)
-#                #print(np.dot(x,x)*np.dot(y,y))
-#                #print(&#34;-&#34;)
+#                ##print([float(a) for a in x])
+#                ##print([float(a) for a in y])
+#                ##print(np.dot(x,y)**2)
+#                ##print(np.dot(x,x)*np.dot(y,y))
+#                ##print(&#34;-&#34;)
 #       
 #                if (np.dot(x,y)**2 == np.dot(x,x)*np.dot(y,y)):
 #                    foundParallel = True
-#                    #print(&#34;Bh&#34;)
+#                    ##print(&#34;Bh&#34;)
 #                    break
 #        
 #            if not foundParallel:
@@ -151,9 +151,9 @@ class FloatConvexHullProjector (Projector):
                         sum += miniPhi.children.variables[var] * round(Fraction(vertex[allVariables.index(var)]), self.__rounding)
 
                     if sum &lt; miniPhi.children.bound:
-                        print(sum)
-                        print(vertex)
-                        print(miniPhi)
+                        #print(sum)
+                        #print(vertex)
+                        #print(miniPhi)
                         found = True
                         break
 
@@ -164,9 +164,9 @@ class FloatConvexHullProjector (Projector):
                         sum += miniPhi.variables[var] * round(Fraction(vertex[allVariables.index(var)]), self.__rounding)
 
                     if sum &gt; miniPhi.bound:
-                        print(sum)
-                        print(vertex)
-                        print(miniPhi)
+                        #print(sum)
+                        #print(vertex)
+                        #print(miniPhi)
                         found = True
                         break
 
@@ -175,8 +175,8 @@ class FloatConvexHullProjector (Projector):
 
         vertices = np.array(tempVertices)
 
-        print(vertices)
-        print(len(vertices))
+        #print(vertices)
+        #print(len(vertices))
 
         if len(vertices) == 0:
             raise RuntimeError(&#34;Couldn&#39;t find any vertex&#34;)
@@ -200,7 +200,7 @@ class FloatConvexHullProjector (Projector):
         variables = newVar
 
         projectedVertices = np.unique(np.array(projectedVertices), axis=0)
-        print(projectedVertices)
+        #print(projectedVertices)
 
         # Seventh step: Get convex Hull
         try:
@@ -290,7 +290,7 @@ class FloatConvexHullProjector (Projector):
                         normal = [round(Fraction(n), self.__rounding) for n in normal]
                         
                         fractionPoints = list()
-                        print(points)
+                        #print(points)
 
                         for p in points:
                             pass
@@ -309,10 +309,10 @@ class FloatConvexHullProjector (Projector):
                             for i in range(len(variables)):
                                 coef = lc.variables.get(variables[i])
                                 if coef:
-                                    #print(coef)
-                                    #print(vertex)
+                                    ##print(coef)
+                                    ##print(vertex)
                                     sum += round(Fraction(vertex[i]), self.__rounding)*coef
-                                    #print(sum)
+                                    ##print(sum)
                             if(sum &lt; lc.bound):
                                 s+= &#34;&lt; &#34; + str(lc.bound)
                                 lc.operator = ConstraintOperator.LEQ
@@ -325,7 +325,7 @@ class FloatConvexHullProjector (Projector):
                         if sum is None:
                             lc.operator = ConstraintOperator.EQ
 
-                        print(simplex, &#34;:&#34;, sum, s, &#34;:&#34;, lc)
+                        #print(simplex, &#34;:&#34;, sum, s, &#34;:&#34;, lc)
 
                         constraintSet.add(lc)
 
@@ -451,8 +451,8 @@ inheritance.</p></div>
 
             hyperplanes.append((hypVar, c.bound))
 
-        for h in hyperplanes:
-            print([float(a) for a in h[0]])
+        #for h in hyperplanes:
+            #print([float(a) for a in h[0]])
 
         # Fourth step: Get all non parallel combinations
         nonParallelCombinations = itertools.combinations(hyperplanes, len(phi.getVariables()))
@@ -466,15 +466,15 @@ inheritance.</p></div>
 #                x = combinationPair[0][0]
 #                y = combinationPair[1][0]
 #
-#                #print([float(a) for a in x])
-#                #print([float(a) for a in y])
-#                #print(np.dot(x,y)**2)
-#                #print(np.dot(x,x)*np.dot(y,y))
-#                #print(&#34;-&#34;)
+#                ##print([float(a) for a in x])
+#                ##print([float(a) for a in y])
+#                ##print(np.dot(x,y)**2)
+#                ##print(np.dot(x,x)*np.dot(y,y))
+#                ##print(&#34;-&#34;)
 #       
 #                if (np.dot(x,y)**2 == np.dot(x,x)*np.dot(y,y)):
 #                    foundParallel = True
-#                    #print(&#34;Bh&#34;)
+#                    ##print(&#34;Bh&#34;)
 #                    break
 #        
 #            if not foundParallel:
@@ -513,9 +513,9 @@ inheritance.</p></div>
                         sum += miniPhi.children.variables[var] * round(Fraction(vertex[allVariables.index(var)]), self.__rounding)
 
                     if sum &lt; miniPhi.children.bound:
-                        print(sum)
-                        print(vertex)
-                        print(miniPhi)
+                        #print(sum)
+                        #print(vertex)
+                        #print(miniPhi)
                         found = True
                         break
 
@@ -526,9 +526,9 @@ inheritance.</p></div>
                         sum += miniPhi.variables[var] * round(Fraction(vertex[allVariables.index(var)]), self.__rounding)
 
                     if sum &gt; miniPhi.bound:
-                        print(sum)
-                        print(vertex)
-                        print(miniPhi)
+                        #print(sum)
+                        #print(vertex)
+                        #print(miniPhi)
                         found = True
                         break
 
@@ -537,8 +537,8 @@ inheritance.</p></div>
 
         vertices = np.array(tempVertices)
 
-        print(vertices)
-        print(len(vertices))
+        #print(vertices)
+        #print(len(vertices))
 
         if len(vertices) == 0:
             raise RuntimeError(&#34;Couldn&#39;t find any vertex&#34;)
@@ -562,7 +562,7 @@ inheritance.</p></div>
         variables = newVar
 
         projectedVertices = np.unique(np.array(projectedVertices), axis=0)
-        print(projectedVertices)
+        #print(projectedVertices)
 
         # Seventh step: Get convex Hull
         try:
@@ -652,7 +652,7 @@ inheritance.</p></div>
                         normal = [round(Fraction(n), self.__rounding) for n in normal]
                         
                         fractionPoints = list()
-                        print(points)
+                        #print(points)
 
                         for p in points:
                             pass
@@ -671,10 +671,10 @@ inheritance.</p></div>
                             for i in range(len(variables)):
                                 coef = lc.variables.get(variables[i])
                                 if coef:
-                                    #print(coef)
-                                    #print(vertex)
+                                    ##print(coef)
+                                    ##print(vertex)
                                     sum += round(Fraction(vertex[i]), self.__rounding)*coef
-                                    #print(sum)
+                                    ##print(sum)
                             if(sum &lt; lc.bound):
                                 s+= &#34;&lt; &#34; + str(lc.bound)
                                 lc.operator = ConstraintOperator.LEQ
@@ -687,7 +687,7 @@ inheritance.</p></div>
                         if sum is None:
                             lc.operator = ConstraintOperator.EQ
 
-                        print(simplex, &#34;:&#34;, sum, s, &#34;:&#34;, lc)
+                        #print(simplex, &#34;:&#34;, sum, s, &#34;:&#34;, lc)
 
                         constraintSet.add(lc)
 
@@ -796,8 +796,8 @@ inheritance.</p></div>
 
             hyperplanes.append((hypVar, c.bound))
 
-        for h in hyperplanes:
-            print([float(a) for a in h[0]])
+        #for h in hyperplanes:
+            #print([float(a) for a in h[0]])
 
         # Fourth step: Get all non parallel combinations
         nonParallelCombinations = itertools.combinations(hyperplanes, len(phi.getVariables()))
@@ -811,15 +811,15 @@ inheritance.</p></div>
 #                x = combinationPair[0][0]
 #                y = combinationPair[1][0]
 #
-#                #print([float(a) for a in x])
-#                #print([float(a) for a in y])
-#                #print(np.dot(x,y)**2)
-#                #print(np.dot(x,x)*np.dot(y,y))
-#                #print(&#34;-&#34;)
+#                ##print([float(a) for a in x])
+#                ##print([float(a) for a in y])
+#                ##print(np.dot(x,y)**2)
+#                ##print(np.dot(x,x)*np.dot(y,y))
+#                ##print(&#34;-&#34;)
 #       
 #                if (np.dot(x,y)**2 == np.dot(x,x)*np.dot(y,y)):
 #                    foundParallel = True
-#                    #print(&#34;Bh&#34;)
+#                    ##print(&#34;Bh&#34;)
 #                    break
 #        
 #            if not foundParallel:
@@ -858,9 +858,9 @@ inheritance.</p></div>
                         sum += miniPhi.children.variables[var] * round(Fraction(vertex[allVariables.index(var)]), self.__rounding)
 
                     if sum &lt; miniPhi.children.bound:
-                        print(sum)
-                        print(vertex)
-                        print(miniPhi)
+                        #print(sum)
+                        #print(vertex)
+                        #print(miniPhi)
                         found = True
                         break
 
@@ -871,9 +871,9 @@ inheritance.</p></div>
                         sum += miniPhi.variables[var] * round(Fraction(vertex[allVariables.index(var)]), self.__rounding)
 
                     if sum &gt; miniPhi.bound:
-                        print(sum)
-                        print(vertex)
-                        print(miniPhi)
+                        #print(sum)
+                        #print(vertex)
+                        #print(miniPhi)
                         found = True
                         break
 
@@ -882,8 +882,8 @@ inheritance.</p></div>
 
         vertices = np.array(tempVertices)
 
-        print(vertices)
-        print(len(vertices))
+        #print(vertices)
+        #print(len(vertices))
 
         if len(vertices) == 0:
             raise RuntimeError(&#34;Couldn&#39;t find any vertex&#34;)
@@ -907,7 +907,7 @@ inheritance.</p></div>
         variables = newVar
 
         projectedVertices = np.unique(np.array(projectedVertices), axis=0)
-        print(projectedVertices)
+        #print(projectedVertices)
 
         # Seventh step: Get convex Hull
         try:
@@ -997,7 +997,7 @@ inheritance.</p></div>
                         normal = [round(Fraction(n), self.__rounding) for n in normal]
                         
                         fractionPoints = list()
-                        print(points)
+                        #print(points)
 
                         for p in points:
                             pass
@@ -1016,10 +1016,10 @@ inheritance.</p></div>
                             for i in range(len(variables)):
                                 coef = lc.variables.get(variables[i])
                                 if coef:
-                                    #print(coef)
-                                    #print(vertex)
+                                    ##print(coef)
+                                    ##print(vertex)
                                     sum += round(Fraction(vertex[i]), self.__rounding)*coef
-                                    #print(sum)
+                                    ##print(sum)
                             if(sum &lt; lc.bound):
                                 s+= &#34;&lt; &#34; + str(lc.bound)
                                 lc.operator = ConstraintOperator.LEQ
@@ -1032,7 +1032,7 @@ inheritance.</p></div>
                         if sum is None:
                             lc.operator = ConstraintOperator.EQ
 
-                        print(simplex, &#34;:&#34;, sum, s, &#34;:&#34;, lc)
+                        #print(simplex, &#34;:&#34;, sum, s, &#34;:&#34;, lc)
 
                         constraintSet.add(lc)
 
