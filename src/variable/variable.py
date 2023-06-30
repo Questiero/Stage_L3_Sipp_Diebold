@@ -32,8 +32,13 @@ class Variable(ABC):
         To prevent naming conflicts with regular variables, an anonymous variable's name always start with
         it's object's id. The user can also specify an ending to an anonymous variable name.
 
-        # Usage exemple
+        Attributes
+        ----------
+        ending: str
+            The string to concatenate at the end of an anonymous variable's name, after its object id.
 
+        Usage exemple
+        ----------
         ```py
             lc = LinearConstraint("")
 
@@ -46,12 +51,6 @@ class Variable(ABC):
             print(lc)
             >>> 1949361817056anonymous + 1949361816720anonymous + 1949372682384anonymous + 1949435231104anonymous + 1949435231200anonymous <= 5/2
         ```
-
-        Attributes
-        ----------
-        ending: str
-            The string to concatenate at the end of an anonymous variable's name, after its object id.
-
         """
 
         v = cls("")

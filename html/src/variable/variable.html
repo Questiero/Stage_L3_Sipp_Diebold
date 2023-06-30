@@ -62,8 +62,13 @@ class Variable(ABC):
         To prevent naming conflicts with regular variables, an anonymous variable&#39;s name always start with
         it&#39;s object&#39;s id. The user can also specify an ending to an anonymous variable name.
 
-        # Usage exemple
+        Attributes
+        ----------
+        ending: str
+            The string to concatenate at the end of an anonymous variable&#39;s name, after its object id.
 
+        Usage exemple
+        ----------
         ```py
             lc = LinearConstraint(&#34;&#34;)
 
@@ -76,12 +81,6 @@ class Variable(ABC):
             print(lc)
             &gt;&gt;&gt; 1949361817056anonymous + 1949361816720anonymous + 1949372682384anonymous + 1949435231104anonymous + 1949435231200anonymous &lt;= 5/2
         ```
-
-        Attributes
-        ----------
-        ending: str
-            The string to concatenate at the end of an anonymous variable&#39;s name, after its object id.
-
         &#34;&#34;&#34;
 
         v = cls(&#34;&#34;)
@@ -212,8 +211,13 @@ class Variable(ABC):
         To prevent naming conflicts with regular variables, an anonymous variable&#39;s name always start with
         it&#39;s object&#39;s id. The user can also specify an ending to an anonymous variable name.
 
-        # Usage exemple
+        Attributes
+        ----------
+        ending: str
+            The string to concatenate at the end of an anonymous variable&#39;s name, after its object id.
 
+        Usage exemple
+        ----------
         ```py
             lc = LinearConstraint(&#34;&#34;)
 
@@ -226,12 +230,6 @@ class Variable(ABC):
             print(lc)
             &gt;&gt;&gt; 1949361817056anonymous + 1949361816720anonymous + 1949372682384anonymous + 1949435231104anonymous + 1949435231200anonymous &lt;= 5/2
         ```
-
-        Attributes
-        ----------
-        ending: str
-            The string to concatenate at the end of an anonymous variable&#39;s name, after its object id.
-
         &#34;&#34;&#34;
 
         v = cls(&#34;&#34;)
@@ -347,7 +345,12 @@ can't be used in <code><a title="src.formula.nullaryFormula.constraint.linearCon
 <code><a title="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint" href="../formula/nullaryFormula/constraint/linearConstraint.html#src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint">LinearConstraint</a></code> before adding them manualy.</p>
 <p>To prevent naming conflicts with regular variables, an anonymous variable's name always start with
 it's object's id. The user can also specify an ending to an anonymous variable name.</p>
-<h1 id="usage-exemple">Usage exemple</h1>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>ending</code></strong> :&ensp;<code>str</code></dt>
+<dd>The string to concatenate at the end of an anonymous variable's name, after its object id.</dd>
+</dl>
+<h2 id="usage-exemple">Usage Exemple</h2>
 <pre><code class="language-py">    lc = LinearConstraint(&quot;&quot;)
 
     for i in range(5):
@@ -358,12 +361,7 @@ it's object's id. The user can also specify an ending to an anonymous variable n
 
     print(lc)
     &gt;&gt;&gt; 1949361817056anonymous + 1949361816720anonymous + 1949372682384anonymous + 1949435231104anonymous + 1949435231200anonymous &lt;= 5/2
-</code></pre>
-<h2 id="attributes">Attributes</h2>
-<dl>
-<dt><strong><code>ending</code></strong> :&ensp;<code>str</code></dt>
-<dd>The string to concatenate at the end of an anonymous variable's name, after its object id.</dd>
-</dl></div>
+</code></pre></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -382,8 +380,13 @@ def declareAnonymous(cls, ending: str = None) -&gt; Variable:
     To prevent naming conflicts with regular variables, an anonymous variable&#39;s name always start with
     it&#39;s object&#39;s id. The user can also specify an ending to an anonymous variable name.
 
-    # Usage exemple
+    Attributes
+    ----------
+    ending: str
+        The string to concatenate at the end of an anonymous variable&#39;s name, after its object id.
 
+    Usage exemple
+    ----------
     ```py
         lc = LinearConstraint(&#34;&#34;)
 
@@ -396,12 +399,6 @@ def declareAnonymous(cls, ending: str = None) -&gt; Variable:
         print(lc)
         &gt;&gt;&gt; 1949361817056anonymous + 1949361816720anonymous + 1949372682384anonymous + 1949435231104anonymous + 1949435231200anonymous &lt;= 5/2
     ```
-
-    Attributes
-    ----------
-    ending: str
-        The string to concatenate at the end of an anonymous variable&#39;s name, after its object id.
-
     &#34;&#34;&#34;
 
     v = cls(&#34;&#34;)
