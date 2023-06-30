@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
 <title>src.constants API documentation</title>
-<meta name="description" content="" />
+<meta name="description" content="Class storing all global variables, allowing the user to easily customise the program to their liking." />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
 <link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
@@ -23,43 +23,68 @@
 <h1 class="title">Module <code>src.constants</code></h1>
 </header>
 <section id="section-intro">
+<p>Class storing all global variables, allowing the user to easily customise the program to their liking.</p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class Constants():
-    
-    ONLY_ONE_SOLUTION = True
+<pre><code class="python">&#34;&#34;&#34;
+Class storing all global variables, allowing the user to easily customise the program to their liking.
+&#34;&#34;&#34;
 
-    AND_PARSER_OPERATOR = &#34;&amp;&#34;
-    OR_PARSER_OPERATOR = &#34;|&#34;
-    NOT_PARSER_OPERATOR = &#34;~&#34;
-    XOR_PARSER_OPERATOR = &#34;&lt;+&gt;&#34;
-    IMPLICATION_PARSER_OPERATOR = &#34;-&gt;&#34;
-    EQUIVALENCE_PARSER_OPERATOR = &#34;&lt;-&gt;&#34;
+class Constants():
+    
+
+    ONLY_ONE_SOLUTION = True
+    &#34;&#34;&#34;
+    If set to `True`, the revision algorithm will by default only return one point that satisfies \(\psi \circ \mu\).
+    If not, it will return all solutions.
+    By default, this constant is set to `True`.\n
+
+    Note that this only change the default value of the `onlyOneSolution` parameter of `src.revision.Revision`, it could still be changed
+    on a case-by-case basis for every new instance of this class.
+    &#34;&#34;&#34;
+
+    # ---------------------------------------------------
+    # Operator used in `src.formula.formulaManager.FormulaManager.parser`.
+
+    AND_PARSER_OPERATOR = &#34;&amp;&#34; #: Value for the operator used in `src.formula.formulaManager.FormulaManager.parser` for the `src.formula.naryFormula.andOperator.And` operator, defaulted as `&amp;`.
+    OR_PARSER_OPERATOR = &#34;|&#34; #: Value for the operator used in `src.formula.formulaManager.FormulaManager.parser` for the `src.formula.naryFormula.orOperator.Or` operator, defaulted as `|`.
+    NOT_PARSER_OPERATOR = &#34;~&#34; #: Value for the operator used in `src.formula.formulaManager.FormulaManager.parser` for the `src.formula.unaryFormula.notOperator.Not` operator, defaulted as `~`.
+    XOR_PARSER_OPERATOR = &#34;&lt;+&gt;&#34; #: Value for the operator used in `src.formula.formulaManager.FormulaManager.parser` for the `src.formula.binaryFormula.xorOperator.Xor` operator, defaulted as `&lt;+&gt;`.
+    IMPLICATION_PARSER_OPERATOR = &#34;-&gt;&#34; #: Value for the operator used in `src.formula.formulaManager.FormulaManager.parser` for the `src.formula.binaryFormula.implicationOperator.Implication` operator, defaulted as `-&gt;`.
+    EQUIVALENCE_PARSER_OPERATOR = &#34;&lt;-&gt;&#34; #: Value for the operator used in `src.formula.formulaManager.FormulaManager.parser` for the `src.formula.binaryFormula.equivalenceOperator.Equivalence` operator, defaulted as `&lt;-&gt;`.
+
+    # ---------------------------------------------------
+    # Display-only constants
 
     LINEAR_CONSTRAINT_STRING_DISPLAY_MULT = True
+    &#34;&#34;&#34;
+    If set to `True`, the string display of a `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint` will put
+    multiplicaiton signs between each variable and their coefficient.
+    By default, this constant is set to `True`.\n
+    &#34;&#34;&#34;
 
-    AND_STRING_OPERATOR = &#34;&amp;&#34;
-    OR_STRING_OPERATOR = &#34;|&#34;
-    NOT_STRING_OPERATOR = &#34;~&#34;
-    XOR_STRING_OPERATOR = &#34;XOR&#34;
-    IMPLICATION_STRING_OPERATOR = &#34;-&gt;&#34;
-    EQUIVALENCE_STRING_OPERATOR = &#34;&lt;-&gt;&#34;
-    TOP_STRING_OPERATOR = &#34;TOP&#34;
-    BOTTOM_STRING_OPERATOR = &#34;BOT&#34;
+    AND_STRING_OPERATOR = &#34;&amp;&#34; #: Value for the operator used in `src.formula.formula.Formula`&#39;s string display for the `src.formula.naryFormula.andOperator.And` operator, defaulted as `&amp;`.
+    OR_STRING_OPERATOR = &#34;|&#34; #: Value for the operator used in `src.formula.formula.Formula`&#39;s string display for the `src.formula.naryFormula.orOperator.Or` operator, defaulted as `|`.
+    NOT_STRING_OPERATOR = &#34;~&#34; #: Value for the operator used in `src.formula.formula.Formula`&#39;s string display for the `src.formula.unaryFormula.notOperator.Not` operator, defaulted as `~`.
+    XOR_STRING_OPERATOR = &#34;XOR&#34; #: Value for the operator used in `src.formula.formula.Formula`&#39;s string display for the `src.formula.binaryFormula.xorOperator.Xor` operator, defaulted as `XOR`.
+    IMPLICATION_STRING_OPERATOR = &#34;-&gt;&#34; #: Value for the operator used in `src.formula.formula.Formula`&#39;s string display for the `src.formula.binaryFormula.implicationOperator.Implication` operator, defaulted as `-&gt;`.
+    EQUIVALENCE_STRING_OPERATOR = &#34;&lt;-&gt;&#34; #: Value for the operator used in `src.formula.formula.Formula`&#39;s string display for the `src.formula.binaryFormula.equivalenceOperator.Equivalence` operator, defaulted as `&lt;-&gt;`.
+    TOP_STRING_OPERATOR = &#34;TOP&#34; #: Value for the operator used in `src.formula.formula.Formula`&#39;s string display for the `src.formula.nullaryFormula.top.Top` operator, defaulted as `TOP`.
+    BOTTOM_STRING_OPERATOR = &#34;BOT&#34; #: Value for the operator used in `src.formula.formula.Formula`&#39;s string display for the `src.formula.nullaryFormula.bottom.Bottom` operator, defaulted as `BOT`.
 
-    AND_LATEX_OPERATOR = &#34;\\land&#34;
-    OR_LATEX_OPERATOR = &#34;\\lor&#34;
-    NOT_LATEX_OPERATOR = &#34;\\lnot&#34;
-    XOR_LATEX_OPERATOR = &#34;\\oplus&#34;
-    IMPLICATION_LATEX_OPERATOR = &#34;\\rightarrow&#34;
-    EQUIVALENCE_LATEX_OPERATOR = &#34;\\leftrightarrow&#34;
-    TOP_LATEX_OPERATOR = &#34;\\top&#34;
-    BOTTOM_LATEX_OPERATOR = &#34;\\bot&#34;
-    EQ_LATEX_OPERATOR = &#34;=&#34;
-    LEQ_LATEX_OPERATOR = &#34;\\leqslant&#34;
-    GEQ_LATEX_OPERATOR = &#34;\\geqslant&#34;</code></pre>
+    AND_LATEX_OPERATOR = &#34;\\land&#34; #: Value for the operator used in `src.formula.formula.Formula.toLatex` for the `src.formula.naryFormula.andOperator.And` operator, defaulted as `\land`.
+    OR_LATEX_OPERATOR = &#34;\\lor&#34; #: Value for the operator used in `src.formula.formula.Formula.toLatex` for the `src.formula.naryFormula.orOperator.Or` operator, defaulted as `\lor`.
+    NOT_LATEX_OPERATOR = &#34;\\lnot&#34; #: Value for the operator used in `src.formula.formula.Formula.toLatex` for the `src.formula.unaryFormula.notOperator.Not` operator, defaulted as `\lnot`.
+    XOR_LATEX_OPERATOR = &#34;\\oplus&#34; #: Value for the operator used in `src.formula.formula.Formula.toLatex` for the `src.formula.binaryFormula.xorOperator.Xor` operator, defaulted as `\oplus`.
+    IMPLICATION_LATEX_OPERATOR = &#34;\\rightarrow&#34; #: Value for the operator used in `src.formula.formula.Formula.toLatex` for the `src.formula.binaryFormula.implicationOperator.Implication` operator, defaulted as `\rightarrow`.
+    EQUIVALENCE_LATEX_OPERATOR = &#34;\\leftrightarrow&#34; #: Value for the operator used in `src.formula.formula.Formula.toLatex` for the `src.formula.binaryFormula.equivalenceOperator.Equivalence` operator, defaulted as `\leftrightarrow`.
+    TOP_LATEX_OPERATOR = &#34;\\top&#34; #: Value for the operator used in `src.formula.formula.Formula.toLatex` for the `src.formula.nullaryFormula.top.Top` operator, defaulted as `\top`.
+    BOTTOM_LATEX_OPERATOR = &#34;\\bot&#34; #: Value for the operator used in `src.formula.formula.Formula.toLatex` for the `src.formula.nullaryFormula.bottom.Bottom` operator, defaulted as `\top`.
+    EQ_LATEX_OPERATOR = &#34;=&#34; #: Value for the operator used in `src.formula.formula.Formula.toLatex` for the `src.formula.nullaryFormula.constraint.ConstraintOperator.EQ` operator, defaulted as `=`.
+    LEQ_LATEX_OPERATOR = &#34;\\leqslant&#34; #: Value for the operator used in `src.formula.formula.Formula.toLatex` for the `src.formula.nullaryFormula.constraint.ConstraintOperator.LEQ` operator, defaulted as `\leqslant`.
+    GEQ_LATEX_OPERATOR = &#34;\\geqslant&#34; #: Value for the operator used in `src.formula.formula.Formula.toLatex` for the `src.formula.nullaryFormula.constraint.ConstraintOperator.GEQ` operator, defaulted as \geqslant`.</code></pre>
 </details>
 </section>
 <section>
@@ -82,147 +107,173 @@
 </summary>
 <pre><code class="python">class Constants():
     
-    ONLY_ONE_SOLUTION = True
 
-    AND_PARSER_OPERATOR = &#34;&amp;&#34;
-    OR_PARSER_OPERATOR = &#34;|&#34;
-    NOT_PARSER_OPERATOR = &#34;~&#34;
-    XOR_PARSER_OPERATOR = &#34;&lt;+&gt;&#34;
-    IMPLICATION_PARSER_OPERATOR = &#34;-&gt;&#34;
-    EQUIVALENCE_PARSER_OPERATOR = &#34;&lt;-&gt;&#34;
+    ONLY_ONE_SOLUTION = True
+    &#34;&#34;&#34;
+    If set to `True`, the revision algorithm will by default only return one point that satisfies \(\psi \circ \mu\).
+    If not, it will return all solutions.
+    By default, this constant is set to `True`.\n
+
+    Note that this only change the default value of the `onlyOneSolution` parameter of `src.revision.Revision`, it could still be changed
+    on a case-by-case basis for every new instance of this class.
+    &#34;&#34;&#34;
+
+    # ---------------------------------------------------
+    # Operator used in `src.formula.formulaManager.FormulaManager.parser`.
+
+    AND_PARSER_OPERATOR = &#34;&amp;&#34; #: Value for the operator used in `src.formula.formulaManager.FormulaManager.parser` for the `src.formula.naryFormula.andOperator.And` operator, defaulted as `&amp;`.
+    OR_PARSER_OPERATOR = &#34;|&#34; #: Value for the operator used in `src.formula.formulaManager.FormulaManager.parser` for the `src.formula.naryFormula.orOperator.Or` operator, defaulted as `|`.
+    NOT_PARSER_OPERATOR = &#34;~&#34; #: Value for the operator used in `src.formula.formulaManager.FormulaManager.parser` for the `src.formula.unaryFormula.notOperator.Not` operator, defaulted as `~`.
+    XOR_PARSER_OPERATOR = &#34;&lt;+&gt;&#34; #: Value for the operator used in `src.formula.formulaManager.FormulaManager.parser` for the `src.formula.binaryFormula.xorOperator.Xor` operator, defaulted as `&lt;+&gt;`.
+    IMPLICATION_PARSER_OPERATOR = &#34;-&gt;&#34; #: Value for the operator used in `src.formula.formulaManager.FormulaManager.parser` for the `src.formula.binaryFormula.implicationOperator.Implication` operator, defaulted as `-&gt;`.
+    EQUIVALENCE_PARSER_OPERATOR = &#34;&lt;-&gt;&#34; #: Value for the operator used in `src.formula.formulaManager.FormulaManager.parser` for the `src.formula.binaryFormula.equivalenceOperator.Equivalence` operator, defaulted as `&lt;-&gt;`.
+
+    # ---------------------------------------------------
+    # Display-only constants
 
     LINEAR_CONSTRAINT_STRING_DISPLAY_MULT = True
+    &#34;&#34;&#34;
+    If set to `True`, the string display of a `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint` will put
+    multiplicaiton signs between each variable and their coefficient.
+    By default, this constant is set to `True`.\n
+    &#34;&#34;&#34;
 
-    AND_STRING_OPERATOR = &#34;&amp;&#34;
-    OR_STRING_OPERATOR = &#34;|&#34;
-    NOT_STRING_OPERATOR = &#34;~&#34;
-    XOR_STRING_OPERATOR = &#34;XOR&#34;
-    IMPLICATION_STRING_OPERATOR = &#34;-&gt;&#34;
-    EQUIVALENCE_STRING_OPERATOR = &#34;&lt;-&gt;&#34;
-    TOP_STRING_OPERATOR = &#34;TOP&#34;
-    BOTTOM_STRING_OPERATOR = &#34;BOT&#34;
+    AND_STRING_OPERATOR = &#34;&amp;&#34; #: Value for the operator used in `src.formula.formula.Formula`&#39;s string display for the `src.formula.naryFormula.andOperator.And` operator, defaulted as `&amp;`.
+    OR_STRING_OPERATOR = &#34;|&#34; #: Value for the operator used in `src.formula.formula.Formula`&#39;s string display for the `src.formula.naryFormula.orOperator.Or` operator, defaulted as `|`.
+    NOT_STRING_OPERATOR = &#34;~&#34; #: Value for the operator used in `src.formula.formula.Formula`&#39;s string display for the `src.formula.unaryFormula.notOperator.Not` operator, defaulted as `~`.
+    XOR_STRING_OPERATOR = &#34;XOR&#34; #: Value for the operator used in `src.formula.formula.Formula`&#39;s string display for the `src.formula.binaryFormula.xorOperator.Xor` operator, defaulted as `XOR`.
+    IMPLICATION_STRING_OPERATOR = &#34;-&gt;&#34; #: Value for the operator used in `src.formula.formula.Formula`&#39;s string display for the `src.formula.binaryFormula.implicationOperator.Implication` operator, defaulted as `-&gt;`.
+    EQUIVALENCE_STRING_OPERATOR = &#34;&lt;-&gt;&#34; #: Value for the operator used in `src.formula.formula.Formula`&#39;s string display for the `src.formula.binaryFormula.equivalenceOperator.Equivalence` operator, defaulted as `&lt;-&gt;`.
+    TOP_STRING_OPERATOR = &#34;TOP&#34; #: Value for the operator used in `src.formula.formula.Formula`&#39;s string display for the `src.formula.nullaryFormula.top.Top` operator, defaulted as `TOP`.
+    BOTTOM_STRING_OPERATOR = &#34;BOT&#34; #: Value for the operator used in `src.formula.formula.Formula`&#39;s string display for the `src.formula.nullaryFormula.bottom.Bottom` operator, defaulted as `BOT`.
 
-    AND_LATEX_OPERATOR = &#34;\\land&#34;
-    OR_LATEX_OPERATOR = &#34;\\lor&#34;
-    NOT_LATEX_OPERATOR = &#34;\\lnot&#34;
-    XOR_LATEX_OPERATOR = &#34;\\oplus&#34;
-    IMPLICATION_LATEX_OPERATOR = &#34;\\rightarrow&#34;
-    EQUIVALENCE_LATEX_OPERATOR = &#34;\\leftrightarrow&#34;
-    TOP_LATEX_OPERATOR = &#34;\\top&#34;
-    BOTTOM_LATEX_OPERATOR = &#34;\\bot&#34;
-    EQ_LATEX_OPERATOR = &#34;=&#34;
-    LEQ_LATEX_OPERATOR = &#34;\\leqslant&#34;
-    GEQ_LATEX_OPERATOR = &#34;\\geqslant&#34;</code></pre>
+    AND_LATEX_OPERATOR = &#34;\\land&#34; #: Value for the operator used in `src.formula.formula.Formula.toLatex` for the `src.formula.naryFormula.andOperator.And` operator, defaulted as `\land`.
+    OR_LATEX_OPERATOR = &#34;\\lor&#34; #: Value for the operator used in `src.formula.formula.Formula.toLatex` for the `src.formula.naryFormula.orOperator.Or` operator, defaulted as `\lor`.
+    NOT_LATEX_OPERATOR = &#34;\\lnot&#34; #: Value for the operator used in `src.formula.formula.Formula.toLatex` for the `src.formula.unaryFormula.notOperator.Not` operator, defaulted as `\lnot`.
+    XOR_LATEX_OPERATOR = &#34;\\oplus&#34; #: Value for the operator used in `src.formula.formula.Formula.toLatex` for the `src.formula.binaryFormula.xorOperator.Xor` operator, defaulted as `\oplus`.
+    IMPLICATION_LATEX_OPERATOR = &#34;\\rightarrow&#34; #: Value for the operator used in `src.formula.formula.Formula.toLatex` for the `src.formula.binaryFormula.implicationOperator.Implication` operator, defaulted as `\rightarrow`.
+    EQUIVALENCE_LATEX_OPERATOR = &#34;\\leftrightarrow&#34; #: Value for the operator used in `src.formula.formula.Formula.toLatex` for the `src.formula.binaryFormula.equivalenceOperator.Equivalence` operator, defaulted as `\leftrightarrow`.
+    TOP_LATEX_OPERATOR = &#34;\\top&#34; #: Value for the operator used in `src.formula.formula.Formula.toLatex` for the `src.formula.nullaryFormula.top.Top` operator, defaulted as `\top`.
+    BOTTOM_LATEX_OPERATOR = &#34;\\bot&#34; #: Value for the operator used in `src.formula.formula.Formula.toLatex` for the `src.formula.nullaryFormula.bottom.Bottom` operator, defaulted as `\top`.
+    EQ_LATEX_OPERATOR = &#34;=&#34; #: Value for the operator used in `src.formula.formula.Formula.toLatex` for the `src.formula.nullaryFormula.constraint.ConstraintOperator.EQ` operator, defaulted as `=`.
+    LEQ_LATEX_OPERATOR = &#34;\\leqslant&#34; #: Value for the operator used in `src.formula.formula.Formula.toLatex` for the `src.formula.nullaryFormula.constraint.ConstraintOperator.LEQ` operator, defaulted as `\leqslant`.
+    GEQ_LATEX_OPERATOR = &#34;\\geqslant&#34; #: Value for the operator used in `src.formula.formula.Formula.toLatex` for the `src.formula.nullaryFormula.constraint.ConstraintOperator.GEQ` operator, defaulted as \geqslant`.</code></pre>
 </details>
 <h3>Class variables</h3>
 <dl>
 <dt id="src.constants.Constants.AND_LATEX_OPERATOR"><code class="name">var <span class="ident">AND_LATEX_OPERATOR</span></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Value for the operator used in <code><a title="src.formula.formula.Formula.toLatex" href="formula/formula.html#src.formula.formula.Formula.toLatex">Formula.toLatex()</a></code> for the <code><a title="src.formula.naryFormula.andOperator.And" href="formula/naryFormula/andOperator.html#src.formula.naryFormula.andOperator.And">And</a></code> operator, defaulted as <code>\land</code>.</p></div>
 </dd>
 <dt id="src.constants.Constants.AND_PARSER_OPERATOR"><code class="name">var <span class="ident">AND_PARSER_OPERATOR</span></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Value for the operator used in <code><a title="src.formula.formulaManager.FormulaManager.parser" href="formula/formulaManager.html#src.formula.formulaManager.FormulaManager.parser">FormulaManager.parser()</a></code> for the <code><a title="src.formula.naryFormula.andOperator.And" href="formula/naryFormula/andOperator.html#src.formula.naryFormula.andOperator.And">And</a></code> operator, defaulted as <code>&amp;</code>.</p></div>
 </dd>
 <dt id="src.constants.Constants.AND_STRING_OPERATOR"><code class="name">var <span class="ident">AND_STRING_OPERATOR</span></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Value for the operator used in <code><a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a></code>'s string display for the <code><a title="src.formula.naryFormula.andOperator.And" href="formula/naryFormula/andOperator.html#src.formula.naryFormula.andOperator.And">And</a></code> operator, defaulted as <code>&amp;</code>.</p></div>
 </dd>
 <dt id="src.constants.Constants.BOTTOM_LATEX_OPERATOR"><code class="name">var <span class="ident">BOTTOM_LATEX_OPERATOR</span></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Value for the operator used in <code><a title="src.formula.formula.Formula.toLatex" href="formula/formula.html#src.formula.formula.Formula.toLatex">Formula.toLatex()</a></code> for the <code><a title="src.formula.nullaryFormula.bottom.Bottom" href="formula/nullaryFormula/bottom.html#src.formula.nullaryFormula.bottom.Bottom">Bottom</a></code> operator, defaulted as <code>\top</code>.</p></div>
 </dd>
 <dt id="src.constants.Constants.BOTTOM_STRING_OPERATOR"><code class="name">var <span class="ident">BOTTOM_STRING_OPERATOR</span></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Value for the operator used in <code><a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a></code>'s string display for the <code><a title="src.formula.nullaryFormula.bottom.Bottom" href="formula/nullaryFormula/bottom.html#src.formula.nullaryFormula.bottom.Bottom">Bottom</a></code> operator, defaulted as <code>BOT</code>.</p></div>
 </dd>
 <dt id="src.constants.Constants.EQUIVALENCE_LATEX_OPERATOR"><code class="name">var <span class="ident">EQUIVALENCE_LATEX_OPERATOR</span></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Value for the operator used in <code><a title="src.formula.formula.Formula.toLatex" href="formula/formula.html#src.formula.formula.Formula.toLatex">Formula.toLatex()</a></code> for the <code><a title="src.formula.binaryFormula.equivalenceOperator.Equivalence" href="formula/binaryFormula/equivalenceOperator.html#src.formula.binaryFormula.equivalenceOperator.Equivalence">Equivalence</a></code> operator, defaulted as <code>\leftrightarrow</code>.</p></div>
 </dd>
 <dt id="src.constants.Constants.EQUIVALENCE_PARSER_OPERATOR"><code class="name">var <span class="ident">EQUIVALENCE_PARSER_OPERATOR</span></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Value for the operator used in <code><a title="src.formula.formulaManager.FormulaManager.parser" href="formula/formulaManager.html#src.formula.formulaManager.FormulaManager.parser">FormulaManager.parser()</a></code> for the <code><a title="src.formula.binaryFormula.equivalenceOperator.Equivalence" href="formula/binaryFormula/equivalenceOperator.html#src.formula.binaryFormula.equivalenceOperator.Equivalence">Equivalence</a></code> operator, defaulted as <code>&lt;-&gt;</code>.</p></div>
 </dd>
 <dt id="src.constants.Constants.EQUIVALENCE_STRING_OPERATOR"><code class="name">var <span class="ident">EQUIVALENCE_STRING_OPERATOR</span></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Value for the operator used in <code><a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a></code>'s string display for the <code><a title="src.formula.binaryFormula.equivalenceOperator.Equivalence" href="formula/binaryFormula/equivalenceOperator.html#src.formula.binaryFormula.equivalenceOperator.Equivalence">Equivalence</a></code> operator, defaulted as <code>&lt;-&gt;</code>.</p></div>
 </dd>
 <dt id="src.constants.Constants.EQ_LATEX_OPERATOR"><code class="name">var <span class="ident">EQ_LATEX_OPERATOR</span></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Value for the operator used in <code><a title="src.formula.formula.Formula.toLatex" href="formula/formula.html#src.formula.formula.Formula.toLatex">Formula.toLatex()</a></code> for the <code>src.formula.nullaryFormula.constraint.ConstraintOperator.EQ</code> operator, defaulted as <code>=</code>.</p></div>
 </dd>
 <dt id="src.constants.Constants.GEQ_LATEX_OPERATOR"><code class="name">var <span class="ident">GEQ_LATEX_OPERATOR</span></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Value for the operator used in <code><a title="src.formula.formula.Formula.toLatex" href="formula/formula.html#src.formula.formula.Formula.toLatex">Formula.toLatex()</a></code> for the <code>src.formula.nullaryFormula.constraint.ConstraintOperator.GEQ</code> operator, defaulted as \geqslant`.</p></div>
 </dd>
 <dt id="src.constants.Constants.IMPLICATION_LATEX_OPERATOR"><code class="name">var <span class="ident">IMPLICATION_LATEX_OPERATOR</span></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Value for the operator used in <code><a title="src.formula.formula.Formula.toLatex" href="formula/formula.html#src.formula.formula.Formula.toLatex">Formula.toLatex()</a></code> for the <code><a title="src.formula.binaryFormula.implicationOperator.Implication" href="formula/binaryFormula/implicationOperator.html#src.formula.binaryFormula.implicationOperator.Implication">Implication</a></code> operator, defaulted as <code>\rightarrow</code>.</p></div>
 </dd>
 <dt id="src.constants.Constants.IMPLICATION_PARSER_OPERATOR"><code class="name">var <span class="ident">IMPLICATION_PARSER_OPERATOR</span></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Value for the operator used in <code><a title="src.formula.formulaManager.FormulaManager.parser" href="formula/formulaManager.html#src.formula.formulaManager.FormulaManager.parser">FormulaManager.parser()</a></code> for the <code><a title="src.formula.binaryFormula.implicationOperator.Implication" href="formula/binaryFormula/implicationOperator.html#src.formula.binaryFormula.implicationOperator.Implication">Implication</a></code> operator, defaulted as <code>-&gt;</code>.</p></div>
 </dd>
 <dt id="src.constants.Constants.IMPLICATION_STRING_OPERATOR"><code class="name">var <span class="ident">IMPLICATION_STRING_OPERATOR</span></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Value for the operator used in <code><a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a></code>'s string display for the <code><a title="src.formula.binaryFormula.implicationOperator.Implication" href="formula/binaryFormula/implicationOperator.html#src.formula.binaryFormula.implicationOperator.Implication">Implication</a></code> operator, defaulted as <code>-&gt;</code>.</p></div>
 </dd>
 <dt id="src.constants.Constants.LEQ_LATEX_OPERATOR"><code class="name">var <span class="ident">LEQ_LATEX_OPERATOR</span></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Value for the operator used in <code><a title="src.formula.formula.Formula.toLatex" href="formula/formula.html#src.formula.formula.Formula.toLatex">Formula.toLatex()</a></code> for the <code>src.formula.nullaryFormula.constraint.ConstraintOperator.LEQ</code> operator, defaulted as <code>\leqslant</code>.</p></div>
 </dd>
 <dt id="src.constants.Constants.LINEAR_CONSTRAINT_STRING_DISPLAY_MULT"><code class="name">var <span class="ident">LINEAR_CONSTRAINT_STRING_DISPLAY_MULT</span></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>If set to <code>True</code>, the string display of a <code><a title="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint" href="formula/nullaryFormula/constraint/linearConstraint.html#src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint">LinearConstraint</a></code> will put
+multiplicaiton signs between each variable and their coefficient.
+By default, this constant is set to <code>True</code>.</p></div>
 </dd>
 <dt id="src.constants.Constants.NOT_LATEX_OPERATOR"><code class="name">var <span class="ident">NOT_LATEX_OPERATOR</span></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Value for the operator used in <code><a title="src.formula.formula.Formula.toLatex" href="formula/formula.html#src.formula.formula.Formula.toLatex">Formula.toLatex()</a></code> for the <code><a title="src.formula.unaryFormula.notOperator.Not" href="formula/unaryFormula/notOperator.html#src.formula.unaryFormula.notOperator.Not">Not</a></code> operator, defaulted as <code>\lnot</code>.</p></div>
 </dd>
 <dt id="src.constants.Constants.NOT_PARSER_OPERATOR"><code class="name">var <span class="ident">NOT_PARSER_OPERATOR</span></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Value for the operator used in <code><a title="src.formula.formulaManager.FormulaManager.parser" href="formula/formulaManager.html#src.formula.formulaManager.FormulaManager.parser">FormulaManager.parser()</a></code> for the <code><a title="src.formula.unaryFormula.notOperator.Not" href="formula/unaryFormula/notOperator.html#src.formula.unaryFormula.notOperator.Not">Not</a></code> operator, defaulted as <code>~</code>.</p></div>
 </dd>
 <dt id="src.constants.Constants.NOT_STRING_OPERATOR"><code class="name">var <span class="ident">NOT_STRING_OPERATOR</span></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Value for the operator used in <code><a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a></code>'s string display for the <code><a title="src.formula.unaryFormula.notOperator.Not" href="formula/unaryFormula/notOperator.html#src.formula.unaryFormula.notOperator.Not">Not</a></code> operator, defaulted as <code>~</code>.</p></div>
 </dd>
 <dt id="src.constants.Constants.ONLY_ONE_SOLUTION"><code class="name">var <span class="ident">ONLY_ONE_SOLUTION</span></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>If set to <code>True</code>, the revision algorithm will by default only return one point that satisfies <span><span class="MathJax_Preview">\psi \circ \mu</span><script type="math/tex">\psi \circ \mu</script></span>.
+If not, it will return all solutions.
+By default, this constant is set to <code>True</code>.</p>
+<p>Note that this only change the default value of the <code>onlyOneSolution</code> parameter of <code><a title="src.revision.Revision" href="revision.html#src.revision.Revision">Revision</a></code>, it could still be changed
+on a case-by-case basis for every new instance of this class.</p></div>
 </dd>
 <dt id="src.constants.Constants.OR_LATEX_OPERATOR"><code class="name">var <span class="ident">OR_LATEX_OPERATOR</span></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Value for the operator used in <code><a title="src.formula.formula.Formula.toLatex" href="formula/formula.html#src.formula.formula.Formula.toLatex">Formula.toLatex()</a></code> for the <code><a title="src.formula.naryFormula.orOperator.Or" href="formula/naryFormula/orOperator.html#src.formula.naryFormula.orOperator.Or">Or</a></code> operator, defaulted as <code>\lor</code>.</p></div>
 </dd>
 <dt id="src.constants.Constants.OR_PARSER_OPERATOR"><code class="name">var <span class="ident">OR_PARSER_OPERATOR</span></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Value for the operator used in <code><a title="src.formula.formulaManager.FormulaManager.parser" href="formula/formulaManager.html#src.formula.formulaManager.FormulaManager.parser">FormulaManager.parser()</a></code> for the <code><a title="src.formula.naryFormula.orOperator.Or" href="formula/naryFormula/orOperator.html#src.formula.naryFormula.orOperator.Or">Or</a></code> operator, defaulted as <code>|</code>.</p></div>
 </dd>
 <dt id="src.constants.Constants.OR_STRING_OPERATOR"><code class="name">var <span class="ident">OR_STRING_OPERATOR</span></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Value for the operator used in <code><a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a></code>'s string display for the <code><a title="src.formula.naryFormula.orOperator.Or" href="formula/naryFormula/orOperator.html#src.formula.naryFormula.orOperator.Or">Or</a></code> operator, defaulted as <code>|</code>.</p></div>
 </dd>
 <dt id="src.constants.Constants.TOP_LATEX_OPERATOR"><code class="name">var <span class="ident">TOP_LATEX_OPERATOR</span></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Value for the operator used in <code><a title="src.formula.formula.Formula.toLatex" href="formula/formula.html#src.formula.formula.Formula.toLatex">Formula.toLatex()</a></code> for the <code><a title="src.formula.nullaryFormula.top.Top" href="formula/nullaryFormula/top.html#src.formula.nullaryFormula.top.Top">Top</a></code> operator, defaulted as <code>\top</code>.</p></div>
 </dd>
 <dt id="src.constants.Constants.TOP_STRING_OPERATOR"><code class="name">var <span class="ident">TOP_STRING_OPERATOR</span></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Value for the operator used in <code><a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a></code>'s string display for the <code><a title="src.formula.nullaryFormula.top.Top" href="formula/nullaryFormula/top.html#src.formula.nullaryFormula.top.Top">Top</a></code> operator, defaulted as <code>TOP</code>.</p></div>
 </dd>
 <dt id="src.constants.Constants.XOR_LATEX_OPERATOR"><code class="name">var <span class="ident">XOR_LATEX_OPERATOR</span></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Value for the operator used in <code><a title="src.formula.formula.Formula.toLatex" href="formula/formula.html#src.formula.formula.Formula.toLatex">Formula.toLatex()</a></code> for the <code><a title="src.formula.binaryFormula.xorOperator.Xor" href="formula/binaryFormula/xorOperator.html#src.formula.binaryFormula.xorOperator.Xor">Xor</a></code> operator, defaulted as <code>\oplus</code>.</p></div>
 </dd>
 <dt id="src.constants.Constants.XOR_PARSER_OPERATOR"><code class="name">var <span class="ident">XOR_PARSER_OPERATOR</span></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Value for the operator used in <code><a title="src.formula.formulaManager.FormulaManager.parser" href="formula/formulaManager.html#src.formula.formulaManager.FormulaManager.parser">FormulaManager.parser()</a></code> for the <code><a title="src.formula.binaryFormula.xorOperator.Xor" href="formula/binaryFormula/xorOperator.html#src.formula.binaryFormula.xorOperator.Xor">Xor</a></code> operator, defaulted as <code>&lt;+&gt;</code>.</p></div>
 </dd>
 <dt id="src.constants.Constants.XOR_STRING_OPERATOR"><code class="name">var <span class="ident">XOR_STRING_OPERATOR</span></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Value for the operator used in <code><a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a></code>'s string display for the <code><a title="src.formula.binaryFormula.xorOperator.Xor" href="formula/binaryFormula/xorOperator.html#src.formula.binaryFormula.xorOperator.Xor">Xor</a></code> operator, defaulted as <code>XOR</code>.</p></div>
 </dd>
 </dl>
 </dd>
