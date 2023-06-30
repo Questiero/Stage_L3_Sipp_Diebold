@@ -21,8 +21,15 @@ class ScipySolver(MLOSolver) :
         limitUp = []
         for constraint in constraints:
             tab.append(constraint[0])
-            limitInf.append(-np.inf)
-            limitUp.append(constraint[2])
+            if constraint[1] == ConstraintOperator.LEQ:
+                limitInf.append(-np.inf)
+                limitUp.append(constraint[2])
+            elif constraint[1] == ConstraintOperator.GEQ:
+                limitInf.append(constraint[2])
+                limitUp.append(np.inf)
+            elif constraint[1] == ConstraintOperator.EQ:
+                limitInf.append(constraint[2])
+                limitUp.append(constraint[2])
 
         lc = LinearConstraint(tab, limitInf, limitUp)
         result = milp(c=objectif, integrality=integers, constraints=lc)
@@ -30,6 +37,6 @@ class ScipySolver(MLOSolver) :
         if result.status == 0:
             res = (OptimizationValues.OPTIMAL, list(result.x), result.fun)
         elif result.status == 3:
-            res = (OptimizationValues.UNBOUNDED, [], np.inf)
-        else: res = (OptimizationValues.INFEASIBLE, [], np.inf)
+            res = (OptimizationValues.UNBOUNDED, [], float(np.inf))
+        else: res = (OptimizationValues.INFEASIBLE, [], float(np.inf))
         return res
