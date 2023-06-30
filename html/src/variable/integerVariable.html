@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
 <title>src.variable.integerVariable API documentation</title>
-<meta name="description" content="" />
+<meta name="description" content="Class representing an integer number Variable, meaning a number \(x \in \mathbb{Z}\)" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
 <link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
@@ -23,11 +23,16 @@
 <h1 class="title">Module <code>src.variable.integerVariable</code></h1>
 </header>
 <section id="section-intro">
+<p>Class representing an integer number Variable, meaning a number <span><span class="MathJax_Preview">x \in \mathbb{Z}</span><script type="math/tex">x \in \mathbb{Z}</script></span></p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from __future__ import annotations
+<pre><code class="python">&#34;&#34;&#34;
+Class representing an integer number Variable, meaning a number \(x \in \mathbb{Z}\)
+&#34;&#34;&#34;
+
+from __future__ import annotations
 
 from .variable import Variable
 from .variableManager import VariableManager
@@ -36,7 +41,7 @@ from fractions import Fraction
 
 class IntegerVariable(Variable):
     &#39;&#39;&#39;
-    IntegerVariable class, representing a Variable defined in N.
+    IntegerVariable class, representing a Variable defined in Z.
 
     Attributes
     ----------
@@ -127,7 +132,7 @@ class IntegerVariable(Variable):
 <span>(</span><span>name)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>IntegerVariable class, representing a Variable defined in N.</p>
+<div class="desc"><p>IntegerVariable class, representing a Variable defined in Z.</p>
 <h2 id="attributes">Attributes</h2>
 <dl>
 <dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
@@ -141,7 +146,7 @@ Name can't have this symbole : + - * / @</dd>
 </summary>
 <pre><code class="python">class IntegerVariable(Variable):
     &#39;&#39;&#39;
-    IntegerVariable class, representing a Variable defined in N.
+    IntegerVariable class, representing a Variable defined in Z.
 
     Attributes
     ----------

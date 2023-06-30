@@ -1,3 +1,8 @@
+"""
+Projector of a `src.formula.formula.Formula` to a sub-set of its variables, using floating numbers and SciPy's
+`ConvxHull`.
+"""
+
 from __future__ import annotations
 
 from ..formula import And, LinearConstraint, Not, ConstraintOperator
@@ -29,9 +34,13 @@ class FloatConvexHullProjector (Projector):
 
         constraintSet = set()
 
+        #print(phi)
+
         # First step: simplify
         for simplifier in self.__simplifier:
             phi = simplifier.run(phi.toLessOrEqConstraint().toDNF())
+
+        #print(phi)
 
         # Second step: Get all variables
         allVariables = list(phi.getVariables())

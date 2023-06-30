@@ -52,6 +52,6 @@ class Constants():
     EQUIVALENCE_LATEX_OPERATOR = "\\leftrightarrow" #: Value for the operator used in `src.formula.formula.Formula.toLatex` for the `src.formula.binaryFormula.equivalenceOperator.Equivalence` operator, defaulted as `\leftrightarrow`.
     TOP_LATEX_OPERATOR = "\\top" #: Value for the operator used in `src.formula.formula.Formula.toLatex` for the `src.formula.nullaryFormula.top.Top` operator, defaulted as `\top`.
     BOTTOM_LATEX_OPERATOR = "\\bot" #: Value for the operator used in `src.formula.formula.Formula.toLatex` for the `src.formula.nullaryFormula.bottom.Bottom` operator, defaulted as `\top`.
-    EQ_LATEX_OPERATOR = "=" #: Value for the operator used in `src.formula.formula.Formula.toLatex` for the `src.formula.nullaryFormula.constraint.ConstraintOperator.EQ` operator, defaulted as `=`.
-    LEQ_LATEX_OPERATOR = "\\leqslant" #: Value for the operator used in `src.formula.formula.Formula.toLatex` for the `src.formula.nullaryFormula.constraint.ConstraintOperator.LEQ` operator, defaulted as `\leqslant`.
-    GEQ_LATEX_OPERATOR = "\\geqslant" #: Value for the operator used in `src.formula.formula.Formula.toLatex` for the `src.formula.nullaryFormula.constraint.ConstraintOperator.GEQ` operator, defaulted as \geqslant`.
+    EQ_LATEX_OPERATOR = "=" #: Value for the operator used in `src.formula.formula.Formula.toLatex` for the `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.EQ` operator, defaulted as `=`.
+    LEQ_LATEX_OPERATOR = "\\leqslant" #: Value for the operator used in `src.formula.formula.Formula.toLatex` for the `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` operator, defaulted as `\leqslant`.
+    GEQ_LATEX_OPERATOR = "\\geqslant" #: Value for the operator used in `src.formula.formula.Formula.toLatex` for the `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.GEQ` operator, defaulted as \geqslant`.

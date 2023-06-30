@@ -1,3 +1,7 @@
+"""
+Class representing a real Number variable, meaning a number \(x \in \mathbb{R}\)
+"""
+
 from __future__ import annotations
 
 from .variable import Variable

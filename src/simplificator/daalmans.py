@@ -1,3 +1,7 @@
+"""
+Implementation of the Daalmans algorithm for simplification of conjunction of literals.
+"""
+
 from __future__ import annotations
 
 from ..formula import Formula, LinearConstraint, ConstraintOperator, Not, And, NullaryFormula

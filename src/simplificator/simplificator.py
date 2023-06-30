@@ -1,3 +1,7 @@
+"""
+Abstract class, representing a simplificator of conjunction of litterals.
+"""
+
 from __future__ import annotations
 
 from ..formula import And, ConstraintOperator

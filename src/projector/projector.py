@@ -1,3 +1,7 @@
+"""
+Abstract class, representating a projector of a `src.formula.formula.Formula` to a sub-set of its variables.
+"""
+
 from __future__ import annotations
 
 from ..formula import And

@@ -1,3 +1,7 @@
+"""
+Class representing an integer number Variable, meaning a number \(x \in \mathbb{Z}\)
+"""
+
 from __future__ import annotations
 
 from .variable import Variable
@@ -7,7 +11,7 @@ from fractions import Fraction
 
 class IntegerVariable(Variable):
     '''
-    IntegerVariable class, representing a Variable defined in N.
+    IntegerVariable class, representing a Variable defined in Z.
 
     Attributes
     ----------

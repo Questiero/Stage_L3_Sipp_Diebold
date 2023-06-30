@@ -32,9 +32,29 @@
 from abc import ABC
 
 class MLOSolver(ABC):
+    &#39;&#39;&#39;
+    Abstract MLOSolver class, representing mixed linear constraint solver.
+    &#39;&#39;&#39;
+
     def __init__(self):
         raise NotImplementedError(&#34;Solver can&#39;t have an instance&#34;)
     def solve(self, variables : list, objectif : dict, constraints : dict) -&gt; tuple:
+        &#39;&#39;&#39;
+        Method returning the result of a mixed linear problem.
+
+        Attributes
+        ----------
+        variables : variables used in constraints
+        objectif : objective function to minimize
+        constraints : list of mixed linear constraints 
+
+        Returns
+        -------
+        optimizationValues : OptimizationValues can be :
+            INFEASIBLE if the problem is infeasible
+            OPTIMAL if the solver have found an optimal value
+            UNBOUNDED if the solver can found an optimal value but the problem is feasible
+        &#39;&#39;&#39;
         raise NotImplementedError(&#34;Method solve is not implemented&#34;)</code></pre>
 </details>
 </section>
@@ -51,16 +71,35 @@ class MLOSolver(ABC):
 <span>class <span class="ident">MLOSolver</span></span>
 </code></dt>
 <dd>
-<div class="desc"><p>Helper class that provides a standard way to create an ABC using
-inheritance.</p></div>
+<div class="desc"><p>Abstract MLOSolver class, representing mixed linear constraint solver.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class MLOSolver(ABC):
+    &#39;&#39;&#39;
+    Abstract MLOSolver class, representing mixed linear constraint solver.
+    &#39;&#39;&#39;
+
     def __init__(self):
         raise NotImplementedError(&#34;Solver can&#39;t have an instance&#34;)
     def solve(self, variables : list, objectif : dict, constraints : dict) -&gt; tuple:
+        &#39;&#39;&#39;
+        Method returning the result of a mixed linear problem.
+
+        Attributes
+        ----------
+        variables : variables used in constraints
+        objectif : objective function to minimize
+        constraints : list of mixed linear constraints 
+
+        Returns
+        -------
+        optimizationValues : OptimizationValues can be :
+            INFEASIBLE if the problem is infeasible
+            OPTIMAL if the solver have found an optimal value
+            UNBOUNDED if the solver can found an optimal value but the problem is feasible
+        &#39;&#39;&#39;
         raise NotImplementedError(&#34;Method solve is not implemented&#34;)</code></pre>
 </details>
 <h3>Ancestors</h3>
@@ -70,6 +109,7 @@ inheritance.</p></div>
 <h3>Subclasses</h3>
 <ul class="hlist">
 <li><a title="src.mlo_solver.LPSolver.LPSolver" href="LPSolver.html#src.mlo_solver.LPSolver.LPSolver">LPSolver</a></li>
+<li><a title="src.mlo_solver.scipySolver.ScipySolver" href="scipySolver.html#src.mlo_solver.scipySolver.ScipySolver">ScipySolver</a></li>
 </ul>
 <h3>Methods</h3>
 <dl>
@@ -77,12 +117,44 @@ inheritance.</p></div>
 <span>def <span class="ident">solve</span></span>(<span>self, variables: list, objectif: dict, constraints: dict) ‑> tuple</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Method returning the result of a mixed linear problem.</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>variables</code></strong> :&ensp;<code>variables used in constraints</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>objectif</code></strong> :&ensp;<code>objective function to minimize</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>constraints</code></strong> :&ensp;<code>list</code> of <code>mixed linear constraints </code></dt>
+<dd>&nbsp;</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>optimizationValues</code></strong> :&ensp;<code>OptimizationValues can be :</code></dt>
+<dd>INFEASIBLE if the problem is infeasible
+OPTIMAL if the solver have found an optimal value
+UNBOUNDED if the solver can found an optimal value but the problem is feasible</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def solve(self, variables : list, objectif : dict, constraints : dict) -&gt; tuple:
+    &#39;&#39;&#39;
+    Method returning the result of a mixed linear problem.
+
+    Attributes
+    ----------
+    variables : variables used in constraints
+    objectif : objective function to minimize
+    constraints : list of mixed linear constraints 
+
+    Returns
+    -------
+    optimizationValues : OptimizationValues can be :
+        INFEASIBLE if the problem is infeasible
+        OPTIMAL if the solver have found an optimal value
+        UNBOUNDED if the solver can found an optimal value but the problem is feasible
+    &#39;&#39;&#39;
     raise NotImplementedError(&#34;Method solve is not implemented&#34;)</code></pre>
 </details>
 </dd>
