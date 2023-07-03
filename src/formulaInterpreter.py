@@ -68,19 +68,19 @@ class FormulaInterpreter:
                     if variable in constraint.variables:
                         constraintP.append(constraint.variables[variable])
                     else:
-                        constraintP.append(0)
+                        constraintP.append(Fraction(0))
                 constraints.append((constraintP, constraint.operator, constraint.bound))
             constraintP = []
             for var in variables: 
                 if(var == self._eVar) :
-                    constraintP.append(-1)
+                    constraintP.append(Fraction(-1))
                 else :
-                    constraintP.append(0)
-            constraints.append((constraintP, ConstraintOperator.LEQ, 0))
+                    constraintP.append(Fraction(0))
+            constraints.append((constraintP, ConstraintOperator.LEQ, Fraction(0)))
 
-            res = self.__MLOSolver.solve(variables, list(map(lambda v : -1 if v == self._eVar else 0, variables)), constraints)
+            res = self.__MLOSolver.solve(variables, list(map(lambda v : Fraction(-1) if v == self._eVar else Fraction(0), variables)), constraints)
             if res[0] == OptimizationValues.OPTIMAL :
-                if res[1][variables.index(self._eVar)] != 0:
+                if res[1][variables.index(self._eVar)] != Fraction(0):
                     return True
             if res[0] == OptimizationValues.UNBOUNDED:
                 return True
