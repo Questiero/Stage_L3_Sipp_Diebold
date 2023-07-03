@@ -1,3 +1,7 @@
+"""
+Class representing the equivalence operator.
+"""
+
 from __future__ import annotations
 
 from .binaryFormula import BinaryFormula
@@ -8,7 +12,7 @@ from .. import Formula
 
 class Equivalence(BinaryFormula):
     '''
-     Class representing the biconditional operator.
+     Class representing the equivalence operator.
 
     Attributes
     ----------
@@ -20,13 +24,13 @@ class Equivalence(BinaryFormula):
     
     def _eliminate(self) -> Formula:
         '''
-        Method returning the simplified form for the biconditional operator,
+        Method returning the simplified form for the equivalence operator,
         using only Not, And and Or.In this case, it's (a AND b) OR (NOT a AND NOT b).
 
         Returns
         -------
         formula: Formula
-            The simplified version of the biconditional operator. In this case,
+            The simplified version of the equivalence operator. In this case,
             it's (a AND b) OR (NOT a AND NOT b).
         '''
            

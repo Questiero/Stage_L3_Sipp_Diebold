@@ -1,3 +1,7 @@
+"""
+Reprensation of the Constraint operators
+"""
+
 from __future__ import annotations
 
 from ....constants import Constants

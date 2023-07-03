@@ -1,3 +1,7 @@
+"""
+Abstract class, representing a binary operator.
+"""
+
 from __future__ import annotations
 
 from ..formula import Formula

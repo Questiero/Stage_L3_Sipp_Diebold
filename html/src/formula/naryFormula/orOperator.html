@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
 <title>src.formula.naryFormula.orOperator API documentation</title>
-<meta name="description" content="" />
+<meta name="description" content="Class representing the Or operator as a relation with an arity equal or
+greater than 1 in PCMLC as a syntax tree." />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
 <link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
@@ -23,11 +24,18 @@
 <h1 class="title">Module <code>src.formula.naryFormula.orOperator</code></h1>
 </header>
 <section id="section-intro">
+<p>Class representing the Or operator as a relation with an arity equal or
+greater than 1 in PCMLC as a syntax tree.</p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from __future__ import annotations
+<pre><code class="python">&#34;&#34;&#34;
+Class representing the Or operator as a relation with an arity equal or
+greater than 1 in PCMLC as a syntax tree.
+&#34;&#34;&#34;
+
+from __future__ import annotations
 
 from .naryFormula import NaryFormula
 from ...constants import Constants
@@ -41,7 +49,7 @@ from ...variable import Variable
 class Or(NaryFormula):
     &#39;&#39;&#39;
     Class representing the Or operator as a relation with an arity equal or
-    greater than 2 in PCMLC as a syntax tree.
+    greater than 1 in PCMLC as a syntax tree.
 
     Parameters
     ----------
@@ -220,7 +228,7 @@ class Or(NaryFormula):
 </code></dt>
 <dd>
 <div class="desc"><p>Class representing the Or operator as a relation with an arity equal or
-greater than 2 in PCMLC as a syntax tree.</p>
+greater than 1 in PCMLC as a syntax tree.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>*formulas</code></strong> :&ensp;<code>Formula</code></dt>
@@ -238,7 +246,7 @@ greater than 2 in PCMLC as a syntax tree.</p>
 <pre><code class="python">class Or(NaryFormula):
     &#39;&#39;&#39;
     Class representing the Or operator as a relation with an arity equal or
-    greater than 2 in PCMLC as a syntax tree.
+    greater than 1 in PCMLC as a syntax tree.
 
     Parameters
     ----------

@@ -1,3 +1,7 @@
+"""
+Representation of a LinearConstraint in PCMLC.
+"""
+
 from __future__ import annotations
 
 from .constraint import Constraint

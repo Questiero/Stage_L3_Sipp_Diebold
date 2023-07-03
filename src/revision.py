@@ -1,3 +1,8 @@
+"""
+Main class of the module, allowing the user to make the knowledge revision between two `src.formula.formula.Formula`
+\(\psi\) and \(\mu\) that are mixed integer linear constraints.
+"""
+
 from __future__ import annotations
 
 from .formula import Formula, Or, And, UnaryFormula, NullaryFormula, LinearConstraint, Not, ConstraintOperator
@@ -26,6 +31,10 @@ class Revision:
         self.__projector = projector
 
     def execute(self, psi : Formula, mu : Formula) -> tuple[Fraction, Formula]:
+        """
+        Execute the revision of \(\psi\) by \(\mu\), two `src.formula.formula.Formula`.
+        """
+
         psiDNF, muDNF = psi.toLessOrEqConstraint().toDNF(), mu.toLessOrEqConstraint().toDNF()
         return self.__executeDNF(self.__convertExplicit(psiDNF), self.__convertExplicit(muDNF))
         

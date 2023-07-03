@@ -5,7 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
 <title>src.formula.naryFormula.naryFormula API documentation</title>
-<meta name="description" content="" />
+<meta name="description" content="Abstract class, representing an operator with an arity equal or greater
+than 1 in PCMLC as a syntax tree.
+The operator is asummed symmetric." />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
 <link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
@@ -23,11 +25,20 @@
 <h1 class="title">Module <code>src.formula.naryFormula.naryFormula</code></h1>
 </header>
 <section id="section-intro">
+<p>Abstract class, representing an operator with an arity equal or greater
+than 1 in PCMLC as a syntax tree.
+The operator is asummed symmetric.</p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from __future__ import annotations
+<pre><code class="python">&#34;&#34;&#34;
+Abstract class, representing an operator with an arity equal or greater
+than 1 in PCMLC as a syntax tree.
+The operator is asummed symmetric.
+&#34;&#34;&#34;
+
+from __future__ import annotations
 
 from .. import Formula
 from ..formulaManager import FormulaManager
@@ -38,7 +49,7 @@ from ...variable import Variable
 class NaryFormula(Formula):
     &#39;&#39;&#39;
     Abstract class, representing an operator with an arity equal or greater
-    than 2 in PCMLC as a syntax tree.
+    than 1 in PCMLC as a syntax tree.
     The operator is asummed symmetric.
 
     Parameters
@@ -92,7 +103,11 @@ class NaryFormula(Formula):
         for child in tempChildren:
             variables = variables | child.getVariables()
             
-        return variables</code></pre>
+        return variables
+    
+    def clone(self) -&gt; Formula:
+        clone = self.__class__(formulaSet = self.children)
+        return clone</code></pre>
 </details>
 </section>
 <section>
@@ -110,7 +125,7 @@ class NaryFormula(Formula):
 </code></dt>
 <dd>
 <div class="desc"><p>Abstract class, representing an operator with an arity equal or greater
-than 2 in PCMLC as a syntax tree.
+than 1 in PCMLC as a syntax tree.
 The operator is asummed symmetric.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
@@ -129,7 +144,7 @@ The operator is asummed symmetric.</p>
 <pre><code class="python">class NaryFormula(Formula):
     &#39;&#39;&#39;
     Abstract class, representing an operator with an arity equal or greater
-    than 2 in PCMLC as a syntax tree.
+    than 1 in PCMLC as a syntax tree.
     The operator is asummed symmetric.
 
     Parameters
@@ -183,7 +198,11 @@ The operator is asummed symmetric.</p>
         for child in tempChildren:
             variables = variables | child.getVariables()
             
-        return variables</code></pre>
+        return variables
+    
+    def clone(self) -&gt; Formula:
+        clone = self.__class__(formulaSet = self.children)
+        return clone</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -197,6 +216,20 @@ The operator is asummed symmetric.</p>
 </ul>
 <h3>Methods</h3>
 <dl>
+<dt id="src.formula.naryFormula.naryFormula.NaryFormula.clone"><code class="name flex">
+<span>def <span class="ident">clone</span></span>(<span>self) ‑> <a title="src.formula.formula.Formula" href="../formula.html#src.formula.formula.Formula">Formula</a></span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def clone(self) -&gt; Formula:
+    clone = self.__class__(formulaSet = self.children)
+    return clone</code></pre>
+</details>
+</dd>
 <dt id="src.formula.naryFormula.naryFormula.NaryFormula.getVariables"><code class="name flex">
 <span>def <span class="ident">getVariables</span></span>(<span>self) ‑> set[<a title="src.variable.variable.Variable" href="../../variable/variable.html#src.variable.variable.Variable">Variable</a>]</span>
 </code></dt>
@@ -263,6 +296,7 @@ the n-ary Formula's children.</p>
 <li>
 <h4><code><a title="src.formula.naryFormula.naryFormula.NaryFormula" href="#src.formula.naryFormula.naryFormula.NaryFormula">NaryFormula</a></code></h4>
 <ul class="">
+<li><code><a title="src.formula.naryFormula.naryFormula.NaryFormula.clone" href="#src.formula.naryFormula.naryFormula.NaryFormula.clone">clone</a></code></li>
 <li><code><a title="src.formula.naryFormula.naryFormula.NaryFormula.getVariables" href="#src.formula.naryFormula.naryFormula.NaryFormula.getVariables">getVariables</a></code></li>
 </ul>
 </li>

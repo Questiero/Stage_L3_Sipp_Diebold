@@ -1,3 +1,7 @@
+"""
+Utility class, allowing the user to get a visualisation of a `src.formula.formula.Formula`.
+"""
+
 from __future__ import annotations
 
 from . import Formula

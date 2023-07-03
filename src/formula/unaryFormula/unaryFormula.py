@@ -1,3 +1,7 @@
+"""
+Abstract class, representing a unary operator.
+"""
+
 from __future__ import annotations
 
 from .. import Formula

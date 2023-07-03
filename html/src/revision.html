@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
 <title>src.revision API documentation</title>
-<meta name="description" content="" />
+<meta name="description" content="Main class of the module, allowing the user to make the knowledge revision between two `src.formula.formula.Formula`
+\(\psi\) and \(\mu\) that are …" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
 <link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
@@ -23,11 +24,18 @@
 <h1 class="title">Module <code>src.revision</code></h1>
 </header>
 <section id="section-intro">
+<p>Main class of the module, allowing the user to make the knowledge revision between two <code><a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a></code>
+<span><span class="MathJax_Preview">\psi</span><script type="math/tex">\psi</script></span> and <span><span class="MathJax_Preview">\mu</span><script type="math/tex">\mu</script></span> that are mixed integer linear constraints.</p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from __future__ import annotations
+<pre><code class="python">&#34;&#34;&#34;
+Main class of the module, allowing the user to make the knowledge revision between two `src.formula.formula.Formula`
+\(\psi\) and \(\mu\) that are mixed integer linear constraints.
+&#34;&#34;&#34;
+
+from __future__ import annotations
 
 from .formula import Formula, Or, And, UnaryFormula, NullaryFormula, LinearConstraint, Not, ConstraintOperator
 from .formulaInterpreter import FormulaInterpreter
@@ -55,6 +63,10 @@ class Revision:
         self.__projector = projector
 
     def execute(self, psi : Formula, mu : Formula) -&gt; tuple[Fraction, Formula]:
+        &#34;&#34;&#34;
+        Execute the revision of \(\psi\) by \(\mu\), two `src.formula.formula.Formula`.
+        &#34;&#34;&#34;
+
         psiDNF, muDNF = psi.toLessOrEqConstraint().toDNF(), mu.toLessOrEqConstraint().toDNF()
         return self.__executeDNF(self.__convertExplicit(psiDNF), self.__convertExplicit(muDNF))
         
@@ -287,6 +299,10 @@ class Revision:
         self.__projector = projector
 
     def execute(self, psi : Formula, mu : Formula) -&gt; tuple[Fraction, Formula]:
+        &#34;&#34;&#34;
+        Execute the revision of \(\psi\) by \(\mu\), two `src.formula.formula.Formula`.
+        &#34;&#34;&#34;
+
         psiDNF, muDNF = psi.toLessOrEqConstraint().toDNF(), mu.toLessOrEqConstraint().toDNF()
         return self.__executeDNF(self.__convertExplicit(psiDNF), self.__convertExplicit(muDNF))
         
@@ -490,12 +506,16 @@ class Revision:
 <span>def <span class="ident">execute</span></span>(<span>self, psi: Formula, mu: Formula) ‑> tuple[fractions.Fraction, <a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a>]</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Execute the revision of <span><span class="MathJax_Preview">\psi</span><script type="math/tex">\psi</script></span> by <span><span class="MathJax_Preview">\mu</span><script type="math/tex">\mu</script></span>, two <code><a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a></code>.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def execute(self, psi : Formula, mu : Formula) -&gt; tuple[Fraction, Formula]:
+    &#34;&#34;&#34;
+    Execute the revision of \(\psi\) by \(\mu\), two `src.formula.formula.Formula`.
+    &#34;&#34;&#34;
+
     psiDNF, muDNF = psi.toLessOrEqConstraint().toDNF(), mu.toLessOrEqConstraint().toDNF()
     return self.__executeDNF(self.__convertExplicit(psiDNF), self.__convertExplicit(muDNF))</code></pre>
 </details>

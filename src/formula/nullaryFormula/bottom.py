@@ -1,3 +1,7 @@
+"""
+Class representing the Bottom constant.
+"""
+
 from __future__ import annotations
 
 from .nullaryFormula import NullaryFormula

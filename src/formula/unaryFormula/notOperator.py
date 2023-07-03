@@ -1,3 +1,7 @@
+"""
+Class representing the Not operator.
+"""
+
 from __future__ import annotations
 
 from .unaryFormula import UnaryFormula

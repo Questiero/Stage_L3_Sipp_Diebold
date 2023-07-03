@@ -1,3 +1,9 @@
+"""
+Abstract class, representing an operator with an arity equal or greater
+than 1 in PCMLC as a syntax tree.
+The operator is asummed symmetric.
+"""
+
 from __future__ import annotations
 
 from .. import Formula
@@ -9,7 +15,7 @@ from ...variable import Variable
 class NaryFormula(Formula):
     '''
     Abstract class, representing an operator with an arity equal or greater
-    than 2 in PCMLC as a syntax tree.
+    than 1 in PCMLC as a syntax tree.
     The operator is asummed symmetric.
 
     Parameters

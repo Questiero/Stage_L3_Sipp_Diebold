@@ -1,3 +1,8 @@
+"""
+Abstract class, representing a Node with an arity of 0, i.e. without 
+any children.
+"""
+
 from __future__ import annotations
 
 from .. import Formula

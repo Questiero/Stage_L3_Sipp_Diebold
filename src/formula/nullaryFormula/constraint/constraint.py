@@ -1,3 +1,7 @@
+"""
+Abstract Constraint class, representing a Constraint in PCMLC.
+"""
+
 from __future__ import annotations
 
 from ..nullaryFormula import NullaryFormula

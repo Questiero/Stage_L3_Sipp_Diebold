@@ -1,3 +1,7 @@
+"""
+Abstract Formula class, representing a Formula in PCMLC as a syntax tree.
+"""
+
 from __future__ import annotations
 
 from abc import ABC, abstractmethod

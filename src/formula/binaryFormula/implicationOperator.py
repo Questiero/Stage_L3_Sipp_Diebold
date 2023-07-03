@@ -1,3 +1,7 @@
+"""
+Class representing the implication operator.
+"""
+
 from __future__ import annotations
 
 from .binaryFormula import BinaryFormula

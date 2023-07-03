@@ -1,3 +1,7 @@
+"""
+Class representing the XOR operator.
+"""
+
 from __future__ import annotations
 
 from .binaryFormula import BinaryFormula

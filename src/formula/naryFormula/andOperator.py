@@ -1,3 +1,8 @@
+"""
+Class representing the And operator as a relation with an arity equal or
+greater than 1 in PCMLC as a syntax tree.
+"""
+
 from __future__ import annotations
 
 from .naryFormula import NaryFormula
@@ -12,7 +17,7 @@ from ...variable import Variable
 class And(NaryFormula):
     '''
     Class representing the And operator as a relation with an arity equal or
-    greater than 2 in PCMLC as a syntax tree.
+    greater than 1 in PCMLC as a syntax tree.
 
     Parameters
     ----------
