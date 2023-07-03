@@ -1,3 +1,7 @@
+"""
+Class allowing `src.revision.Revision` to interact with a `src.mlo_solver.MLOSolver.MLOSolver`.
+"""
+
 from __future__ import annotations
 
 from .formula import Formula, Or, Not, LinearConstraint, ConstraintOperator, And
