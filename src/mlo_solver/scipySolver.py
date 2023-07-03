@@ -39,7 +39,7 @@ class ScipySolver(MLOSolver) :
                 limitUp.append(constraint[2])
 
         lc = LinearConstraint(tab, limitInf, limitUp)
-        result = milp(c=objectif, integrality=integers, constraints=lc, bounds=Bounds(boundsLower, boundsUpper))
+        result = milp(c=objectif, integrality=integers, constraints=lc, bounds=Bounds(boundsLower, boundsUpper), options={"presolve":False})
         res : tuple
         if result.status == 0:
             res = (OptimizationValues.OPTIMAL, list(result.x), result.fun)
