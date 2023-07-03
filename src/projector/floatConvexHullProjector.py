@@ -45,8 +45,10 @@ class FloatConvexHullProjector (Projector):
         # Second step: Get all variables
         allVariables = list(phi.getVariables())
         allVariables.sort(key = lambda v: v.name[::-1])
+        #print(allVariables)
         variables = list(variables)
         variables.sort(key = lambda v: v.name[::-1])
+        #print(variables)
 
         # Third step: Get all hyperplanes
         hyperplanes = list()
@@ -269,11 +271,7 @@ class FloatConvexHullProjector (Projector):
                         normal = normal * np.linalg.norm(normal, 1)
                         normal = [round(Fraction(n), self.__rounding) for n in normal]
                         
-                        fractionPoints = list()
                         #print(points)
-
-                        for p in points:
-                            pass
 
                         # Build constraint
                         lc = LinearConstraint("")
@@ -321,7 +319,6 @@ class FloatConvexHullProjector (Projector):
                     print("Euuuuh")           
 
             return And(formulaSet = constraintSet)
-        
 
     def __createConstraintSegment(self, x, y, variables):
         

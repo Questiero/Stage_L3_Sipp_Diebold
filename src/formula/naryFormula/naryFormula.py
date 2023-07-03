@@ -64,3 +64,7 @@ class NaryFormula(Formula):
             variables = variables | child.getVariables()
             
         return variables
+    
+    def clone(self) -> Formula:
+        clone = self.__class__(formulaSet = self.children)
+        return clone
