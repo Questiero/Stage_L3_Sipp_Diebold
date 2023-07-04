@@ -15,6 +15,7 @@ class Caron(Simplificator):
     """
     Implementation of the Caron algorithm for simplification of conjunction of literals (i.e `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint` or
     `src.formula.unaryFormula.notOperator.Not`).
+    Caron’s algorithm deals with the removal of redundant mixed linear constraints.
 
     Parameters
     ----------

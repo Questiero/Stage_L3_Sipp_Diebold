@@ -1,5 +1,5 @@
 """
-Implementation of the Daalmans algorithm for simplification of conjunction of literals (i.e `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint` or
+Implementation of the Daalmans method for simplification of conjunction of literals (i.e `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint` or
     `src.formula.unaryFormula.notOperator.Not`).
 """
 
@@ -14,8 +14,11 @@ from fractions import Fraction
 
 class Daalmans(Simplificator):
     """
-    Implementation of the Daalmans algorithm for simplification of conjunction of literals (i.e `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint` or
+    Implementation of the Daalmans method for simplification of conjunction of literals (i.e `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint` or
     `src.formula.unaryFormula.notOperator.Not`).
+    This method is split in two algorithm :
+    - The first algorithm is concerned with detecting fixed variables. Fixed variables are variables that can only have one value.
+    - The second algorithm deals with the removal of redundant mixed linear constraints.
 
     Parameters
     ----------
