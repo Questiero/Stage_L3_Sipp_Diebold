@@ -6,7 +6,7 @@
 <meta name="generator" content="pdoc 0.10.0" />
 <title>src.projector.floatConvexHullProjector API documentation</title>
 <meta name="description" content="Projector of a `src.formula.formula.Formula` to a sub-set of its variables, using floating numbers and SciPy&#39;s
-`ConvxHull`." />
+`ConvexHull`." />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
 <link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
@@ -25,14 +25,14 @@
 </header>
 <section id="section-intro">
 <p>Projector of a <code><a title="src.formula.formula.Formula" href="../formula/formula.html#src.formula.formula.Formula">Formula</a></code> to a sub-set of its variables, using floating numbers and SciPy's
-<code>ConvxHull</code>.</p>
+<code>ConvexHull</code>.</p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">&#34;&#34;&#34;
 Projector of a `src.formula.formula.Formula` to a sub-set of its variables, using floating numbers and SciPy&#39;s
-`ConvxHull`.
+`ConvexHull`.
 &#34;&#34;&#34;
 
 from __future__ import annotations
@@ -51,18 +51,46 @@ from fractions import Fraction
 np.set_printoptions(threshold=np.inf)
 
 class FloatConvexHullProjector (Projector):
+    r&#34;&#34;&#34;
+    Projector of a `src.formula.formula.Formula` to a sub-set of its variables, using floating numbers and SciPy&#39;s
+    `ConvexHull`.
+
+    Parameters
+    ----------
+    rounding: int, optional
+        The rounding you wish to have to eliminte floating point integers approximation errors. By default, is set to 12.
+    simplifiers : list of src.simplificator.simplificator.Simplificator, optional
+        List of all of the `src.simplificator.simplificator.Simplificator` that will be applied to the `src.formula.formula.Formula`, 
+        in order given by the list.
+    &#34;&#34;&#34;
 
     __rounding: int
-    __simplifier: Simplificator
+    __simplifier: list[Simplificator]
 
     &#34;&#34;&#34;
     By default, used simplifier is a single Caron using lp_solve
     &#34;&#34;&#34;
-    def __init__(self, rounding: int = 12, simplification: list[Simplificator] = [Caron(LPSolver())]):
+    def __init__(self, rounding: int = 12, simplifiers: list[Simplificator] = [Caron(LPSolver())]):
         self.__rounding = rounding
-        self.__simplifier = simplification
+        self.__simplifier = simplifiers
 
     def projectOn(self, phi: And, variables: set[Variable]):
+        r&#34;&#34;&#34;
+        Main method of `src.projector.floatConvexHullProjector.FloatConvexHullProjector`, allowing to project a given
+        `src.formula.formula.Formula` to a subset of its `src.variable.variable.Variable`.
+
+        Parameters
+        ----------
+        phi: src.formula.formula.Formula
+            The src.formula.formula.Formula to project.
+        variables: set of src.variable.variable.Variable
+            The subset of `src.variable.variable.Variable` to project on.
+        
+        Returns
+        -------
+        src.formula.formula.Formula
+            The projection of \(\varphi\) on the specified subset of its variables.
+        &#34;&#34;&#34;
 
         constraintSet = set()
 
@@ -404,28 +432,64 @@ class FloatConvexHullProjector (Projector):
 <dl>
 <dt id="src.projector.floatConvexHullProjector.FloatConvexHullProjector"><code class="flex name class">
 <span>class <span class="ident">FloatConvexHullProjector</span></span>
-<span>(</span><span>rounding: int = 12, simplification: list[Simplificator] = [&lt;src.simplificator.caron.Caron object&gt;])</span>
+<span>(</span><span>rounding: int = 12, simplifiers: list[Simplificator] = [&lt;src.simplificator.caron.Caron object&gt;])</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Helper class that provides a standard way to create an ABC using
-inheritance.</p></div>
+<div class="desc"><p>Projector of a <code><a title="src.formula.formula.Formula" href="../formula/formula.html#src.formula.formula.Formula">Formula</a></code> to a sub-set of its variables, using floating numbers and SciPy's
+<code>ConvexHull</code>.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>rounding</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>The rounding you wish to have to eliminte floating point integers approximation errors. By default, is set to 12.</dd>
+<dt><strong><code>simplifiers</code></strong> :&ensp;<code>list</code> of <code><a title="src.simplificator.simplificator.Simplificator" href="../simplificator/simplificator.html#src.simplificator.simplificator.Simplificator">Simplificator</a></code>, optional</dt>
+<dd>List of all of the <code><a title="src.simplificator.simplificator.Simplificator" href="../simplificator/simplificator.html#src.simplificator.simplificator.Simplificator">Simplificator</a></code> that will be applied to the <code><a title="src.formula.formula.Formula" href="../formula/formula.html#src.formula.formula.Formula">Formula</a></code>,
+in order given by the list.</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class FloatConvexHullProjector (Projector):
+    r&#34;&#34;&#34;
+    Projector of a `src.formula.formula.Formula` to a sub-set of its variables, using floating numbers and SciPy&#39;s
+    `ConvexHull`.
+
+    Parameters
+    ----------
+    rounding: int, optional
+        The rounding you wish to have to eliminte floating point integers approximation errors. By default, is set to 12.
+    simplifiers : list of src.simplificator.simplificator.Simplificator, optional
+        List of all of the `src.simplificator.simplificator.Simplificator` that will be applied to the `src.formula.formula.Formula`, 
+        in order given by the list.
+    &#34;&#34;&#34;
 
     __rounding: int
-    __simplifier: Simplificator
+    __simplifier: list[Simplificator]
 
     &#34;&#34;&#34;
     By default, used simplifier is a single Caron using lp_solve
     &#34;&#34;&#34;
-    def __init__(self, rounding: int = 12, simplification: list[Simplificator] = [Caron(LPSolver())]):
+    def __init__(self, rounding: int = 12, simplifiers: list[Simplificator] = [Caron(LPSolver())]):
         self.__rounding = rounding
-        self.__simplifier = simplification
+        self.__simplifier = simplifiers
 
     def projectOn(self, phi: And, variables: set[Variable]):
+        r&#34;&#34;&#34;
+        Main method of `src.projector.floatConvexHullProjector.FloatConvexHullProjector`, allowing to project a given
+        `src.formula.formula.Formula` to a subset of its `src.variable.variable.Variable`.
+
+        Parameters
+        ----------
+        phi: src.formula.formula.Formula
+            The src.formula.formula.Formula to project.
+        variables: set of src.variable.variable.Variable
+            The subset of `src.variable.variable.Variable` to project on.
+        
+        Returns
+        -------
+        src.formula.formula.Formula
+            The projection of \(\varphi\) on the specified subset of its variables.
+        &#34;&#34;&#34;
 
         constraintSet = set()
 
@@ -766,12 +830,41 @@ inheritance.</p></div>
 <span>def <span class="ident">projectOn</span></span>(<span>self, phi: And, variables: set[Variable])</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Main method of <code><a title="src.projector.floatConvexHullProjector.FloatConvexHullProjector" href="#src.projector.floatConvexHullProjector.FloatConvexHullProjector">FloatConvexHullProjector</a></code>, allowing to project a given
+<code><a title="src.formula.formula.Formula" href="../formula/formula.html#src.formula.formula.Formula">Formula</a></code> to a subset of its <code><a title="src.variable.variable.Variable" href="../variable/variable.html#src.variable.variable.Variable">Variable</a></code>.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>phi</code></strong> :&ensp;<code><a title="src.formula.formula.Formula" href="../formula/formula.html#src.formula.formula.Formula">Formula</a></code></dt>
+<dd>The src.formula.formula.Formula to project.</dd>
+<dt><strong><code>variables</code></strong> :&ensp;<code>set</code> of <code><a title="src.variable.variable.Variable" href="../variable/variable.html#src.variable.variable.Variable">Variable</a></code></dt>
+<dd>The subset of <code><a title="src.variable.variable.Variable" href="../variable/variable.html#src.variable.variable.Variable">Variable</a></code> to project on.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code><a title="src.formula.formula.Formula" href="../formula/formula.html#src.formula.formula.Formula">Formula</a></code></dt>
+<dd>The projection of <span><span class="MathJax_Preview">\varphi</span><script type="math/tex">\varphi</script></span> on the specified subset of its variables.</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">    def projectOn(self, phi: And, variables: set[Variable]):
+        r&#34;&#34;&#34;
+        Main method of `src.projector.floatConvexHullProjector.FloatConvexHullProjector`, allowing to project a given
+        `src.formula.formula.Formula` to a subset of its `src.variable.variable.Variable`.
+
+        Parameters
+        ----------
+        phi: src.formula.formula.Formula
+            The src.formula.formula.Formula to project.
+        variables: set of src.variable.variable.Variable
+            The subset of `src.variable.variable.Variable` to project on.
+        
+        Returns
+        -------
+        src.formula.formula.Formula
+            The projection of \(\varphi\) on the specified subset of its variables.
+        &#34;&#34;&#34;
 
         constraintSet = set()
 

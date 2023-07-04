@@ -46,7 +46,6 @@ class Daalmans(Simplificator):
             The simplified form of \(\varphi\)
         """
 
-
         if not self._interpreter.sat(phi): return phi
         if isinstance(phi, NullaryFormula): phi = And(phi)
         phiPrime = self.__fixedVariables(phi)

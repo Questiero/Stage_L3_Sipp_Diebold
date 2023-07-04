@@ -1,6 +1,6 @@
 """
 Projector of a `src.formula.formula.Formula` to a sub-set of its variables, using floating numbers and SciPy's
-`ConvxHull`.
+`ConvexHull`.
 """
 
 from __future__ import annotations
@@ -19,18 +19,46 @@ from fractions import Fraction
 np.set_printoptions(threshold=np.inf)
 
 class FloatConvexHullProjector (Projector):
+    r"""
+    Projector of a `src.formula.formula.Formula` to a sub-set of its variables, using floating numbers and SciPy's
+    `ConvexHull`.
+
+    Parameters
+    ----------
+    rounding: int, optional
+        The rounding you wish to have to eliminte floating point integers approximation errors. By default, is set to 12.
+    simplifiers : list of src.simplificator.simplificator.Simplificator, optional
+        List of all of the `src.simplificator.simplificator.Simplificator` that will be applied to the `src.formula.formula.Formula`, 
+        in order given by the list.
+    """
 
     __rounding: int
-    __simplifier: Simplificator
+    __simplifier: list[Simplificator]
 
     """
     By default, used simplifier is a single Caron using lp_solve
     """
-    def __init__(self, rounding: int = 12, simplification: list[Simplificator] = [Caron(LPSolver())]):
+    def __init__(self, rounding: int = 12, simplifiers: list[Simplificator] = [Caron(LPSolver())]):
         self.__rounding = rounding
-        self.__simplifier = simplification
+        self.__simplifier = simplifiers
 
     def projectOn(self, phi: And, variables: set[Variable]):
+        r"""
+        Main method of `src.projector.floatConvexHullProjector.FloatConvexHullProjector`, allowing to project a given
+        `src.formula.formula.Formula` to a subset of its `src.variable.variable.Variable`.
+
+        Parameters
+        ----------
+        phi: src.formula.formula.Formula
+            The src.formula.formula.Formula to project.
+        variables: set of src.variable.variable.Variable
+            The subset of `src.variable.variable.Variable` to project on.
+        
+        Returns
+        -------
+        src.formula.formula.Formula
+            The projection of \(\varphi\) on the specified subset of its variables.
+        """
 
         constraintSet = set()
 
