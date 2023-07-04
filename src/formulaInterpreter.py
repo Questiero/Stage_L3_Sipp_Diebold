@@ -50,7 +50,7 @@ class FormulaInterpreter:
 
         Returns
         -------
-        res : `src.formula.formula.Formula`
+        `src.formula.formula.Formula`
             The simplified `src.formula.formula.Formula`.
         """
 
@@ -77,7 +77,7 @@ class FormulaInterpreter:
 
         Returns
         -------
-        res : boolean
+        boolean
             Booean symbolizing if \(\varphi\) is feasable (`True`) or not (`False`).
         
         """
@@ -135,10 +135,10 @@ class FormulaInterpreter:
 
         Returns
         -------
-        distance : Fraction
+        Fraction
             Minimal distance (calculated with the `src.distance.distance_function.distanceFunction.DistanceFunction`
             given at the initialization of the class) that satisfies the optimization problem above. 
-        y : `src.formula.formula.Formula`
+        `src.formula.formula.Formula`
             `src.formula.formula.Formula` representing a point \(y \in \mathcal{M}(\mu)\) that satisfies the optimization problem above. 
         """
 
@@ -169,6 +169,7 @@ class FormulaInterpreter:
     def __buildConstraints(self, variables : list[Variable], psi : And, mu : And) -> dict[tuple[dict[Fraction], ConstraintOperator, Fraction]]:
         '''
         Method used to build table of constraints, for the solver, linked to phi and mu
+        
         Attributes
         ----------
         variables : list of variables
@@ -239,10 +240,10 @@ class FormulaInterpreter:
 
         Returns
         -------
-        distance : Fraction
+        Fraction
             Minimal distance (calculated with the `src.distance.distance_function.distanceFunction.DistanceFunction`
             given at the initialization of the class) that satisfies the optimization problem above. 
-        y : `src.formula.formula.Formula`
+        `src.formula.formula.Formula`
             `src.formula.formula.Formula` representing a point \(y \in \mathcal{M}(\mu)\) that satisfies the optimization problem above. 
         """
 
@@ -268,7 +269,7 @@ class FormulaInterpreter:
 
         Returns
         -------
-        phiPrime : `src.formula.naryFormula.andOperator.And`
+        `src.formula.naryFormula.andOperator.And`
             Conjunctions of `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint` transformed from \(\phi\),
             as specified above.
 

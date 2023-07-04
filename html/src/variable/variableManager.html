@@ -30,7 +30,7 @@ and allow easy retrieving of already defined ones.</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">&#34;&#34;&#34;
+<pre><code class="python">r&#34;&#34;&#34;
 Class used to store all non-anonymous user-declared `src.variable.variable.Variable`
 and allow easy retrieving of already defined ones.
 &#34;&#34;&#34;
@@ -42,55 +42,67 @@ from .variable import Variable
 import re
 
 class VariableManager:
-    &#39;&#39;&#39;
-    VariableManager class, used to manage all instances of Variable.
+    r&#34;&#34;&#34;
+    VariableManager class, used to manage all instances of `src.variable.variable.Variable`.
     
     Attributes
     ----------
-    dict(String, Variable): instance
-        A dictionnary of all instances of Variables
+    instance: dictionary of Variable by String
+        A dictionary of all instances of `src.variable.variable.Variable`, with their name as key.
 
-    &#39;&#39;&#39;
+    &#34;&#34;&#34;
     
     instance = {}
-    pattern = re.compile(&#34;^[a-zA-Z]([a-zA-Z0-9_])*$&#34;)
+    __namePatern = &#34;^[a-zA-Z]([a-zA-Z0-9_])*$&#34;
 
     @staticmethod
-    def verify(name : str, cls):
-        &#39;&#39;&#39;
-        Static method to verify if a Variable can be add to the VariableManager.
+    def verify(name: str, cls: type[Variable]) -&gt; None:
+        r&#34;&#34;&#34;
+        Function verifying if a `src.variable.variable.Variable` can be added to `src.variable.variableManager.VariableManager.instance`,
+        meaning that the name respects the naming conventions and that it doesn&#39;t already exists under another type.
     
-        Attributes
+        Parameters
         ----------
         name: String
-            name of the variable
+            Name of the `src.variable.variable.Variable`.
 
         cl: class
-            Class of the variable
+            Type of the `src.variable.variable.Variable`.
         
         Raises
         ------
         TypeError
-            If the Variable is not a Variable, already defined with another Type or the name of the variable is not valid according to a pattern.
-        &#39;&#39;&#39;
-        if not __class__.pattern.match(name) : raise NameError(f&#34;{name} is not a valide name for a variable&#34;)
-        if name in __class__.instance and cls !=  __class__.instance[name].__class__: raise TypeError(f&#34;{name} is already define with another type.&#34;)
+            If the object is already defined with another type or its name is not valid.
+        &#34;&#34;&#34;
+
+        if not re.match(VariableManager.__namePatern, name):
+            raise NameError(f&#34;{name} is not a valide name for a variable&#34;)
+        if name in __class__.instance and cls !=  __class__.instance[name].__class__:
+            raise TypeError(f&#34;{name} is already define with another type.&#34;)
 
     @staticmethod
-    def add(obj: Variable):
-        &#39;&#39;&#39;
-        Static method to add a Variable to the VariableManager.
+    def add(obj: Variable) -&gt; Variable:
+        r&#34;&#34;&#34;
+        Function adding a `src.variable.variable.Variable` to `src.variable.variableManager.VariableManager.instance`.
     
-        Attributes
+        Parameters
         ----------
-        obj: Variable
-            The Variable to add
+        obj: `src.variable.variable.Variable`
+            The `src.variable.variable.Variable` to add.
         
+            
+        Returns
+        -------
+        `src.variable.variable.Variable`
+            The `src.variable.variable.Variable` added if the execution of this function was successful.
+
         Raises
         ------
         TypeError
-            If the Variable is not a Variable, or already defined with another Type.
-        &#39;&#39;&#39;
+            If the object isn&#39;t a `src.variable.variable.Variable`, already defined with another type or its name is not valid.
+
+        &#34;&#34;&#34;
+
         VariableManager.verify(obj.name, obj.__class__)
         if(isinstance(obj, Variable)):
             __class__.instance[obj.name] = obj
@@ -100,44 +112,49 @@ class VariableManager:
     
     @classmethod
     def get(cls, name : str) -&gt; Variable:
-        &#39;&#39;&#39;
-        Static method to get a Variable to the VariableManager.
+        r&#34;&#34;&#34;
+        Function to get a `src.variable.variable.Variable` from the `src.variable.variableManager.VariableManager.instance`.
     
-        Attributes
+        Parameters
         ----------
-        obj: Variable
-            The Variable to add
+        name: String
+            The name of the `src.variable.variable.Variable` to get.
         
+        Returns
+        -------
+        `src.variable.variable.Variable`
+            The `src.variable.variable.Variable` to get.
+
         Raises
         ------
         NameError
             The Variable isn&#39;t defined.
-            
-        Returns
-        -------
-        Variable: variable
-            The defined 
-
-        &#39;&#39;&#39;
+        &#34;&#34;&#34;
         
         if(name in cls.instance):
             return cls.instance[name]
         else: raise NameError(f&#34;{name} is not declared.&#34;)
     
     @staticmethod
-    def declare(classe, name : str):
-        &#39;&#39;&#39;
-        Static method to declare a Variable to the VariableManager.
+    def declare(name: str, cls: type[Variable]) -&gt; Variable:
+        r&#34;&#34;&#34;
+        Function to declare a `src.variable.variable.Variable`.
     
-        Attributes
+        Parameters
         ----------
-        classe: Class
-            The class of the Variable to declare
         name: String
-            The Variable name
-        &#39;&#39;&#39;
+            Name of the `src.variable.variable.Variable`.
+
+        cl: class
+            Type of the `src.variable.variable.Variable`.
+
+        Returns:
+        Variable
+            The newly defined `src.variable.variable.Variable`.
+        &#34;&#34;&#34;
         
-        obj = classe.__new__(name)</code></pre>
+        obj = cls.__new__(name)
+        return obj</code></pre>
 </details>
 </section>
 <section>
@@ -153,64 +170,78 @@ class VariableManager:
 <span>class <span class="ident">VariableManager</span></span>
 </code></dt>
 <dd>
-<div class="desc"><p>VariableManager class, used to manage all instances of Variable.</p>
+<div class="desc"><p>VariableManager class, used to manage all instances of <code><a title="src.variable.variable.Variable" href="variable.html#src.variable.variable.Variable">Variable</a></code>.</p>
 <h2 id="attributes">Attributes</h2>
-<p>dict(String, Variable): instance
-A dictionnary of all instances of Variables</p></div>
+<dl>
+<dt><strong><code>instance</code></strong> :&ensp;<code>dictionary</code> of <code>Variable by String</code></dt>
+<dd>A dictionary of all instances of <code><a title="src.variable.variable.Variable" href="variable.html#src.variable.variable.Variable">Variable</a></code>, with their name as key.</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class VariableManager:
-    &#39;&#39;&#39;
-    VariableManager class, used to manage all instances of Variable.
+    r&#34;&#34;&#34;
+    VariableManager class, used to manage all instances of `src.variable.variable.Variable`.
     
     Attributes
     ----------
-    dict(String, Variable): instance
-        A dictionnary of all instances of Variables
+    instance: dictionary of Variable by String
+        A dictionary of all instances of `src.variable.variable.Variable`, with their name as key.
 
-    &#39;&#39;&#39;
+    &#34;&#34;&#34;
     
     instance = {}
-    pattern = re.compile(&#34;^[a-zA-Z]([a-zA-Z0-9_])*$&#34;)
+    __namePatern = &#34;^[a-zA-Z]([a-zA-Z0-9_])*$&#34;
 
     @staticmethod
-    def verify(name : str, cls):
-        &#39;&#39;&#39;
-        Static method to verify if a Variable can be add to the VariableManager.
+    def verify(name: str, cls: type[Variable]) -&gt; None:
+        r&#34;&#34;&#34;
+        Function verifying if a `src.variable.variable.Variable` can be added to `src.variable.variableManager.VariableManager.instance`,
+        meaning that the name respects the naming conventions and that it doesn&#39;t already exists under another type.
     
-        Attributes
+        Parameters
         ----------
         name: String
-            name of the variable
+            Name of the `src.variable.variable.Variable`.
 
         cl: class
-            Class of the variable
+            Type of the `src.variable.variable.Variable`.
         
         Raises
         ------
         TypeError
-            If the Variable is not a Variable, already defined with another Type or the name of the variable is not valid according to a pattern.
-        &#39;&#39;&#39;
-        if not __class__.pattern.match(name) : raise NameError(f&#34;{name} is not a valide name for a variable&#34;)
-        if name in __class__.instance and cls !=  __class__.instance[name].__class__: raise TypeError(f&#34;{name} is already define with another type.&#34;)
+            If the object is already defined with another type or its name is not valid.
+        &#34;&#34;&#34;
+
+        if not re.match(VariableManager.__namePatern, name):
+            raise NameError(f&#34;{name} is not a valide name for a variable&#34;)
+        if name in __class__.instance and cls !=  __class__.instance[name].__class__:
+            raise TypeError(f&#34;{name} is already define with another type.&#34;)
 
     @staticmethod
-    def add(obj: Variable):
-        &#39;&#39;&#39;
-        Static method to add a Variable to the VariableManager.
+    def add(obj: Variable) -&gt; Variable:
+        r&#34;&#34;&#34;
+        Function adding a `src.variable.variable.Variable` to `src.variable.variableManager.VariableManager.instance`.
     
-        Attributes
+        Parameters
         ----------
-        obj: Variable
-            The Variable to add
+        obj: `src.variable.variable.Variable`
+            The `src.variable.variable.Variable` to add.
         
+            
+        Returns
+        -------
+        `src.variable.variable.Variable`
+            The `src.variable.variable.Variable` added if the execution of this function was successful.
+
         Raises
         ------
         TypeError
-            If the Variable is not a Variable, or already defined with another Type.
-        &#39;&#39;&#39;
+            If the object isn&#39;t a `src.variable.variable.Variable`, already defined with another type or its name is not valid.
+
+        &#34;&#34;&#34;
+
         VariableManager.verify(obj.name, obj.__class__)
         if(isinstance(obj, Variable)):
             __class__.instance[obj.name] = obj
@@ -220,44 +251,49 @@ A dictionnary of all instances of Variables</p></div>
     
     @classmethod
     def get(cls, name : str) -&gt; Variable:
-        &#39;&#39;&#39;
-        Static method to get a Variable to the VariableManager.
+        r&#34;&#34;&#34;
+        Function to get a `src.variable.variable.Variable` from the `src.variable.variableManager.VariableManager.instance`.
     
-        Attributes
+        Parameters
         ----------
-        obj: Variable
-            The Variable to add
+        name: String
+            The name of the `src.variable.variable.Variable` to get.
         
+        Returns
+        -------
+        `src.variable.variable.Variable`
+            The `src.variable.variable.Variable` to get.
+
         Raises
         ------
         NameError
             The Variable isn&#39;t defined.
-            
-        Returns
-        -------
-        Variable: variable
-            The defined 
-
-        &#39;&#39;&#39;
+        &#34;&#34;&#34;
         
         if(name in cls.instance):
             return cls.instance[name]
         else: raise NameError(f&#34;{name} is not declared.&#34;)
     
     @staticmethod
-    def declare(classe, name : str):
-        &#39;&#39;&#39;
-        Static method to declare a Variable to the VariableManager.
+    def declare(name: str, cls: type[Variable]) -&gt; Variable:
+        r&#34;&#34;&#34;
+        Function to declare a `src.variable.variable.Variable`.
     
-        Attributes
+        Parameters
         ----------
-        classe: Class
-            The class of the Variable to declare
         name: String
-            The Variable name
-        &#39;&#39;&#39;
+            Name of the `src.variable.variable.Variable`.
+
+        cl: class
+            Type of the `src.variable.variable.Variable`.
+
+        Returns:
+        Variable
+            The newly defined `src.variable.variable.Variable`.
+        &#34;&#34;&#34;
         
-        obj = classe.__new__(name)</code></pre>
+        obj = cls.__new__(name)
+        return obj</code></pre>
 </details>
 <h3>Class variables</h3>
 <dl>
@@ -265,47 +301,54 @@ A dictionnary of all instances of Variables</p></div>
 <dd>
 <div class="desc"></div>
 </dd>
-<dt id="src.variable.variableManager.VariableManager.pattern"><code class="name">var <span class="ident">pattern</span></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
 </dl>
 <h3>Static methods</h3>
 <dl>
 <dt id="src.variable.variableManager.VariableManager.add"><code class="name flex">
-<span>def <span class="ident">add</span></span>(<span>obj: Variable)</span>
+<span>def <span class="ident">add</span></span>(<span>obj: Variable) ‑> <a title="src.variable.variable.Variable" href="variable.html#src.variable.variable.Variable">Variable</a></span>
 </code></dt>
 <dd>
-<div class="desc"><p>Static method to add a Variable to the VariableManager.</p>
-<h2 id="attributes">Attributes</h2>
+<div class="desc"><p>Function adding a <code><a title="src.variable.variable.Variable" href="variable.html#src.variable.variable.Variable">Variable</a></code> to <code><a title="src.variable.variableManager.VariableManager.instance" href="#src.variable.variableManager.VariableManager.instance">VariableManager.instance</a></code>.</p>
+<h2 id="parameters">Parameters</h2>
 <dl>
-<dt><strong><code>obj</code></strong> :&ensp;<code>Variable</code></dt>
-<dd>The Variable to add</dd>
+<dt><strong><code>obj</code></strong> :&ensp;<code><a title="src.variable.variable.Variable" href="variable.html#src.variable.variable.Variable">Variable</a></code></dt>
+<dd>The <code><a title="src.variable.variable.Variable" href="variable.html#src.variable.variable.Variable">Variable</a></code> to add.</dd>
 </dl>
+<h2 id="returns">Returns</h2>
+<p><code><a title="src.variable.variable.Variable" href="variable.html#src.variable.variable.Variable">Variable</a></code>
+The <code><a title="src.variable.variable.Variable" href="variable.html#src.variable.variable.Variable">Variable</a></code> added if the execution of this function was successful.</p>
 <h2 id="raises">Raises</h2>
 <dl>
 <dt><code>TypeError</code></dt>
-<dd>If the Variable is not a Variable, or already defined with another Type.</dd>
+<dd>If the object isn't a <code><a title="src.variable.variable.Variable" href="variable.html#src.variable.variable.Variable">Variable</a></code>, already defined with another type or its name is not valid.</dd>
 </dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@staticmethod
-def add(obj: Variable):
-    &#39;&#39;&#39;
-    Static method to add a Variable to the VariableManager.
+def add(obj: Variable) -&gt; Variable:
+    r&#34;&#34;&#34;
+    Function adding a `src.variable.variable.Variable` to `src.variable.variableManager.VariableManager.instance`.
 
-    Attributes
+    Parameters
     ----------
-    obj: Variable
-        The Variable to add
+    obj: `src.variable.variable.Variable`
+        The `src.variable.variable.Variable` to add.
     
+        
+    Returns
+    -------
+    `src.variable.variable.Variable`
+        The `src.variable.variable.Variable` added if the execution of this function was successful.
+
     Raises
     ------
     TypeError
-        If the Variable is not a Variable, or already defined with another Type.
-    &#39;&#39;&#39;
+        If the object isn&#39;t a `src.variable.variable.Variable`, already defined with another type or its name is not valid.
+
+    &#34;&#34;&#34;
+
     VariableManager.verify(obj.name, obj.__class__)
     if(isinstance(obj, Variable)):
         __class__.instance[obj.name] = obj
@@ -315,56 +358,63 @@ def add(obj: Variable):
 </details>
 </dd>
 <dt id="src.variable.variableManager.VariableManager.declare"><code class="name flex">
-<span>def <span class="ident">declare</span></span>(<span>classe, name: str)</span>
+<span>def <span class="ident">declare</span></span>(<span>name: str, cls: type[Variable]) ‑> <a title="src.variable.variable.Variable" href="variable.html#src.variable.variable.Variable">Variable</a></span>
 </code></dt>
 <dd>
-<div class="desc"><p>Static method to declare a Variable to the VariableManager.</p>
-<h2 id="attributes">Attributes</h2>
+<div class="desc"><p>Function to declare a <code><a title="src.variable.variable.Variable" href="variable.html#src.variable.variable.Variable">Variable</a></code>.</p>
+<h2 id="parameters">Parameters</h2>
 <dl>
-<dt><strong><code>classe</code></strong> :&ensp;<code>Class</code></dt>
-<dd>The class of the Variable to declare</dd>
 <dt><strong><code>name</code></strong> :&ensp;<code>String</code></dt>
-<dd>The Variable name</dd>
+<dd>Name of the <code><a title="src.variable.variable.Variable" href="variable.html#src.variable.variable.Variable">Variable</a></code>.</dd>
+<dt><strong><code>cl</code></strong> :&ensp;<code>class</code></dt>
+<dd>Type of the <code><a title="src.variable.variable.Variable" href="variable.html#src.variable.variable.Variable">Variable</a></code>.</dd>
+<dt>Returns:</dt>
+<dt><strong><code>Variable</code></strong></dt>
+<dd>The newly defined <code><a title="src.variable.variable.Variable" href="variable.html#src.variable.variable.Variable">Variable</a></code>.</dd>
 </dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@staticmethod
-def declare(classe, name : str):
-    &#39;&#39;&#39;
-    Static method to declare a Variable to the VariableManager.
+def declare(name: str, cls: type[Variable]) -&gt; Variable:
+    r&#34;&#34;&#34;
+    Function to declare a `src.variable.variable.Variable`.
 
-    Attributes
+    Parameters
     ----------
-    classe: Class
-        The class of the Variable to declare
     name: String
-        The Variable name
-    &#39;&#39;&#39;
+        Name of the `src.variable.variable.Variable`.
+
+    cl: class
+        Type of the `src.variable.variable.Variable`.
+
+    Returns:
+    Variable
+        The newly defined `src.variable.variable.Variable`.
+    &#34;&#34;&#34;
     
-    obj = classe.__new__(name)</code></pre>
+    obj = cls.__new__(name)
+    return obj</code></pre>
 </details>
 </dd>
 <dt id="src.variable.variableManager.VariableManager.get"><code class="name flex">
 <span>def <span class="ident">get</span></span>(<span>name: str) ‑> <a title="src.variable.variable.Variable" href="variable.html#src.variable.variable.Variable">Variable</a></span>
 </code></dt>
 <dd>
-<div class="desc"><p>Static method to get a Variable to the VariableManager.</p>
-<h2 id="attributes">Attributes</h2>
+<div class="desc"><p>Function to get a <code><a title="src.variable.variable.Variable" href="variable.html#src.variable.variable.Variable">Variable</a></code> from the <code><a title="src.variable.variableManager.VariableManager.instance" href="#src.variable.variableManager.VariableManager.instance">VariableManager.instance</a></code>.</p>
+<h2 id="parameters">Parameters</h2>
 <dl>
-<dt><strong><code>obj</code></strong> :&ensp;<code>Variable</code></dt>
-<dd>The Variable to add</dd>
+<dt><strong><code>name</code></strong> :&ensp;<code>String</code></dt>
+<dd>The name of the <code><a title="src.variable.variable.Variable" href="variable.html#src.variable.variable.Variable">Variable</a></code> to get.</dd>
 </dl>
+<h2 id="returns">Returns</h2>
+<p><code><a title="src.variable.variable.Variable" href="variable.html#src.variable.variable.Variable">Variable</a></code>
+The <code><a title="src.variable.variable.Variable" href="variable.html#src.variable.variable.Variable">Variable</a></code> to get.</p>
 <h2 id="raises">Raises</h2>
 <dl>
 <dt><code>NameError</code></dt>
 <dd>The Variable isn't defined.</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>Variable</code></strong> :&ensp;<code>variable</code></dt>
-<dd>The defined</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -372,25 +422,24 @@ def declare(classe, name : str):
 </summary>
 <pre><code class="python">@classmethod
 def get(cls, name : str) -&gt; Variable:
-    &#39;&#39;&#39;
-    Static method to get a Variable to the VariableManager.
+    r&#34;&#34;&#34;
+    Function to get a `src.variable.variable.Variable` from the `src.variable.variableManager.VariableManager.instance`.
 
-    Attributes
+    Parameters
     ----------
-    obj: Variable
-        The Variable to add
+    name: String
+        The name of the `src.variable.variable.Variable` to get.
     
+    Returns
+    -------
+    `src.variable.variable.Variable`
+        The `src.variable.variable.Variable` to get.
+
     Raises
     ------
     NameError
         The Variable isn&#39;t defined.
-        
-    Returns
-    -------
-    Variable: variable
-        The defined 
-
-    &#39;&#39;&#39;
+    &#34;&#34;&#34;
     
     if(name in cls.instance):
         return cls.instance[name]
@@ -398,46 +447,51 @@ def get(cls, name : str) -&gt; Variable:
 </details>
 </dd>
 <dt id="src.variable.variableManager.VariableManager.verify"><code class="name flex">
-<span>def <span class="ident">verify</span></span>(<span>name: str, cls)</span>
+<span>def <span class="ident">verify</span></span>(<span>name: str, cls: type[Variable]) ‑> None</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Static method to verify if a Variable can be add to the VariableManager.</p>
-<h2 id="attributes">Attributes</h2>
+<div class="desc"><p>Function verifying if a <code><a title="src.variable.variable.Variable" href="variable.html#src.variable.variable.Variable">Variable</a></code> can be added to <code><a title="src.variable.variableManager.VariableManager.instance" href="#src.variable.variableManager.VariableManager.instance">VariableManager.instance</a></code>,
+meaning that the name respects the naming conventions and that it doesn't already exists under another type.</p>
+<h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>name</code></strong> :&ensp;<code>String</code></dt>
-<dd>name of the variable</dd>
+<dd>Name of the <code><a title="src.variable.variable.Variable" href="variable.html#src.variable.variable.Variable">Variable</a></code>.</dd>
 <dt><strong><code>cl</code></strong> :&ensp;<code>class</code></dt>
-<dd>Class of the variable</dd>
+<dd>Type of the <code><a title="src.variable.variable.Variable" href="variable.html#src.variable.variable.Variable">Variable</a></code>.</dd>
 </dl>
 <h2 id="raises">Raises</h2>
 <dl>
 <dt><code>TypeError</code></dt>
-<dd>If the Variable is not a Variable, already defined with another Type or the name of the variable is not valid according to a pattern.</dd>
+<dd>If the object is already defined with another type or its name is not valid.</dd>
 </dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@staticmethod
-def verify(name : str, cls):
-    &#39;&#39;&#39;
-    Static method to verify if a Variable can be add to the VariableManager.
+def verify(name: str, cls: type[Variable]) -&gt; None:
+    r&#34;&#34;&#34;
+    Function verifying if a `src.variable.variable.Variable` can be added to `src.variable.variableManager.VariableManager.instance`,
+    meaning that the name respects the naming conventions and that it doesn&#39;t already exists under another type.
 
-    Attributes
+    Parameters
     ----------
     name: String
-        name of the variable
+        Name of the `src.variable.variable.Variable`.
 
     cl: class
-        Class of the variable
+        Type of the `src.variable.variable.Variable`.
     
     Raises
     ------
     TypeError
-        If the Variable is not a Variable, already defined with another Type or the name of the variable is not valid according to a pattern.
-    &#39;&#39;&#39;
-    if not __class__.pattern.match(name) : raise NameError(f&#34;{name} is not a valide name for a variable&#34;)
-    if name in __class__.instance and cls !=  __class__.instance[name].__class__: raise TypeError(f&#34;{name} is already define with another type.&#34;)</code></pre>
+        If the object is already defined with another type or its name is not valid.
+    &#34;&#34;&#34;
+
+    if not re.match(VariableManager.__namePatern, name):
+        raise NameError(f&#34;{name} is not a valide name for a variable&#34;)
+    if name in __class__.instance and cls !=  __class__.instance[name].__class__:
+        raise TypeError(f&#34;{name} is already define with another type.&#34;)</code></pre>
 </details>
 </dd>
 </dl>
@@ -460,12 +514,11 @@ def verify(name : str, cls):
 <ul>
 <li>
 <h4><code><a title="src.variable.variableManager.VariableManager" href="#src.variable.variableManager.VariableManager">VariableManager</a></code></h4>
-<ul class="two-column">
+<ul class="">
 <li><code><a title="src.variable.variableManager.VariableManager.add" href="#src.variable.variableManager.VariableManager.add">add</a></code></li>
 <li><code><a title="src.variable.variableManager.VariableManager.declare" href="#src.variable.variableManager.VariableManager.declare">declare</a></code></li>
 <li><code><a title="src.variable.variableManager.VariableManager.get" href="#src.variable.variableManager.VariableManager.get">get</a></code></li>
 <li><code><a title="src.variable.variableManager.VariableManager.instance" href="#src.variable.variableManager.VariableManager.instance">instance</a></code></li>
-<li><code><a title="src.variable.variableManager.VariableManager.pattern" href="#src.variable.variableManager.VariableManager.pattern">pattern</a></code></li>
 <li><code><a title="src.variable.variableManager.VariableManager.verify" href="#src.variable.variableManager.VariableManager.verify">verify</a></code></li>
 </ul>
 </li>

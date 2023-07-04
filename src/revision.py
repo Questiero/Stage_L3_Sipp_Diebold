@@ -62,11 +62,11 @@ class Revision:
 
 
         Returns
-        ----------
-        distance : Fraction
+        -------
+        Fraction
             Distance (calculated with the `src.distance.distance_function.distanceFunction.DistanceFunction`
             given at the initialization of the class) between \(\psi\) and \(\mu\).
-        psiPrime : `src.formula.formula.Formula`
+        `src.formula.formula.Formula`
             Result of the knowledge revison of \(\psi\) by \(\mu\).
         """
 
