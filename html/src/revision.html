@@ -30,7 +30,7 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">&#34;&#34;&#34;
+<pre><code class="python">r&#34;&#34;&#34;
 Main class of the module, allowing the user to make the knowledge revision between two `src.formula.formula.Formula`
 \(\psi\) and \(\mu\) that are mixed integer linear constraints.
 &#34;&#34;&#34;
@@ -49,6 +49,10 @@ from fractions import Fraction
 import math
 
 class Revision:
+    r&#34;&#34;&#34;
+    Main class of the module, allowing the user to make the knowledge revision between two `src.formula.formula.Formula`
+    \(\psi\) and \(\mu\) that are mixed integer linear constraints.
+    &#34;&#34;&#34;
     
     __distance : DistanceFunction
     __interpreter : FormulaInterpreter
@@ -56,6 +60,25 @@ class Revision:
     _onlyOneSolution: bool
 
     def __init__(self, solverInit : MLOSolver, distance : DistanceFunction, simplifiers : list[Simplificator] = [], onlyOneSolution: bool = Constants.ONLY_ONE_SOLUTION, projector: Projector = None):
+        r&#34;&#34;&#34;
+        Constructor of `src.revision.Revision`
+
+        Parameters
+        ----------
+        solverInit: `src.mlo_solver.MLOSolver.MLOSolver`
+            The solver that will be used for optimization.
+        distance: `src.distance.distance_function.distanceFunction.DistanceFunction`
+            The distance function that will be used and, more importantly, the weights \((w_i)\) and \(\varepsilon\) arguments of it.
+            The original argument is meant to be used with a `src.distance.distance_function.discreteL1DistanceFunction.discreteL1DistanceFunction`.
+        simplifiers: list of `src.simplificator.simplificator.Simplificator`, optional
+            List of all of the `src.simplificator.simplificator.Simplificator` that will be applied to the `src.formula.formula.Formula`, 
+            in order given by the list.
+        onlyOneSolution: boolean, optional
+            If set to `True`, the revision algorithm will by default only return one point that satisfies \(\psi \circ \mu\).
+            If not, it will return all solutions.
+            By default, this constant is set to whichever one was chosen in `src.constants.Constants`.
+        &#34;&#34;&#34;
+        
         self.__distance = distance 
         self.__interpreter = FormulaInterpreter(solverInit, distance, simplifiers)
         self._onlyOneSolution = onlyOneSolution
@@ -63,8 +86,24 @@ class Revision:
         self.__projector = projector
 
     def execute(self, psi : Formula, mu : Formula) -&gt; tuple[Fraction, Formula]:
-        &#34;&#34;&#34;
-        Execute the revision of \(\psi\) by \(\mu\), two `src.formula.formula.Formula`.
+        r&#34;&#34;&#34;
+        Execute the revision of \(\psi\) by \(\mu\).
+
+        Parameters
+        ----------
+        psi: `src.formula.formula.Formula`
+            \(\psi\), left part of the knowledge revision operator and `src.formula.formula.Formula` that will be revised.
+        mu: `src.formula.formula.Formula`
+            \(\mu\), right part of the knowledge revision operator and `src.formula.formula.Formula` that will be used to revise \(\psi\) by.
+
+
+        Returns
+        ----------
+        distance: Fraction
+            Distance (calculated with the `src.distance.distance_function.distanceFunction.DistanceFunction`
+            given at the initialization of the class) between \(\psi\) and \(\mu\).
+        psiPrime: `src.formula.formula.Formula`
+            Result of the knowledge revison of \(\psi\) by \(\mu\).
         &#34;&#34;&#34;
 
         psiDNF, muDNF = psi.toLessOrEqConstraint().toDNF(), mu.toLessOrEqConstraint().toDNF()
@@ -279,12 +318,33 @@ class Revision:
 <span>(</span><span>solverInit: MLOSolver, distance: DistanceFunction, simplifiers: list[Simplificator] = [], onlyOneSolution: bool = True, projector: Projector = None)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Main class of the module, allowing the user to make the knowledge revision between two <code><a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a></code>
+<span><span class="MathJax_Preview">\psi</span><script type="math/tex">\psi</script></span> and <span><span class="MathJax_Preview">\mu</span><script type="math/tex">\mu</script></span> that are mixed integer linear constraints.</p>
+<p>Constructor of <code><a title="src.revision.Revision" href="#src.revision.Revision">Revision</a></code></p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>solverInit</code></strong> :&ensp;<code><a title="src.mlo_solver.MLOSolver.MLOSolver" href="mlo_solver/MLOSolver.html#src.mlo_solver.MLOSolver.MLOSolver">MLOSolver</a></code></dt>
+<dd>The solver that will be used for optimization.</dd>
+<dt><strong><code>distance</code></strong> :&ensp;<code><a title="src.distance.distance_function.distanceFunction.DistanceFunction" href="distance/distance_function/distanceFunction.html#src.distance.distance_function.distanceFunction.DistanceFunction">DistanceFunction</a></code></dt>
+<dd>The distance function that will be used and, more importantly, the weights <span><span class="MathJax_Preview">(w_i)</span><script type="math/tex">(w_i)</script></span> and <span><span class="MathJax_Preview">\varepsilon</span><script type="math/tex">\varepsilon</script></span> arguments of it.
+The original argument is meant to be used with a <code><a title="src.distance.distance_function.discreteL1DistanceFunction.discreteL1DistanceFunction" href="distance/distance_function/discreteL1DistanceFunction.html#src.distance.distance_function.discreteL1DistanceFunction.discreteL1DistanceFunction">discreteL1DistanceFunction</a></code>.</dd>
+<dt><strong><code>simplifiers</code></strong> :&ensp;<code>list</code> of <code><a title="src.simplificator.simplificator.Simplificator" href="simplificator/simplificator.html#src.simplificator.simplificator.Simplificator">Simplificator</a></code>, optional</dt>
+<dd>List of all of the <code><a title="src.simplificator.simplificator.Simplificator" href="simplificator/simplificator.html#src.simplificator.simplificator.Simplificator">Simplificator</a></code> that will be applied to the <code><a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a></code>,
+in order given by the list.</dd>
+<dt><strong><code>onlyOneSolution</code></strong> :&ensp;<code>boolean</code>, optional</dt>
+<dd>If set to <code>True</code>, the revision algorithm will by default only return one point that satisfies <span><span class="MathJax_Preview">\psi \circ \mu</span><script type="math/tex">\psi \circ \mu</script></span>.
+If not, it will return all solutions.
+By default, this constant is set to whichever one was chosen in <code><a title="src.constants.Constants" href="constants.html#src.constants.Constants">Constants</a></code>.</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Revision:
+    r&#34;&#34;&#34;
+    Main class of the module, allowing the user to make the knowledge revision between two `src.formula.formula.Formula`
+    \(\psi\) and \(\mu\) that are mixed integer linear constraints.
+    &#34;&#34;&#34;
     
     __distance : DistanceFunction
     __interpreter : FormulaInterpreter
@@ -292,6 +352,25 @@ class Revision:
     _onlyOneSolution: bool
 
     def __init__(self, solverInit : MLOSolver, distance : DistanceFunction, simplifiers : list[Simplificator] = [], onlyOneSolution: bool = Constants.ONLY_ONE_SOLUTION, projector: Projector = None):
+        r&#34;&#34;&#34;
+        Constructor of `src.revision.Revision`
+
+        Parameters
+        ----------
+        solverInit: `src.mlo_solver.MLOSolver.MLOSolver`
+            The solver that will be used for optimization.
+        distance: `src.distance.distance_function.distanceFunction.DistanceFunction`
+            The distance function that will be used and, more importantly, the weights \((w_i)\) and \(\varepsilon\) arguments of it.
+            The original argument is meant to be used with a `src.distance.distance_function.discreteL1DistanceFunction.discreteL1DistanceFunction`.
+        simplifiers: list of `src.simplificator.simplificator.Simplificator`, optional
+            List of all of the `src.simplificator.simplificator.Simplificator` that will be applied to the `src.formula.formula.Formula`, 
+            in order given by the list.
+        onlyOneSolution: boolean, optional
+            If set to `True`, the revision algorithm will by default only return one point that satisfies \(\psi \circ \mu\).
+            If not, it will return all solutions.
+            By default, this constant is set to whichever one was chosen in `src.constants.Constants`.
+        &#34;&#34;&#34;
+        
         self.__distance = distance 
         self.__interpreter = FormulaInterpreter(solverInit, distance, simplifiers)
         self._onlyOneSolution = onlyOneSolution
@@ -299,8 +378,24 @@ class Revision:
         self.__projector = projector
 
     def execute(self, psi : Formula, mu : Formula) -&gt; tuple[Fraction, Formula]:
-        &#34;&#34;&#34;
-        Execute the revision of \(\psi\) by \(\mu\), two `src.formula.formula.Formula`.
+        r&#34;&#34;&#34;
+        Execute the revision of \(\psi\) by \(\mu\).
+
+        Parameters
+        ----------
+        psi: `src.formula.formula.Formula`
+            \(\psi\), left part of the knowledge revision operator and `src.formula.formula.Formula` that will be revised.
+        mu: `src.formula.formula.Formula`
+            \(\mu\), right part of the knowledge revision operator and `src.formula.formula.Formula` that will be used to revise \(\psi\) by.
+
+
+        Returns
+        ----------
+        distance: Fraction
+            Distance (calculated with the `src.distance.distance_function.distanceFunction.DistanceFunction`
+            given at the initialization of the class) between \(\psi\) and \(\mu\).
+        psiPrime: `src.formula.formula.Formula`
+            Result of the knowledge revison of \(\psi\) by \(\mu\).
         &#34;&#34;&#34;
 
         psiDNF, muDNF = psi.toLessOrEqConstraint().toDNF(), mu.toLessOrEqConstraint().toDNF()
@@ -506,14 +601,45 @@ class Revision:
 <span>def <span class="ident">execute</span></span>(<span>self, psi: Formula, mu: Formula) ‑> tuple[fractions.Fraction, <a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a>]</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Execute the revision of <span><span class="MathJax_Preview">\psi</span><script type="math/tex">\psi</script></span> by <span><span class="MathJax_Preview">\mu</span><script type="math/tex">\mu</script></span>, two <code><a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a></code>.</p></div>
+<div class="desc"><p>Execute the revision of <span><span class="MathJax_Preview">\psi</span><script type="math/tex">\psi</script></span> by <span><span class="MathJax_Preview">\mu</span><script type="math/tex">\mu</script></span>.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>psi</code></strong> :&ensp;<code><a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a></code></dt>
+<dd><span><span class="MathJax_Preview">\psi</span><script type="math/tex">\psi</script></span>, left part of the knowledge revision operator and <code><a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a></code> that will be revised.</dd>
+<dt><strong><code>mu</code></strong> :&ensp;<code><a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a></code></dt>
+<dd><span><span class="MathJax_Preview">\mu</span><script type="math/tex">\mu</script></span>, right part of the knowledge revision operator and <code><a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a></code> that will be used to revise <span><span class="MathJax_Preview">\psi</span><script type="math/tex">\psi</script></span> by.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>distance</code></strong> :&ensp;<code>Fraction</code></dt>
+<dd>Distance (calculated with the <code><a title="src.distance.distance_function.distanceFunction.DistanceFunction" href="distance/distance_function/distanceFunction.html#src.distance.distance_function.distanceFunction.DistanceFunction">DistanceFunction</a></code>
+given at the initialization of the class) between <span><span class="MathJax_Preview">\psi</span><script type="math/tex">\psi</script></span> and <span><span class="MathJax_Preview">\mu</span><script type="math/tex">\mu</script></span>.</dd>
+<dt><strong><code>psiPrime</code></strong> :&ensp;<code><a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a></code></dt>
+<dd>Result of the knowledge revison of <span><span class="MathJax_Preview">\psi</span><script type="math/tex">\psi</script></span> by <span><span class="MathJax_Preview">\mu</span><script type="math/tex">\mu</script></span>.</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def execute(self, psi : Formula, mu : Formula) -&gt; tuple[Fraction, Formula]:
-    &#34;&#34;&#34;
-    Execute the revision of \(\psi\) by \(\mu\), two `src.formula.formula.Formula`.
+    r&#34;&#34;&#34;
+    Execute the revision of \(\psi\) by \(\mu\).
+
+    Parameters
+    ----------
+    psi: `src.formula.formula.Formula`
+        \(\psi\), left part of the knowledge revision operator and `src.formula.formula.Formula` that will be revised.
+    mu: `src.formula.formula.Formula`
+        \(\mu\), right part of the knowledge revision operator and `src.formula.formula.Formula` that will be used to revise \(\psi\) by.
+
+
+    Returns
+    ----------
+    distance: Fraction
+        Distance (calculated with the `src.distance.distance_function.distanceFunction.DistanceFunction`
+        given at the initialization of the class) between \(\psi\) and \(\mu\).
+    psiPrime: `src.formula.formula.Formula`
+        Result of the knowledge revison of \(\psi\) by \(\mu\).
     &#34;&#34;&#34;
 
     psiDNF, muDNF = psi.toLessOrEqConstraint().toDNF(), mu.toLessOrEqConstraint().toDNF()
