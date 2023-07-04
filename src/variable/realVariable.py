@@ -1,5 +1,5 @@
 r"""
-Class representing a real Number variable, meaning a number \(x \in \mathbb{R}\)
+Class representing a real number Variable, meaning a number \(x \in \mathbb{R}\)
 """
 
 from __future__ import annotations
@@ -11,45 +11,16 @@ from fractions import Fraction
 
 class RealVariable(Variable):
     r"""
-    RealVariable class, representing a Variable defined in R.
+    Class, representing a real number `src.variable.variable.Variable`, meaning a `src.variable.variable.Variable` defined in \(\mathbb{R}\).
+    Most of the time, you **shouldn't** use the constructor
+    of `src.variable.realVariable.RealVariable` and should rather look into `src.variable.realVariable.RealVariable.declare`, 
+    `src.variable.realVariable.RealVariable.declareBulk` or `src.variable.realVariable.RealVariable.declareAnonymous`.
 
-    Attributes
+    Parameters
     ----------
-    name: str
-        The name of the Variable
-        Name must begin with an alphabet character. It can be followed by alphanumerical character or _.
-        Name can't have this symbole : + - * / @
+    name : String
+        The name of the `src.variable.realVariable.RealVariable`.
     """
-
-    def declare(name: str) -> RealVariable:
-        r"""
-        Function used to declare a new 
-        If this variable already exist and have another type compared to the new declaraton,
-        This function will raise an Exception.
-
-        Attributes
-        ----------
-        String: name
-            The name of the Variable to be declared.
-        """
-        return VariableManager.add(RealVariable(name))
-    
-    def declareBulk(*lname: str) -> list[RealVariable]:
-        r"""
-        Function used to declare a new 
-        If this variable already exist and have another type compared to the new declaraton,
-        This function will raise an Exception.
-
-        Attributes
-        ----------
-        String: name
-            The name of the Variable to be declared.
-        """
-
-        vars = []
-        for name in lname:
-            vars.append(VariableManager.add(RealVariable(name)))
-        return vars
 
     def haveBound(self) -> tuple[bool, bool]:
         r"""
@@ -88,5 +59,5 @@ class RealVariable(Variable):
             True if the variable must have intergers values
             else False
         """
-        
+
         return False

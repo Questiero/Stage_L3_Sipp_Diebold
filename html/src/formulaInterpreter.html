@@ -49,12 +49,12 @@ class FormulaInterpreter:
     
     Parameters
     ----------
-    solverInit : `src.mlo_solver.MLOSolver.MLOSolver`
+    solverInit : src.mlo_solver.MLOSolver.MLOSolver
         The solver that will be used for optimization.
-    distance : `src.distance.distance_function.distanceFunction.DistanceFunction`
+    distance : src.distance.distance_function.distanceFunction.DistanceFunction
         The distance function that will be used and, more importantly, the weights \((w_i)\) and \(\varepsilon\) arguments of it.
         The original algorithm is meant to be used with a `src.distance.distance_function.discreteL1DistanceFunction.discreteL1DistanceFunction`.
-    simplifiers : list of `src.simplificator.simplificator.Simplificator`, optional
+    simplifiers : list of src.simplificator.simplificator.Simplificator, optional
         List of all of the `src.simplificator.simplificator.Simplificator` that will be applied to the `src.formula.formula.Formula`, 
         in order given by the list.
     &#34;&#34;&#34;
@@ -75,12 +75,12 @@ class FormulaInterpreter:
 
         Parameters
         ----------
-        phi : `src.formula.formula.Formula`
+        phi : src.formula.formula.Formula
             The `src.formula.formula.Formula` to simplify.
 
         Returns
         -------
-        `src.formula.formula.Formula`
+        src.formula.formula.Formula
             The simplified `src.formula.formula.Formula`.
         &#34;&#34;&#34;
 
@@ -168,7 +168,7 @@ class FormulaInterpreter:
         Fraction
             Minimal distance (calculated with the `src.distance.distance_function.distanceFunction.DistanceFunction`
             given at the initialization of the class) that satisfies the optimization problem above. 
-        `src.formula.formula.Formula`
+        src.formula.formula.Formula
             `src.formula.formula.Formula` representing a point \(y \in \mathcal{M}(\mu)\) that satisfies the optimization problem above. 
         &#34;&#34;&#34;
 
@@ -273,7 +273,7 @@ class FormulaInterpreter:
         Fraction
             Minimal distance (calculated with the `src.distance.distance_function.distanceFunction.DistanceFunction`
             given at the initialization of the class) that satisfies the optimization problem above. 
-        `src.formula.formula.Formula`
+        src.formula.formula.Formula
             `src.formula.formula.Formula` representing a point \(y \in \mathcal{M}(\mu)\) that satisfies the optimization problem above. 
         &#34;&#34;&#34;
 
@@ -299,7 +299,7 @@ class FormulaInterpreter:
 
         Returns
         -------
-        `src.formula.naryFormula.andOperator.And`
+        src.formula.naryFormula.andOperator.And
             Conjunctions of `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint` transformed from \(\phi\),
             as specified above.
 
@@ -357,12 +357,12 @@ in order given by the list.</dd>
     
     Parameters
     ----------
-    solverInit : `src.mlo_solver.MLOSolver.MLOSolver`
+    solverInit : src.mlo_solver.MLOSolver.MLOSolver
         The solver that will be used for optimization.
-    distance : `src.distance.distance_function.distanceFunction.DistanceFunction`
+    distance : src.distance.distance_function.distanceFunction.DistanceFunction
         The distance function that will be used and, more importantly, the weights \((w_i)\) and \(\varepsilon\) arguments of it.
         The original algorithm is meant to be used with a `src.distance.distance_function.discreteL1DistanceFunction.discreteL1DistanceFunction`.
-    simplifiers : list of `src.simplificator.simplificator.Simplificator`, optional
+    simplifiers : list of src.simplificator.simplificator.Simplificator, optional
         List of all of the `src.simplificator.simplificator.Simplificator` that will be applied to the `src.formula.formula.Formula`, 
         in order given by the list.
     &#34;&#34;&#34;
@@ -383,12 +383,12 @@ in order given by the list.</dd>
 
         Parameters
         ----------
-        phi : `src.formula.formula.Formula`
+        phi : src.formula.formula.Formula
             The `src.formula.formula.Formula` to simplify.
 
         Returns
         -------
-        `src.formula.formula.Formula`
+        src.formula.formula.Formula
             The simplified `src.formula.formula.Formula`.
         &#34;&#34;&#34;
 
@@ -476,7 +476,7 @@ in order given by the list.</dd>
         Fraction
             Minimal distance (calculated with the `src.distance.distance_function.distanceFunction.DistanceFunction`
             given at the initialization of the class) that satisfies the optimization problem above. 
-        `src.formula.formula.Formula`
+        src.formula.formula.Formula
             `src.formula.formula.Formula` representing a point \(y \in \mathcal{M}(\mu)\) that satisfies the optimization problem above. 
         &#34;&#34;&#34;
 
@@ -581,7 +581,7 @@ in order given by the list.</dd>
         Fraction
             Minimal distance (calculated with the `src.distance.distance_function.distanceFunction.DistanceFunction`
             given at the initialization of the class) that satisfies the optimization problem above. 
-        `src.formula.formula.Formula`
+        src.formula.formula.Formula
             `src.formula.formula.Formula` representing a point \(y \in \mathcal{M}(\mu)\) that satisfies the optimization problem above. 
         &#34;&#34;&#34;
 
@@ -607,7 +607,7 @@ in order given by the list.</dd>
 
         Returns
         -------
-        `src.formula.naryFormula.andOperator.And`
+        src.formula.naryFormula.andOperator.And
             Conjunctions of `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint` transformed from \(\phi\),
             as specified above.
 
@@ -663,9 +663,9 @@ y \in \mathcal{M}(\mu) \\
 <dt><code>Fraction</code></dt>
 <dd>Minimal distance (calculated with the <code><a title="src.distance.distance_function.distanceFunction.DistanceFunction" href="distance/distance_function/distanceFunction.html#src.distance.distance_function.distanceFunction.DistanceFunction">DistanceFunction</a></code>
 given at the initialization of the class) that satisfies the optimization problem above.</dd>
-</dl>
-<p><code><a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a></code>
-<code><a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a></code> representing a point <span><span class="MathJax_Preview">y \in \mathcal{M}(\mu)</span><script type="math/tex">y \in \mathcal{M}(\mu)</script></span> that satisfies the optimization problem above.</p></div>
+<dt><code><a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a></code></dt>
+<dd><code><a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a></code> representing a point <span><span class="MathJax_Preview">y \in \mathcal{M}(\mu)</span><script type="math/tex">y \in \mathcal{M}(\mu)</script></span> that satisfies the optimization problem above.</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -697,7 +697,7 @@ given at the initialization of the class) that satisfies the optimization proble
     Fraction
         Minimal distance (calculated with the `src.distance.distance_function.distanceFunction.DistanceFunction`
         given at the initialization of the class) that satisfies the optimization problem above. 
-    `src.formula.formula.Formula`
+    src.formula.formula.Formula
         `src.formula.formula.Formula` representing a point \(y \in \mathcal{M}(\mu)\) that satisfies the optimization problem above. 
     &#34;&#34;&#34;
 
@@ -758,9 +758,9 @@ y \in \mathcal{M}(\mu) \\
 <dt><code>Fraction</code></dt>
 <dd>Minimal distance (calculated with the <code><a title="src.distance.distance_function.distanceFunction.DistanceFunction" href="distance/distance_function/distanceFunction.html#src.distance.distance_function.distanceFunction.DistanceFunction">DistanceFunction</a></code>
 given at the initialization of the class) that satisfies the optimization problem above.</dd>
-</dl>
-<p><code><a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a></code>
-<code><a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a></code> representing a point <span><span class="MathJax_Preview">y \in \mathcal{M}(\mu)</span><script type="math/tex">y \in \mathcal{M}(\mu)</script></span> that satisfies the optimization problem above.</p></div>
+<dt><code><a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a></code></dt>
+<dd><code><a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a></code> representing a point <span><span class="MathJax_Preview">y \in \mathcal{M}(\mu)</span><script type="math/tex">y \in \mathcal{M}(\mu)</script></span> that satisfies the optimization problem above.</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -790,7 +790,7 @@ given at the initialization of the class) that satisfies the optimization proble
     Fraction
         Minimal distance (calculated with the `src.distance.distance_function.distanceFunction.DistanceFunction`
         given at the initialization of the class) that satisfies the optimization problem above. 
-    `src.formula.formula.Formula`
+    src.formula.formula.Formula
         `src.formula.formula.Formula` representing a point \(y \in \mathcal{M}(\mu)\) that satisfies the optimization problem above. 
     &#34;&#34;&#34;
 
@@ -817,9 +817,11 @@ of the form <span><span class="MathJax_Preview">\sum_{j=1}^{n}-a_jx_j \leqslant 
 <dd>Conjunctions of litterals to transform, as specified above.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
-<p><code><a title="src.formula.naryFormula.andOperator.And" href="formula/naryFormula/andOperator.html#src.formula.naryFormula.andOperator.And">And</a></code>
-Conjunctions of <code><a title="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint" href="formula/nullaryFormula/constraint/linearConstraint.html#src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint">LinearConstraint</a></code> transformed from <span><span class="MathJax_Preview">\phi</span><script type="math/tex">\phi</script></span>,
-as specified above.</p></div>
+<dl>
+<dt><code><a title="src.formula.naryFormula.andOperator.And" href="formula/naryFormula/andOperator.html#src.formula.naryFormula.andOperator.And">And</a></code></dt>
+<dd>Conjunctions of <code><a title="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint" href="formula/nullaryFormula/constraint/linearConstraint.html#src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint">LinearConstraint</a></code> transformed from <span><span class="MathJax_Preview">\phi</span><script type="math/tex">\phi</script></span>,
+as specified above.</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -839,7 +841,7 @@ as specified above.</p></div>
 
     Returns
     -------
-    `src.formula.naryFormula.andOperator.And`
+    src.formula.naryFormula.andOperator.And
         Conjunctions of `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint` transformed from \(\phi\),
         as specified above.
 
@@ -936,8 +938,10 @@ as specified above.</p></div>
 <dd>The <code><a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a></code> to simplify.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
-<p><code><a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a></code>
-The simplified <code><a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a></code>.</p></div>
+<dl>
+<dt><code><a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a></code></dt>
+<dd>The simplified <code><a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a></code>.</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -948,12 +952,12 @@ The simplified <code><a title="src.formula.formula.Formula" href="formula/formul
 
     Parameters
     ----------
-    phi : `src.formula.formula.Formula`
+    phi : src.formula.formula.Formula
         The `src.formula.formula.Formula` to simplify.
 
     Returns
     -------
-    `src.formula.formula.Formula`
+    src.formula.formula.Formula
         The simplified `src.formula.formula.Formula`.
     &#34;&#34;&#34;
 

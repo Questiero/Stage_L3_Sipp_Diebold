@@ -34,12 +34,21 @@ Abstract class, representing a variable.
 
 from __future__ import annotations
 
+# local import of VariableManager
+
 from fractions import Fraction
 from abc import ABC, abstractmethod
 
 class Variable(ABC):
     r&#34;&#34;&#34;
-    Abstract class, representing a variables.
+    Abstract class, representing a variables. Most of the time, you **shouldn&#39;t** use the constructor
+    of a `src.variable.variable.Variable` and should rather look into `src.variable.variable.Variable.declare`, 
+    `src.variable.variable.Variable.declareBulk` or `src.variable.variable.Variable.declareAnonymous`.
+
+    Parameters
+    ----------
+    name : String
+        The name of the `src.variable.variable.Variable`.
     &#34;&#34;&#34;
     
     #: Name of the variable, by which they are identified.
@@ -51,7 +60,7 @@ class Variable(ABC):
     @classmethod
     def declareAnonymous(cls, ending: str = None) -&gt; Variable:
         r&#34;&#34;&#34;
-        Function allowing the user to declar an anonymous variable meant to be used inside algorithms without risking any
+        Class method, allowing the user to declare an anonymous variable meant to be used inside algorithms without risking any
         naming conflit with the standardly defined variables.\n
         Anonymous variables aren&#39;t stored in `src.variable.variableManager.VariableManager.instance` and, as such,
         can&#39;t be used in `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint`&#39;s constructor.\n
@@ -64,7 +73,7 @@ class Variable(ABC):
 
         Attributes
         ----------
-        ending: str
+        ending : String
             The string to concatenate at the end of an anonymous variable&#39;s name, after its object id.
 
         Usage exemple
@@ -90,27 +99,64 @@ class Variable(ABC):
         v.name = name
         return v 
 
-    @abstractmethod
-    def declare(name : str) -&gt; Variable:
-        r&#34;&#34;&#34;
-        Function used to declare a new variable.
-        If this variable already exist and have another type compared to the new declaraton,
-        This function will raise an Exception.
+    @classmethod
+    def declare(cls, name : str) -&gt; Variable:
+        &#34;&#34;&#34;
+        Class method used to declare a new variable based on its name.
+        A Variable name should respect the following naming conventions:
+        - A name is unique and shouldn&#39;t be declared multiple times\n
+        - Names are case sensitives\n
+        - Name must begin with a letter\n
+        - It can be followed by alphanumerical character or _\n
+        - Name can&#39;t contain any of the following symbols: +-*/@
+
+        If this variable already exist under another type, an Exception will be raised.
 
         Attributes
         ----------
-        String: name
-            The name of the Variable to be declared.
-            Name must begin with an alphabet character. It can be followed by alphanumerical character or _.
-            Name can&#39;t have this symbole : + - * / @
+        name : String
+            The name of the `src.variable.variable.Variable` to be declared.
 
         Returns
         -------
-        Variable: variable
-            The defined variable.
+        src.variable.variable.Variable
+            The newly declared `src.variable.variable.Variable`.
         &#34;&#34;&#34;
 
-        pass
+        from .variableManager import VariableManager
+
+        return VariableManager.add(cls(name))
+
+    @classmethod
+    def declareBulk(cls, *lname: str) -&gt; list[Variable]:
+        &#34;&#34;&#34;
+        Class method used to declare multiple new instances of `src.variable.variable.Variable` at the same time.
+        A Variable name should respect the following naming conventions:
+        - A name is unique and shouldn&#39;t be declared multiple times\n
+        - Names are case sensitives\n
+        - Name must begin with a letter\n
+        - It can be followed by alphanumerical character or _\n
+        - Name can&#39;t contain any of the following symbols: +-*/@
+
+        If one variable already exist under another type, an Exception will be raised.
+
+        Attributes
+        ----------
+        lname : list of String
+            The names of the `src.variable.variable.Variable` to be declared.
+
+        Returns
+        -------
+        list of src.variable.variable.Variable
+            A list containing all the newly declared instances of `src.variable.variable.Variable`.
+        &#34;&#34;&#34;
+
+        from .variableManager import VariableManager
+
+        vars = []
+        for name in lname:
+            vars.append(VariableManager.add(cls(name)))
+        return vars
 
     @abstractmethod
     def haveBound(self) -&gt; tuple[bool, bool]:
@@ -178,14 +224,28 @@ class Variable(ABC):
 <span>(</span><span>name)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Abstract class, representing a variables.</p></div>
+<div class="desc"><p>Abstract class, representing a variables. Most of the time, you <strong>shouldn't</strong> use the constructor
+of a <code><a title="src.variable.variable.Variable" href="#src.variable.variable.Variable">Variable</a></code> and should rather look into <code><a title="src.variable.variable.Variable.declare" href="#src.variable.variable.Variable.declare">Variable.declare()</a></code>,
+<code><a title="src.variable.variable.Variable.declareBulk" href="#src.variable.variable.Variable.declareBulk">Variable.declareBulk()</a></code> or <code><a title="src.variable.variable.Variable.declareAnonymous" href="#src.variable.variable.Variable.declareAnonymous">Variable.declareAnonymous()</a></code>.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>name</code></strong> :&ensp;<code>String</code></dt>
+<dd>The name of the <code><a title="src.variable.variable.Variable" href="#src.variable.variable.Variable">Variable</a></code>.</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Variable(ABC):
     r&#34;&#34;&#34;
-    Abstract class, representing a variables.
+    Abstract class, representing a variables. Most of the time, you **shouldn&#39;t** use the constructor
+    of a `src.variable.variable.Variable` and should rather look into `src.variable.variable.Variable.declare`, 
+    `src.variable.variable.Variable.declareBulk` or `src.variable.variable.Variable.declareAnonymous`.
+
+    Parameters
+    ----------
+    name : String
+        The name of the `src.variable.variable.Variable`.
     &#34;&#34;&#34;
     
     #: Name of the variable, by which they are identified.
@@ -197,7 +257,7 @@ class Variable(ABC):
     @classmethod
     def declareAnonymous(cls, ending: str = None) -&gt; Variable:
         r&#34;&#34;&#34;
-        Function allowing the user to declar an anonymous variable meant to be used inside algorithms without risking any
+        Class method, allowing the user to declare an anonymous variable meant to be used inside algorithms without risking any
         naming conflit with the standardly defined variables.\n
         Anonymous variables aren&#39;t stored in `src.variable.variableManager.VariableManager.instance` and, as such,
         can&#39;t be used in `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint`&#39;s constructor.\n
@@ -210,7 +270,7 @@ class Variable(ABC):
 
         Attributes
         ----------
-        ending: str
+        ending : String
             The string to concatenate at the end of an anonymous variable&#39;s name, after its object id.
 
         Usage exemple
@@ -236,27 +296,64 @@ class Variable(ABC):
         v.name = name
         return v 
 
-    @abstractmethod
-    def declare(name : str) -&gt; Variable:
-        r&#34;&#34;&#34;
-        Function used to declare a new variable.
-        If this variable already exist and have another type compared to the new declaraton,
-        This function will raise an Exception.
+    @classmethod
+    def declare(cls, name : str) -&gt; Variable:
+        &#34;&#34;&#34;
+        Class method used to declare a new variable based on its name.
+        A Variable name should respect the following naming conventions:
+        - A name is unique and shouldn&#39;t be declared multiple times\n
+        - Names are case sensitives\n
+        - Name must begin with a letter\n
+        - It can be followed by alphanumerical character or _\n
+        - Name can&#39;t contain any of the following symbols: +-*/@
+
+        If this variable already exist under another type, an Exception will be raised.
 
         Attributes
         ----------
-        String: name
-            The name of the Variable to be declared.
-            Name must begin with an alphabet character. It can be followed by alphanumerical character or _.
-            Name can&#39;t have this symbole : + - * / @
+        name : String
+            The name of the `src.variable.variable.Variable` to be declared.
 
         Returns
         -------
-        Variable: variable
-            The defined variable.
+        src.variable.variable.Variable
+            The newly declared `src.variable.variable.Variable`.
         &#34;&#34;&#34;
 
-        pass
+        from .variableManager import VariableManager
+
+        return VariableManager.add(cls(name))
+
+    @classmethod
+    def declareBulk(cls, *lname: str) -&gt; list[Variable]:
+        &#34;&#34;&#34;
+        Class method used to declare multiple new instances of `src.variable.variable.Variable` at the same time.
+        A Variable name should respect the following naming conventions:
+        - A name is unique and shouldn&#39;t be declared multiple times\n
+        - Names are case sensitives\n
+        - Name must begin with a letter\n
+        - It can be followed by alphanumerical character or _\n
+        - Name can&#39;t contain any of the following symbols: +-*/@
+
+        If one variable already exist under another type, an Exception will be raised.
+
+        Attributes
+        ----------
+        lname : list of String
+            The names of the `src.variable.variable.Variable` to be declared.
+
+        Returns
+        -------
+        list of src.variable.variable.Variable
+            A list containing all the newly declared instances of `src.variable.variable.Variable`.
+        &#34;&#34;&#34;
+
+        from .variableManager import VariableManager
+
+        vars = []
+        for name in lname:
+            vars.append(VariableManager.add(cls(name)))
+        return vars
 
     @abstractmethod
     def haveBound(self) -&gt; tuple[bool, bool]:
@@ -327,11 +424,76 @@ class Variable(ABC):
 </dl>
 <h3>Static methods</h3>
 <dl>
+<dt id="src.variable.variable.Variable.declare"><code class="name flex">
+<span>def <span class="ident">declare</span></span>(<span>name: str) ‑> <a title="src.variable.variable.Variable" href="#src.variable.variable.Variable">Variable</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Class method used to declare a new variable based on its name.
+A Variable name should respect the following naming conventions:
+- A name is unique and shouldn't be declared multiple times</p>
+<ul>
+<li>
+<p>Names are case sensitives</p>
+</li>
+<li>
+<p>Name must begin with a letter</p>
+</li>
+<li>
+<p>It can be followed by alphanumerical character or _</p>
+</li>
+<li>
+<p>Name can't contain any of the following symbols: +-*/@</p>
+</li>
+</ul>
+<p>If this variable already exist under another type, an Exception will be raised.</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>name</code></strong> :&ensp;<code>String</code></dt>
+<dd>The name of the <code><a title="src.variable.variable.Variable" href="#src.variable.variable.Variable">Variable</a></code> to be declared.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code><a title="src.variable.variable.Variable" href="#src.variable.variable.Variable">Variable</a></code></dt>
+<dd>The newly declared <code><a title="src.variable.variable.Variable" href="#src.variable.variable.Variable">Variable</a></code>.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@classmethod
+def declare(cls, name : str) -&gt; Variable:
+    &#34;&#34;&#34;
+    Class method used to declare a new variable based on its name.
+    A Variable name should respect the following naming conventions:
+    - A name is unique and shouldn&#39;t be declared multiple times\n
+    - Names are case sensitives\n
+    - Name must begin with a letter\n
+    - It can be followed by alphanumerical character or _\n
+    - Name can&#39;t contain any of the following symbols: +-*/@
+
+    If this variable already exist under another type, an Exception will be raised.
+
+    Attributes
+    ----------
+    name : String
+        The name of the `src.variable.variable.Variable` to be declared.
+
+    Returns
+    -------
+    src.variable.variable.Variable
+        The newly declared `src.variable.variable.Variable`.
+    &#34;&#34;&#34;
+
+    from .variableManager import VariableManager
+
+    return VariableManager.add(cls(name))</code></pre>
+</details>
+</dd>
 <dt id="src.variable.variable.Variable.declareAnonymous"><code class="name flex">
 <span>def <span class="ident">declareAnonymous</span></span>(<span>ending: str = None) ‑> <a title="src.variable.variable.Variable" href="#src.variable.variable.Variable">Variable</a></span>
 </code></dt>
 <dd>
-<div class="desc"><p>Function allowing the user to declar an anonymous variable meant to be used inside algorithms without risking any
+<div class="desc"><p>Class method, allowing the user to declare an anonymous variable meant to be used inside algorithms without risking any
 naming conflit with the standardly defined variables.\n
 Anonymous variables aren't stored in <code><a title="src.variable.variableManager.VariableManager.instance" href="variableManager.html#src.variable.variableManager.VariableManager.instance">VariableManager.instance</a></code> and, as such,
 can't be used in <code><a title="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint" href="../formula/nullaryFormula/constraint/linearConstraint.html#src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint">LinearConstraint</a></code>'s constructor.\n</p>
@@ -341,7 +503,7 @@ can't be used in <code><a title="src.formula.nullaryFormula.constraint.linearCon
 it's object's id. The user can also specify an ending to an anonymous variable name.</p>
 <h2 id="attributes">Attributes</h2>
 <dl>
-<dt><strong><code>ending</code></strong> :&ensp;<code>str</code></dt>
+<dt><strong><code>ending</code></strong> :&ensp;<code>String</code></dt>
 <dd>The string to concatenate at the end of an anonymous variable's name, after its object id.</dd>
 </dl>
 <h2 id="usage-exemple">Usage Exemple</h2>
@@ -363,7 +525,7 @@ it's object's id. The user can also specify an ending to an anonymous variable n
 <pre><code class="python">@classmethod
 def declareAnonymous(cls, ending: str = None) -&gt; Variable:
     r&#34;&#34;&#34;
-    Function allowing the user to declar an anonymous variable meant to be used inside algorithms without risking any
+    Class method, allowing the user to declare an anonymous variable meant to be used inside algorithms without risking any
     naming conflit with the standardly defined variables.\n
     Anonymous variables aren&#39;t stored in `src.variable.variableManager.VariableManager.instance` and, as such,
     can&#39;t be used in `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint`&#39;s constructor.\n
@@ -376,7 +538,7 @@ def declareAnonymous(cls, ending: str = None) -&gt; Variable:
 
     Attributes
     ----------
-    ending: str
+    ending : String
         The string to concatenate at the end of an anonymous variable&#39;s name, after its object id.
 
     Usage exemple
@@ -403,55 +565,77 @@ def declareAnonymous(cls, ending: str = None) -&gt; Variable:
     return v </code></pre>
 </details>
 </dd>
-</dl>
-<h3>Methods</h3>
-<dl>
-<dt id="src.variable.variable.Variable.declare"><code class="name flex">
-<span>def <span class="ident">declare</span></span>(<span>name: str) ‑> <a title="src.variable.variable.Variable" href="#src.variable.variable.Variable">Variable</a></span>
+<dt id="src.variable.variable.Variable.declareBulk"><code class="name flex">
+<span>def <span class="ident">declareBulk</span></span>(<span>*lname: str) ‑> list[<a title="src.variable.variable.Variable" href="#src.variable.variable.Variable">Variable</a>]</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Function used to declare a new variable.
-If this variable already exist and have another type compared to the new declaraton,
-This function will raise an Exception.</p>
+<div class="desc"><p>Class method used to declare multiple new instances of <code><a title="src.variable.variable.Variable" href="#src.variable.variable.Variable">Variable</a></code> at the same time.
+A Variable name should respect the following naming conventions:
+- A name is unique and shouldn't be declared multiple times</p>
+<ul>
+<li>
+<p>Names are case sensitives</p>
+</li>
+<li>
+<p>Name must begin with a letter</p>
+</li>
+<li>
+<p>It can be followed by alphanumerical character or _</p>
+</li>
+<li>
+<p>Name can't contain any of the following symbols: +-*/@</p>
+</li>
+</ul>
+<p>If one variable already exist under another type, an Exception will be raised.</p>
 <h2 id="attributes">Attributes</h2>
 <dl>
-<dt><strong><code>String</code></strong> :&ensp;<code>name</code></dt>
-<dd>The name of the Variable to be declared.
-Name must begin with an alphabet character. It can be followed by alphanumerical character or _.
-Name can't have this symbole : + - * / @</dd>
+<dt><strong><code>lname</code></strong> :&ensp;<code>list</code> of <code>String</code></dt>
+<dd>The names of the <code><a title="src.variable.variable.Variable" href="#src.variable.variable.Variable">Variable</a></code> to be declared.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><strong><code>Variable</code></strong> :&ensp;<code>variable</code></dt>
-<dd>The defined variable.</dd>
+<dt><code>list</code> of <code><a title="src.variable.variable.Variable" href="#src.variable.variable.Variable">Variable</a></code></dt>
+<dd>A list containing all the newly declared instances of <code><a title="src.variable.variable.Variable" href="#src.variable.variable.Variable">Variable</a></code>.</dd>
 </dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">@abstractmethod
-def declare(name : str) -&gt; Variable:
-    r&#34;&#34;&#34;
-    Function used to declare a new variable.
-    If this variable already exist and have another type compared to the new declaraton,
-    This function will raise an Exception.
+<pre><code class="python">@classmethod
+def declareBulk(cls, *lname: str) -&gt; list[Variable]:
+    &#34;&#34;&#34;
+    Class method used to declare multiple new instances of `src.variable.variable.Variable` at the same time.
+    A Variable name should respect the following naming conventions:
+    - A name is unique and shouldn&#39;t be declared multiple times\n
+    - Names are case sensitives\n
+    - Name must begin with a letter\n
+    - It can be followed by alphanumerical character or _\n
+    - Name can&#39;t contain any of the following symbols: +-*/@
+
+    If one variable already exist under another type, an Exception will be raised.
 
     Attributes
     ----------
-    String: name
-        The name of the Variable to be declared.
-        Name must begin with an alphabet character. It can be followed by alphanumerical character or _.
-        Name can&#39;t have this symbole : + - * / @
+    lname : list of String
+        The names of the `src.variable.variable.Variable` to be declared.
 
     Returns
     -------
-    Variable: variable
-        The defined variable.
+    list of src.variable.variable.Variable
+        A list containing all the newly declared instances of `src.variable.variable.Variable`.
     &#34;&#34;&#34;
 
-    pass</code></pre>
+    from .variableManager import VariableManager
+
+    vars = []
+    for name in lname:
+        vars.append(VariableManager.add(cls(name)))
+    return vars</code></pre>
 </details>
 </dd>
+</dl>
+<h3>Methods</h3>
+<dl>
 <dt id="src.variable.variable.Variable.getBounds"><code class="name flex">
 <span>def <span class="ident">getBounds</span></span>(<span>self) ‑> tuple[fractions.Fraction, fractions.Fraction]</span>
 </code></dt>
@@ -564,6 +748,7 @@ def isInteger(self) -&gt; bool:
 <ul class="two-column">
 <li><code><a title="src.variable.variable.Variable.declare" href="#src.variable.variable.Variable.declare">declare</a></code></li>
 <li><code><a title="src.variable.variable.Variable.declareAnonymous" href="#src.variable.variable.Variable.declareAnonymous">declareAnonymous</a></code></li>
+<li><code><a title="src.variable.variable.Variable.declareBulk" href="#src.variable.variable.Variable.declareBulk">declareBulk</a></code></li>
 <li><code><a title="src.variable.variable.Variable.getBounds" href="#src.variable.variable.Variable.getBounds">getBounds</a></code></li>
 <li><code><a title="src.variable.variable.Variable.haveBound" href="#src.variable.variable.Variable.haveBound">haveBound</a></code></li>
 <li><code><a title="src.variable.variable.Variable.isInteger" href="#src.variable.variable.Variable.isInteger">isInteger</a></code></li>

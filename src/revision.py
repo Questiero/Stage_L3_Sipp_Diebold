@@ -23,12 +23,12 @@ class Revision:
 
     Parameters
     ----------
-    solverInit : `src.mlo_solver.MLOSolver.MLOSolver`
+    solverInit : src.mlo_solver.MLOSolver.MLOSolver
         The solver that will be used for optimization.
-    distance : `src.distance.distance_function.distanceFunction.DistanceFunction`
+    distance : src.distance.distance_function.distanceFunction.DistanceFunction
         The distance function that will be used and, more importantly, the weights \((w_i)\) and \(\varepsilon\) arguments of it.
         The original algorithm is meant to be used with a `src.distance.distance_function.discreteL1DistanceFunction.discreteL1DistanceFunction`.
-    simplifiers : list of `src.simplificator.simplificator.Simplificator`, optional
+    simplifiers : list of src.simplificator.simplificator.Simplificator, optional
         List of all of the `src.simplificator.simplificator.Simplificator` that will be applied to the `src.formula.formula.Formula`, 
         in order given by the list.
     onlyOneSolution : boolean, optional
@@ -55,9 +55,9 @@ class Revision:
 
         Parameters
         ----------
-        psi : `src.formula.formula.Formula`
+        psi : src.formula.formula.Formula
             \(\psi\), left part of the knowledge revision operator and `src.formula.formula.Formula` that will be revised.
-        mu : `src.formula.formula.Formula`
+        mu : src.formula.formula.Formula
             \(\mu\), right part of the knowledge revision operator and `src.formula.formula.Formula` that will be used to revise \(\psi\) by.
 
 
@@ -66,7 +66,7 @@ class Revision:
         Fraction
             Distance (calculated with the `src.distance.distance_function.distanceFunction.DistanceFunction`
             given at the initialization of the class) between \(\psi\) and \(\mu\).
-        `src.formula.formula.Formula`
+        src.formula.formula.Formula
             Result of the knowledge revison of \(\psi\) by \(\mu\).
         """
 

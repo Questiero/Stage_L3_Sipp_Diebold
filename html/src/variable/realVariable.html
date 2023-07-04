@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
 <title>src.variable.realVariable API documentation</title>
-<meta name="description" content="Class representing a real Number variable, meaning a number \(x \in \mathbb{R}\)" />
+<meta name="description" content="Class representing a real number Variable, meaning a number \(x \in \mathbb{R}\)" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
 <link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
@@ -23,13 +23,13 @@
 <h1 class="title">Module <code>src.variable.realVariable</code></h1>
 </header>
 <section id="section-intro">
-<p>Class representing a real Number variable, meaning a number <span><span class="MathJax_Preview">x \in \mathbb{R}</span><script type="math/tex">x \in \mathbb{R}</script></span></p>
+<p>Class representing a real number Variable, meaning a number <span><span class="MathJax_Preview">x \in \mathbb{R}</span><script type="math/tex">x \in \mathbb{R}</script></span></p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">r&#34;&#34;&#34;
-Class representing a real Number variable, meaning a number \(x \in \mathbb{R}\)
+Class representing a real number Variable, meaning a number \(x \in \mathbb{R}\)
 &#34;&#34;&#34;
 
 from __future__ import annotations
@@ -41,45 +41,16 @@ from fractions import Fraction
 
 class RealVariable(Variable):
     r&#34;&#34;&#34;
-    RealVariable class, representing a Variable defined in R.
+    Class, representing a real number `src.variable.variable.Variable`, meaning a `src.variable.variable.Variable` defined in \(\mathbb{R}\).
+    Most of the time, you **shouldn&#39;t** use the constructor
+    of `src.variable.realVariable.RealVariable` and should rather look into `src.variable.realVariable.RealVariable.declare`, 
+    `src.variable.realVariable.RealVariable.declareBulk` or `src.variable.realVariable.RealVariable.declareAnonymous`.
 
-    Attributes
+    Parameters
     ----------
-    name: str
-        The name of the Variable
-        Name must begin with an alphabet character. It can be followed by alphanumerical character or _.
-        Name can&#39;t have this symbole : + - * / @
+    name : String
+        The name of the `src.variable.realVariable.RealVariable`.
     &#34;&#34;&#34;
-
-    def declare(name: str) -&gt; RealVariable:
-        r&#34;&#34;&#34;
-        Function used to declare a new 
-        If this variable already exist and have another type compared to the new declaraton,
-        This function will raise an Exception.
-
-        Attributes
-        ----------
-        String: name
-            The name of the Variable to be declared.
-        &#34;&#34;&#34;
-        return VariableManager.add(RealVariable(name))
-    
-    def declareBulk(*lname: str) -&gt; list[RealVariable]:
-        r&#34;&#34;&#34;
-        Function used to declare a new 
-        If this variable already exist and have another type compared to the new declaraton,
-        This function will raise an Exception.
-
-        Attributes
-        ----------
-        String: name
-            The name of the Variable to be declared.
-        &#34;&#34;&#34;
-
-        vars = []
-        for name in lname:
-            vars.append(VariableManager.add(RealVariable(name)))
-        return vars
 
     def haveBound(self) -&gt; tuple[bool, bool]:
         r&#34;&#34;&#34;
@@ -118,7 +89,7 @@ class RealVariable(Variable):
             True if the variable must have intergers values
             else False
         &#34;&#34;&#34;
-        
+
         return False</code></pre>
 </details>
 </section>
@@ -136,13 +107,14 @@ class RealVariable(Variable):
 <span>(</span><span>name)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>RealVariable class, representing a Variable defined in R.</p>
-<h2 id="attributes">Attributes</h2>
+<div class="desc"><p>Class, representing a real number <code><a title="src.variable.variable.Variable" href="variable.html#src.variable.variable.Variable">Variable</a></code>, meaning a <code><a title="src.variable.variable.Variable" href="variable.html#src.variable.variable.Variable">Variable</a></code> defined in <span><span class="MathJax_Preview">\mathbb{R}</span><script type="math/tex">\mathbb{R}</script></span>.
+Most of the time, you <strong>shouldn't</strong> use the constructor
+of <code><a title="src.variable.realVariable.RealVariable" href="#src.variable.realVariable.RealVariable">RealVariable</a></code> and should rather look into <code><a title="src.variable.realVariable.RealVariable.declare" href="variable.html#src.variable.variable.Variable.declare">Variable.declare()</a></code>,
+<code><a title="src.variable.realVariable.RealVariable.declareBulk" href="variable.html#src.variable.variable.Variable.declareBulk">Variable.declareBulk()</a></code> or <code><a title="src.variable.realVariable.RealVariable.declareAnonymous" href="variable.html#src.variable.variable.Variable.declareAnonymous">Variable.declareAnonymous()</a></code>.</p>
+<h2 id="parameters">Parameters</h2>
 <dl>
-<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
-<dd>The name of the Variable
-Name must begin with an alphabet character. It can be followed by alphanumerical character or _.
-Name can't have this symbole : + - * / @</dd>
+<dt><strong><code>name</code></strong> :&ensp;<code>String</code></dt>
+<dd>The name of the <code><a title="src.variable.realVariable.RealVariable" href="#src.variable.realVariable.RealVariable">RealVariable</a></code>.</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -150,45 +122,16 @@ Name can't have this symbole : + - * / @</dd>
 </summary>
 <pre><code class="python">class RealVariable(Variable):
     r&#34;&#34;&#34;
-    RealVariable class, representing a Variable defined in R.
+    Class, representing a real number `src.variable.variable.Variable`, meaning a `src.variable.variable.Variable` defined in \(\mathbb{R}\).
+    Most of the time, you **shouldn&#39;t** use the constructor
+    of `src.variable.realVariable.RealVariable` and should rather look into `src.variable.realVariable.RealVariable.declare`, 
+    `src.variable.realVariable.RealVariable.declareBulk` or `src.variable.realVariable.RealVariable.declareAnonymous`.
 
-    Attributes
+    Parameters
     ----------
-    name: str
-        The name of the Variable
-        Name must begin with an alphabet character. It can be followed by alphanumerical character or _.
-        Name can&#39;t have this symbole : + - * / @
+    name : String
+        The name of the `src.variable.realVariable.RealVariable`.
     &#34;&#34;&#34;
-
-    def declare(name: str) -&gt; RealVariable:
-        r&#34;&#34;&#34;
-        Function used to declare a new 
-        If this variable already exist and have another type compared to the new declaraton,
-        This function will raise an Exception.
-
-        Attributes
-        ----------
-        String: name
-            The name of the Variable to be declared.
-        &#34;&#34;&#34;
-        return VariableManager.add(RealVariable(name))
-    
-    def declareBulk(*lname: str) -&gt; list[RealVariable]:
-        r&#34;&#34;&#34;
-        Function used to declare a new 
-        If this variable already exist and have another type compared to the new declaraton,
-        This function will raise an Exception.
-
-        Attributes
-        ----------
-        String: name
-            The name of the Variable to be declared.
-        &#34;&#34;&#34;
-
-        vars = []
-        for name in lname:
-            vars.append(VariableManager.add(RealVariable(name)))
-        return vars
 
     def haveBound(self) -&gt; tuple[bool, bool]:
         r&#34;&#34;&#34;
@@ -227,7 +170,7 @@ Name can't have this symbole : + - * / @</dd>
             True if the variable must have intergers values
             else False
         &#34;&#34;&#34;
-        
+
         return False</code></pre>
 </details>
 <h3>Ancestors</h3>
@@ -235,78 +178,13 @@ Name can't have this symbole : + - * / @</dd>
 <li><a title="src.variable.variable.Variable" href="variable.html#src.variable.variable.Variable">Variable</a></li>
 <li>abc.ABC</li>
 </ul>
-<h3>Methods</h3>
-<dl>
-<dt id="src.variable.realVariable.RealVariable.declare"><code class="name flex">
-<span>def <span class="ident">declare</span></span>(<span>name: str) ‑> <a title="src.variable.realVariable.RealVariable" href="#src.variable.realVariable.RealVariable">RealVariable</a></span>
-</code></dt>
-<dd>
-<div class="desc"><p>Function used to declare a new
-If this variable already exist and have another type compared to the new declaraton,
-This function will raise an Exception.</p>
-<h2 id="attributes">Attributes</h2>
-<dl>
-<dt><strong><code>String</code></strong> :&ensp;<code>name</code></dt>
-<dd>The name of the Variable to be declared.</dd>
-</dl></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def declare(name: str) -&gt; RealVariable:
-    r&#34;&#34;&#34;
-    Function used to declare a new 
-    If this variable already exist and have another type compared to the new declaraton,
-    This function will raise an Exception.
-
-    Attributes
-    ----------
-    String: name
-        The name of the Variable to be declared.
-    &#34;&#34;&#34;
-    return VariableManager.add(RealVariable(name))</code></pre>
-</details>
-</dd>
-<dt id="src.variable.realVariable.RealVariable.declareBulk"><code class="name flex">
-<span>def <span class="ident">declareBulk</span></span>(<span>*lname: str) ‑> list[<a title="src.variable.realVariable.RealVariable" href="#src.variable.realVariable.RealVariable">RealVariable</a>]</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Function used to declare a new
-If this variable already exist and have another type compared to the new declaraton,
-This function will raise an Exception.</p>
-<h2 id="attributes">Attributes</h2>
-<dl>
-<dt><strong><code>String</code></strong> :&ensp;<code>name</code></dt>
-<dd>The name of the Variable to be declared.</dd>
-</dl></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def declareBulk(*lname: str) -&gt; list[RealVariable]:
-    r&#34;&#34;&#34;
-    Function used to declare a new 
-    If this variable already exist and have another type compared to the new declaraton,
-    This function will raise an Exception.
-
-    Attributes
-    ----------
-    String: name
-        The name of the Variable to be declared.
-    &#34;&#34;&#34;
-
-    vars = []
-    for name in lname:
-        vars.append(VariableManager.add(RealVariable(name)))
-    return vars</code></pre>
-</details>
-</dd>
-</dl>
 <h3>Inherited members</h3>
 <ul class="hlist">
 <li><code><b><a title="src.variable.variable.Variable" href="variable.html#src.variable.variable.Variable">Variable</a></b></code>:
 <ul class="hlist">
+<li><code><a title="src.variable.variable.Variable.declare" href="variable.html#src.variable.variable.Variable.declare">declare</a></code></li>
 <li><code><a title="src.variable.variable.Variable.declareAnonymous" href="variable.html#src.variable.variable.Variable.declareAnonymous">declareAnonymous</a></code></li>
+<li><code><a title="src.variable.variable.Variable.declareBulk" href="variable.html#src.variable.variable.Variable.declareBulk">declareBulk</a></code></li>
 <li><code><a title="src.variable.variable.Variable.getBounds" href="variable.html#src.variable.variable.Variable.getBounds">getBounds</a></code></li>
 <li><code><a title="src.variable.variable.Variable.haveBound" href="variable.html#src.variable.variable.Variable.haveBound">haveBound</a></code></li>
 <li><code><a title="src.variable.variable.Variable.isInteger" href="variable.html#src.variable.variable.Variable.isInteger">isInteger</a></code></li>
@@ -333,10 +211,6 @@ This function will raise an Exception.</p>
 <ul>
 <li>
 <h4><code><a title="src.variable.realVariable.RealVariable" href="#src.variable.realVariable.RealVariable">RealVariable</a></code></h4>
-<ul class="">
-<li><code><a title="src.variable.realVariable.RealVariable.declare" href="#src.variable.realVariable.RealVariable.declare">declare</a></code></li>
-<li><code><a title="src.variable.realVariable.RealVariable.declareBulk" href="#src.variable.realVariable.RealVariable.declareBulk">declareBulk</a></code></li>
-</ul>
 </li>
 </ul>
 </li>

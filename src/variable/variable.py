@@ -4,12 +4,21 @@ Abstract class, representing a variable.
 
 from __future__ import annotations
 
+# local import of VariableManager
+
 from fractions import Fraction
 from abc import ABC, abstractmethod
 
 class Variable(ABC):
     r"""
-    Abstract class, representing a variables.
+    Abstract class, representing a variables. Most of the time, you **shouldn't** use the constructor
+    of a `src.variable.variable.Variable` and should rather look into `src.variable.variable.Variable.declare`, 
+    `src.variable.variable.Variable.declareBulk` or `src.variable.variable.Variable.declareAnonymous`.
+
+    Parameters
+    ----------
+    name : String
+        The name of the `src.variable.variable.Variable`.
     """
     
     #: Name of the variable, by which they are identified.
@@ -21,7 +30,7 @@ class Variable(ABC):
     @classmethod
     def declareAnonymous(cls, ending: str = None) -> Variable:
         r"""
-        Function allowing the user to declar an anonymous variable meant to be used inside algorithms without risking any
+        Class method, allowing the user to declare an anonymous variable meant to be used inside algorithms without risking any
         naming conflit with the standardly defined variables.\n
         Anonymous variables aren't stored in `src.variable.variableManager.VariableManager.instance` and, as such,
         can't be used in `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint`'s constructor.\n
@@ -34,7 +43,7 @@ class Variable(ABC):
 
         Attributes
         ----------
-        ending: str
+        ending : String
             The string to concatenate at the end of an anonymous variable's name, after its object id.
 
         Usage exemple
@@ -60,27 +69,64 @@ class Variable(ABC):
         v.name = name
         return v 
 
-    @abstractmethod
-    def declare(name : str) -> Variable:
-        r"""
-        Function used to declare a new variable.
-        If this variable already exist and have another type compared to the new declaraton,
-        This function will raise an Exception.
+    @classmethod
+    def declare(cls, name : str) -> Variable:
+        """
+        Class method used to declare a new variable based on its name.
+        A Variable name should respect the following naming conventions:
+        - A name is unique and shouldn't be declared multiple times\n
+        - Names are case sensitives\n
+        - Name must begin with a letter\n
+        - It can be followed by alphanumerical character or _\n
+        - Name can't contain any of the following symbols: +-*/@
+
+        If this variable already exist under another type, an Exception will be raised.
 
         Attributes
         ----------
-        String: name
-            The name of the Variable to be declared.
-            Name must begin with an alphabet character. It can be followed by alphanumerical character or _.
-            Name can't have this symbole : + - * / @
+        name : String
+            The name of the `src.variable.variable.Variable` to be declared.
 
         Returns
         -------
-        Variable: variable
-            The defined variable.
+        src.variable.variable.Variable
+            The newly declared `src.variable.variable.Variable`.
         """
 
-        pass
+        from .variableManager import VariableManager
+
+        return VariableManager.add(cls(name))
+
+    @classmethod
+    def declareBulk(cls, *lname: str) -> list[Variable]:
+        """
+        Class method used to declare multiple new instances of `src.variable.variable.Variable` at the same time.
+        A Variable name should respect the following naming conventions:
+        - A name is unique and shouldn't be declared multiple times\n
+        - Names are case sensitives\n
+        - Name must begin with a letter\n
+        - It can be followed by alphanumerical character or _\n
+        - Name can't contain any of the following symbols: +-*/@
+
+        If one variable already exist under another type, an Exception will be raised.
+
+        Attributes
+        ----------
+        lname : list of String
+            The names of the `src.variable.variable.Variable` to be declared.
+
+        Returns
+        -------
+        list of src.variable.variable.Variable
+            A list containing all the newly declared instances of `src.variable.variable.Variable`.
+        """
+
+        from .variableManager import VariableManager
+
+        vars = []
+        for name in lname:
+            vars.append(VariableManager.add(cls(name)))
+        return vars
 
     @abstractmethod
     def haveBound(self) -> tuple[bool, bool]:

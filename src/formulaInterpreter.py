@@ -19,12 +19,12 @@ class FormulaInterpreter:
     
     Parameters
     ----------
-    solverInit : `src.mlo_solver.MLOSolver.MLOSolver`
+    solverInit : src.mlo_solver.MLOSolver.MLOSolver
         The solver that will be used for optimization.
-    distance : `src.distance.distance_function.distanceFunction.DistanceFunction`
+    distance : src.distance.distance_function.distanceFunction.DistanceFunction
         The distance function that will be used and, more importantly, the weights \((w_i)\) and \(\varepsilon\) arguments of it.
         The original algorithm is meant to be used with a `src.distance.distance_function.discreteL1DistanceFunction.discreteL1DistanceFunction`.
-    simplifiers : list of `src.simplificator.simplificator.Simplificator`, optional
+    simplifiers : list of src.simplificator.simplificator.Simplificator, optional
         List of all of the `src.simplificator.simplificator.Simplificator` that will be applied to the `src.formula.formula.Formula`, 
         in order given by the list.
     """
@@ -45,12 +45,12 @@ class FormulaInterpreter:
 
         Parameters
         ----------
-        phi : `src.formula.formula.Formula`
+        phi : src.formula.formula.Formula
             The `src.formula.formula.Formula` to simplify.
 
         Returns
         -------
-        `src.formula.formula.Formula`
+        src.formula.formula.Formula
             The simplified `src.formula.formula.Formula`.
         """
 
@@ -138,7 +138,7 @@ class FormulaInterpreter:
         Fraction
             Minimal distance (calculated with the `src.distance.distance_function.distanceFunction.DistanceFunction`
             given at the initialization of the class) that satisfies the optimization problem above. 
-        `src.formula.formula.Formula`
+        src.formula.formula.Formula
             `src.formula.formula.Formula` representing a point \(y \in \mathcal{M}(\mu)\) that satisfies the optimization problem above. 
         """
 
@@ -243,7 +243,7 @@ class FormulaInterpreter:
         Fraction
             Minimal distance (calculated with the `src.distance.distance_function.distanceFunction.DistanceFunction`
             given at the initialization of the class) that satisfies the optimization problem above. 
-        `src.formula.formula.Formula`
+        src.formula.formula.Formula
             `src.formula.formula.Formula` representing a point \(y \in \mathcal{M}(\mu)\) that satisfies the optimization problem above. 
         """
 
@@ -269,7 +269,7 @@ class FormulaInterpreter:
 
         Returns
         -------
-        `src.formula.naryFormula.andOperator.And`
+        src.formula.naryFormula.andOperator.And
             Conjunctions of `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint` transformed from \(\phi\),
             as specified above.
 

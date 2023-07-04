@@ -41,45 +41,16 @@ from fractions import Fraction
 
 class IntegerVariable(Variable):
     r&#34;&#34;&#34;
-    IntegerVariable class, representing a Variable defined in Z.
+    Class, representing an integer number `src.variable.variable.Variable`, meaning a `src.variable.variable.Variable` defined in \(\mathbb{Z}\).
+    Most of the time, you **shouldn&#39;t** use the constructor
+    of `src.variable.integerVariable.IntegerVariable` and should rather look into `src.variable.integerVariable.IntegerVariable.declare`, 
+    `src.variable.integerVariable.IntegerVariable.declareBulk` or `src.variable.integerVariable.IntegerVariable.declareAnonymous`.
 
-    Attributes
+    Parameters
     ----------
-    name: str
-        The name of the Variable
-        Name must begin with an alphabet character. It can be followed by alphanumerical character or _.
-        Name can&#39;t have this symbole : + - * / @
+    name : String
+        The name of the `src.variable.integerVariable.IntegerVariable`.
     &#34;&#34;&#34;
-
-    def declare(name: str) -&gt; IntegerVariable:
-        r&#34;&#34;&#34;
-        Function used to declare a new 
-        If this variable already exist and have another type compared to the new declaraton,
-        This function will raise an Exception.
-
-        Attributes
-        ----------
-        String: name
-            The name of the Variable to be declared.
-        &#34;&#34;&#34;
-        return VariableManager.add(IntegerVariable(name))
-    
-    def declareBulk(*lname: str) -&gt; list[IntegerVariable]:
-        r&#34;&#34;&#34;
-        Function used to declare a new 
-        If this variable already exist and have another type compared to the new declaraton,
-        This function will raise an Exception.
-
-        Attributes
-        ----------
-        String: name
-            The name of the Variable to be declared.
-        &#34;&#34;&#34;
-
-        vars = []
-        for name in lname:
-            vars.append(VariableManager.add(IntegerVariable(name)))
-        return vars
 
     def haveBound(self) -&gt; tuple[bool, bool]:
         r&#34;&#34;&#34;
@@ -118,7 +89,7 @@ class IntegerVariable(Variable):
             True if the variable must have intergers values
             else False
         &#34;&#34;&#34;
-        
+
         return True</code></pre>
 </details>
 </section>
@@ -136,13 +107,14 @@ class IntegerVariable(Variable):
 <span>(</span><span>name)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>IntegerVariable class, representing a Variable defined in Z.</p>
-<h2 id="attributes">Attributes</h2>
+<div class="desc"><p>Class, representing an integer number <code><a title="src.variable.variable.Variable" href="variable.html#src.variable.variable.Variable">Variable</a></code>, meaning a <code><a title="src.variable.variable.Variable" href="variable.html#src.variable.variable.Variable">Variable</a></code> defined in <span><span class="MathJax_Preview">\mathbb{Z}</span><script type="math/tex">\mathbb{Z}</script></span>.
+Most of the time, you <strong>shouldn't</strong> use the constructor
+of <code><a title="src.variable.integerVariable.IntegerVariable" href="#src.variable.integerVariable.IntegerVariable">IntegerVariable</a></code> and should rather look into <code><a title="src.variable.integerVariable.IntegerVariable.declare" href="variable.html#src.variable.variable.Variable.declare">Variable.declare()</a></code>,
+<code><a title="src.variable.integerVariable.IntegerVariable.declareBulk" href="variable.html#src.variable.variable.Variable.declareBulk">Variable.declareBulk()</a></code> or <code><a title="src.variable.integerVariable.IntegerVariable.declareAnonymous" href="variable.html#src.variable.variable.Variable.declareAnonymous">Variable.declareAnonymous()</a></code>.</p>
+<h2 id="parameters">Parameters</h2>
 <dl>
-<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
-<dd>The name of the Variable
-Name must begin with an alphabet character. It can be followed by alphanumerical character or _.
-Name can't have this symbole : + - * / @</dd>
+<dt><strong><code>name</code></strong> :&ensp;<code>String</code></dt>
+<dd>The name of the <code><a title="src.variable.integerVariable.IntegerVariable" href="#src.variable.integerVariable.IntegerVariable">IntegerVariable</a></code>.</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -150,45 +122,16 @@ Name can't have this symbole : + - * / @</dd>
 </summary>
 <pre><code class="python">class IntegerVariable(Variable):
     r&#34;&#34;&#34;
-    IntegerVariable class, representing a Variable defined in Z.
+    Class, representing an integer number `src.variable.variable.Variable`, meaning a `src.variable.variable.Variable` defined in \(\mathbb{Z}\).
+    Most of the time, you **shouldn&#39;t** use the constructor
+    of `src.variable.integerVariable.IntegerVariable` and should rather look into `src.variable.integerVariable.IntegerVariable.declare`, 
+    `src.variable.integerVariable.IntegerVariable.declareBulk` or `src.variable.integerVariable.IntegerVariable.declareAnonymous`.
 
-    Attributes
+    Parameters
     ----------
-    name: str
-        The name of the Variable
-        Name must begin with an alphabet character. It can be followed by alphanumerical character or _.
-        Name can&#39;t have this symbole : + - * / @
+    name : String
+        The name of the `src.variable.integerVariable.IntegerVariable`.
     &#34;&#34;&#34;
-
-    def declare(name: str) -&gt; IntegerVariable:
-        r&#34;&#34;&#34;
-        Function used to declare a new 
-        If this variable already exist and have another type compared to the new declaraton,
-        This function will raise an Exception.
-
-        Attributes
-        ----------
-        String: name
-            The name of the Variable to be declared.
-        &#34;&#34;&#34;
-        return VariableManager.add(IntegerVariable(name))
-    
-    def declareBulk(*lname: str) -&gt; list[IntegerVariable]:
-        r&#34;&#34;&#34;
-        Function used to declare a new 
-        If this variable already exist and have another type compared to the new declaraton,
-        This function will raise an Exception.
-
-        Attributes
-        ----------
-        String: name
-            The name of the Variable to be declared.
-        &#34;&#34;&#34;
-
-        vars = []
-        for name in lname:
-            vars.append(VariableManager.add(IntegerVariable(name)))
-        return vars
 
     def haveBound(self) -&gt; tuple[bool, bool]:
         r&#34;&#34;&#34;
@@ -227,7 +170,7 @@ Name can't have this symbole : + - * / @</dd>
             True if the variable must have intergers values
             else False
         &#34;&#34;&#34;
-        
+
         return True</code></pre>
 </details>
 <h3>Ancestors</h3>
@@ -235,78 +178,13 @@ Name can't have this symbole : + - * / @</dd>
 <li><a title="src.variable.variable.Variable" href="variable.html#src.variable.variable.Variable">Variable</a></li>
 <li>abc.ABC</li>
 </ul>
-<h3>Methods</h3>
-<dl>
-<dt id="src.variable.integerVariable.IntegerVariable.declare"><code class="name flex">
-<span>def <span class="ident">declare</span></span>(<span>name: str) ‑> <a title="src.variable.integerVariable.IntegerVariable" href="#src.variable.integerVariable.IntegerVariable">IntegerVariable</a></span>
-</code></dt>
-<dd>
-<div class="desc"><p>Function used to declare a new
-If this variable already exist and have another type compared to the new declaraton,
-This function will raise an Exception.</p>
-<h2 id="attributes">Attributes</h2>
-<dl>
-<dt><strong><code>String</code></strong> :&ensp;<code>name</code></dt>
-<dd>The name of the Variable to be declared.</dd>
-</dl></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def declare(name: str) -&gt; IntegerVariable:
-    r&#34;&#34;&#34;
-    Function used to declare a new 
-    If this variable already exist and have another type compared to the new declaraton,
-    This function will raise an Exception.
-
-    Attributes
-    ----------
-    String: name
-        The name of the Variable to be declared.
-    &#34;&#34;&#34;
-    return VariableManager.add(IntegerVariable(name))</code></pre>
-</details>
-</dd>
-<dt id="src.variable.integerVariable.IntegerVariable.declareBulk"><code class="name flex">
-<span>def <span class="ident">declareBulk</span></span>(<span>*lname: str) ‑> list[<a title="src.variable.integerVariable.IntegerVariable" href="#src.variable.integerVariable.IntegerVariable">IntegerVariable</a>]</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Function used to declare a new
-If this variable already exist and have another type compared to the new declaraton,
-This function will raise an Exception.</p>
-<h2 id="attributes">Attributes</h2>
-<dl>
-<dt><strong><code>String</code></strong> :&ensp;<code>name</code></dt>
-<dd>The name of the Variable to be declared.</dd>
-</dl></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def declareBulk(*lname: str) -&gt; list[IntegerVariable]:
-    r&#34;&#34;&#34;
-    Function used to declare a new 
-    If this variable already exist and have another type compared to the new declaraton,
-    This function will raise an Exception.
-
-    Attributes
-    ----------
-    String: name
-        The name of the Variable to be declared.
-    &#34;&#34;&#34;
-
-    vars = []
-    for name in lname:
-        vars.append(VariableManager.add(IntegerVariable(name)))
-    return vars</code></pre>
-</details>
-</dd>
-</dl>
 <h3>Inherited members</h3>
 <ul class="hlist">
 <li><code><b><a title="src.variable.variable.Variable" href="variable.html#src.variable.variable.Variable">Variable</a></b></code>:
 <ul class="hlist">
+<li><code><a title="src.variable.variable.Variable.declare" href="variable.html#src.variable.variable.Variable.declare">declare</a></code></li>
 <li><code><a title="src.variable.variable.Variable.declareAnonymous" href="variable.html#src.variable.variable.Variable.declareAnonymous">declareAnonymous</a></code></li>
+<li><code><a title="src.variable.variable.Variable.declareBulk" href="variable.html#src.variable.variable.Variable.declareBulk">declareBulk</a></code></li>
 <li><code><a title="src.variable.variable.Variable.getBounds" href="variable.html#src.variable.variable.Variable.getBounds">getBounds</a></code></li>
 <li><code><a title="src.variable.variable.Variable.haveBound" href="variable.html#src.variable.variable.Variable.haveBound">haveBound</a></code></li>
 <li><code><a title="src.variable.variable.Variable.isInteger" href="variable.html#src.variable.variable.Variable.isInteger">isInteger</a></code></li>
@@ -333,10 +211,6 @@ This function will raise an Exception.</p>
 <ul>
 <li>
 <h4><code><a title="src.variable.integerVariable.IntegerVariable" href="#src.variable.integerVariable.IntegerVariable">IntegerVariable</a></code></h4>
-<ul class="">
-<li><code><a title="src.variable.integerVariable.IntegerVariable.declare" href="#src.variable.integerVariable.IntegerVariable.declare">declare</a></code></li>
-<li><code><a title="src.variable.integerVariable.IntegerVariable.declareBulk" href="#src.variable.integerVariable.IntegerVariable.declareBulk">declareBulk</a></code></li>
-</ul>
 </li>
 </ul>
 </li>

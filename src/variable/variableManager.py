@@ -55,13 +55,13 @@ class VariableManager:
     
         Parameters
         ----------
-        obj: `src.variable.variable.Variable`
+        obj: src.variable.variable.Variable
             The `src.variable.variable.Variable` to add.
         
             
         Returns
         -------
-        `src.variable.variable.Variable`
+        src.variable.variable.Variable
             The `src.variable.variable.Variable` added if the execution of this function was successful.
 
         Raises
@@ -90,7 +90,7 @@ class VariableManager:
         
         Returns
         -------
-        `src.variable.variable.Variable`
+        src.variable.variable.Variable
             The `src.variable.variable.Variable` to get.
 
         Raises

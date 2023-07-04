@@ -11,45 +11,16 @@ from fractions import Fraction
 
 class IntegerVariable(Variable):
     r"""
-    IntegerVariable class, representing a Variable defined in Z.
+    Class, representing an integer number `src.variable.variable.Variable`, meaning a `src.variable.variable.Variable` defined in \(\mathbb{Z}\).
+    Most of the time, you **shouldn't** use the constructor
+    of `src.variable.integerVariable.IntegerVariable` and should rather look into `src.variable.integerVariable.IntegerVariable.declare`, 
+    `src.variable.integerVariable.IntegerVariable.declareBulk` or `src.variable.integerVariable.IntegerVariable.declareAnonymous`.
 
-    Attributes
+    Parameters
     ----------
-    name: str
-        The name of the Variable
-        Name must begin with an alphabet character. It can be followed by alphanumerical character or _.
-        Name can't have this symbole : + - * / @
+    name : String
+        The name of the `src.variable.integerVariable.IntegerVariable`.
     """
-
-    def declare(name: str) -> IntegerVariable:
-        r"""
-        Function used to declare a new 
-        If this variable already exist and have another type compared to the new declaraton,
-        This function will raise an Exception.
-
-        Attributes
-        ----------
-        String: name
-            The name of the Variable to be declared.
-        """
-        return VariableManager.add(IntegerVariable(name))
-    
-    def declareBulk(*lname: str) -> list[IntegerVariable]:
-        r"""
-        Function used to declare a new 
-        If this variable already exist and have another type compared to the new declaraton,
-        This function will raise an Exception.
-
-        Attributes
-        ----------
-        String: name
-            The name of the Variable to be declared.
-        """
-
-        vars = []
-        for name in lname:
-            vars.append(VariableManager.add(IntegerVariable(name)))
-        return vars
 
     def haveBound(self) -> tuple[bool, bool]:
         r"""
@@ -88,5 +59,5 @@ class IntegerVariable(Variable):
             True if the variable must have intergers values
             else False
         """
-        
+
         return True
