@@ -246,7 +246,7 @@ class FormulaInterpreter:
             `src.formula.formula.Formula` representing a point \(y \in \mathcal{M}(\mu)\) that satisfies the optimization problem above. 
         """
 
-        variables = list(And(phi,mu).getVariables())
+        variables = list(And(psi,mu).getVariables())
         e = RealVariable("@")
         if not e in variables: variables.append(e)
         self.__distanceFunction.getWeights()[e] = 0
