@@ -28,7 +28,7 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">&#34;&#34;&#34;
+<pre><code class="python">r&#34;&#34;&#34;
 Class allowing `src.revision.Revision` to interact with a `src.mlo_solver.MLOSolver.MLOSolver`.
 &#34;&#34;&#34;
 
@@ -44,7 +44,22 @@ from .simplificator import Simplificator
 from fractions import Fraction
 
 class FormulaInterpreter:
-    def __init__(self, mloSolver : MLOSolver, distanceFunction : DistanceFunction, simplifications : list[Simplificator]) -&gt; None:
+    r&#34;&#34;&#34;
+    Class allowing `src.revision.Revision` to interact with a `src.mlo_solver.MLOSolver.MLOSolver`.
+    
+    Parameters
+    ----------
+    solverInit : `src.mlo_solver.MLOSolver.MLOSolver`
+        The solver that will be used for optimization.
+    distance : `src.distance.distance_function.distanceFunction.DistanceFunction`
+        The distance function that will be used and, more importantly, the weights \((w_i)\) and \(\varepsilon\) arguments of it.
+        The original algorithm is meant to be used with a `src.distance.distance_function.discreteL1DistanceFunction.discreteL1DistanceFunction`.
+    simplifiers : list of `src.simplificator.simplificator.Simplificator`, optional
+        List of all of the `src.simplificator.simplificator.Simplificator` that will be applied to the `src.formula.formula.Formula`, 
+        in order given by the list.
+    &#34;&#34;&#34;
+
+    def __init__(self, mloSolver : MLOSolver, distanceFunction : DistanceFunction, simplifications : list[Simplificator] = []) -&gt; None:
         self.__MLOSolver = mloSolver
         self.__distanceFunction = distanceFunction
         self.__simplifiers = simplifications
@@ -55,17 +70,20 @@ class FormulaInterpreter:
         self._eVar = RealVariable(&#34;@&#34;)
 
     def simplifyMLC(self, phi : Formula):
-        &#39;&#39;&#39;
-        Method used to simplify a conjonction of mix linears constraints
+        r&#34;&#34;&#34;
+        Method used to simplify a conjonction of mixed linear constraints.
 
-        Attributes
+        Parameters
         ----------
-        phi : the formula to simplify
+        phi : `src.formula.formula.Formula`
+            The `src.formula.formula.Formula` to simplify.
 
         Returns
         -------
-        res: the formula with mlc simplified
-        &#39;&#39;&#39;
+        res : `src.formula.formula.Formula`
+            The simplified `src.formula.formula.Formula`.
+        &#34;&#34;&#34;
+
         if self.__simplifiers == None:
             return phi
         else:
@@ -79,18 +97,20 @@ class FormulaInterpreter:
             return Or(formulaSet= set(orChild))
 
     def sat(self, phi : Formula) -&gt; bool:
-        &#39;&#39;&#39;
-        Method used to verify the satisfiability of a formula
+        r&#34;&#34;&#34;
+        Method used to verify the feasability of a `src.formula.formula.Formula`.
 
-        Attributes
+        Parameters
         ----------
-        phi : the formula
+        phi : `src.formula.formula.Formula`
+            The `src.formula.formula.Formula` you want to verify the feasability.
 
         Returns
         -------
-        res: true if the formula is satsifiable, false in the other case
+        res : boolean
+            Booean symbolizing if \(\varphi\) is feasable (`True`) or not (`False`).
         
-        &#39;&#39;&#39;
+        &#34;&#34;&#34;
         variables = list(phi.getVariables())
         variables.append(self._eVar)
 
@@ -121,21 +141,37 @@ class FormulaInterpreter:
             
         return False
 
-    def findOneSolution(self, variables : list[Variable], phi : And, mu : And) -&gt; tuple[Fraction, Formula]:
-        &#39;&#39;&#39;
-        Method used for find one solution for the optimization of a couple of Formula
+    def findOneSolution(self, variables : list[Variable], psi : And, mu : And) -&gt; tuple[Fraction, Formula]:
+        r&#34;&#34;&#34;
+        Method used to interact with the initialy specified `src.mlo_solver.MLOSolver.MLOSolver`, thus finding one solution of
+        the optimization of the following system when \(\psi\) and \(\mu\) are conjunctions of
+        `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint`, with \(d\) the  `src.distance.distance_function.distanceFunction.DistanceFunction`
+        given at the initialization of the class.
 
-        Attributes
+        \[
+            \begin{cases}
+                x \in \mathcal{M}(\psi) \\
+                y \in \mathcal{M}(\mu) \\
+                \text{minimize } d(x, y)
+            \end{cases}
+        \]
+
+        Parameters
         ----------
-        variables : list of variables
-        phi : a formula (And)
-        mu : a formula (And)
+        variables : list of `src.variable.variable.Variable`
+            List of all the `src.variable.variable.Variable` in use in both \(\psi\) and \(\mu\).
+        psi, mu : `src.formula.naryFormula.andOperator.And`
+            \(\psi\) and \(\mu\), conjunctions of litterals as used in the optimization problem above.
 
         Returns
         -------
-        res: distance between phi and mu, Formula wich symbolize the optimisation between phi and mu
-        
-        &#39;&#39;&#39;
+        distance : Fraction
+            Minimal distance (calculated with the `src.distance.distance_function.distanceFunction.DistanceFunction`
+            given at the initialization of the class) that satisfies the optimization problem above. 
+        y : `src.formula.formula.Formula`
+            `src.formula.formula.Formula` representing a point \(y \in \mathcal{M}(\mu)\) that satisfies the optimization problem above. 
+        &#34;&#34;&#34;
+
         variablesTest = []
         neg = None
         for var in variables:
@@ -144,7 +180,7 @@ class FormulaInterpreter:
             else: variablesTest.append(var)
         variablesTest.append(neg)
         variables = variablesTest
-        constraints = self.__buildConstraints(variables, phi, mu)
+        constraints = self.__buildConstraints(variables, psi, mu)
 
         obj = [0]*len(variables)*2
         for variable in variables:
@@ -160,7 +196,7 @@ class FormulaInterpreter:
                 resSet = resSet.union(set([LinearConstraint(str(variables[i]) + &#34; = &#34; + str(Fraction(values[len(variables)+i])))]))
         return (res[2], And(formulaSet=resSet))
 
-    def __buildConstraints(self, variables : list[Variable], phi : And, mu : And) -&gt; dict[tuple[dict[Fraction], ConstraintOperator, Fraction]]:
+    def __buildConstraints(self, variables : list[Variable], psi : And, mu : And) -&gt; dict[tuple[dict[Fraction], ConstraintOperator, Fraction]]:
         &#39;&#39;&#39;
         Method used to build table of constraints, for the solver, linked to phi and mu
         Attributes
@@ -175,7 +211,7 @@ class FormulaInterpreter:
         &#39;&#39;&#39;
         constraints = []
         i = 0
-        for formula in [phi, mu]:
+        for formula in [psi, mu]:
             for lc in formula.getAdherence(self._eVar):
                 for constraint in lc:
                     constraintP = []
@@ -211,27 +247,63 @@ class FormulaInterpreter:
             constraints.append((constraintN, ConstraintOperator.LEQ, 0))
         return constraints
 
-    def optimizeCouple(self, phi : And, mu : And) -&gt; tuple[Fraction, Formula]:
-        &#39;&#39;&#39;
-        Method used for optimized a couple of Formula
+    def optimizeCouple(self, psi : And, mu : And) -&gt; tuple[Fraction, Formula]:
+        r&#34;&#34;&#34;
+        Method used to interact with the initialy specified `src.mlo_solver.MLOSolver.MLOSolver`, thus finding one solution of
+        the optimization of the following system when \(\psi\) and \(\mu\) are conjunctions of
+        `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint`, with \(d\) the  `src.distance.distance_function.distanceFunction.DistanceFunction`
+        given at the initialization of the class.
 
-        Attributes
+        \[
+            \begin{cases}
+                x \in \mathcal{M}(\psi) \\
+                y \in \mathcal{M}(\mu) \\
+                \text{minimize } d(x, y)
+            \end{cases}
+        \]
+
+        Parameters
         ----------
-        phi : a formula (And)
-        mu : a formula (And)
+        psi, mu : `src.formula.naryFormula.andOperator.And`
+            \(\psi\) and \(\mu\), conjunctions of litterals as used in the optimization problem above.
 
         Returns
         -------
-        res: distance between phi and mu, Formula wich symbolize the optimisation between phi and mu
-        &#39;&#39;&#39;
+        distance : Fraction
+            Minimal distance (calculated with the `src.distance.distance_function.distanceFunction.DistanceFunction`
+            given at the initialization of the class) that satisfies the optimization problem above. 
+        y : `src.formula.formula.Formula`
+            `src.formula.formula.Formula` representing a point \(y \in \mathcal{M}(\mu)\) that satisfies the optimization problem above. 
+        &#34;&#34;&#34;
+
         variables = list(And(phi,mu).getVariables())
         e = RealVariable(&#34;@&#34;)
         if not e in variables: variables.append(e)
         self.__distanceFunction.getWeights()[e] = 0
 
-        return self.findOneSolution(variables,phi,mu)    
+        return self.findOneSolution(variables, psi, mu)    
 
-    def removeNot(self, phi: And):
+    def removeNot(self, phi: And) -&gt; And:
+        r&#34;&#34;&#34;
+        Method used to transform a conjunction of litterals (i.e `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint`
+        and `src.formula.unaryFormula.notOperator.Not` of `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint`) in a conjunction of `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint`,
+        where every `src.formula.unaryFormula.notOperator.Not` of `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint`
+        \(\neg(\sum_{j=1}^{n}a_jx_j \leqslant b) = \sum_{j=1}^{n}a_jx_j &gt; b\) is replaced by a `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint`
+        of the form \(\sum_{j=1}^{n}-a_jx_j \leqslant -b\).
+
+        Parameters
+        ----------
+        phi : `src.formula.naryFormula.andOperator.And`
+            Conjunctions of litterals to transform, as specified above.
+
+        Returns
+        -------
+        phiPrime : `src.formula.naryFormula.andOperator.And`
+            Conjunctions of `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint` transformed from \(\phi\),
+            as specified above.
+
+        &#34;&#34;&#34;
+
         andSet = set()
         negConstraint = LinearConstraint(&#34;&#34;)
         negConstraint.variables[self._eVar] = -1
@@ -259,16 +331,42 @@ class FormulaInterpreter:
 <dl>
 <dt id="src.formulaInterpreter.FormulaInterpreter"><code class="flex name class">
 <span>class <span class="ident">FormulaInterpreter</span></span>
-<span>(</span><span>mloSolver: MLOSolver, distanceFunction: DistanceFunction, simplifications: list[Simplificator])</span>
+<span>(</span><span>mloSolver: MLOSolver, distanceFunction: DistanceFunction, simplifications: list[Simplificator] = [])</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Class allowing <code><a title="src.revision.Revision" href="revision.html#src.revision.Revision">Revision</a></code> to interact with a <code><a title="src.mlo_solver.MLOSolver.MLOSolver" href="mlo_solver/MLOSolver.html#src.mlo_solver.MLOSolver.MLOSolver">MLOSolver</a></code>.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>solverInit</code></strong> :&ensp;<code><a title="src.mlo_solver.MLOSolver.MLOSolver" href="mlo_solver/MLOSolver.html#src.mlo_solver.MLOSolver.MLOSolver">MLOSolver</a></code></dt>
+<dd>The solver that will be used for optimization.</dd>
+<dt><strong><code>distance</code></strong> :&ensp;<code><a title="src.distance.distance_function.distanceFunction.DistanceFunction" href="distance/distance_function/distanceFunction.html#src.distance.distance_function.distanceFunction.DistanceFunction">DistanceFunction</a></code></dt>
+<dd>The distance function that will be used and, more importantly, the weights <span><span class="MathJax_Preview">(w_i)</span><script type="math/tex">(w_i)</script></span> and <span><span class="MathJax_Preview">\varepsilon</span><script type="math/tex">\varepsilon</script></span> arguments of it.
+The original algorithm is meant to be used with a <code><a title="src.distance.distance_function.discreteL1DistanceFunction.discreteL1DistanceFunction" href="distance/distance_function/discreteL1DistanceFunction.html#src.distance.distance_function.discreteL1DistanceFunction.discreteL1DistanceFunction">discreteL1DistanceFunction</a></code>.</dd>
+<dt><strong><code>simplifiers</code></strong> :&ensp;<code>list</code> of <code><a title="src.simplificator.simplificator.Simplificator" href="simplificator/simplificator.html#src.simplificator.simplificator.Simplificator">Simplificator</a></code>, optional</dt>
+<dd>List of all of the <code><a title="src.simplificator.simplificator.Simplificator" href="simplificator/simplificator.html#src.simplificator.simplificator.Simplificator">Simplificator</a></code> that will be applied to the <code><a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a></code>,
+in order given by the list.</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class FormulaInterpreter:
-    def __init__(self, mloSolver : MLOSolver, distanceFunction : DistanceFunction, simplifications : list[Simplificator]) -&gt; None:
+    r&#34;&#34;&#34;
+    Class allowing `src.revision.Revision` to interact with a `src.mlo_solver.MLOSolver.MLOSolver`.
+    
+    Parameters
+    ----------
+    solverInit : `src.mlo_solver.MLOSolver.MLOSolver`
+        The solver that will be used for optimization.
+    distance : `src.distance.distance_function.distanceFunction.DistanceFunction`
+        The distance function that will be used and, more importantly, the weights \((w_i)\) and \(\varepsilon\) arguments of it.
+        The original algorithm is meant to be used with a `src.distance.distance_function.discreteL1DistanceFunction.discreteL1DistanceFunction`.
+    simplifiers : list of `src.simplificator.simplificator.Simplificator`, optional
+        List of all of the `src.simplificator.simplificator.Simplificator` that will be applied to the `src.formula.formula.Formula`, 
+        in order given by the list.
+    &#34;&#34;&#34;
+
+    def __init__(self, mloSolver : MLOSolver, distanceFunction : DistanceFunction, simplifications : list[Simplificator] = []) -&gt; None:
         self.__MLOSolver = mloSolver
         self.__distanceFunction = distanceFunction
         self.__simplifiers = simplifications
@@ -279,17 +377,20 @@ class FormulaInterpreter:
         self._eVar = RealVariable(&#34;@&#34;)
 
     def simplifyMLC(self, phi : Formula):
-        &#39;&#39;&#39;
-        Method used to simplify a conjonction of mix linears constraints
+        r&#34;&#34;&#34;
+        Method used to simplify a conjonction of mixed linear constraints.
 
-        Attributes
+        Parameters
         ----------
-        phi : the formula to simplify
+        phi : `src.formula.formula.Formula`
+            The `src.formula.formula.Formula` to simplify.
 
         Returns
         -------
-        res: the formula with mlc simplified
-        &#39;&#39;&#39;
+        res : `src.formula.formula.Formula`
+            The simplified `src.formula.formula.Formula`.
+        &#34;&#34;&#34;
+
         if self.__simplifiers == None:
             return phi
         else:
@@ -303,18 +404,20 @@ class FormulaInterpreter:
             return Or(formulaSet= set(orChild))
 
     def sat(self, phi : Formula) -&gt; bool:
-        &#39;&#39;&#39;
-        Method used to verify the satisfiability of a formula
+        r&#34;&#34;&#34;
+        Method used to verify the feasability of a `src.formula.formula.Formula`.
 
-        Attributes
+        Parameters
         ----------
-        phi : the formula
+        phi : `src.formula.formula.Formula`
+            The `src.formula.formula.Formula` you want to verify the feasability.
 
         Returns
         -------
-        res: true if the formula is satsifiable, false in the other case
+        res : boolean
+            Booean symbolizing if \(\varphi\) is feasable (`True`) or not (`False`).
         
-        &#39;&#39;&#39;
+        &#34;&#34;&#34;
         variables = list(phi.getVariables())
         variables.append(self._eVar)
 
@@ -345,21 +448,37 @@ class FormulaInterpreter:
             
         return False
 
-    def findOneSolution(self, variables : list[Variable], phi : And, mu : And) -&gt; tuple[Fraction, Formula]:
-        &#39;&#39;&#39;
-        Method used for find one solution for the optimization of a couple of Formula
+    def findOneSolution(self, variables : list[Variable], psi : And, mu : And) -&gt; tuple[Fraction, Formula]:
+        r&#34;&#34;&#34;
+        Method used to interact with the initialy specified `src.mlo_solver.MLOSolver.MLOSolver`, thus finding one solution of
+        the optimization of the following system when \(\psi\) and \(\mu\) are conjunctions of
+        `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint`, with \(d\) the  `src.distance.distance_function.distanceFunction.DistanceFunction`
+        given at the initialization of the class.
 
-        Attributes
+        \[
+            \begin{cases}
+                x \in \mathcal{M}(\psi) \\
+                y \in \mathcal{M}(\mu) \\
+                \text{minimize } d(x, y)
+            \end{cases}
+        \]
+
+        Parameters
         ----------
-        variables : list of variables
-        phi : a formula (And)
-        mu : a formula (And)
+        variables : list of `src.variable.variable.Variable`
+            List of all the `src.variable.variable.Variable` in use in both \(\psi\) and \(\mu\).
+        psi, mu : `src.formula.naryFormula.andOperator.And`
+            \(\psi\) and \(\mu\), conjunctions of litterals as used in the optimization problem above.
 
         Returns
         -------
-        res: distance between phi and mu, Formula wich symbolize the optimisation between phi and mu
-        
-        &#39;&#39;&#39;
+        distance : Fraction
+            Minimal distance (calculated with the `src.distance.distance_function.distanceFunction.DistanceFunction`
+            given at the initialization of the class) that satisfies the optimization problem above. 
+        y : `src.formula.formula.Formula`
+            `src.formula.formula.Formula` representing a point \(y \in \mathcal{M}(\mu)\) that satisfies the optimization problem above. 
+        &#34;&#34;&#34;
+
         variablesTest = []
         neg = None
         for var in variables:
@@ -368,7 +487,7 @@ class FormulaInterpreter:
             else: variablesTest.append(var)
         variablesTest.append(neg)
         variables = variablesTest
-        constraints = self.__buildConstraints(variables, phi, mu)
+        constraints = self.__buildConstraints(variables, psi, mu)
 
         obj = [0]*len(variables)*2
         for variable in variables:
@@ -384,7 +503,7 @@ class FormulaInterpreter:
                 resSet = resSet.union(set([LinearConstraint(str(variables[i]) + &#34; = &#34; + str(Fraction(values[len(variables)+i])))]))
         return (res[2], And(formulaSet=resSet))
 
-    def __buildConstraints(self, variables : list[Variable], phi : And, mu : And) -&gt; dict[tuple[dict[Fraction], ConstraintOperator, Fraction]]:
+    def __buildConstraints(self, variables : list[Variable], psi : And, mu : And) -&gt; dict[tuple[dict[Fraction], ConstraintOperator, Fraction]]:
         &#39;&#39;&#39;
         Method used to build table of constraints, for the solver, linked to phi and mu
         Attributes
@@ -399,7 +518,7 @@ class FormulaInterpreter:
         &#39;&#39;&#39;
         constraints = []
         i = 0
-        for formula in [phi, mu]:
+        for formula in [psi, mu]:
             for lc in formula.getAdherence(self._eVar):
                 for constraint in lc:
                     constraintP = []
@@ -435,27 +554,63 @@ class FormulaInterpreter:
             constraints.append((constraintN, ConstraintOperator.LEQ, 0))
         return constraints
 
-    def optimizeCouple(self, phi : And, mu : And) -&gt; tuple[Fraction, Formula]:
-        &#39;&#39;&#39;
-        Method used for optimized a couple of Formula
+    def optimizeCouple(self, psi : And, mu : And) -&gt; tuple[Fraction, Formula]:
+        r&#34;&#34;&#34;
+        Method used to interact with the initialy specified `src.mlo_solver.MLOSolver.MLOSolver`, thus finding one solution of
+        the optimization of the following system when \(\psi\) and \(\mu\) are conjunctions of
+        `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint`, with \(d\) the  `src.distance.distance_function.distanceFunction.DistanceFunction`
+        given at the initialization of the class.
 
-        Attributes
+        \[
+            \begin{cases}
+                x \in \mathcal{M}(\psi) \\
+                y \in \mathcal{M}(\mu) \\
+                \text{minimize } d(x, y)
+            \end{cases}
+        \]
+
+        Parameters
         ----------
-        phi : a formula (And)
-        mu : a formula (And)
+        psi, mu : `src.formula.naryFormula.andOperator.And`
+            \(\psi\) and \(\mu\), conjunctions of litterals as used in the optimization problem above.
 
         Returns
         -------
-        res: distance between phi and mu, Formula wich symbolize the optimisation between phi and mu
-        &#39;&#39;&#39;
+        distance : Fraction
+            Minimal distance (calculated with the `src.distance.distance_function.distanceFunction.DistanceFunction`
+            given at the initialization of the class) that satisfies the optimization problem above. 
+        y : `src.formula.formula.Formula`
+            `src.formula.formula.Formula` representing a point \(y \in \mathcal{M}(\mu)\) that satisfies the optimization problem above. 
+        &#34;&#34;&#34;
+
         variables = list(And(phi,mu).getVariables())
         e = RealVariable(&#34;@&#34;)
         if not e in variables: variables.append(e)
         self.__distanceFunction.getWeights()[e] = 0
 
-        return self.findOneSolution(variables,phi,mu)    
+        return self.findOneSolution(variables, psi, mu)    
 
-    def removeNot(self, phi: And):
+    def removeNot(self, phi: And) -&gt; And:
+        r&#34;&#34;&#34;
+        Method used to transform a conjunction of litterals (i.e `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint`
+        and `src.formula.unaryFormula.notOperator.Not` of `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint`) in a conjunction of `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint`,
+        where every `src.formula.unaryFormula.notOperator.Not` of `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint`
+        \(\neg(\sum_{j=1}^{n}a_jx_j \leqslant b) = \sum_{j=1}^{n}a_jx_j &gt; b\) is replaced by a `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint`
+        of the form \(\sum_{j=1}^{n}-a_jx_j \leqslant -b\).
+
+        Parameters
+        ----------
+        phi : `src.formula.naryFormula.andOperator.And`
+            Conjunctions of litterals to transform, as specified above.
+
+        Returns
+        -------
+        phiPrime : `src.formula.naryFormula.andOperator.And`
+            Conjunctions of `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint` transformed from \(\phi\),
+            as specified above.
+
+        &#34;&#34;&#34;
+
         andSet = set()
         negConstraint = LinearConstraint(&#34;&#34;)
         negConstraint.variables[self._eVar] = -1
@@ -473,43 +628,77 @@ class FormulaInterpreter:
 <h3>Methods</h3>
 <dl>
 <dt id="src.formulaInterpreter.FormulaInterpreter.findOneSolution"><code class="name flex">
-<span>def <span class="ident">findOneSolution</span></span>(<span>self, variables: list[Variable], phi: And, mu: And) ‑> tuple[fractions.Fraction, <a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a>]</span>
+<span>def <span class="ident">findOneSolution</span></span>(<span>self, variables: list[Variable], psi: And, mu: And) ‑> tuple[fractions.Fraction, <a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a>]</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Method used for find one solution for the optimization of a couple of Formula</p>
-<h2 id="attributes">Attributes</h2>
+<div class="desc"><p>Method used to interact with the initialy specified <code><a title="src.mlo_solver.MLOSolver.MLOSolver" href="mlo_solver/MLOSolver.html#src.mlo_solver.MLOSolver.MLOSolver">MLOSolver</a></code>, thus finding one solution of
+the optimization of the following system when <span><span class="MathJax_Preview">\psi</span><script type="math/tex">\psi</script></span> and <span><span class="MathJax_Preview">\mu</span><script type="math/tex">\mu</script></span> are conjunctions of
+<code><a title="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint" href="formula/nullaryFormula/constraint/linearConstraint.html#src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint">LinearConstraint</a></code>, with <span><span class="MathJax_Preview">d</span><script type="math/tex">d</script></span> the
+<code><a title="src.distance.distance_function.distanceFunction.DistanceFunction" href="distance/distance_function/distanceFunction.html#src.distance.distance_function.distanceFunction.DistanceFunction">DistanceFunction</a></code>
+given at the initialization of the class.</p>
+<p><span><span class="MathJax_Preview">
+\begin{cases}
+x \in \mathcal{M}(\psi) \\
+y \in \mathcal{M}(\mu) \\
+\text{minimize } d(x, y)
+\end{cases}
+</span><script type="math/tex; mode=display">
+\begin{cases}
+x \in \mathcal{M}(\psi) \\
+y \in \mathcal{M}(\mu) \\
+\text{minimize } d(x, y)
+\end{cases}
+</script></span></p>
+<h2 id="parameters">Parameters</h2>
 <dl>
-<dt><strong><code>variables</code></strong> :&ensp;<code>list</code> of <code>variables</code></dt>
-<dd>&nbsp;</dd>
-<dt><strong><code>phi</code></strong> :&ensp;<code>a formula (And)</code></dt>
-<dd>&nbsp;</dd>
-<dt><strong><code>mu</code></strong> :&ensp;<code>a formula (And)</code></dt>
-<dd>&nbsp;</dd>
+<dt><strong><code>variables</code></strong> :&ensp;<code>list</code> of <code><a title="src.variable.variable.Variable" href="variable/variable.html#src.variable.variable.Variable">Variable</a></code></dt>
+<dd>List of all the <code><a title="src.variable.variable.Variable" href="variable/variable.html#src.variable.variable.Variable">Variable</a></code> in use in both <span><span class="MathJax_Preview">\psi</span><script type="math/tex">\psi</script></span> and <span><span class="MathJax_Preview">\mu</span><script type="math/tex">\mu</script></span>.</dd>
+<dt><strong><code>psi</code></strong>, <strong><code>mu</code></strong> :&ensp;<code><a title="src.formula.naryFormula.andOperator.And" href="formula/naryFormula/andOperator.html#src.formula.naryFormula.andOperator.And">And</a></code></dt>
+<dd><span><span class="MathJax_Preview">\psi</span><script type="math/tex">\psi</script></span> and <span><span class="MathJax_Preview">\mu</span><script type="math/tex">\mu</script></span>, conjunctions of litterals as used in the optimization problem above.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><strong><code>res</code></strong> :&ensp;<code>distance between phi and mu, Formula wich symbolize the optimisation between phi and mu</code></dt>
-<dd>&nbsp;</dd>
+<dt><strong><code>distance</code></strong> :&ensp;<code>Fraction</code></dt>
+<dd>Minimal distance (calculated with the <code><a title="src.distance.distance_function.distanceFunction.DistanceFunction" href="distance/distance_function/distanceFunction.html#src.distance.distance_function.distanceFunction.DistanceFunction">DistanceFunction</a></code>
+given at the initialization of the class) that satisfies the optimization problem above.</dd>
+<dt><strong><code>y</code></strong> :&ensp;<code><a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a></code></dt>
+<dd><code><a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a></code> representing a point <span><span class="MathJax_Preview">y \in \mathcal{M}(\mu)</span><script type="math/tex">y \in \mathcal{M}(\mu)</script></span> that satisfies the optimization problem above.</dd>
 </dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def findOneSolution(self, variables : list[Variable], phi : And, mu : And) -&gt; tuple[Fraction, Formula]:
-    &#39;&#39;&#39;
-    Method used for find one solution for the optimization of a couple of Formula
+<pre><code class="python">def findOneSolution(self, variables : list[Variable], psi : And, mu : And) -&gt; tuple[Fraction, Formula]:
+    r&#34;&#34;&#34;
+    Method used to interact with the initialy specified `src.mlo_solver.MLOSolver.MLOSolver`, thus finding one solution of
+    the optimization of the following system when \(\psi\) and \(\mu\) are conjunctions of
+    `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint`, with \(d\) the  `src.distance.distance_function.distanceFunction.DistanceFunction`
+    given at the initialization of the class.
 
-    Attributes
+    \[
+        \begin{cases}
+            x \in \mathcal{M}(\psi) \\
+            y \in \mathcal{M}(\mu) \\
+            \text{minimize } d(x, y)
+        \end{cases}
+    \]
+
+    Parameters
     ----------
-    variables : list of variables
-    phi : a formula (And)
-    mu : a formula (And)
+    variables : list of `src.variable.variable.Variable`
+        List of all the `src.variable.variable.Variable` in use in both \(\psi\) and \(\mu\).
+    psi, mu : `src.formula.naryFormula.andOperator.And`
+        \(\psi\) and \(\mu\), conjunctions of litterals as used in the optimization problem above.
 
     Returns
     -------
-    res: distance between phi and mu, Formula wich symbolize the optimisation between phi and mu
-    
-    &#39;&#39;&#39;
+    distance : Fraction
+        Minimal distance (calculated with the `src.distance.distance_function.distanceFunction.DistanceFunction`
+        given at the initialization of the class) that satisfies the optimization problem above. 
+    y : `src.formula.formula.Formula`
+        `src.formula.formula.Formula` representing a point \(y \in \mathcal{M}(\mu)\) that satisfies the optimization problem above. 
+    &#34;&#34;&#34;
+
     variablesTest = []
     neg = None
     for var in variables:
@@ -518,7 +707,7 @@ class FormulaInterpreter:
         else: variablesTest.append(var)
     variablesTest.append(neg)
     variables = variablesTest
-    constraints = self.__buildConstraints(variables, phi, mu)
+    constraints = self.__buildConstraints(variables, psi, mu)
 
     obj = [0]*len(variables)*2
     for variable in variables:
@@ -536,57 +725,126 @@ class FormulaInterpreter:
 </details>
 </dd>
 <dt id="src.formulaInterpreter.FormulaInterpreter.optimizeCouple"><code class="name flex">
-<span>def <span class="ident">optimizeCouple</span></span>(<span>self, phi: And, mu: And) ‑> tuple[fractions.Fraction, <a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a>]</span>
+<span>def <span class="ident">optimizeCouple</span></span>(<span>self, psi: And, mu: And) ‑> tuple[fractions.Fraction, <a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a>]</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Method used for optimized a couple of Formula</p>
-<h2 id="attributes">Attributes</h2>
+<div class="desc"><p>Method used to interact with the initialy specified <code><a title="src.mlo_solver.MLOSolver.MLOSolver" href="mlo_solver/MLOSolver.html#src.mlo_solver.MLOSolver.MLOSolver">MLOSolver</a></code>, thus finding one solution of
+the optimization of the following system when <span><span class="MathJax_Preview">\psi</span><script type="math/tex">\psi</script></span> and <span><span class="MathJax_Preview">\mu</span><script type="math/tex">\mu</script></span> are conjunctions of
+<code><a title="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint" href="formula/nullaryFormula/constraint/linearConstraint.html#src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint">LinearConstraint</a></code>, with <span><span class="MathJax_Preview">d</span><script type="math/tex">d</script></span> the
+<code><a title="src.distance.distance_function.distanceFunction.DistanceFunction" href="distance/distance_function/distanceFunction.html#src.distance.distance_function.distanceFunction.DistanceFunction">DistanceFunction</a></code>
+given at the initialization of the class.</p>
+<p><span><span class="MathJax_Preview">
+\begin{cases}
+x \in \mathcal{M}(\psi) \\
+y \in \mathcal{M}(\mu) \\
+\text{minimize } d(x, y)
+\end{cases}
+</span><script type="math/tex; mode=display">
+\begin{cases}
+x \in \mathcal{M}(\psi) \\
+y \in \mathcal{M}(\mu) \\
+\text{minimize } d(x, y)
+\end{cases}
+</script></span></p>
+<h2 id="parameters">Parameters</h2>
 <dl>
-<dt><strong><code>phi</code></strong> :&ensp;<code>a formula (And)</code></dt>
-<dd>&nbsp;</dd>
-<dt><strong><code>mu</code></strong> :&ensp;<code>a formula (And)</code></dt>
-<dd>&nbsp;</dd>
+<dt><strong><code>psi</code></strong>, <strong><code>mu</code></strong> :&ensp;<code><a title="src.formula.naryFormula.andOperator.And" href="formula/naryFormula/andOperator.html#src.formula.naryFormula.andOperator.And">And</a></code></dt>
+<dd><span><span class="MathJax_Preview">\psi</span><script type="math/tex">\psi</script></span> and <span><span class="MathJax_Preview">\mu</span><script type="math/tex">\mu</script></span>, conjunctions of litterals as used in the optimization problem above.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><strong><code>res</code></strong> :&ensp;<code>distance between phi and mu, Formula wich symbolize the optimisation between phi and mu</code></dt>
-<dd>&nbsp;</dd>
+<dt><strong><code>distance</code></strong> :&ensp;<code>Fraction</code></dt>
+<dd>Minimal distance (calculated with the <code><a title="src.distance.distance_function.distanceFunction.DistanceFunction" href="distance/distance_function/distanceFunction.html#src.distance.distance_function.distanceFunction.DistanceFunction">DistanceFunction</a></code>
+given at the initialization of the class) that satisfies the optimization problem above.</dd>
+<dt><strong><code>y</code></strong> :&ensp;<code><a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a></code></dt>
+<dd><code><a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a></code> representing a point <span><span class="MathJax_Preview">y \in \mathcal{M}(\mu)</span><script type="math/tex">y \in \mathcal{M}(\mu)</script></span> that satisfies the optimization problem above.</dd>
 </dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def optimizeCouple(self, phi : And, mu : And) -&gt; tuple[Fraction, Formula]:
-    &#39;&#39;&#39;
-    Method used for optimized a couple of Formula
+<pre><code class="python">def optimizeCouple(self, psi : And, mu : And) -&gt; tuple[Fraction, Formula]:
+    r&#34;&#34;&#34;
+    Method used to interact with the initialy specified `src.mlo_solver.MLOSolver.MLOSolver`, thus finding one solution of
+    the optimization of the following system when \(\psi\) and \(\mu\) are conjunctions of
+    `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint`, with \(d\) the  `src.distance.distance_function.distanceFunction.DistanceFunction`
+    given at the initialization of the class.
 
-    Attributes
+    \[
+        \begin{cases}
+            x \in \mathcal{M}(\psi) \\
+            y \in \mathcal{M}(\mu) \\
+            \text{minimize } d(x, y)
+        \end{cases}
+    \]
+
+    Parameters
     ----------
-    phi : a formula (And)
-    mu : a formula (And)
+    psi, mu : `src.formula.naryFormula.andOperator.And`
+        \(\psi\) and \(\mu\), conjunctions of litterals as used in the optimization problem above.
 
     Returns
     -------
-    res: distance between phi and mu, Formula wich symbolize the optimisation between phi and mu
-    &#39;&#39;&#39;
+    distance : Fraction
+        Minimal distance (calculated with the `src.distance.distance_function.distanceFunction.DistanceFunction`
+        given at the initialization of the class) that satisfies the optimization problem above. 
+    y : `src.formula.formula.Formula`
+        `src.formula.formula.Formula` representing a point \(y \in \mathcal{M}(\mu)\) that satisfies the optimization problem above. 
+    &#34;&#34;&#34;
+
     variables = list(And(phi,mu).getVariables())
     e = RealVariable(&#34;@&#34;)
     if not e in variables: variables.append(e)
     self.__distanceFunction.getWeights()[e] = 0
 
-    return self.findOneSolution(variables,phi,mu)    </code></pre>
+    return self.findOneSolution(variables, psi, mu)    </code></pre>
 </details>
 </dd>
 <dt id="src.formulaInterpreter.FormulaInterpreter.removeNot"><code class="name flex">
-<span>def <span class="ident">removeNot</span></span>(<span>self, phi: And)</span>
+<span>def <span class="ident">removeNot</span></span>(<span>self, phi: And) ‑> <a title="src.formula.naryFormula.andOperator.And" href="formula/naryFormula/andOperator.html#src.formula.naryFormula.andOperator.And">And</a></span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Method used to transform a conjunction of litterals (i.e <code><a title="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint" href="formula/nullaryFormula/constraint/linearConstraint.html#src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint">LinearConstraint</a></code>
+and <code><a title="src.formula.unaryFormula.notOperator.Not" href="formula/unaryFormula/notOperator.html#src.formula.unaryFormula.notOperator.Not">Not</a></code> of <code><a title="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint" href="formula/nullaryFormula/constraint/linearConstraint.html#src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint">LinearConstraint</a></code>) in a conjunction of <code><a title="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint" href="formula/nullaryFormula/constraint/linearConstraint.html#src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint">LinearConstraint</a></code>,
+where every <code><a title="src.formula.unaryFormula.notOperator.Not" href="formula/unaryFormula/notOperator.html#src.formula.unaryFormula.notOperator.Not">Not</a></code> of <code><a title="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint" href="formula/nullaryFormula/constraint/linearConstraint.html#src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint">LinearConstraint</a></code>
+<span><span class="MathJax_Preview">\neg(\sum_{j=1}^{n}a_jx_j \leqslant b) = \sum_{j=1}^{n}a_jx_j &gt; b</span><script type="math/tex">\neg(\sum_{j=1}^{n}a_jx_j \leqslant b) = \sum_{j=1}^{n}a_jx_j > b</script></span> is replaced by a <code><a title="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint" href="formula/nullaryFormula/constraint/linearConstraint.html#src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint">LinearConstraint</a></code>
+of the form <span><span class="MathJax_Preview">\sum_{j=1}^{n}-a_jx_j \leqslant -b</span><script type="math/tex">\sum_{j=1}^{n}-a_jx_j \leqslant -b</script></span>.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>phi</code></strong> :&ensp;<code><a title="src.formula.naryFormula.andOperator.And" href="formula/naryFormula/andOperator.html#src.formula.naryFormula.andOperator.And">And</a></code></dt>
+<dd>Conjunctions of litterals to transform, as specified above.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>phiPrime</code></strong> :&ensp;<code><a title="src.formula.naryFormula.andOperator.And" href="formula/naryFormula/andOperator.html#src.formula.naryFormula.andOperator.And">And</a></code></dt>
+<dd>Conjunctions of <code><a title="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint" href="formula/nullaryFormula/constraint/linearConstraint.html#src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint">LinearConstraint</a></code> transformed from <span><span class="MathJax_Preview">\phi</span><script type="math/tex">\phi</script></span>,
+as specified above.</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def removeNot(self, phi: And):
+<pre><code class="python">def removeNot(self, phi: And) -&gt; And:
+    r&#34;&#34;&#34;
+    Method used to transform a conjunction of litterals (i.e `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint`
+    and `src.formula.unaryFormula.notOperator.Not` of `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint`) in a conjunction of `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint`,
+    where every `src.formula.unaryFormula.notOperator.Not` of `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint`
+    \(\neg(\sum_{j=1}^{n}a_jx_j \leqslant b) = \sum_{j=1}^{n}a_jx_j &gt; b\) is replaced by a `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint`
+    of the form \(\sum_{j=1}^{n}-a_jx_j \leqslant -b\).
+
+    Parameters
+    ----------
+    phi : `src.formula.naryFormula.andOperator.And`
+        Conjunctions of litterals to transform, as specified above.
+
+    Returns
+    -------
+    phiPrime : `src.formula.naryFormula.andOperator.And`
+        Conjunctions of `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint` transformed from \(\phi\),
+        as specified above.
+
+    &#34;&#34;&#34;
+
     andSet = set()
     negConstraint = LinearConstraint(&#34;&#34;)
     negConstraint.variables[self._eVar] = -1
@@ -606,34 +864,36 @@ class FormulaInterpreter:
 <span>def <span class="ident">sat</span></span>(<span>self, phi: Formula) ‑> bool</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Method used to verify the satisfiability of a formula</p>
-<h2 id="attributes">Attributes</h2>
+<div class="desc"><p>Method used to verify the feasability of a <code><a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a></code>.</p>
+<h2 id="parameters">Parameters</h2>
 <dl>
-<dt><strong><code>phi</code></strong> :&ensp;<code>the formula</code></dt>
-<dd>&nbsp;</dd>
+<dt><strong><code>phi</code></strong> :&ensp;<code><a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a></code></dt>
+<dd>The <code><a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a></code> you want to verify the feasability.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><strong><code>res</code></strong> :&ensp;<code>true if the formula is satsifiable, false in the other case</code></dt>
-<dd>&nbsp;</dd>
+<dt><strong><code>res</code></strong> :&ensp;<code>boolean</code></dt>
+<dd>Booean symbolizing if <span><span class="MathJax_Preview">\varphi</span><script type="math/tex">\varphi</script></span> is feasable (<code>True</code>) or not (<code>False</code>).</dd>
 </dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def sat(self, phi : Formula) -&gt; bool:
-    &#39;&#39;&#39;
-    Method used to verify the satisfiability of a formula
+    r&#34;&#34;&#34;
+    Method used to verify the feasability of a `src.formula.formula.Formula`.
 
-    Attributes
+    Parameters
     ----------
-    phi : the formula
+    phi : `src.formula.formula.Formula`
+        The `src.formula.formula.Formula` you want to verify the feasability.
 
     Returns
     -------
-    res: true if the formula is satsifiable, false in the other case
+    res : boolean
+        Booean symbolizing if \(\varphi\) is feasable (`True`) or not (`False`).
     
-    &#39;&#39;&#39;
+    &#34;&#34;&#34;
     variables = list(phi.getVariables())
     variables.append(self._eVar)
 
@@ -669,33 +929,36 @@ class FormulaInterpreter:
 <span>def <span class="ident">simplifyMLC</span></span>(<span>self, phi: Formula)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Method used to simplify a conjonction of mix linears constraints</p>
-<h2 id="attributes">Attributes</h2>
+<div class="desc"><p>Method used to simplify a conjonction of mixed linear constraints.</p>
+<h2 id="parameters">Parameters</h2>
 <dl>
-<dt><strong><code>phi</code></strong> :&ensp;<code>the formula to simplify</code></dt>
-<dd>&nbsp;</dd>
+<dt><strong><code>phi</code></strong> :&ensp;<code><a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a></code></dt>
+<dd>The <code><a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a></code> to simplify.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><strong><code>res</code></strong> :&ensp;<code>the formula with mlc simplified</code></dt>
-<dd>&nbsp;</dd>
+<dt><strong><code>res</code></strong> :&ensp;<code><a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a></code></dt>
+<dd>The simplified <code><a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a></code>.</dd>
 </dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def simplifyMLC(self, phi : Formula):
-    &#39;&#39;&#39;
-    Method used to simplify a conjonction of mix linears constraints
+    r&#34;&#34;&#34;
+    Method used to simplify a conjonction of mixed linear constraints.
 
-    Attributes
+    Parameters
     ----------
-    phi : the formula to simplify
+    phi : `src.formula.formula.Formula`
+        The `src.formula.formula.Formula` to simplify.
 
     Returns
     -------
-    res: the formula with mlc simplified
-    &#39;&#39;&#39;
+    res : `src.formula.formula.Formula`
+        The simplified `src.formula.formula.Formula`.
+    &#34;&#34;&#34;
+
     if self.__simplifiers == None:
         return phi
     else:

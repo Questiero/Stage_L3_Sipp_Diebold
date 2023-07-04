@@ -20,6 +20,21 @@ class Revision:
     r"""
     Main class of the module, allowing the user to make the knowledge revision between two `src.formula.formula.Formula`
     \(\psi\) and \(\mu\) that are mixed integer linear constraints.
+
+    Parameters
+    ----------
+    solverInit : `src.mlo_solver.MLOSolver.MLOSolver`
+        The solver that will be used for optimization.
+    distance : `src.distance.distance_function.distanceFunction.DistanceFunction`
+        The distance function that will be used and, more importantly, the weights \((w_i)\) and \(\varepsilon\) arguments of it.
+        The original algorithm is meant to be used with a `src.distance.distance_function.discreteL1DistanceFunction.discreteL1DistanceFunction`.
+    simplifiers : list of `src.simplificator.simplificator.Simplificator`, optional
+        List of all of the `src.simplificator.simplificator.Simplificator` that will be applied to the `src.formula.formula.Formula`, 
+        in order given by the list.
+    onlyOneSolution : boolean, optional
+        If set to `True`, the revision algorithm will by default only return one point that satisfies \(\psi \circ \mu\).
+        If not, it will return all solutions.
+        By default, this constant is set to whichever one was chosen in `src.constants.Constants`.
     """
     
     __distance : DistanceFunction
@@ -27,26 +42,7 @@ class Revision:
     __projector : Projector
     _onlyOneSolution: bool
 
-    def __init__(self, solverInit : MLOSolver, distance : DistanceFunction, simplifiers : list[Simplificator] = [], onlyOneSolution: bool = Constants.ONLY_ONE_SOLUTION, projector: Projector = None):
-        r"""
-        Constructor of `src.revision.Revision`
-
-        Parameters
-        ----------
-        solverInit: `src.mlo_solver.MLOSolver.MLOSolver`
-            The solver that will be used for optimization.
-        distance: `src.distance.distance_function.distanceFunction.DistanceFunction`
-            The distance function that will be used and, more importantly, the weights \((w_i)\) and \(\varepsilon\) arguments of it.
-            The original argument is meant to be used with a `src.distance.distance_function.discreteL1DistanceFunction.discreteL1DistanceFunction`.
-        simplifiers: list of `src.simplificator.simplificator.Simplificator`, optional
-            List of all of the `src.simplificator.simplificator.Simplificator` that will be applied to the `src.formula.formula.Formula`, 
-            in order given by the list.
-        onlyOneSolution: boolean, optional
-            If set to `True`, the revision algorithm will by default only return one point that satisfies \(\psi \circ \mu\).
-            If not, it will return all solutions.
-            By default, this constant is set to whichever one was chosen in `src.constants.Constants`.
-        """
-        
+    def __init__(self, solverInit : MLOSolver, distance : DistanceFunction, simplifiers : list[Simplificator] = [], onlyOneSolution: bool = Constants.ONLY_ONE_SOLUTION, projector: Projector = None) -> None:        
         self.__distance = distance 
         self.__interpreter = FormulaInterpreter(solverInit, distance, simplifiers)
         self._onlyOneSolution = onlyOneSolution
@@ -59,18 +55,18 @@ class Revision:
 
         Parameters
         ----------
-        psi: `src.formula.formula.Formula`
+        psi : `src.formula.formula.Formula`
             \(\psi\), left part of the knowledge revision operator and `src.formula.formula.Formula` that will be revised.
-        mu: `src.formula.formula.Formula`
+        mu : `src.formula.formula.Formula`
             \(\mu\), right part of the knowledge revision operator and `src.formula.formula.Formula` that will be used to revise \(\psi\) by.
 
 
         Returns
         ----------
-        distance: Fraction
+        distance : Fraction
             Distance (calculated with the `src.distance.distance_function.distanceFunction.DistanceFunction`
             given at the initialization of the class) between \(\psi\) and \(\mu\).
-        psiPrime: `src.formula.formula.Formula`
+        psiPrime : `src.formula.formula.Formula`
             Result of the knowledge revison of \(\psi\) by \(\mu\).
         """
 
