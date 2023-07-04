@@ -276,7 +276,7 @@ class FormulaInterpreter:
             `src.formula.formula.Formula` representing a point \(y \in \mathcal{M}(\mu)\) that satisfies the optimization problem above. 
         &#34;&#34;&#34;
 
-        variables = list(And(phi,mu).getVariables())
+        variables = list(And(psi,mu).getVariables())
         e = RealVariable(&#34;@&#34;)
         if not e in variables: variables.append(e)
         self.__distanceFunction.getWeights()[e] = 0
@@ -583,7 +583,7 @@ in order given by the list.</dd>
             `src.formula.formula.Formula` representing a point \(y \in \mathcal{M}(\mu)\) that satisfies the optimization problem above. 
         &#34;&#34;&#34;
 
-        variables = list(And(phi,mu).getVariables())
+        variables = list(And(psi,mu).getVariables())
         e = RealVariable(&#34;@&#34;)
         if not e in variables: variables.append(e)
         self.__distanceFunction.getWeights()[e] = 0
@@ -792,7 +792,7 @@ given at the initialization of the class) that satisfies the optimization proble
         `src.formula.formula.Formula` representing a point \(y \in \mathcal{M}(\mu)\) that satisfies the optimization problem above. 
     &#34;&#34;&#34;
 
-    variables = list(And(phi,mu).getVariables())
+    variables = list(And(psi,mu).getVariables())
     e = RealVariable(&#34;@&#34;)
     if not e in variables: variables.append(e)
     self.__distanceFunction.getWeights()[e] = 0
