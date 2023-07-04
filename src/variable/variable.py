@@ -1,4 +1,4 @@
-"""
+r"""
 Abstract class, representing a variable.
 """
 
@@ -8,9 +8,9 @@ from fractions import Fraction
 from abc import ABC, abstractmethod
 
 class Variable(ABC):
-    '''
+    r"""
     Abstract class, representing a variables.
-    '''
+    """
     
     #: Name of the variable, by which they are identified.
     name : str = ""
@@ -20,7 +20,7 @@ class Variable(ABC):
 
     @classmethod
     def declareAnonymous(cls, ending: str = None) -> Variable:
-        """
+        r"""
         Function allowing the user to declar an anonymous variable meant to be used inside algorithms without risking any
         naming conflit with the standardly defined variables.\n
         Anonymous variables aren't stored in `src.variable.variableManager.VariableManager.instance` and, as such,
@@ -62,7 +62,7 @@ class Variable(ABC):
 
     @abstractmethod
     def declare(name : str) -> Variable:
-        '''
+        r"""
         Function used to declare a new variable.
         If this variable already exist and have another type compared to the new declaraton,
         This function will raise an Exception.
@@ -78,13 +78,13 @@ class Variable(ABC):
         -------
         Variable: variable
             The defined variable.
-        '''
+        """
 
         pass
 
     @abstractmethod
     def haveBound(self) -> tuple[bool, bool]:
-        '''
+        r"""
         Method use to say if the variable have lower and upper bound
 
         Returns
@@ -93,12 +93,12 @@ class Variable(ABC):
             true,true if the variable have a lower and an upper bound
             true, false if the variable have a lower and not an upper bound
             etc...
-        '''
+        """
         pass
 
     @abstractmethod
     def getBounds(self) -> tuple[Fraction, Fraction]:
-        '''
+        r"""
         Method use to known bounds of the variables
 
         Returns
@@ -106,12 +106,12 @@ class Variable(ABC):
         res: 
             can be None, None if the variable have no limits,
             or Fraction, Fraction.
-        '''
+        """
         pass
     
     @abstractmethod
     def isInteger(self) -> bool:
-        '''
+        r"""
         Method used to known if the variable must have intergers values.
 
         Returns
@@ -119,16 +119,13 @@ class Variable(ABC):
         res:
             True if the variable must have intergers values
             else False
-        '''
+        """
         pass
 
-
-    
     def __str__(self):
         return self.name
     
     def __eq__(self, other):
-        """Overrides the default implementation"""
         if isinstance(other, self.__class__):
             return self.name == other.name
         return False

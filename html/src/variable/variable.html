@@ -28,7 +28,7 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">&#34;&#34;&#34;
+<pre><code class="python">r&#34;&#34;&#34;
 Abstract class, representing a variable.
 &#34;&#34;&#34;
 
@@ -38,9 +38,9 @@ from fractions import Fraction
 from abc import ABC, abstractmethod
 
 class Variable(ABC):
-    &#39;&#39;&#39;
+    r&#34;&#34;&#34;
     Abstract class, representing a variables.
-    &#39;&#39;&#39;
+    &#34;&#34;&#34;
     
     #: Name of the variable, by which they are identified.
     name : str = &#34;&#34;
@@ -50,7 +50,7 @@ class Variable(ABC):
 
     @classmethod
     def declareAnonymous(cls, ending: str = None) -&gt; Variable:
-        &#34;&#34;&#34;
+        r&#34;&#34;&#34;
         Function allowing the user to declar an anonymous variable meant to be used inside algorithms without risking any
         naming conflit with the standardly defined variables.\n
         Anonymous variables aren&#39;t stored in `src.variable.variableManager.VariableManager.instance` and, as such,
@@ -92,7 +92,7 @@ class Variable(ABC):
 
     @abstractmethod
     def declare(name : str) -&gt; Variable:
-        &#39;&#39;&#39;
+        r&#34;&#34;&#34;
         Function used to declare a new variable.
         If this variable already exist and have another type compared to the new declaraton,
         This function will raise an Exception.
@@ -108,13 +108,13 @@ class Variable(ABC):
         -------
         Variable: variable
             The defined variable.
-        &#39;&#39;&#39;
+        &#34;&#34;&#34;
 
         pass
 
     @abstractmethod
     def haveBound(self) -&gt; tuple[bool, bool]:
-        &#39;&#39;&#39;
+        r&#34;&#34;&#34;
         Method use to say if the variable have lower and upper bound
 
         Returns
@@ -123,12 +123,12 @@ class Variable(ABC):
             true,true if the variable have a lower and an upper bound
             true, false if the variable have a lower and not an upper bound
             etc...
-        &#39;&#39;&#39;
+        &#34;&#34;&#34;
         pass
 
     @abstractmethod
     def getBounds(self) -&gt; tuple[Fraction, Fraction]:
-        &#39;&#39;&#39;
+        r&#34;&#34;&#34;
         Method use to known bounds of the variables
 
         Returns
@@ -136,12 +136,12 @@ class Variable(ABC):
         res: 
             can be None, None if the variable have no limits,
             or Fraction, Fraction.
-        &#39;&#39;&#39;
+        &#34;&#34;&#34;
         pass
     
     @abstractmethod
     def isInteger(self) -&gt; bool:
-        &#39;&#39;&#39;
+        r&#34;&#34;&#34;
         Method used to known if the variable must have intergers values.
 
         Returns
@@ -149,16 +149,13 @@ class Variable(ABC):
         res:
             True if the variable must have intergers values
             else False
-        &#39;&#39;&#39;
+        &#34;&#34;&#34;
         pass
 
-
-    
     def __str__(self):
         return self.name
     
     def __eq__(self, other):
-        &#34;&#34;&#34;Overrides the default implementation&#34;&#34;&#34;
         if isinstance(other, self.__class__):
             return self.name == other.name
         return False
@@ -187,9 +184,9 @@ class Variable(ABC):
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Variable(ABC):
-    &#39;&#39;&#39;
+    r&#34;&#34;&#34;
     Abstract class, representing a variables.
-    &#39;&#39;&#39;
+    &#34;&#34;&#34;
     
     #: Name of the variable, by which they are identified.
     name : str = &#34;&#34;
@@ -199,7 +196,7 @@ class Variable(ABC):
 
     @classmethod
     def declareAnonymous(cls, ending: str = None) -&gt; Variable:
-        &#34;&#34;&#34;
+        r&#34;&#34;&#34;
         Function allowing the user to declar an anonymous variable meant to be used inside algorithms without risking any
         naming conflit with the standardly defined variables.\n
         Anonymous variables aren&#39;t stored in `src.variable.variableManager.VariableManager.instance` and, as such,
@@ -241,7 +238,7 @@ class Variable(ABC):
 
     @abstractmethod
     def declare(name : str) -&gt; Variable:
-        &#39;&#39;&#39;
+        r&#34;&#34;&#34;
         Function used to declare a new variable.
         If this variable already exist and have another type compared to the new declaraton,
         This function will raise an Exception.
@@ -257,13 +254,13 @@ class Variable(ABC):
         -------
         Variable: variable
             The defined variable.
-        &#39;&#39;&#39;
+        &#34;&#34;&#34;
 
         pass
 
     @abstractmethod
     def haveBound(self) -&gt; tuple[bool, bool]:
-        &#39;&#39;&#39;
+        r&#34;&#34;&#34;
         Method use to say if the variable have lower and upper bound
 
         Returns
@@ -272,12 +269,12 @@ class Variable(ABC):
             true,true if the variable have a lower and an upper bound
             true, false if the variable have a lower and not an upper bound
             etc...
-        &#39;&#39;&#39;
+        &#34;&#34;&#34;
         pass
 
     @abstractmethod
     def getBounds(self) -&gt; tuple[Fraction, Fraction]:
-        &#39;&#39;&#39;
+        r&#34;&#34;&#34;
         Method use to known bounds of the variables
 
         Returns
@@ -285,12 +282,12 @@ class Variable(ABC):
         res: 
             can be None, None if the variable have no limits,
             or Fraction, Fraction.
-        &#39;&#39;&#39;
+        &#34;&#34;&#34;
         pass
     
     @abstractmethod
     def isInteger(self) -&gt; bool:
-        &#39;&#39;&#39;
+        r&#34;&#34;&#34;
         Method used to known if the variable must have intergers values.
 
         Returns
@@ -298,16 +295,13 @@ class Variable(ABC):
         res:
             True if the variable must have intergers values
             else False
-        &#39;&#39;&#39;
+        &#34;&#34;&#34;
         pass
 
-
-    
     def __str__(self):
         return self.name
     
     def __eq__(self, other):
-        &#34;&#34;&#34;Overrides the default implementation&#34;&#34;&#34;
         if isinstance(other, self.__class__):
             return self.name == other.name
         return False
@@ -338,9 +332,9 @@ class Variable(ABC):
 </code></dt>
 <dd>
 <div class="desc"><p>Function allowing the user to declar an anonymous variable meant to be used inside algorithms without risking any
-naming conflit with the standardly defined variables.</p>
-<p>Anonymous variables aren't stored in <code><a title="src.variable.variableManager.VariableManager.instance" href="variableManager.html#src.variable.variableManager.VariableManager.instance">VariableManager.instance</a></code> and, as such,
-can't be used in <code><a title="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint" href="../formula/nullaryFormula/constraint/linearConstraint.html#src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint">LinearConstraint</a></code>'s constructor.</p>
+naming conflit with the standardly defined variables.\n
+Anonymous variables aren't stored in <code><a title="src.variable.variableManager.VariableManager.instance" href="variableManager.html#src.variable.variableManager.VariableManager.instance">VariableManager.instance</a></code> and, as such,
+can't be used in <code><a title="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint" href="../formula/nullaryFormula/constraint/linearConstraint.html#src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint">LinearConstraint</a></code>'s constructor.\n</p>
 <p>Since they can't be used in the usual constructor, one must first declare an empty
 <code><a title="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint" href="../formula/nullaryFormula/constraint/linearConstraint.html#src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint">LinearConstraint</a></code> before adding them manualy.</p>
 <p>To prevent naming conflicts with regular variables, an anonymous variable's name always start with
@@ -368,7 +362,7 @@ it's object's id. The user can also specify an ending to an anonymous variable n
 </summary>
 <pre><code class="python">@classmethod
 def declareAnonymous(cls, ending: str = None) -&gt; Variable:
-    &#34;&#34;&#34;
+    r&#34;&#34;&#34;
     Function allowing the user to declar an anonymous variable meant to be used inside algorithms without risking any
     naming conflit with the standardly defined variables.\n
     Anonymous variables aren&#39;t stored in `src.variable.variableManager.VariableManager.instance` and, as such,
@@ -437,7 +431,7 @@ Name can't have this symbole : + - * / @</dd>
 </summary>
 <pre><code class="python">@abstractmethod
 def declare(name : str) -&gt; Variable:
-    &#39;&#39;&#39;
+    r&#34;&#34;&#34;
     Function used to declare a new variable.
     If this variable already exist and have another type compared to the new declaraton,
     This function will raise an Exception.
@@ -453,7 +447,7 @@ def declare(name : str) -&gt; Variable:
     -------
     Variable: variable
         The defined variable.
-    &#39;&#39;&#39;
+    &#34;&#34;&#34;
 
     pass</code></pre>
 </details>
@@ -475,7 +469,7 @@ or Fraction, Fraction.</dd>
 </summary>
 <pre><code class="python">@abstractmethod
 def getBounds(self) -&gt; tuple[Fraction, Fraction]:
-    &#39;&#39;&#39;
+    r&#34;&#34;&#34;
     Method use to known bounds of the variables
 
     Returns
@@ -483,7 +477,7 @@ def getBounds(self) -&gt; tuple[Fraction, Fraction]:
     res: 
         can be None, None if the variable have no limits,
         or Fraction, Fraction.
-    &#39;&#39;&#39;
+    &#34;&#34;&#34;
     pass</code></pre>
 </details>
 </dd>
@@ -505,7 +499,7 @@ etc&hellip;</dd>
 </summary>
 <pre><code class="python">@abstractmethod
 def haveBound(self) -&gt; tuple[bool, bool]:
-    &#39;&#39;&#39;
+    r&#34;&#34;&#34;
     Method use to say if the variable have lower and upper bound
 
     Returns
@@ -514,7 +508,7 @@ def haveBound(self) -&gt; tuple[bool, bool]:
         true,true if the variable have a lower and an upper bound
         true, false if the variable have a lower and not an upper bound
         etc...
-    &#39;&#39;&#39;
+    &#34;&#34;&#34;
     pass</code></pre>
 </details>
 </dd>
@@ -535,7 +529,7 @@ else False</dd>
 </summary>
 <pre><code class="python">@abstractmethod
 def isInteger(self) -&gt; bool:
-    &#39;&#39;&#39;
+    r&#34;&#34;&#34;
     Method used to known if the variable must have intergers values.
 
     Returns
@@ -543,7 +537,7 @@ def isInteger(self) -&gt; bool:
     res:
         True if the variable must have intergers values
         else False
-    &#39;&#39;&#39;
+    &#34;&#34;&#34;
     pass</code></pre>
 </details>
 </dd>

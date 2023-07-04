@@ -28,7 +28,7 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">&#34;&#34;&#34;
+<pre><code class="python">r&#34;&#34;&#34;
 Class representing an integer number Variable, meaning a number \(x \in \mathbb{Z}\)
 &#34;&#34;&#34;
 
@@ -40,7 +40,7 @@ from .variableManager import VariableManager
 from fractions import Fraction
 
 class IntegerVariable(Variable):
-    &#39;&#39;&#39;
+    r&#34;&#34;&#34;
     IntegerVariable class, representing a Variable defined in Z.
 
     Attributes
@@ -49,10 +49,10 @@ class IntegerVariable(Variable):
         The name of the Variable
         Name must begin with an alphabet character. It can be followed by alphanumerical character or _.
         Name can&#39;t have this symbole : + - * / @
-    &#39;&#39;&#39;
+    &#34;&#34;&#34;
 
     def declare(name: str) -&gt; IntegerVariable:
-        &#39;&#39;&#39;
+        r&#34;&#34;&#34;
         Function used to declare a new 
         If this variable already exist and have another type compared to the new declaraton,
         This function will raise an Exception.
@@ -61,11 +61,11 @@ class IntegerVariable(Variable):
         ----------
         String: name
             The name of the Variable to be declared.
-        &#39;&#39;&#39;
+        &#34;&#34;&#34;
         return VariableManager.add(IntegerVariable(name))
     
     def declareBulk(*lname: str) -&gt; list[IntegerVariable]:
-        &#39;&#39;&#39;
+        r&#34;&#34;&#34;
         Function used to declare a new 
         If this variable already exist and have another type compared to the new declaraton,
         This function will raise an Exception.
@@ -74,14 +74,15 @@ class IntegerVariable(Variable):
         ----------
         String: name
             The name of the Variable to be declared.
-        &#39;&#39;&#39;
+        &#34;&#34;&#34;
+
         vars = []
         for name in lname:
             vars.append(VariableManager.add(IntegerVariable(name)))
         return vars
 
     def haveBound(self) -&gt; tuple[bool, bool]:
-        &#39;&#39;&#39;
+        r&#34;&#34;&#34;
         Method use to say if the variable have lower and upper bound
 
         Returns
@@ -90,11 +91,12 @@ class IntegerVariable(Variable):
             true,true if the variable have a lower and an upper bound
             true, false if the variable have a lower and not an upper bound
             etc...
-        &#39;&#39;&#39;
+        &#34;&#34;&#34;
+
         return False, False
 
     def getBounds(self) -&gt; tuple[Fraction, Fraction]:
-        &#39;&#39;&#39;
+        r&#34;&#34;&#34;
         Method use to known bounds of the variables
 
         Returns
@@ -102,11 +104,12 @@ class IntegerVariable(Variable):
         res: 
             can be None, None if the variable have no limits,
             or Fraction, Fraction.
-        &#39;&#39;&#39;
+        &#34;&#34;&#34;
+
         return None, None
 
     def isInteger(self) -&gt; bool:
-        &#39;&#39;&#39;
+        r&#34;&#34;&#34;
         Method used to known if the variable must have intergers values.
 
         Returns
@@ -114,7 +117,8 @@ class IntegerVariable(Variable):
         res:
             True if the variable must have intergers values
             else False
-        &#39;&#39;&#39;
+        &#34;&#34;&#34;
+        
         return True</code></pre>
 </details>
 </section>
@@ -145,7 +149,7 @@ Name can't have this symbole : + - * / @</dd>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class IntegerVariable(Variable):
-    &#39;&#39;&#39;
+    r&#34;&#34;&#34;
     IntegerVariable class, representing a Variable defined in Z.
 
     Attributes
@@ -154,10 +158,10 @@ Name can't have this symbole : + - * / @</dd>
         The name of the Variable
         Name must begin with an alphabet character. It can be followed by alphanumerical character or _.
         Name can&#39;t have this symbole : + - * / @
-    &#39;&#39;&#39;
+    &#34;&#34;&#34;
 
     def declare(name: str) -&gt; IntegerVariable:
-        &#39;&#39;&#39;
+        r&#34;&#34;&#34;
         Function used to declare a new 
         If this variable already exist and have another type compared to the new declaraton,
         This function will raise an Exception.
@@ -166,11 +170,11 @@ Name can't have this symbole : + - * / @</dd>
         ----------
         String: name
             The name of the Variable to be declared.
-        &#39;&#39;&#39;
+        &#34;&#34;&#34;
         return VariableManager.add(IntegerVariable(name))
     
     def declareBulk(*lname: str) -&gt; list[IntegerVariable]:
-        &#39;&#39;&#39;
+        r&#34;&#34;&#34;
         Function used to declare a new 
         If this variable already exist and have another type compared to the new declaraton,
         This function will raise an Exception.
@@ -179,14 +183,15 @@ Name can't have this symbole : + - * / @</dd>
         ----------
         String: name
             The name of the Variable to be declared.
-        &#39;&#39;&#39;
+        &#34;&#34;&#34;
+
         vars = []
         for name in lname:
             vars.append(VariableManager.add(IntegerVariable(name)))
         return vars
 
     def haveBound(self) -&gt; tuple[bool, bool]:
-        &#39;&#39;&#39;
+        r&#34;&#34;&#34;
         Method use to say if the variable have lower and upper bound
 
         Returns
@@ -195,11 +200,12 @@ Name can't have this symbole : + - * / @</dd>
             true,true if the variable have a lower and an upper bound
             true, false if the variable have a lower and not an upper bound
             etc...
-        &#39;&#39;&#39;
+        &#34;&#34;&#34;
+
         return False, False
 
     def getBounds(self) -&gt; tuple[Fraction, Fraction]:
-        &#39;&#39;&#39;
+        r&#34;&#34;&#34;
         Method use to known bounds of the variables
 
         Returns
@@ -207,11 +213,12 @@ Name can't have this symbole : + - * / @</dd>
         res: 
             can be None, None if the variable have no limits,
             or Fraction, Fraction.
-        &#39;&#39;&#39;
+        &#34;&#34;&#34;
+
         return None, None
 
     def isInteger(self) -&gt; bool:
-        &#39;&#39;&#39;
+        r&#34;&#34;&#34;
         Method used to known if the variable must have intergers values.
 
         Returns
@@ -219,7 +226,8 @@ Name can't have this symbole : + - * / @</dd>
         res:
             True if the variable must have intergers values
             else False
-        &#39;&#39;&#39;
+        &#34;&#34;&#34;
+        
         return True</code></pre>
 </details>
 <h3>Ancestors</h3>
@@ -246,7 +254,7 @@ This function will raise an Exception.</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def declare(name: str) -&gt; IntegerVariable:
-    &#39;&#39;&#39;
+    r&#34;&#34;&#34;
     Function used to declare a new 
     If this variable already exist and have another type compared to the new declaraton,
     This function will raise an Exception.
@@ -255,7 +263,7 @@ This function will raise an Exception.</p>
     ----------
     String: name
         The name of the Variable to be declared.
-    &#39;&#39;&#39;
+    &#34;&#34;&#34;
     return VariableManager.add(IntegerVariable(name))</code></pre>
 </details>
 </dd>
@@ -276,7 +284,7 @@ This function will raise an Exception.</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def declareBulk(*lname: str) -&gt; list[IntegerVariable]:
-    &#39;&#39;&#39;
+    r&#34;&#34;&#34;
     Function used to declare a new 
     If this variable already exist and have another type compared to the new declaraton,
     This function will raise an Exception.
@@ -285,7 +293,8 @@ This function will raise an Exception.</p>
     ----------
     String: name
         The name of the Variable to be declared.
-    &#39;&#39;&#39;
+    &#34;&#34;&#34;
+
     vars = []
     for name in lname:
         vars.append(VariableManager.add(IntegerVariable(name)))

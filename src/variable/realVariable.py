@@ -1,4 +1,4 @@
-"""
+r"""
 Class representing a real Number variable, meaning a number \(x \in \mathbb{R}\)
 """
 
@@ -10,7 +10,7 @@ from .variableManager import VariableManager
 from fractions import Fraction
 
 class RealVariable(Variable):
-    '''
+    r"""
     RealVariable class, representing a Variable defined in R.
 
     Attributes
@@ -19,10 +19,10 @@ class RealVariable(Variable):
         The name of the Variable
         Name must begin with an alphabet character. It can be followed by alphanumerical character or _.
         Name can't have this symbole : + - * / @
-    '''
+    """
 
     def declare(name: str) -> RealVariable:
-        '''
+        r"""
         Function used to declare a new 
         If this variable already exist and have another type compared to the new declaraton,
         This function will raise an Exception.
@@ -31,11 +31,11 @@ class RealVariable(Variable):
         ----------
         String: name
             The name of the Variable to be declared.
-        '''
+        """
         return VariableManager.add(RealVariable(name))
     
     def declareBulk(*lname: str) -> list[RealVariable]:
-        '''
+        r"""
         Function used to declare a new 
         If this variable already exist and have another type compared to the new declaraton,
         This function will raise an Exception.
@@ -44,14 +44,15 @@ class RealVariable(Variable):
         ----------
         String: name
             The name of the Variable to be declared.
-        '''
+        """
+
         vars = []
         for name in lname:
             vars.append(VariableManager.add(RealVariable(name)))
         return vars
 
     def haveBound(self) -> tuple[bool, bool]:
-        '''
+        r"""
         Method use to say if the variable have lower and upper bound
 
         Returns
@@ -60,11 +61,12 @@ class RealVariable(Variable):
             true,true if the variable have a lower and an upper bound
             true, false if the variable have a lower and not an upper bound
             etc...
-        '''
+        """
+
         return False, False
     
     def getBounds(self) -> tuple[Fraction, Fraction]:
-        '''
+        r"""
         Method use to known bounds of the variables
 
         Returns
@@ -72,11 +74,12 @@ class RealVariable(Variable):
         res: 
             can be None, None if the variable have no limits,
             or Fraction, Fraction.
-        '''
+        """
+
         return None, None
     
     def isInteger(self) -> bool:
-        '''
+        r"""
         Method used to known if the variable must have intergers values.
 
         Returns
@@ -84,5 +87,6 @@ class RealVariable(Variable):
         res:
             True if the variable must have intergers values
             else False
-        '''
+        """
+        
         return False
