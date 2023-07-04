@@ -71,7 +71,7 @@ class LinearConstraint(Constraint):
             raise SyntaxError(f"Unknown character {unknownChar}")
         
         # rule 2, spaces doesn't matter
-        string = re.sub('\s*','', string)
+        string = re.sub(r"\s*","", string)
         
         leftRightParts = []
         

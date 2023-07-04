@@ -23,7 +23,7 @@ class RealVariable(Variable):
     """
 
     def haveBound(self) -> tuple[bool, bool]:
-        r"""
+        """
         Method use to say if the variable have lower and upper bound
 
         Returns
@@ -37,7 +37,7 @@ class RealVariable(Variable):
         return False, False
     
     def getBounds(self) -> tuple[Fraction, Fraction]:
-        r"""
+        """
         Method use to known bounds of the variables
 
         Returns
@@ -50,7 +50,7 @@ class RealVariable(Variable):
         return None, None
     
     def isInteger(self) -> bool:
-        r"""
+        """
         Method used to known if the variable must have intergers values.
 
         Returns

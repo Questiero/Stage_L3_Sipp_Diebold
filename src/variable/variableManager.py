@@ -1,4 +1,4 @@
-r"""
+"""
 Class used to store all non-anonymous user-declared `src.variable.variable.Variable`
 and allow easy retrieving of already defined ones.
 """
@@ -10,7 +10,7 @@ from .variable import Variable
 import re
 
 class VariableManager:
-    r"""
+    """
     VariableManager class, used to manage all instances of `src.variable.variable.Variable`.
     
     Attributes
@@ -25,7 +25,7 @@ class VariableManager:
 
     @staticmethod
     def verify(name: str, cls: type[Variable]) -> None:
-        r"""
+        """
         Function verifying if a `src.variable.variable.Variable` can be added to `src.variable.variableManager.VariableManager.instance`,
         meaning that the name respects the naming conventions and that it doesn't already exists under another type.
     
@@ -50,7 +50,7 @@ class VariableManager:
 
     @staticmethod
     def add(obj: Variable) -> Variable:
-        r"""
+        """
         Function adding a `src.variable.variable.Variable` to `src.variable.variableManager.VariableManager.instance`.
     
         Parameters
@@ -80,7 +80,7 @@ class VariableManager:
     
     @classmethod
     def get(cls, name : str) -> Variable:
-        r"""
+        """
         Function to get a `src.variable.variable.Variable` from the `src.variable.variableManager.VariableManager.instance`.
     
         Parameters
@@ -105,7 +105,7 @@ class VariableManager:
     
     @staticmethod
     def declare(name: str, cls: type[Variable]) -> Variable:
-        r"""
+        """
         Function to declare a `src.variable.variable.Variable`.
     
         Parameters

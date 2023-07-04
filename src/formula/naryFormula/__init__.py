@@ -1,4 +1,4 @@
-"""
+r"""
 Representation of nary formulas, meaning formulas with \(n\) arguments.
 """
 

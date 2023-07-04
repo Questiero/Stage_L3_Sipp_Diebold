@@ -1,4 +1,4 @@
-r"""
+"""
 Class allowing `src.revision.Revision` to interact with a `src.mlo_solver.MLOSolver.MLOSolver`.
 """
 
@@ -40,7 +40,7 @@ class FormulaInterpreter:
         self._eVar = RealVariable("@")
 
     def simplifyMLC(self, phi : Formula):
-        r"""
+        """
         Method used to simplify a conjonction of mixed linear constraints.
 
         Parameters
@@ -270,7 +270,7 @@ class FormulaInterpreter:
         Returns
         -------
         src.formula.naryFormula.andOperator.And
-            Conjunctions of `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint` transformed from \(\phi\),
+            Conjunctions of `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint` transformed from \(\varphi\),
             as specified above.
 
         """

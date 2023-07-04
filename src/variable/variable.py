@@ -1,4 +1,4 @@
-r"""
+"""
 Abstract class, representing a variable.
 """
 
@@ -10,8 +10,8 @@ from fractions import Fraction
 from abc import ABC, abstractmethod
 
 class Variable(ABC):
-    r"""
-    Abstract class, representing a variables. Most of the time, you **shouldn't** use the constructor
+    """
+    Abstract class, representing a variable. Most of the time, you **shouldn't** use the constructor
     of a `src.variable.variable.Variable` and should rather look into `src.variable.variable.Variable.declare`, 
     `src.variable.variable.Variable.declareBulk` or `src.variable.variable.Variable.declareAnonymous`.
 
@@ -29,7 +29,7 @@ class Variable(ABC):
 
     @classmethod
     def declareAnonymous(cls, ending: str = None) -> Variable:
-        r"""
+        """
         Class method, allowing the user to declare an anonymous variable meant to be used inside algorithms without risking any
         naming conflit with the standardly defined variables.\n
         Anonymous variables aren't stored in `src.variable.variableManager.VariableManager.instance` and, as such,
@@ -47,7 +47,7 @@ class Variable(ABC):
             The string to concatenate at the end of an anonymous variable's name, after its object id.
 
         Usage exemple
-        ----------
+        -------------
         ```py
             lc = LinearConstraint("")
 
@@ -130,7 +130,7 @@ class Variable(ABC):
 
     @abstractmethod
     def haveBound(self) -> tuple[bool, bool]:
-        r"""
+        """
         Method use to say if the variable have lower and upper bound
 
         Returns
@@ -144,7 +144,7 @@ class Variable(ABC):
 
     @abstractmethod
     def getBounds(self) -> tuple[Fraction, Fraction]:
-        r"""
+        """
         Method use to known bounds of the variables
 
         Returns
@@ -157,7 +157,7 @@ class Variable(ABC):
     
     @abstractmethod
     def isInteger(self) -> bool:
-        r"""
+        """
         Method used to known if the variable must have intergers values.
 
         Returns

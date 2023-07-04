@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
 <title>src.simplificator.caron API documentation</title>
-<meta name="description" content="Implementation of the Caron algorithm for simplification of conjunction of literals." />
+<meta name="description" content="Implementation of the Caron algorithm for simplification of conjunction of literals (i.e …" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
 <link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
@@ -23,13 +23,15 @@
 <h1 class="title">Module <code>src.simplificator.caron</code></h1>
 </header>
 <section id="section-intro">
-<p>Implementation of the Caron algorithm for simplification of conjunction of literals.</p>
+<p>Implementation of the Caron algorithm for simplification of conjunction of literals (i.e <code><a title="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint" href="../formula/nullaryFormula/constraint/linearConstraint.html#src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint">LinearConstraint</a></code> or
+<code><a title="src.formula.unaryFormula.notOperator.Not" href="../formula/unaryFormula/notOperator.html#src.formula.unaryFormula.notOperator.Not">Not</a></code>).</p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">&#34;&#34;&#34;
-Implementation of the Caron algorithm for simplification of conjunction of literals.
+Implementation of the Caron algorithm for simplification of conjunction of literals (i.e `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint` or
+    `src.formula.unaryFormula.notOperator.Not`).
 &#34;&#34;&#34;
 
 from __future__ import annotations
@@ -41,16 +43,40 @@ from ..mlo_solver import MLOSolver, OptimizationValues
 
 
 class Caron(Simplificator):
+    &#34;&#34;&#34;
+    Implementation of the Caron algorithm for simplification of conjunction of literals (i.e `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint` or
+    `src.formula.unaryFormula.notOperator.Not`).
+
+    Parameters
+    ----------
+    src.mlo_solver.MLOSolver.MLOSolver
+        The `src.mlo_solver.MLOSolver.MLOSolver` used to solve optimization problems.
+    &#34;&#34;&#34;
+
     _interpreter = None
     def __init__(self, solver : MLOSolver):
         self._solver = solver
 
     def run(self, phi):
+        r&#34;&#34;&#34;
+        Main method of `src.simplificator.caron.Caron`, allowing to simplify a given `src.formula.formula.Formula`.
+
+        Parameters
+        ----------
+        phi: src.formula.formula.Formula
+            The src.formula.formula.Formula to simplify.
+        
+        Returns
+        -------
+        src.formula.formula.Formula
+            The simplified form of \(\varphi\)
+        &#34;&#34;&#34;
+
         if not self._interpreter.sat(phi): return phi
         if isinstance(phi, NullaryFormula): phi = And(phi)
-        return self._deleteConstraint(phi)
+        return self.__deleteConstraint(phi)
     
-    def _deleteConstraint(self, phi : Formula):
+    def __deleteConstraint(self, phi : Formula):
         finalConstraints : list
         finalConstraints = list(phi.children.copy())
         e = RealVariable(&#34;@&#34;)
@@ -63,7 +89,7 @@ class Caron(Simplificator):
 
             finalConstraints.remove(litteral)
             newPhi = And(*finalConstraints)
-            phiTab = self.toTab(newPhi, e, variables=variables) 
+            phiTab = self._toTab(newPhi, e, variables=variables) 
             objectif = []
             for variable in variables:
                 objectif.append(0 if not variable in constraint.variables.keys() else constraint.variables[variable]*-1)
@@ -101,23 +127,50 @@ class Caron(Simplificator):
 <span>(</span><span>solver: MLOSolver)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Helper class that provides a standard way to create an ABC using
-inheritance.</p></div>
+<div class="desc"><p>Implementation of the Caron algorithm for simplification of conjunction of literals (i.e <code><a title="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint" href="../formula/nullaryFormula/constraint/linearConstraint.html#src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint">LinearConstraint</a></code> or
+<code><a title="src.formula.unaryFormula.notOperator.Not" href="../formula/unaryFormula/notOperator.html#src.formula.unaryFormula.notOperator.Not">Not</a></code>).</p>
+<h2 id="parameters">Parameters</h2>
+<p>src.mlo_solver.MLOSolver.MLOSolver
+The <code><a title="src.mlo_solver.MLOSolver.MLOSolver" href="../mlo_solver/MLOSolver.html#src.mlo_solver.MLOSolver.MLOSolver">MLOSolver</a></code> used to solve optimization problems.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Caron(Simplificator):
+    &#34;&#34;&#34;
+    Implementation of the Caron algorithm for simplification of conjunction of literals (i.e `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint` or
+    `src.formula.unaryFormula.notOperator.Not`).
+
+    Parameters
+    ----------
+    src.mlo_solver.MLOSolver.MLOSolver
+        The `src.mlo_solver.MLOSolver.MLOSolver` used to solve optimization problems.
+    &#34;&#34;&#34;
+
     _interpreter = None
     def __init__(self, solver : MLOSolver):
         self._solver = solver
 
     def run(self, phi):
+        r&#34;&#34;&#34;
+        Main method of `src.simplificator.caron.Caron`, allowing to simplify a given `src.formula.formula.Formula`.
+
+        Parameters
+        ----------
+        phi: src.formula.formula.Formula
+            The src.formula.formula.Formula to simplify.
+        
+        Returns
+        -------
+        src.formula.formula.Formula
+            The simplified form of \(\varphi\)
+        &#34;&#34;&#34;
+
         if not self._interpreter.sat(phi): return phi
         if isinstance(phi, NullaryFormula): phi = And(phi)
-        return self._deleteConstraint(phi)
+        return self.__deleteConstraint(phi)
     
-    def _deleteConstraint(self, phi : Formula):
+    def __deleteConstraint(self, phi : Formula):
         finalConstraints : list
         finalConstraints = list(phi.children.copy())
         e = RealVariable(&#34;@&#34;)
@@ -130,7 +183,7 @@ inheritance.</p></div>
 
             finalConstraints.remove(litteral)
             newPhi = And(*finalConstraints)
-            phiTab = self.toTab(newPhi, e, variables=variables) 
+            phiTab = self._toTab(newPhi, e, variables=variables) 
             objectif = []
             for variable in variables:
                 objectif.append(0 if not variable in constraint.variables.keys() else constraint.variables[variable]*-1)
@@ -164,15 +217,39 @@ inheritance.</p></div>
 <span>def <span class="ident">run</span></span>(<span>self, phi)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Main method of <code><a title="src.simplificator.caron.Caron" href="#src.simplificator.caron.Caron">Caron</a></code>, allowing to simplify a given <code><a title="src.formula.formula.Formula" href="../formula/formula.html#src.formula.formula.Formula">Formula</a></code>.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>phi</code></strong> :&ensp;<code><a title="src.formula.formula.Formula" href="../formula/formula.html#src.formula.formula.Formula">Formula</a></code></dt>
+<dd>The src.formula.formula.Formula to simplify.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code><a title="src.formula.formula.Formula" href="../formula/formula.html#src.formula.formula.Formula">Formula</a></code></dt>
+<dd>The simplified form of <span><span class="MathJax_Preview">\varphi</span><script type="math/tex">\varphi</script></span></dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def run(self, phi):
+    r&#34;&#34;&#34;
+    Main method of `src.simplificator.caron.Caron`, allowing to simplify a given `src.formula.formula.Formula`.
+
+    Parameters
+    ----------
+    phi: src.formula.formula.Formula
+        The src.formula.formula.Formula to simplify.
+    
+    Returns
+    -------
+    src.formula.formula.Formula
+        The simplified form of \(\varphi\)
+    &#34;&#34;&#34;
+
     if not self._interpreter.sat(phi): return phi
     if isinstance(phi, NullaryFormula): phi = And(phi)
-    return self._deleteConstraint(phi)</code></pre>
+    return self.__deleteConstraint(phi)</code></pre>
 </details>
 </dd>
 </dl>

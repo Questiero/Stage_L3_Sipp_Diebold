@@ -1,5 +1,6 @@
 """
-Implementation of the Caron algorithm for simplification of conjunction of literals.
+Implementation of the Caron algorithm for simplification of conjunction of literals (i.e `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint` or
+    `src.formula.unaryFormula.notOperator.Not`).
 """
 
 from __future__ import annotations
@@ -11,16 +12,40 @@ from ..mlo_solver import MLOSolver, OptimizationValues
 
 
 class Caron(Simplificator):
+    """
+    Implementation of the Caron algorithm for simplification of conjunction of literals (i.e `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint` or
+    `src.formula.unaryFormula.notOperator.Not`).
+
+    Parameters
+    ----------
+    src.mlo_solver.MLOSolver.MLOSolver
+        The `src.mlo_solver.MLOSolver.MLOSolver` used to solve optimization problems.
+    """
+
     _interpreter = None
     def __init__(self, solver : MLOSolver):
         self._solver = solver
 
     def run(self, phi):
+        r"""
+        Main method of `src.simplificator.caron.Caron`, allowing to simplify a given `src.formula.formula.Formula`.
+
+        Parameters
+        ----------
+        phi: src.formula.formula.Formula
+            The src.formula.formula.Formula to simplify.
+        
+        Returns
+        -------
+        src.formula.formula.Formula
+            The simplified form of \(\varphi\)
+        """
+
         if not self._interpreter.sat(phi): return phi
         if isinstance(phi, NullaryFormula): phi = And(phi)
-        return self._deleteConstraint(phi)
+        return self.__deleteConstraint(phi)
     
-    def _deleteConstraint(self, phi : Formula):
+    def __deleteConstraint(self, phi : Formula):
         finalConstraints : list
         finalConstraints = list(phi.children.copy())
         e = RealVariable("@")
@@ -33,7 +58,7 @@ class Caron(Simplificator):
 
             finalConstraints.remove(litteral)
             newPhi = And(*finalConstraints)
-            phiTab = self.toTab(newPhi, e, variables=variables) 
+            phiTab = self._toTab(newPhi, e, variables=variables) 
             objectif = []
             for variable in variables:
                 objectif.append(0 if not variable in constraint.variables.keys() else constraint.variables[variable]*-1)

@@ -28,7 +28,7 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">r&#34;&#34;&#34;
+<pre><code class="python">&#34;&#34;&#34;
 Abstract class, representing a variable.
 &#34;&#34;&#34;
 
@@ -40,8 +40,8 @@ from fractions import Fraction
 from abc import ABC, abstractmethod
 
 class Variable(ABC):
-    r&#34;&#34;&#34;
-    Abstract class, representing a variables. Most of the time, you **shouldn&#39;t** use the constructor
+    &#34;&#34;&#34;
+    Abstract class, representing a variable. Most of the time, you **shouldn&#39;t** use the constructor
     of a `src.variable.variable.Variable` and should rather look into `src.variable.variable.Variable.declare`, 
     `src.variable.variable.Variable.declareBulk` or `src.variable.variable.Variable.declareAnonymous`.
 
@@ -59,7 +59,7 @@ class Variable(ABC):
 
     @classmethod
     def declareAnonymous(cls, ending: str = None) -&gt; Variable:
-        r&#34;&#34;&#34;
+        &#34;&#34;&#34;
         Class method, allowing the user to declare an anonymous variable meant to be used inside algorithms without risking any
         naming conflit with the standardly defined variables.\n
         Anonymous variables aren&#39;t stored in `src.variable.variableManager.VariableManager.instance` and, as such,
@@ -77,7 +77,7 @@ class Variable(ABC):
             The string to concatenate at the end of an anonymous variable&#39;s name, after its object id.
 
         Usage exemple
-        ----------
+        -------------
         ```py
             lc = LinearConstraint(&#34;&#34;)
 
@@ -160,7 +160,7 @@ class Variable(ABC):
 
     @abstractmethod
     def haveBound(self) -&gt; tuple[bool, bool]:
-        r&#34;&#34;&#34;
+        &#34;&#34;&#34;
         Method use to say if the variable have lower and upper bound
 
         Returns
@@ -174,7 +174,7 @@ class Variable(ABC):
 
     @abstractmethod
     def getBounds(self) -&gt; tuple[Fraction, Fraction]:
-        r&#34;&#34;&#34;
+        &#34;&#34;&#34;
         Method use to known bounds of the variables
 
         Returns
@@ -187,7 +187,7 @@ class Variable(ABC):
     
     @abstractmethod
     def isInteger(self) -&gt; bool:
-        r&#34;&#34;&#34;
+        &#34;&#34;&#34;
         Method used to known if the variable must have intergers values.
 
         Returns
@@ -224,7 +224,7 @@ class Variable(ABC):
 <span>(</span><span>name)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Abstract class, representing a variables. Most of the time, you <strong>shouldn't</strong> use the constructor
+<div class="desc"><p>Abstract class, representing a variable. Most of the time, you <strong>shouldn't</strong> use the constructor
 of a <code><a title="src.variable.variable.Variable" href="#src.variable.variable.Variable">Variable</a></code> and should rather look into <code><a title="src.variable.variable.Variable.declare" href="#src.variable.variable.Variable.declare">Variable.declare()</a></code>,
 <code><a title="src.variable.variable.Variable.declareBulk" href="#src.variable.variable.Variable.declareBulk">Variable.declareBulk()</a></code> or <code><a title="src.variable.variable.Variable.declareAnonymous" href="#src.variable.variable.Variable.declareAnonymous">Variable.declareAnonymous()</a></code>.</p>
 <h2 id="parameters">Parameters</h2>
@@ -237,8 +237,8 @@ of a <code><a title="src.variable.variable.Variable" href="#src.variable.variabl
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Variable(ABC):
-    r&#34;&#34;&#34;
-    Abstract class, representing a variables. Most of the time, you **shouldn&#39;t** use the constructor
+    &#34;&#34;&#34;
+    Abstract class, representing a variable. Most of the time, you **shouldn&#39;t** use the constructor
     of a `src.variable.variable.Variable` and should rather look into `src.variable.variable.Variable.declare`, 
     `src.variable.variable.Variable.declareBulk` or `src.variable.variable.Variable.declareAnonymous`.
 
@@ -256,7 +256,7 @@ of a <code><a title="src.variable.variable.Variable" href="#src.variable.variabl
 
     @classmethod
     def declareAnonymous(cls, ending: str = None) -&gt; Variable:
-        r&#34;&#34;&#34;
+        &#34;&#34;&#34;
         Class method, allowing the user to declare an anonymous variable meant to be used inside algorithms without risking any
         naming conflit with the standardly defined variables.\n
         Anonymous variables aren&#39;t stored in `src.variable.variableManager.VariableManager.instance` and, as such,
@@ -274,7 +274,7 @@ of a <code><a title="src.variable.variable.Variable" href="#src.variable.variabl
             The string to concatenate at the end of an anonymous variable&#39;s name, after its object id.
 
         Usage exemple
-        ----------
+        -------------
         ```py
             lc = LinearConstraint(&#34;&#34;)
 
@@ -357,7 +357,7 @@ of a <code><a title="src.variable.variable.Variable" href="#src.variable.variabl
 
     @abstractmethod
     def haveBound(self) -&gt; tuple[bool, bool]:
-        r&#34;&#34;&#34;
+        &#34;&#34;&#34;
         Method use to say if the variable have lower and upper bound
 
         Returns
@@ -371,7 +371,7 @@ of a <code><a title="src.variable.variable.Variable" href="#src.variable.variabl
 
     @abstractmethod
     def getBounds(self) -&gt; tuple[Fraction, Fraction]:
-        r&#34;&#34;&#34;
+        &#34;&#34;&#34;
         Method use to known bounds of the variables
 
         Returns
@@ -384,7 +384,7 @@ of a <code><a title="src.variable.variable.Variable" href="#src.variable.variabl
     
     @abstractmethod
     def isInteger(self) -&gt; bool:
-        r&#34;&#34;&#34;
+        &#34;&#34;&#34;
         Method used to known if the variable must have intergers values.
 
         Returns
@@ -494,9 +494,9 @@ def declare(cls, name : str) -&gt; Variable:
 </code></dt>
 <dd>
 <div class="desc"><p>Class method, allowing the user to declare an anonymous variable meant to be used inside algorithms without risking any
-naming conflit with the standardly defined variables.\n
-Anonymous variables aren't stored in <code><a title="src.variable.variableManager.VariableManager.instance" href="variableManager.html#src.variable.variableManager.VariableManager.instance">VariableManager.instance</a></code> and, as such,
-can't be used in <code><a title="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint" href="../formula/nullaryFormula/constraint/linearConstraint.html#src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint">LinearConstraint</a></code>'s constructor.\n</p>
+naming conflit with the standardly defined variables.</p>
+<p>Anonymous variables aren't stored in <code><a title="src.variable.variableManager.VariableManager.instance" href="variableManager.html#src.variable.variableManager.VariableManager.instance">VariableManager.instance</a></code> and, as such,
+can't be used in <code><a title="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint" href="../formula/nullaryFormula/constraint/linearConstraint.html#src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint">LinearConstraint</a></code>'s constructor.</p>
 <p>Since they can't be used in the usual constructor, one must first declare an empty
 <code><a title="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint" href="../formula/nullaryFormula/constraint/linearConstraint.html#src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint">LinearConstraint</a></code> before adding them manualy.</p>
 <p>To prevent naming conflicts with regular variables, an anonymous variable's name always start with
@@ -524,7 +524,7 @@ it's object's id. The user can also specify an ending to an anonymous variable n
 </summary>
 <pre><code class="python">@classmethod
 def declareAnonymous(cls, ending: str = None) -&gt; Variable:
-    r&#34;&#34;&#34;
+    &#34;&#34;&#34;
     Class method, allowing the user to declare an anonymous variable meant to be used inside algorithms without risking any
     naming conflit with the standardly defined variables.\n
     Anonymous variables aren&#39;t stored in `src.variable.variableManager.VariableManager.instance` and, as such,
@@ -542,7 +542,7 @@ def declareAnonymous(cls, ending: str = None) -&gt; Variable:
         The string to concatenate at the end of an anonymous variable&#39;s name, after its object id.
 
     Usage exemple
-    ----------
+    -------------
     ```py
         lc = LinearConstraint(&#34;&#34;)
 
@@ -653,7 +653,7 @@ or Fraction, Fraction.</dd>
 </summary>
 <pre><code class="python">@abstractmethod
 def getBounds(self) -&gt; tuple[Fraction, Fraction]:
-    r&#34;&#34;&#34;
+    &#34;&#34;&#34;
     Method use to known bounds of the variables
 
     Returns
@@ -683,7 +683,7 @@ etc&hellip;</dd>
 </summary>
 <pre><code class="python">@abstractmethod
 def haveBound(self) -&gt; tuple[bool, bool]:
-    r&#34;&#34;&#34;
+    &#34;&#34;&#34;
     Method use to say if the variable have lower and upper bound
 
     Returns
@@ -713,7 +713,7 @@ else False</dd>
 </summary>
 <pre><code class="python">@abstractmethod
 def isInteger(self) -&gt; bool:
-    r&#34;&#34;&#34;
+    &#34;&#34;&#34;
     Method used to known if the variable must have intergers values.
 
     Returns

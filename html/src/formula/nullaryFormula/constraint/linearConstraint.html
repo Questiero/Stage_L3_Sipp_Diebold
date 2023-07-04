@@ -101,7 +101,7 @@ class LinearConstraint(Constraint):
             raise SyntaxError(f&#34;Unknown character {unknownChar}&#34;)
         
         # rule 2, spaces doesn&#39;t matter
-        string = re.sub(&#39;\s*&#39;,&#39;&#39;, string)
+        string = re.sub(r&#34;\s*&#34;,&#34;&#34;, string)
         
         leftRightParts = []
         
@@ -445,7 +445,7 @@ it's None.</dd>
             raise SyntaxError(f&#34;Unknown character {unknownChar}&#34;)
         
         # rule 2, spaces doesn&#39;t matter
-        string = re.sub(&#39;\s*&#39;,&#39;&#39;, string)
+        string = re.sub(r&#34;\s*&#34;,&#34;&#34;, string)
         
         leftRightParts = []
         

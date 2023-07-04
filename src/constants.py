@@ -6,7 +6,7 @@ class Constants():
     
 
     ONLY_ONE_SOLUTION = True
-    """
+    r"""
     If set to `True`, the revision algorithm will by default only return one point that satisfies \(\psi \circ \mu\).
     If not, it will return all solutions.
     By default, this constant is set to `True`.\n
