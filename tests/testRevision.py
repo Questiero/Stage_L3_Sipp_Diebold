@@ -4,7 +4,7 @@ import unittest
 from src.variable import RealVariable
 from fractions import Fraction
 from src.formula.nullaryFormula import LinearConstraint
-from src.mlo_solver import ScipySolverRounded
+from src.mlo_solver import LPSolverRounded
 from src.simplificator import Daalmans
 from src.projector import FloatConvexHullProjector
 from src.revision import Revision
@@ -18,7 +18,7 @@ class TestRevision(unittest.TestCase):
             RealVariable.declare("y"): Fraction(1),
         }
 
-        solver = ScipySolverRounded()
+        solver = LPSolverRounded()
         simplifier = [Daalmans(solver)]
         projector = FloatConvexHullProjector(simplifiers=simplifier, rounding=12)
 
@@ -40,7 +40,7 @@ class TestRevision(unittest.TestCase):
             RealVariable.declare("pouvoirSucrant"): Fraction(20),
         }
 
-        solver = ScipySolverRounded()
+        solver = LPSolverRounded()
         simplifier = [Daalmans(solver)]
         projector = FloatConvexHullProjector(simplifiers=simplifier, rounding=10)
 
@@ -60,7 +60,7 @@ class TestRevision(unittest.TestCase):
             RealVariable.declare("y"): Fraction(1),
         }
 
-        solver = ScipySolverRounded()
+        solver = LPSolverRounded()
         simplifier = [Daalmans(solver)]
         projector = FloatConvexHullProjector(simplifiers=simplifier, rounding=10)
 
