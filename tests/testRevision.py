@@ -75,6 +75,6 @@ class TestRevision(unittest.TestCase):
 
         self.assertEqual(res[1], (LinearConstraint("x = 5") & LinearConstraint("y <= 5") & LinearConstraint("- y <= -2")) | (LinearConstraint("x <= 5") & LinearConstraint("- x <= -2") & LinearConstraint("y = 2")) | (LinearConstraint("x <= 5") & LinearConstraint("- x <= -2") & LinearConstraint("y = 5")) | (LinearConstraint("x = 2") & LinearConstraint("- y <= -2") & LinearConstraint("y <= 5")))
 
-        self.assertTrue(simplifier[0]._interpreter.sat(res[1].toLessOrEqConstraint().toDNF()), "The revision of two rectangle is insat.")
+        self.assertTrue(simplifier[0]._interpreter.sat(res[1].toLessOrEqConstraint().toDNF()), "The revision of two rectangles is insat.")
     
 if __name__ == '__main__': unittest.main()
