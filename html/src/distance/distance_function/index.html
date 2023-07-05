@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
 <title>src.distance.distance_function API documentation</title>
-<meta name="description" content="" />
+<meta name="description" content="Representation of distance functions." />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
 <link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
@@ -23,11 +23,16 @@
 <h1 class="title">Module <code>src.distance.distance_function</code></h1>
 </header>
 <section id="section-intro">
+<p>Representation of distance functions.</p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from .distanceFunction import DistanceFunction
+<pre><code class="python">&#34;&#34;&#34;
+Representation of distance functions.
+&#34;&#34;&#34;
+
+from .distanceFunction import DistanceFunction
 from .distanceFunctionOnNumericalTuple import distanceFunctionOnNumericalTuple
 from .l1DistanceFunction import l1DistanceFunction
 from .discreteL1DistanceFunction import discreteL1DistanceFunction</code></pre>
@@ -38,19 +43,19 @@ from .discreteL1DistanceFunction import discreteL1DistanceFunction</code></pre>
 <dl>
 <dt><code class="name"><a title="src.distance.distance_function.discreteL1DistanceFunction" href="discreteL1DistanceFunction.html">src.distance.distance_function.discreteL1DistanceFunction</a></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Class representing a discretized l1 distance function, also called cityblock or Manhattan.</p></div>
 </dd>
 <dt><code class="name"><a title="src.distance.distance_function.distanceFunction" href="distanceFunction.html">src.distance.distance_function.distanceFunction</a></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Abstract class representing a distance function.</p></div>
 </dd>
 <dt><code class="name"><a title="src.distance.distance_function.distanceFunctionOnNumericalTuple" href="distanceFunctionOnNumericalTuple.html">src.distance.distance_function.distanceFunctionOnNumericalTuple</a></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Abstract class representing a distance function applied on numerical tuples.</p></div>
 </dd>
 <dt><code class="name"><a title="src.distance.distance_function.l1DistanceFunction" href="l1DistanceFunction.html">src.distance.distance_function.l1DistanceFunction</a></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Class representing a l1 distance function, also called cityblock or Manhattan.</p></div>
 </dd>
 </dl>
 </section>

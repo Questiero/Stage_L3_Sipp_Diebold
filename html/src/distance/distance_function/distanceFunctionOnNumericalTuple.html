@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
 <title>src.distance.distance_function.distanceFunctionOnNumericalTuple API documentation</title>
-<meta name="description" content="" />
+<meta name="description" content="Abstract class representing a distance function applied on numerical tuples." />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
 <link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
@@ -23,11 +23,16 @@
 <h1 class="title">Module <code>src.distance.distance_function.distanceFunctionOnNumericalTuple</code></h1>
 </header>
 <section id="section-intro">
+<p>Abstract class representing a distance function applied on numerical tuples.</p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from __future__ import annotations
+<pre><code class="python">&#34;&#34;&#34;
+Abstract class representing a distance function applied on numerical tuples.
+&#34;&#34;&#34;
+
+from __future__ import annotations
 
 from .distanceFunction import DistanceFunction
 from ..domain import VariableTupleDomaine
@@ -36,6 +41,14 @@ from fractions import Fraction
 from abc import abstractmethod
 
 class distanceFunctionOnNumericalTuple(DistanceFunction):
+    &#34;&#34;&#34;
+    Abstract class representing a distance function applied on numerical tuples.
+
+    Parameters
+    ----------
+    domain: src.distance.domain.variableTupleDomaine.VariableTupleDomaine
+        The `src.distance.domain.variableTupleDomaine.VariableTupleDomaine` on which the distance function is defined.
+    &#34;&#34;&#34;
 
     def __init__(self, domaine : VariableTupleDomaine):
         self._domaine = domaine
@@ -63,13 +76,25 @@ class distanceFunctionOnNumericalTuple(DistanceFunction):
 <span>(</span><span>domaine: VariableTupleDomaine)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Helper class that provides a standard way to create an ABC using
-inheritance.</p></div>
+<div class="desc"><p>Abstract class representing a distance function applied on numerical tuples.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>domain</code></strong> :&ensp;<code><a title="src.distance.domain.variableTupleDomaine.VariableTupleDomaine" href="../domain/variableTupleDomaine.html#src.distance.domain.variableTupleDomaine.VariableTupleDomaine">VariableTupleDomaine</a></code></dt>
+<dd>The <code><a title="src.distance.domain.variableTupleDomaine.VariableTupleDomaine" href="../domain/variableTupleDomaine.html#src.distance.domain.variableTupleDomaine.VariableTupleDomaine">VariableTupleDomaine</a></code> on which the distance function is defined.</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class distanceFunctionOnNumericalTuple(DistanceFunction):
+    &#34;&#34;&#34;
+    Abstract class representing a distance function applied on numerical tuples.
+
+    Parameters
+    ----------
+    domain: src.distance.domain.variableTupleDomaine.VariableTupleDomaine
+        The `src.distance.domain.variableTupleDomaine.VariableTupleDomaine` on which the distance function is defined.
+    &#34;&#34;&#34;
 
     def __init__(self, domaine : VariableTupleDomaine):
         self._domaine = domaine
@@ -123,6 +148,14 @@ def getWeights(self) -&gt; Fraction:
 </details>
 </dd>
 </dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="src.distance.distance_function.distanceFunction.DistanceFunction" href="distanceFunction.html#src.distance.distance_function.distanceFunction.DistanceFunction">DistanceFunction</a></b></code>:
+<ul class="hlist">
+<li><code><a title="src.distance.distance_function.distanceFunction.DistanceFunction.dist" href="distanceFunction.html#src.distance.distance_function.distanceFunction.DistanceFunction.dist">dist</a></code></li>
+</ul>
+</li>
+</ul>
 </dd>
 </dl>
 </section>

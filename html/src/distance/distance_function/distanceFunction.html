@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
 <title>src.distance.distance_function.distanceFunction API documentation</title>
-<meta name="description" content="" />
+<meta name="description" content="Abstract class representing a distance function." />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
 <link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
@@ -23,21 +23,54 @@
 <h1 class="title">Module <code>src.distance.distance_function.distanceFunction</code></h1>
 </header>
 <section id="section-intro">
+<p>Abstract class representing a distance function.</p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from __future__ import annotations
+<pre><code class="python">&#34;&#34;&#34;
+Abstract class representing a distance function.
+&#34;&#34;&#34;
+
+from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from ..domain import Domain
 
+from ...variable import Variable
+from fractions import Fraction
+
 class DistanceFunction(ABC):
+    &#34;&#34;&#34;
+    Abstract class representing a distance function.
+
+    Parameters
+    ----------
+    domain: src.distance.domain.domain.Domain
+        The `src.distance.domain.domain.Domain` on which the distance function is defined.
+    &#34;&#34;&#34;
     
-    _domaine : Domain
+    _domain : Domain
+
+    def __init__(self, domain : Domain):
+        self._domain = domain
     
     @abstractmethod
-    def dist(x,y):
+    def dist(x: tuple[Variable], y: tuple[Variable]) -&gt; Fraction:
+        r&#34;&#34;&#34;
+        Main method of a distance funciton, allowing to get the distance between two points \(x\) and \(y\).
+
+        Parameters
+        ----------
+        x, y : tuple of src.variable.variable.Variable
+            The two tuples of `src.variable.variable.Variable` you which to get the distance between.
+
+        Returns
+        -------
+        fractions.Fraction
+            The distance between \(x\) and \(y\).
+        &#34;&#34;&#34;
+
         pass</code></pre>
 </details>
 </section>
@@ -52,20 +85,50 @@ class DistanceFunction(ABC):
 <dl>
 <dt id="src.distance.distance_function.distanceFunction.DistanceFunction"><code class="flex name class">
 <span>class <span class="ident">DistanceFunction</span></span>
+<span>(</span><span>domain: Domain)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Helper class that provides a standard way to create an ABC using
-inheritance.</p></div>
+<div class="desc"><p>Abstract class representing a distance function.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>domain</code></strong> :&ensp;<code><a title="src.distance.domain.domain.Domain" href="../domain/domain.html#src.distance.domain.domain.Domain">Domain</a></code></dt>
+<dd>The <code><a title="src.distance.domain.domain.Domain" href="../domain/domain.html#src.distance.domain.domain.Domain">Domain</a></code> on which the distance function is defined.</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class DistanceFunction(ABC):
+    &#34;&#34;&#34;
+    Abstract class representing a distance function.
+
+    Parameters
+    ----------
+    domain: src.distance.domain.domain.Domain
+        The `src.distance.domain.domain.Domain` on which the distance function is defined.
+    &#34;&#34;&#34;
     
-    _domaine : Domain
+    _domain : Domain
+
+    def __init__(self, domain : Domain):
+        self._domain = domain
     
     @abstractmethod
-    def dist(x,y):
+    def dist(x: tuple[Variable], y: tuple[Variable]) -&gt; Fraction:
+        r&#34;&#34;&#34;
+        Main method of a distance funciton, allowing to get the distance between two points \(x\) and \(y\).
+
+        Parameters
+        ----------
+        x, y : tuple of src.variable.variable.Variable
+            The two tuples of `src.variable.variable.Variable` you which to get the distance between.
+
+        Returns
+        -------
+        fractions.Fraction
+            The distance between \(x\) and \(y\).
+        &#34;&#34;&#34;
+
         pass</code></pre>
 </details>
 <h3>Ancestors</h3>
@@ -79,16 +142,40 @@ inheritance.</p></div>
 <h3>Methods</h3>
 <dl>
 <dt id="src.distance.distance_function.distanceFunction.DistanceFunction.dist"><code class="name flex">
-<span>def <span class="ident">dist</span></span>(<span>x, y)</span>
+<span>def <span class="ident">dist</span></span>(<span>x: tuple[Variable], y: tuple[Variable]) ‑> fractions.Fraction</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Main method of a distance funciton, allowing to get the distance between two points <span><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span> and <span><span class="MathJax_Preview">y</span><script type="math/tex">y</script></span>.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>x</code></strong>, <strong><code>y</code></strong> :&ensp;<code>tuple</code> of <code><a title="src.variable.variable.Variable" href="../../variable/variable.html#src.variable.variable.Variable">Variable</a></code></dt>
+<dd>The two tuples of <code><a title="src.variable.variable.Variable" href="../../variable/variable.html#src.variable.variable.Variable">Variable</a></code> you which to get the distance between.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>fractions.Fraction</code></dt>
+<dd>The distance between <span><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span> and <span><span class="MathJax_Preview">y</span><script type="math/tex">y</script></span>.</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@abstractmethod
-def dist(x,y):
+def dist(x: tuple[Variable], y: tuple[Variable]) -&gt; Fraction:
+    r&#34;&#34;&#34;
+    Main method of a distance funciton, allowing to get the distance between two points \(x\) and \(y\).
+
+    Parameters
+    ----------
+    x, y : tuple of src.variable.variable.Variable
+        The two tuples of `src.variable.variable.Variable` you which to get the distance between.
+
+    Returns
+    -------
+    fractions.Fraction
+        The distance between \(x\) and \(y\).
+    &#34;&#34;&#34;
+
     pass</code></pre>
 </details>
 </dd>
