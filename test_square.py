@@ -18,7 +18,8 @@ weights = {
 
 solver = LPSolverRounded()
 simplifier = [Daalmans(solver)]
-projector = FloatConvexHullProjector(simplification=simplifier, rounding=10)
+projector = FloatConvexHullProjector(simplifiers=simplifier, rounding=10)
+
 mu = LinearConstraint("x >= 2") & LinearConstraint("x <= 5") & LinearConstraint("y >= 2") & LinearConstraint("y <= 5")
 psi = LinearConstraint("x >= 0") & LinearConstraint("x <= 7") & LinearConstraint("y >= 7") & LinearConstraint("y <= 9")\
 | LinearConstraint("x >= 0") & LinearConstraint("x <= 7") & LinearConstraint("y >= -1") & LinearConstraint("y <= 0")\

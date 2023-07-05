@@ -17,7 +17,7 @@ weights = {
 
 solver = LPSolverRounded()
 simplifier = [Daalmans(solver)]
-projector = FloatConvexHullProjector(simplification=simplifier, rounding=10)
+projector = FloatConvexHullProjector(simplifiers=simplifier, rounding=10)
 
 cd = LinearConstraint("vol_tequila >= 0") & LinearConstraint("0.35*vol_tequila - vol_alcool = 0")\
     & LinearConstraint("0.6*vol_sirop + 0.2 * vol_tequila - pouvoirSucrant = 0")

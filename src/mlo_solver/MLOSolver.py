@@ -1,29 +1,43 @@
+"""
+Abstract MLOSolver class, representing mixed linear constraint solver.
+"""
+
 from __future__ import annotations
 
-from abc import ABC
+from ..variable import Variable
+from ..formula import ConstraintOperator
+from .optimizationValues import OptimizationValues
+
+from abc import ABC, abstractmethod
+from fractions import Fraction
 
 class MLOSolver(ABC):
-    '''
+    """
     Abstract MLOSolver class, representing mixed linear constraint solver.
-    '''
-
-    def __init__(self):
-        raise NotImplementedError("Solver can't have an instance")
-    def solve(self, variables : list, objectif : dict, constraints : dict) -> tuple:
-        '''
+    """
+    
+    @abstractmethod
+    def solve(self, variables : list[Variable], objectif : list[Fraction], constraints : list[tuple[list[Fraction], ConstraintOperator, Fraction]])\
+        -> tuple[OptimizationValues, list[Fraction], Fraction]:
+        """
         Method returning the result of a mixed linear problem.
 
-        Attributes
+        Parameters
         ----------
-        variables : variables used in constraints
-        objectif : objective function to minimize
-        constraints : list of mixed linear constraints 
+        variables : list of src.variable.variable.Variable
+            Variables used in constraints.
+        objectif : list of fractions.Fraction
+            Weights of the objective function to optimize.
+        constraints : list of tuple of the form (list of fractions.Fraction, src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator, fractions.Fraction)
+            Each tuple represents a linear constraint, with the first element being the weights, the second the operator and the third the bound.
 
         Returns
         -------
-        optimizationValues : OptimizationValues can be :
-            INFEASIBLE if the problem is infeasible
-            OPTIMAL if the solver have found an optimal value
-            UNBOUNDED if the solver can found an optimal value but the problem is feasible
-        '''
-        raise NotImplementedError("Method solve is not implemented")
+        src.mlo_solver.optimizationValues.OptimizationValues
+            Information of the final state of the problem.
+        list of fractions.Fraction
+            The point at the optimal, if found.
+        fractions.Fraction
+            The optimal value, if found.
+        """
+        pass

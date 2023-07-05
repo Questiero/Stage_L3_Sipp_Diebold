@@ -8,7 +8,6 @@ from . import Formula
 from .naryFormula import And, Or
 from .unaryFormula import Not
 from ..variable.variable import Variable
-from ..mlo_solver.LPSolverRounded import LPSolverRounded
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -25,6 +24,8 @@ class FormulaDisplay:
             A solver that used by the display
     '''
     def __init__(self):
+        from ..mlo_solver.LPSolverRounded import LPSolverRounded
+
         self._solver = LPSolverRounded()
 
     def display(self, formulas: dict[Formula, str], variables: set[Variable]):

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
 <title>src.mlo_solver.MLOSolver API documentation</title>
-<meta name="description" content="" />
+<meta name="description" content="Abstract MLOSolver class, representing mixed linear constraint solver." />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
 <link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
@@ -23,39 +23,54 @@
 <h1 class="title">Module <code>src.mlo_solver.MLOSolver</code></h1>
 </header>
 <section id="section-intro">
+<p>Abstract MLOSolver class, representing mixed linear constraint solver.</p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from __future__ import annotations
+<pre><code class="python">&#34;&#34;&#34;
+Abstract MLOSolver class, representing mixed linear constraint solver.
+&#34;&#34;&#34;
 
-from abc import ABC
+from __future__ import annotations
+
+from ..variable import Variable
+from ..formula import ConstraintOperator
+from .optimizationValues import OptimizationValues
+
+from abc import ABC, abstractmethod
+from fractions import Fraction
 
 class MLOSolver(ABC):
-    &#39;&#39;&#39;
+    &#34;&#34;&#34;
     Abstract MLOSolver class, representing mixed linear constraint solver.
-    &#39;&#39;&#39;
-
-    def __init__(self):
-        raise NotImplementedError(&#34;Solver can&#39;t have an instance&#34;)
-    def solve(self, variables : list, objectif : dict, constraints : dict) -&gt; tuple:
-        &#39;&#39;&#39;
+    &#34;&#34;&#34;
+    
+    @abstractmethod
+    def solve(self, variables : list[Variable], objectif : list[Fraction], constraints : list[tuple[list[Fraction], ConstraintOperator, Fraction]])\
+        -&gt; tuple[OptimizationValues, list[Fraction], Fraction]:
+        &#34;&#34;&#34;
         Method returning the result of a mixed linear problem.
 
-        Attributes
+        Parameters
         ----------
-        variables : variables used in constraints
-        objectif : objective function to minimize
-        constraints : list of mixed linear constraints 
+        variables : list of src.variable.variable.Variable
+            Variables used in constraints.
+        objectif : list of fractions.Fraction
+            Weights of the objective function to optimize.
+        constraints : list of tuple of the form (list of fractions.Fraction, src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator, fractions.Fraction)
+            Each tuple represents a linear constraint, with the first element being the weights, the second the operator and the third the bound.
 
         Returns
         -------
-        optimizationValues : OptimizationValues can be :
-            INFEASIBLE if the problem is infeasible
-            OPTIMAL if the solver have found an optimal value
-            UNBOUNDED if the solver can found an optimal value but the problem is feasible
-        &#39;&#39;&#39;
-        raise NotImplementedError(&#34;Method solve is not implemented&#34;)</code></pre>
+        src.mlo_solver.optimizationValues.OptimizationValues
+            Information of the final state of the problem.
+        list of fractions.Fraction
+            The point at the optimal, if found.
+        fractions.Fraction
+            The optimal value, if found.
+        &#34;&#34;&#34;
+        pass</code></pre>
 </details>
 </section>
 <section>
@@ -77,30 +92,35 @@ class MLOSolver(ABC):
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class MLOSolver(ABC):
-    &#39;&#39;&#39;
+    &#34;&#34;&#34;
     Abstract MLOSolver class, representing mixed linear constraint solver.
-    &#39;&#39;&#39;
-
-    def __init__(self):
-        raise NotImplementedError(&#34;Solver can&#39;t have an instance&#34;)
-    def solve(self, variables : list, objectif : dict, constraints : dict) -&gt; tuple:
-        &#39;&#39;&#39;
+    &#34;&#34;&#34;
+    
+    @abstractmethod
+    def solve(self, variables : list[Variable], objectif : list[Fraction], constraints : list[tuple[list[Fraction], ConstraintOperator, Fraction]])\
+        -&gt; tuple[OptimizationValues, list[Fraction], Fraction]:
+        &#34;&#34;&#34;
         Method returning the result of a mixed linear problem.
 
-        Attributes
+        Parameters
         ----------
-        variables : variables used in constraints
-        objectif : objective function to minimize
-        constraints : list of mixed linear constraints 
+        variables : list of src.variable.variable.Variable
+            Variables used in constraints.
+        objectif : list of fractions.Fraction
+            Weights of the objective function to optimize.
+        constraints : list of tuple of the form (list of fractions.Fraction, src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator, fractions.Fraction)
+            Each tuple represents a linear constraint, with the first element being the weights, the second the operator and the third the bound.
 
         Returns
         -------
-        optimizationValues : OptimizationValues can be :
-            INFEASIBLE if the problem is infeasible
-            OPTIMAL if the solver have found an optimal value
-            UNBOUNDED if the solver can found an optimal value but the problem is feasible
-        &#39;&#39;&#39;
-        raise NotImplementedError(&#34;Method solve is not implemented&#34;)</code></pre>
+        src.mlo_solver.optimizationValues.OptimizationValues
+            Information of the final state of the problem.
+        list of fractions.Fraction
+            The point at the optimal, if found.
+        fractions.Fraction
+            The optimal value, if found.
+        &#34;&#34;&#34;
+        pass</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -114,48 +134,57 @@ class MLOSolver(ABC):
 <h3>Methods</h3>
 <dl>
 <dt id="src.mlo_solver.MLOSolver.MLOSolver.solve"><code class="name flex">
-<span>def <span class="ident">solve</span></span>(<span>self, variables: list, objectif: dict, constraints: dict) ‑> tuple</span>
+<span>def <span class="ident">solve</span></span>(<span>self, variables: list[Variable], objectif: list[Fraction], constraints: list[tuple[list[Fraction], ConstraintOperator, Fraction]]) ‑> tuple[<a title="src.mlo_solver.optimizationValues.OptimizationValues" href="optimizationValues.html#src.mlo_solver.optimizationValues.OptimizationValues">OptimizationValues</a>, list[fractions.Fraction], fractions.Fraction]</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Method returning the result of a mixed linear problem.</p>
-<h2 id="attributes">Attributes</h2>
+<h2 id="parameters">Parameters</h2>
 <dl>
-<dt><strong><code>variables</code></strong> :&ensp;<code>variables used in constraints</code></dt>
-<dd>&nbsp;</dd>
-<dt><strong><code>objectif</code></strong> :&ensp;<code>objective function to minimize</code></dt>
-<dd>&nbsp;</dd>
-<dt><strong><code>constraints</code></strong> :&ensp;<code>list</code> of <code>mixed linear constraints </code></dt>
-<dd>&nbsp;</dd>
+<dt><strong><code>variables</code></strong> :&ensp;<code>list</code> of <code><a title="src.variable.variable.Variable" href="../variable/variable.html#src.variable.variable.Variable">Variable</a></code></dt>
+<dd>Variables used in constraints.</dd>
+<dt><strong><code>objectif</code></strong> :&ensp;<code>list</code> of <code>fractions.Fraction</code></dt>
+<dd>Weights of the objective function to optimize.</dd>
+<dt><strong><code>constraints</code></strong> :&ensp;<code>list</code> of <code>tuple</code> of <code>the form (list</code> of <code>fractions.Fraction, <a title="src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator" href="../formula/nullaryFormula/constraint/constraintOperator.html#src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator">ConstraintOperator</a>, fractions.Fraction)</code></dt>
+<dd>Each tuple represents a linear constraint, with the first element being the weights, the second the operator and the third the bound.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><strong><code>optimizationValues</code></strong> :&ensp;<code>OptimizationValues can be :</code></dt>
-<dd>INFEASIBLE if the problem is infeasible
-OPTIMAL if the solver have found an optimal value
-UNBOUNDED if the solver can found an optimal value but the problem is feasible</dd>
+<dt><code><a title="src.mlo_solver.optimizationValues.OptimizationValues" href="optimizationValues.html#src.mlo_solver.optimizationValues.OptimizationValues">OptimizationValues</a></code></dt>
+<dd>Information of the final state of the problem.</dd>
+<dt><code>list</code> of <code>fractions.Fraction</code></dt>
+<dd>The point at the optimal, if found.</dd>
+<dt><code>fractions.Fraction</code></dt>
+<dd>The optimal value, if found.</dd>
 </dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def solve(self, variables : list, objectif : dict, constraints : dict) -&gt; tuple:
-    &#39;&#39;&#39;
+<pre><code class="python">@abstractmethod
+def solve(self, variables : list[Variable], objectif : list[Fraction], constraints : list[tuple[list[Fraction], ConstraintOperator, Fraction]])\
+    -&gt; tuple[OptimizationValues, list[Fraction], Fraction]:
+    &#34;&#34;&#34;
     Method returning the result of a mixed linear problem.
 
-    Attributes
+    Parameters
     ----------
-    variables : variables used in constraints
-    objectif : objective function to minimize
-    constraints : list of mixed linear constraints 
+    variables : list of src.variable.variable.Variable
+        Variables used in constraints.
+    objectif : list of fractions.Fraction
+        Weights of the objective function to optimize.
+    constraints : list of tuple of the form (list of fractions.Fraction, src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator, fractions.Fraction)
+        Each tuple represents a linear constraint, with the first element being the weights, the second the operator and the third the bound.
 
     Returns
     -------
-    optimizationValues : OptimizationValues can be :
-        INFEASIBLE if the problem is infeasible
-        OPTIMAL if the solver have found an optimal value
-        UNBOUNDED if the solver can found an optimal value but the problem is feasible
-    &#39;&#39;&#39;
-    raise NotImplementedError(&#34;Method solve is not implemented&#34;)</code></pre>
+    src.mlo_solver.optimizationValues.OptimizationValues
+        Information of the final state of the problem.
+    list of fractions.Fraction
+        The point at the optimal, if found.
+    fractions.Fraction
+        The optimal value, if found.
+    &#34;&#34;&#34;
+    pass</code></pre>
 </details>
 </dd>
 </dl>

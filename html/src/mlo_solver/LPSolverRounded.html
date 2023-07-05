@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
 <title>src.mlo_solver.LPSolverRounded API documentation</title>
-<meta name="description" content="" />
+<meta name="description" content="Rounded approximation of src.mlo_solver.LPSolver.LPSolver, reducing floating point approximations." />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
 <link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
@@ -23,27 +23,64 @@
 <h1 class="title">Module <code>src.mlo_solver.LPSolverRounded</code></h1>
 </header>
 <section id="section-intro">
+<p>Rounded approximation of src.mlo_solver.LPSolver.LPSolver, reducing floating point approximations.</p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from __future__ import annotations
+<pre><code class="python">&#34;&#34;&#34;
+Rounded approximation of src.mlo_solver.LPSolver.LPSolver, reducing floating point approximations.
+&#34;&#34;&#34;
+
+from __future__ import annotations
 
 from .LPSolver import LPSolver
 from ..formula.nullaryFormula.constraint import ConstraintOperator
+from ..variable import Variable
+from .optimizationValues import OptimizationValues
 from math import isnan
 
 from fractions import Fraction
 
 class LPSolverRounded(LPSolver):
+    &#34;&#34;&#34;
+    Rounded approximation of src.mlo_solver.LPSolver.LPSolver, reducing floating point approximations.
+
+    Parameters
+    ----------
+    round: int
+        The decimal to which all numbers are rounded.
+    &#34;&#34;&#34;
 
     __round: int
 
     def __init__(self, round: int = 12):
         self.__round = round
         
-    def solve(self, variables : list, objectif : dict, constraints : dict[tuple[dict[Fraction], ConstraintOperator, Fraction]]) -&gt; tuple:
-        
+    def solve(self, variables : list[Variable], objectif : list[Fraction], constraints : list[tuple[list[Fraction], ConstraintOperator, Fraction]])\
+        -&gt; tuple[OptimizationValues, list[Fraction], Fraction]:
+        &#34;&#34;&#34;
+        Method returning the result of a mixed linear problem.
+
+        Parameters
+        ----------
+        variables : list of src.variable.variable.Variable
+            Variables used in constraints.
+        objectif : list of fractions.Fraction
+            Weights of the objective function to optimize.
+        constraints : list of tuple of the form (list of fractions.Fraction, src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator, fractions.Fraction)
+            Each tuple represents a linear constraint, with the first element being the weights, the second the operator and the third the bound.
+
+        Returns
+        -------
+        src.mlo_solver.optimizationValues.OptimizationValues
+            Information of the final state of the problem.
+        list of fractions.Fraction
+            The point at the optimal, if found.
+        fractions.Fraction
+            The optimal value, if found.
+        &#34;&#34;&#34;
+
         LPsolverRes = super().solve(variables, objectif, constraints)
         
         res = []
@@ -69,20 +106,55 @@ class LPSolverRounded(LPSolver):
 <span>(</span><span>round: int = 12)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Abstract MLOSolver class, representing mixed linear constraint solver.</p></div>
+<div class="desc"><p>Rounded approximation of src.mlo_solver.LPSolver.LPSolver, reducing floating point approximations.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>round</code></strong> :&ensp;<code>int</code></dt>
+<dd>The decimal to which all numbers are rounded.</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class LPSolverRounded(LPSolver):
+    &#34;&#34;&#34;
+    Rounded approximation of src.mlo_solver.LPSolver.LPSolver, reducing floating point approximations.
+
+    Parameters
+    ----------
+    round: int
+        The decimal to which all numbers are rounded.
+    &#34;&#34;&#34;
 
     __round: int
 
     def __init__(self, round: int = 12):
         self.__round = round
         
-    def solve(self, variables : list, objectif : dict, constraints : dict[tuple[dict[Fraction], ConstraintOperator, Fraction]]) -&gt; tuple:
-        
+    def solve(self, variables : list[Variable], objectif : list[Fraction], constraints : list[tuple[list[Fraction], ConstraintOperator, Fraction]])\
+        -&gt; tuple[OptimizationValues, list[Fraction], Fraction]:
+        &#34;&#34;&#34;
+        Method returning the result of a mixed linear problem.
+
+        Parameters
+        ----------
+        variables : list of src.variable.variable.Variable
+            Variables used in constraints.
+        objectif : list of fractions.Fraction
+            Weights of the objective function to optimize.
+        constraints : list of tuple of the form (list of fractions.Fraction, src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator, fractions.Fraction)
+            Each tuple represents a linear constraint, with the first element being the weights, the second the operator and the third the bound.
+
+        Returns
+        -------
+        src.mlo_solver.optimizationValues.OptimizationValues
+            Information of the final state of the problem.
+        list of fractions.Fraction
+            The point at the optimal, if found.
+        fractions.Fraction
+            The optimal value, if found.
+        &#34;&#34;&#34;
+
         LPsolverRes = super().solve(variables, objectif, constraints)
         
         res = []
