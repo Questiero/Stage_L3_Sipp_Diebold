@@ -1,0 +1,57 @@
+import sys
+sys.path.append(".")
+import unittest
+from src.variable import RealVariable
+from fractions import Fraction
+from src.formula.nullaryFormula import LinearConstraint
+from src.mlo_solver import ScipySolverRounded
+from src.simplificator import Daalmans
+from src.projector import FloatConvexHullProjector
+from src.revision import Revision
+from src.distance import discreteL1DistanceFunction
+
+
+class TestRevision(unittest.TestCase):
+    def test_triangle_and_polygone(self):
+        weights = {
+            RealVariable.declare("x"): Fraction(1),
+            RealVariable.declare("y"): Fraction(1),
+        }
+
+        solver = ScipySolverRounded()
+        simplifier = [Daalmans(solver)]
+        projector = FloatConvexHullProjector(simplification=simplifier, rounding=12)
+
+        psi = LinearConstraint("x >= 0") & LinearConstraint("y >= 0") & LinearConstraint("x + y <= 4")
+        mu = (LinearConstraint("x + y >= 6") & LinearConstraint("5*x + y <= 25") & LinearConstraint("-0.5*x + y <= 3") & LinearConstraint("1/3*x + y >= 4"))\
+            | (LinearConstraint("5*x + y >= 25") & LinearConstraint("3*x + y >= 16") & LinearConstraint("-x + y >= -4") & LinearConstraint("x <= 6") & LinearConstraint("x + y <= 9"))
+
+        rev = Revision(solver, discreteL1DistanceFunction(weights), simplifier, onlyOneSolution=False, projector=projector)
+        res = rev.execute(psi, mu)
+        self.assertEqual(res[1], (LinearConstraint("- 1/2*x + y <= 3") & LinearConstraint("x + y <= 6") & LinearConstraint("- x - y <= -6") & LinearConstraint("-1/3*x - y <= -4")) | (LinearConstraint("x = 5") & LinearConstraint("y = 1")), "The revision of triangle and polygone isn't what we expected.")
+
+        self.assertTrue(simplifier[0]._interpreter.sat(res[1].toLessOrEqConstraint().toDNF()), "The revision of triangle and polygone is insat.")
+
+    def test_cocktail_simplified(self):
+        weights = {
+            RealVariable.declare("vol_tequila"): Fraction(1),
+            RealVariable.declare("vol_sirop"): Fraction(1),
+            RealVariable.declare("vol_alcool"): Fraction(20),
+            RealVariable.declare("pouvoirSucrant"): Fraction(20),
+        }
+
+        solver = ScipySolverRounded()
+        simplifier = [Daalmans(solver)]
+        projector = FloatConvexHullProjector(simplification=simplifier, rounding=10)
+
+        cd = LinearConstraint("vol_tequila >= 0") & LinearConstraint("0.35*vol_tequila - vol_alcool = 0")\
+            & LinearConstraint("0.6*vol_sirop + 0.2 * vol_tequila - pouvoirSucrant = 0")
+        psi = LinearConstraint("vol_tequila = 4") & LinearConstraint("vol_sirop = 2") & cd
+        mu = LinearConstraint("vol_alcool = 0") & cd
+
+        rev = Revision(solver, discreteL1DistanceFunction(weights), simplifier, onlyOneSolution=False, projector=projector)
+        res = rev.execute(psi, mu)
+
+        self.assertTrue(simplifier[0]._interpreter.sat(res[1].toLessOrEqConstraint().toDNF()), "The revision of cocktail simplified is insat.")
+    
+if __name__ == '__main__': unittest.main()
