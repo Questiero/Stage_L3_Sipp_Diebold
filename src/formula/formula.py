@@ -26,13 +26,13 @@ class Formula(ABC):
     @abstractmethod
     def getVariables(self) -> set[Variable]:
         '''
-        Method recurcivly returning a set containing all the variables used in
+        Method recurcively returning a set containing all the variables used in
         the Formula.
 
         Returns
         -------
-        variables: set of Variable
-            All the variables used in the Formula.
+        set of src.variable.variable.Variable
+            All the variables used in the `src.formula.formula.Formula`.
         '''
         pass
     
@@ -43,8 +43,8 @@ class Formula(ABC):
 
         Returns
         -------
-        formula: Formula
-            The current Formula in Disjunctive Normal Form.
+        src.formula.formula.Formula
+            The current `src.formula.formula.Formula` in Disjunctive Normal Form.
         '''
         pass
     
@@ -56,7 +56,7 @@ class Formula(ABC):
 
         Returns
         -------
-        formula: Formula
+        src.formula.formula.Formula
             The current Formula in Disjunctive Normal Form under Negation.
         '''
         pass
@@ -69,11 +69,12 @@ class Formula(ABC):
 
         Attributes
         ----------
-        var : variable used in case of inequality
+        var : src.variable.variable.Variable
+            variable used in case of inequality
 
         Returns
         -------
-        res: list of list of constraint.Constraint
+        list of list of src.formula.nullaryFormula.constraint.constraint.Constraint
             2D list containing all the constraints of discute vraiment de l'implémentationthe adherence of the Formula,
             in Disjunctive Normal Form.
         '''
@@ -86,9 +87,14 @@ class Formula(ABC):
         constraints of the adherence of the Formula, used when a Negation is in play
         instead of getAdherence().
 
+        Attributes
+        ----------
+        var : src.variable.variable.Variable
+            `src.variable.variable.Variable` used in case of inequality
+
         Returns
         -------
-        res: list of list of constraint.Constraint
+        list of list of src.formula.nullaryFormula.constraint.constraint.Constraint
             2D list containing all the constraints of the adherence of the Formula,
             in Disjunctive Normal Form under Negation.
         '''
@@ -97,16 +103,24 @@ class Formula(ABC):
     @abstractmethod
     def toLessOrEqConstraint(self):
         '''
-        Method used to transforming formula to anoter formula without equality or greater constraint
+        Method used to transforming formula to anoter formula with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
 
         Returns
         ------
-        res: Formula with only minus or equal constraint
-        
+        src.formula.formula.Formula
+            A `src.formula.formula.Formula` with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
         '''
         pass
         
     def clone(self) -> Formula:
+        """
+        Method returning a clone of the current Formula.
+
+        Returns:
+        src.formula.formula.Formula
+            Clone of the current `src.formula.formula.Formula`.
+        """
+
         clone = self.__class__(self.children)
         return clone
     
@@ -125,7 +139,16 @@ class Formula(ABC):
         pass
 
     @abstractmethod
-    def toLatex(self):
+    def toLatex(self) -> str:
+        r"""
+        Method returning a \(\LaTeX\) expression representing the Formula. Operators are customisable in `src.constants.Constants`.
+        
+        Returns
+        -------
+        String :
+            The \(\LaTeX\) expression representing the Formula.
+        """
+
         pass
     
     def __or__(self, a):

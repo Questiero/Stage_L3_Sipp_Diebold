@@ -16,11 +16,10 @@ class UnaryFormula(Formula):
 
     Attributes
     ----------
-    children: Formula
+    children: src.formula.formula.Formula
         The child of the current node.
     '''
 
-    # formula: Formula
     def __init__(self, formulaInit: Formula, name: str = None):
         
         self.children = formulaInit
@@ -35,8 +34,8 @@ class UnaryFormula(Formula):
 
         Returns
         -------
-        variables: set of Variable
-            All the variables used in the Formula.
+        set of src.variable.variable.Variable
+            All the variables used in the `src.formula.unaryFormula.unaryFormula.UnaryFormula`.
         '''
         
         return self.children.getVariables()

@@ -41,11 +41,11 @@ class LinearConstraint(Constraint):
         
     Attributes
     ----------
-    variables: dict[Variable, Fraction]
+    variables: dictionnary of fractions.Fraction with src.variable.variable.Variable as key
         The variables in the constraint, associated with their coefficient
-    operator: ConstraintOperator
+    operator: src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator
         The operator of the constraint
-    bound: Fraction
+    bound: fractions.Fraction
         The bound of the constraint
     children: None
         The children of the current node. Since a cosntraint doesn't have any,
@@ -133,7 +133,7 @@ class LinearConstraint(Constraint):
 
         Returns
         -------
-        variables: set of Variable
+        variables: set of src.variable.variable.Variable
             All the variables used in the Formula.
         '''
         
@@ -150,7 +150,7 @@ class LinearConstraint(Constraint):
 
         Returns
         -------
-        res: list of list of Constraint
+        list of list of src.formula.nullaryFormula.constraint.constraint.Constraint
             2D list containing all the constraints of discute vraiment de l'implémentationthe adherence of the Formula,
             in Disjunctive Normal Form.
         '''
@@ -168,7 +168,7 @@ class LinearConstraint(Constraint):
 
         Returns
         -------
-        res: list of list of Constraint
+        list of list of src.formula.nullaryFormula.constraint.constraint.Constraint
             2D list containing all the constraints of the adherence of the Formula,
             in Disjunctive Normal Form under Negation.
         '''
@@ -182,9 +182,7 @@ class LinearConstraint(Constraint):
         return res
     
     def getTuple(self, variables : list) -> tuple:
-        """
-        
-        """
+
         tabVar = []
         op = self.operator
         bound = self.bound
@@ -229,6 +227,15 @@ class LinearConstraint(Constraint):
         return s
     
     def toLatex(self):
+        r"""
+        Method returning a \(\LaTeX\) expression representing the Formula. Operators are customisable in `src.constants.Constants`.
+        
+        Returns
+        -------
+        String :
+            The \(\LaTeX\) expression representing the Formula.
+        """
+
         s = ""
         for var, coef in self.variables.items():
 
@@ -266,8 +273,8 @@ class LinearConstraint(Constraint):
 
         Returns
         ------
-        res: Formula with only minus or equal constraint
-        
+        src.formula.formula.Formula
+            A `src.formula.formula.Formula` with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
         '''
         from ...naryFormula.andOperator import And
         res = self.clone()

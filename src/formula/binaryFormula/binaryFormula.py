@@ -24,11 +24,10 @@ class BinaryFormula(Formula):
 
     Attributes
     ----------
-    children: tuple of Formulas
+    children: tuple of src.formula.formula.Formula
         The children of the current node.
     '''
         
-    # formulas: tuple (Formula, Formula)
     def __init__(self, formulaLeft: Formula, formulaRight: Formula, name: str = None):
 
         self.children = (formulaLeft, formulaRight)
@@ -44,7 +43,7 @@ class BinaryFormula(Formula):
 
         Returns
         -------
-        formula: Formula
+        formula: src.formula.formula.Formula
             The simplified version of the binary operator.
         '''
         
@@ -57,7 +56,7 @@ class BinaryFormula(Formula):
 
         Returns
         -------
-        variables: set of Variable
+        variables: set of src.variable.variable.Variable
             All the variables used in the Formula.
         '''
         
@@ -69,7 +68,7 @@ class BinaryFormula(Formula):
 
         Returns
         -------
-        variables: Formula
+        variables: src.formula.formula.Formula
             The current Formula in Disjunctive Normal Form.
         '''
         
@@ -82,7 +81,7 @@ class BinaryFormula(Formula):
 
         Returns
         -------
-        variables: Formula
+        variables: src.formula.formula.Formula
             The current Formula in Disjunctive Normal Form under Negation.
         '''
         
@@ -99,7 +98,7 @@ class BinaryFormula(Formula):
 
         Returns
         -------
-        res: list of list of Constraint
+        res: list of list of src.formula.nullaryFormula.constraint.constraint.Constraint
             2D list containing all the constraints of discute vraiment de l'implémentationthe adherence of the Formula,
             in Disjunctive Normal Form.
         '''
@@ -117,7 +116,7 @@ class BinaryFormula(Formula):
 
         Returns
         -------
-        res: list of list of Constraint
+        res: list of list of src.formula.nullaryFormula.constraint.constraint.Constraint
             2D list containing all the constraints of the adherence of the Formula,
             in Disjunctive Normal Form under Negation.
         '''

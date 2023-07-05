@@ -54,11 +54,10 @@ class BinaryFormula(Formula):
 
     Attributes
     ----------
-    children: tuple of Formulas
+    children: tuple of src.formula.formula.Formula
         The children of the current node.
     &#39;&#39;&#39;
         
-    # formulas: tuple (Formula, Formula)
     def __init__(self, formulaLeft: Formula, formulaRight: Formula, name: str = None):
 
         self.children = (formulaLeft, formulaRight)
@@ -74,7 +73,7 @@ class BinaryFormula(Formula):
 
         Returns
         -------
-        formula: Formula
+        formula: src.formula.formula.Formula
             The simplified version of the binary operator.
         &#39;&#39;&#39;
         
@@ -87,7 +86,7 @@ class BinaryFormula(Formula):
 
         Returns
         -------
-        variables: set of Variable
+        variables: set of src.variable.variable.Variable
             All the variables used in the Formula.
         &#39;&#39;&#39;
         
@@ -99,7 +98,7 @@ class BinaryFormula(Formula):
 
         Returns
         -------
-        variables: Formula
+        variables: src.formula.formula.Formula
             The current Formula in Disjunctive Normal Form.
         &#39;&#39;&#39;
         
@@ -112,7 +111,7 @@ class BinaryFormula(Formula):
 
         Returns
         -------
-        variables: Formula
+        variables: src.formula.formula.Formula
             The current Formula in Disjunctive Normal Form under Negation.
         &#39;&#39;&#39;
         
@@ -129,7 +128,7 @@ class BinaryFormula(Formula):
 
         Returns
         -------
-        res: list of list of Constraint
+        res: list of list of src.formula.nullaryFormula.constraint.constraint.Constraint
             2D list containing all the constraints of discute vraiment de l&#39;implémentationthe adherence of the Formula,
             in Disjunctive Normal Form.
         &#39;&#39;&#39;
@@ -147,7 +146,7 @@ class BinaryFormula(Formula):
 
         Returns
         -------
-        res: list of list of Constraint
+        res: list of list of src.formula.nullaryFormula.constraint.constraint.Constraint
             2D list containing all the constraints of the adherence of the Formula,
             in Disjunctive Normal Form under Negation.
         &#39;&#39;&#39;
@@ -176,7 +175,7 @@ class BinaryFormula(Formula):
 </dl>
 <h2 id="attributes">Attributes</h2>
 <dl>
-<dt><strong><code>children</code></strong> :&ensp;<code>tuple</code> of <code>Formulas</code></dt>
+<dt><strong><code>children</code></strong> :&ensp;<code>tuple</code> of <code><a title="src.formula.formula.Formula" href="../formula.html#src.formula.formula.Formula">Formula</a></code></dt>
 <dd>The children of the current node.</dd>
 </dl></div>
 <details class="source">
@@ -194,11 +193,10 @@ class BinaryFormula(Formula):
 
     Attributes
     ----------
-    children: tuple of Formulas
+    children: tuple of src.formula.formula.Formula
         The children of the current node.
     &#39;&#39;&#39;
         
-    # formulas: tuple (Formula, Formula)
     def __init__(self, formulaLeft: Formula, formulaRight: Formula, name: str = None):
 
         self.children = (formulaLeft, formulaRight)
@@ -214,7 +212,7 @@ class BinaryFormula(Formula):
 
         Returns
         -------
-        formula: Formula
+        formula: src.formula.formula.Formula
             The simplified version of the binary operator.
         &#39;&#39;&#39;
         
@@ -227,7 +225,7 @@ class BinaryFormula(Formula):
 
         Returns
         -------
-        variables: set of Variable
+        variables: set of src.variable.variable.Variable
             All the variables used in the Formula.
         &#39;&#39;&#39;
         
@@ -239,7 +237,7 @@ class BinaryFormula(Formula):
 
         Returns
         -------
-        variables: Formula
+        variables: src.formula.formula.Formula
             The current Formula in Disjunctive Normal Form.
         &#39;&#39;&#39;
         
@@ -252,7 +250,7 @@ class BinaryFormula(Formula):
 
         Returns
         -------
-        variables: Formula
+        variables: src.formula.formula.Formula
             The current Formula in Disjunctive Normal Form under Negation.
         &#39;&#39;&#39;
         
@@ -269,7 +267,7 @@ class BinaryFormula(Formula):
 
         Returns
         -------
-        res: list of list of Constraint
+        res: list of list of src.formula.nullaryFormula.constraint.constraint.Constraint
             2D list containing all the constraints of discute vraiment de l&#39;implémentationthe adherence of the Formula,
             in Disjunctive Normal Form.
         &#39;&#39;&#39;
@@ -287,7 +285,7 @@ class BinaryFormula(Formula):
 
         Returns
         -------
-        res: list of list of Constraint
+        res: list of list of src.formula.nullaryFormula.constraint.constraint.Constraint
             2D list containing all the constraints of the adherence of the Formula,
             in Disjunctive Normal Form under Negation.
         &#39;&#39;&#39;
@@ -319,7 +317,7 @@ the Formula, in Disjunctive Normal Form.</p>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><strong><code>res</code></strong> :&ensp;<code>list</code> of <code>list</code> of <code>Constraint</code></dt>
+<dt><strong><code>res</code></strong> :&ensp;<code>list</code> of <code>list</code> of <code><a title="src.formula.nullaryFormula.constraint.constraint.Constraint" href="../nullaryFormula/constraint/constraint.html#src.formula.nullaryFormula.constraint.constraint.Constraint">Constraint</a></code></dt>
 <dd>2D list containing all the constraints of discute vraiment de l'implémentationthe adherence of the Formula,
 in Disjunctive Normal Form.</dd>
 </dl></div>
@@ -338,11 +336,40 @@ in Disjunctive Normal Form.</dd>
 
     Returns
     -------
-    res: list of list of Constraint
+    res: list of list of src.formula.nullaryFormula.constraint.constraint.Constraint
         2D list containing all the constraints of discute vraiment de l&#39;implémentationthe adherence of the Formula,
         in Disjunctive Normal Form.
     &#39;&#39;&#39;
     return self._eliminate().getAdherence(var)</code></pre>
+</details>
+</dd>
+<dt id="src.formula.binaryFormula.binaryFormula.BinaryFormula.getVariables"><code class="name flex">
+<span>def <span class="ident">getVariables</span></span>(<span>self) ‑> set[<a title="src.variable.variable.Variable" href="../../variable/variable.html#src.variable.variable.Variable">Variable</a>]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Method recurcivly returning a set containing all the variables used in
+the Formula.</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>variables</code></strong> :&ensp;<code>set</code> of <code><a title="src.variable.variable.Variable" href="../../variable/variable.html#src.variable.variable.Variable">Variable</a></code></dt>
+<dd>All the variables used in the Formula.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getVariables(self) -&gt; set[Variable]:
+    &#39;&#39;&#39;
+    Method recurcivly returning a set containing all the variables used in
+    the Formula.
+
+    Returns
+    -------
+    variables: set of src.variable.variable.Variable
+        All the variables used in the Formula.
+    &#39;&#39;&#39;
+    
+    return self.children[0].getVariables().union(self.children[1].getVariables())</code></pre>
 </details>
 </dd>
 <dt id="src.formula.binaryFormula.binaryFormula.BinaryFormula.toDNF"><code class="name flex">
@@ -352,7 +379,7 @@ in Disjunctive Normal Form.</dd>
 <div class="desc"><p>Method returning the current Formula in Disjunctive Normal Form.</p>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><strong><code>variables</code></strong> :&ensp;<code>Formula</code></dt>
+<dt><strong><code>variables</code></strong> :&ensp;<code><a title="src.formula.formula.Formula" href="../formula.html#src.formula.formula.Formula">Formula</a></code></dt>
 <dd>The current Formula in Disjunctive Normal Form.</dd>
 </dl></div>
 <details class="source">
@@ -365,7 +392,7 @@ in Disjunctive Normal Form.</dd>
 
     Returns
     -------
-    variables: Formula
+    variables: src.formula.formula.Formula
         The current Formula in Disjunctive Normal Form.
     &#39;&#39;&#39;
     
@@ -377,7 +404,8 @@ in Disjunctive Normal Form.</dd>
 <ul class="hlist">
 <li><code><b><a title="src.formula.formula.Formula" href="../formula.html#src.formula.formula.Formula">Formula</a></b></code>:
 <ul class="hlist">
-<li><code><a title="src.formula.formula.Formula.getVariables" href="../formula.html#src.formula.formula.Formula.getVariables">getVariables</a></code></li>
+<li><code><a title="src.formula.formula.Formula.clone" href="../formula.html#src.formula.formula.Formula.clone">clone</a></code></li>
+<li><code><a title="src.formula.formula.Formula.toLatex" href="../formula.html#src.formula.formula.Formula.toLatex">toLatex</a></code></li>
 <li><code><a title="src.formula.formula.Formula.toLessOrEqConstraint" href="../formula.html#src.formula.formula.Formula.toLessOrEqConstraint">toLessOrEqConstraint</a></code></li>
 </ul>
 </li>
@@ -403,6 +431,7 @@ in Disjunctive Normal Form.</dd>
 <h4><code><a title="src.formula.binaryFormula.binaryFormula.BinaryFormula" href="#src.formula.binaryFormula.binaryFormula.BinaryFormula">BinaryFormula</a></code></h4>
 <ul class="">
 <li><code><a title="src.formula.binaryFormula.binaryFormula.BinaryFormula.getAdherence" href="#src.formula.binaryFormula.binaryFormula.BinaryFormula.getAdherence">getAdherence</a></code></li>
+<li><code><a title="src.formula.binaryFormula.binaryFormula.BinaryFormula.getVariables" href="#src.formula.binaryFormula.binaryFormula.BinaryFormula.getVariables">getVariables</a></code></li>
 <li><code><a title="src.formula.binaryFormula.binaryFormula.BinaryFormula.toDNF" href="#src.formula.binaryFormula.binaryFormula.BinaryFormula.toDNF">toDNF</a></code></li>
 </ul>
 </li>

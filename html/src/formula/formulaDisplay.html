@@ -62,11 +62,11 @@ class FormulaDisplay:
         &#39;&#39;&#39;
         Function used to display a formula in dnf form.
 
-        Params
+        Parameters
         ----------
-        formulas : dict[Formula, str]
+        formulas : dictionary of String with src.formula.formula.Formula as key
             Dictionary witch link a formula with a color
-        variables: set[Variable]
+        variables: set of src.variable.variable.Variable
             List of variables witch will be displayed
         &#39;&#39;&#39;
         for phi in formulas.keys():
@@ -100,9 +100,9 @@ class FormulaDisplay:
         ----------
         phi:
             A formula
-        variables: set[Variable]
+        variables: set of src.variable.variable.Variable
             List of variables 
-        values : list[Fraction]
+        values : list of fracitons.Fraction
             List of values for each formulas
         &#39;&#39;&#39;
         res : bool
@@ -295,11 +295,11 @@ class FormulaDisplay:
         &#39;&#39;&#39;
         Function used to display a formula in dnf form.
 
-        Params
+        Parameters
         ----------
-        formulas : dict[Formula, str]
+        formulas : dictionary of String with src.formula.formula.Formula as key
             Dictionary witch link a formula with a color
-        variables: set[Variable]
+        variables: set of src.variable.variable.Variable
             List of variables witch will be displayed
         &#39;&#39;&#39;
         for phi in formulas.keys():
@@ -333,9 +333,9 @@ class FormulaDisplay:
         ----------
         phi:
             A formula
-        variables: set[Variable]
+        variables: set of src.variable.variable.Variable
             List of variables 
-        values : list[Fraction]
+        values : list of fracitons.Fraction
             List of values for each formulas
         &#39;&#39;&#39;
         res : bool
@@ -494,11 +494,13 @@ class FormulaDisplay:
 </code></dt>
 <dd>
 <div class="desc"><p>Function used to display a formula in dnf form.</p>
-<h2 id="params">Params</h2>
-<p>formulas : dict[Formula, str]
-Dictionary witch link a formula with a color
-variables: set[Variable]
-List of variables witch will be displayed</p></div>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>formulas</code></strong> :&ensp;<code>dictionary</code> of <code>String with <a title="src.formula.formula.Formula" href="formula.html#src.formula.formula.Formula">Formula</a> as key</code></dt>
+<dd>Dictionary witch link a formula with a color</dd>
+<dt><strong><code>variables</code></strong> :&ensp;<code>set</code> of <code><a title="src.variable.variable.Variable" href="../variable/variable.html#src.variable.variable.Variable">Variable</a></code></dt>
+<dd>List of variables witch will be displayed</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -507,11 +509,11 @@ List of variables witch will be displayed</p></div>
     &#39;&#39;&#39;
     Function used to display a formula in dnf form.
 
-    Params
+    Parameters
     ----------
-    formulas : dict[Formula, str]
+    formulas : dictionary of String with src.formula.formula.Formula as key
         Dictionary witch link a formula with a color
-    variables: set[Variable]
+    variables: set of src.variable.variable.Variable
         List of variables witch will be displayed
     &#39;&#39;&#39;
     for phi in formulas.keys():

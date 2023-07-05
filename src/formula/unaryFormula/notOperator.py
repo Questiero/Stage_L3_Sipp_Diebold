@@ -19,7 +19,7 @@ class Not(UnaryFormula):
 
     Attributes
     ----------
-    children: Formula
+    children: src.formula.formula.Formula
         The child of the current node.
     '''
         
@@ -29,8 +29,8 @@ class Not(UnaryFormula):
 
         Returns
         -------
-        formula: Formula
-            The current Formula in Disjunctive Normal Form.
+        src.formula.formula.Formula
+            The current `src.formula.formula.Formula` in Disjunctive Normal Form.
         '''
         
         return self.children._toDNFNeg()
@@ -42,8 +42,8 @@ class Not(UnaryFormula):
 
         Returns
         -------
-        formula: Formula
-            The current Formula in Disjunctive Normal Form under Negation.
+        src.formula.formula.Formula
+            The current `src.formula.formula.Formula` in Disjunctive Normal Form.
         '''
         
         return self.children.toDNF()
@@ -55,11 +55,12 @@ class Not(UnaryFormula):
 
         Attributes
         ----------
-        var : variable used in case of inequality
+        var : src.variable.variable.Variable
+            variable used in case of inequality.
 
         Returns
         -------
-        res: list of list of Constraint
+        list of list of src.formula.nullaryFormula.constraint.constraint.Constraint
             2D list containing all the constraints of discute vraiment de l'implémentationthe adherence of the Formula,
             in Disjunctive Normal Form.
         '''
@@ -74,11 +75,12 @@ class Not(UnaryFormula):
 
         Attributes
         ----------
-        var : variable used in case of inequality
+        var : src.variable.variable.Variable
+            variable used in case of inequality.
 
         Returns
         -------
-        res: list of list of Constraint
+        list of list of src.formula.nullaryFormula.constraint.constraint.Constraint
             2D list containing all the constraints of the adherence of the Formula,
             in Disjunctive Normal Form under Negation.
         '''
@@ -91,12 +93,25 @@ class Not(UnaryFormula):
 
         Returns
         ------
-        res: Formula with only minus or equal constraint
-        
+        src.formula.formula.Formula
+            A `src.formula.formula.Formula` with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.        
         '''
         return Not(self.children.toLessOrEqConstraint())
     
     def copyNegLitteral(self, e : Variable) -> Constraint:
+        """
+        Method used to transform the strict operators (i.e the negation) in an open one.
+
+        Parameters
+        ----------
+        e : src.variable.variable.Variable
+            variable used in case of inequality.
+
+        Returns
+        -------
+        src.formula.nullaryFormula.constraint.constraint.Constraint
+            The transformed `src.formula.nullaryFormula.constraint.constraint.Constraint`
+        """
         
         if not isinstance(self.children, Constraint):
             raise TypeError("This method can only be called on a litteral")
@@ -115,4 +130,13 @@ class Not(UnaryFormula):
         return Constants.NOT_STRING_OPERATOR + "(" + str(self.children) + ")"
     
     def toLatex(self):
+        r"""
+        Method returning a \(\LaTeX\) expression representing the Formula. Operators are customisable in `src.constants.Constants`.
+        
+        Returns
+        -------
+        String :
+            The \(\LaTeX\) expression representing the Formula.
+        """
+
         return Constants.NOT_LATEX_OPERATOR + "(" + self.children.toLatex + ")"

@@ -12,11 +12,16 @@ from .. import Formula
 
 class Equivalence(BinaryFormula):
     '''
-     Class representing the equivalence operator.
+    Class representing the equivalence operator.
+
+    Parameters
+    ----------
+    formulaTuple: tuple of Formulas
+        The formulas meant as components of the equivalence operator.
 
     Attributes
     ----------
-    children: tuple of Formulas
+    children: tuple of src.formula.formula.Formula
         The children of the current node.
     '''
     
@@ -25,13 +30,14 @@ class Equivalence(BinaryFormula):
     def _eliminate(self) -> Formula:
         '''
         Method returning the simplified form for the equivalence operator,
-        using only Not, And and Or.In this case, it's (a AND b) OR (NOT a AND NOT b).
+        using only Not, And and Or.
+        In this case, it's (a AND b) OR (NOT a AND NOT b).
 
         Returns
         -------
-        formula: Formula
-            The simplified version of the equivalence operator. In this case,
-            it's (a AND b) OR (NOT a AND NOT b).
+        src.formula.formula.Formula
+            The simplified version of the equivalence operator.
+            In this case, it's (a AND b) OR (NOT a AND NOT b).
         '''
            
         return (self.children[0] & self.children[1]) | (~self.children[0] & ~self.children[1])

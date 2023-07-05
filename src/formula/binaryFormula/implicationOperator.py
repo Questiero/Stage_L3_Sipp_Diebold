@@ -14,9 +14,14 @@ class Implication(BinaryFormula):
     '''
      Class representing the implication operator.
 
+    Parameters
+    ----------
+    formulaTuple: tuple of Formulas
+        The formulas meant as components of the implication operator.
+
     Attributes
     ----------
-    children: tuple of Formulas
+    children: tuple of src.formula.formula.Formula
         The children of the current node.
     '''
     
@@ -25,13 +30,14 @@ class Implication(BinaryFormula):
     def _eliminate(self) -> Formula:
         '''
         Method returning the simplified form for the implication operator, using only
-        Not, And and Or.In this case, it's NOT a OR b
+        Not, And and Or.
+        In this case, it's NOT a OR b.
 
         Returns
         -------
-        formula: Formula
-            The simplified version of the implication operator. In this case, it's
-            NOT a OR b.
+        src.formula.formula.Formula
+            The simplified version of the implication operator.
+            In this case, it's NOT a OR b.
         '''
         
         return ~self.children[0] | self.children[1]

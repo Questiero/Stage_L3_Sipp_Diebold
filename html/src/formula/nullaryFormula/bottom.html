@@ -62,7 +62,7 @@ class Bottom(NullaryFormula):
 
         Returns
         -------
-        variables: None
+        None
             All the variables used in Bottom, so None.
         &#39;&#39;&#39;
         
@@ -75,7 +75,7 @@ class Bottom(NullaryFormula):
 
         Returns
         -------
-        variables: list of list of Constraint
+        list of list of src.formula.nullaryFormula.constraint.constraint.Constraint
             2D list containing all the constraints of the adherence of Bottom,
             in Disjunctive Normal Form. In this case, an empty list.
         &#39;&#39;&#39;
@@ -90,7 +90,7 @@ class Bottom(NullaryFormula):
 
         Returns
         -------
-        variables: list of list of Constraint
+        list of list of src.formula.nullaryFormula.constraint.constraint.Constraint
             2D list containing all the constraints of the adherence of Bottom,
             in Disjunctive Normal Form under Negation. In this case, an empty list. 
         &#39;&#39;&#39;
@@ -101,6 +101,15 @@ class Bottom(NullaryFormula):
         return Constants.BOTTOM_STRING_OPERATOR
     
     def toLatex(self):
+        r&#34;&#34;&#34;
+        Method returning a \(\LaTeX\) expression representing the Formula. Operators are customisable in `src.constants.Constants`.
+        
+        Returns
+        -------
+        String :
+            The \(\LaTeX\) expression representing the Formula.
+        &#34;&#34;&#34;
+                
         return Constants.BOTTOM_LATEX_OPERATOR</code></pre>
 </details>
 </section>
@@ -147,7 +156,7 @@ class Bottom(NullaryFormula):
 
         Returns
         -------
-        variables: None
+        None
             All the variables used in Bottom, so None.
         &#39;&#39;&#39;
         
@@ -160,7 +169,7 @@ class Bottom(NullaryFormula):
 
         Returns
         -------
-        variables: list of list of Constraint
+        list of list of src.formula.nullaryFormula.constraint.constraint.Constraint
             2D list containing all the constraints of the adherence of Bottom,
             in Disjunctive Normal Form. In this case, an empty list.
         &#39;&#39;&#39;
@@ -175,7 +184,7 @@ class Bottom(NullaryFormula):
 
         Returns
         -------
-        variables: list of list of Constraint
+        list of list of src.formula.nullaryFormula.constraint.constraint.Constraint
             2D list containing all the constraints of the adherence of Bottom,
             in Disjunctive Normal Form under Negation. In this case, an empty list. 
         &#39;&#39;&#39;
@@ -186,6 +195,15 @@ class Bottom(NullaryFormula):
         return Constants.BOTTOM_STRING_OPERATOR
     
     def toLatex(self):
+        r&#34;&#34;&#34;
+        Method returning a \(\LaTeX\) expression representing the Formula. Operators are customisable in `src.constants.Constants`.
+        
+        Returns
+        -------
+        String :
+            The \(\LaTeX\) expression representing the Formula.
+        &#34;&#34;&#34;
+                
         return Constants.BOTTOM_LATEX_OPERATOR</code></pre>
 </details>
 <h3>Ancestors</h3>
@@ -204,7 +222,7 @@ class Bottom(NullaryFormula):
 Bottom, in Disjunctive Normal Form. In this case, an empty list.</p>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><strong><code>variables</code></strong> :&ensp;<code>list</code> of <code>list</code> of <code>Constraint</code></dt>
+<dt><code>list</code> of <code>list</code> of <code><a title="src.formula.nullaryFormula.constraint.constraint.Constraint" href="constraint/constraint.html#src.formula.nullaryFormula.constraint.constraint.Constraint">Constraint</a></code></dt>
 <dd>2D list containing all the constraints of the adherence of Bottom,
 in Disjunctive Normal Form. In this case, an empty list.</dd>
 </dl></div>
@@ -219,7 +237,7 @@ in Disjunctive Normal Form. In this case, an empty list.</dd>
 
     Returns
     -------
-    variables: list of list of Constraint
+    list of list of src.formula.nullaryFormula.constraint.constraint.Constraint
         2D list containing all the constraints of the adherence of Bottom,
         in Disjunctive Normal Form. In this case, an empty list.
     &#39;&#39;&#39;
@@ -235,7 +253,7 @@ in Disjunctive Normal Form. In this case, an empty list.</dd>
 Bottom, so None.</p>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><strong><code>variables</code></strong> :&ensp;<code>None</code></dt>
+<dt><code>None</code></dt>
 <dd>All the variables used in Bottom, so None.</dd>
 </dl></div>
 <details class="source">
@@ -249,24 +267,11 @@ Bottom, so None.</p>
 
     Returns
     -------
-    variables: None
+    None
         All the variables used in Bottom, so None.
     &#39;&#39;&#39;
     
     return None</code></pre>
-</details>
-</dd>
-<dt id="src.formula.nullaryFormula.bottom.Bottom.toLatex"><code class="name flex">
-<span>def <span class="ident">toLatex</span></span>(<span>self)</span>
-</code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def toLatex(self):
-    return Constants.BOTTOM_LATEX_OPERATOR</code></pre>
 </details>
 </dd>
 </dl>
@@ -274,7 +279,9 @@ Bottom, so None.</p>
 <ul class="hlist">
 <li><code><b><a title="src.formula.nullaryFormula.nullaryFormula.NullaryFormula" href="nullaryFormula.html#src.formula.nullaryFormula.nullaryFormula.NullaryFormula">NullaryFormula</a></b></code>:
 <ul class="hlist">
+<li><code><a title="src.formula.nullaryFormula.nullaryFormula.NullaryFormula.clone" href="../formula.html#src.formula.formula.Formula.clone">clone</a></code></li>
 <li><code><a title="src.formula.nullaryFormula.nullaryFormula.NullaryFormula.toDNF" href="nullaryFormula.html#src.formula.nullaryFormula.nullaryFormula.NullaryFormula.toDNF">toDNF</a></code></li>
+<li><code><a title="src.formula.nullaryFormula.nullaryFormula.NullaryFormula.toLatex" href="../formula.html#src.formula.formula.Formula.toLatex">toLatex</a></code></li>
 <li><code><a title="src.formula.nullaryFormula.nullaryFormula.NullaryFormula.toLessOrEqConstraint" href="../formula.html#src.formula.formula.Formula.toLessOrEqConstraint">toLessOrEqConstraint</a></code></li>
 </ul>
 </li>
@@ -301,7 +308,6 @@ Bottom, so None.</p>
 <ul class="">
 <li><code><a title="src.formula.nullaryFormula.bottom.Bottom.getAdherence" href="#src.formula.nullaryFormula.bottom.Bottom.getAdherence">getAdherence</a></code></li>
 <li><code><a title="src.formula.nullaryFormula.bottom.Bottom.getVariables" href="#src.formula.nullaryFormula.bottom.Bottom.getVariables">getVariables</a></code></li>
-<li><code><a title="src.formula.nullaryFormula.bottom.Bottom.toLatex" href="#src.formula.nullaryFormula.bottom.Bottom.toLatex">toLatex</a></code></li>
 </ul>
 </li>
 </ul>

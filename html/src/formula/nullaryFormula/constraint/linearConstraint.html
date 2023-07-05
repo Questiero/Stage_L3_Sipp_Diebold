@@ -71,11 +71,11 @@ class LinearConstraint(Constraint):
         
     Attributes
     ----------
-    variables: dict[Variable, Fraction]
+    variables: dictionnary of fractions.Fraction with src.variable.variable.Variable as key
         The variables in the constraint, associated with their coefficient
-    operator: ConstraintOperator
+    operator: src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator
         The operator of the constraint
-    bound: Fraction
+    bound: fractions.Fraction
         The bound of the constraint
     children: None
         The children of the current node. Since a cosntraint doesn&#39;t have any,
@@ -163,7 +163,7 @@ class LinearConstraint(Constraint):
 
         Returns
         -------
-        variables: set of Variable
+        variables: set of src.variable.variable.Variable
             All the variables used in the Formula.
         &#39;&#39;&#39;
         
@@ -180,7 +180,7 @@ class LinearConstraint(Constraint):
 
         Returns
         -------
-        res: list of list of Constraint
+        list of list of src.formula.nullaryFormula.constraint.constraint.Constraint
             2D list containing all the constraints of discute vraiment de l&#39;implémentationthe adherence of the Formula,
             in Disjunctive Normal Form.
         &#39;&#39;&#39;
@@ -198,7 +198,7 @@ class LinearConstraint(Constraint):
 
         Returns
         -------
-        res: list of list of Constraint
+        list of list of src.formula.nullaryFormula.constraint.constraint.Constraint
             2D list containing all the constraints of the adherence of the Formula,
             in Disjunctive Normal Form under Negation.
         &#39;&#39;&#39;
@@ -212,9 +212,7 @@ class LinearConstraint(Constraint):
         return res
     
     def getTuple(self, variables : list) -&gt; tuple:
-        &#34;&#34;&#34;
-        
-        &#34;&#34;&#34;
+
         tabVar = []
         op = self.operator
         bound = self.bound
@@ -259,6 +257,15 @@ class LinearConstraint(Constraint):
         return s
     
     def toLatex(self):
+        r&#34;&#34;&#34;
+        Method returning a \(\LaTeX\) expression representing the Formula. Operators are customisable in `src.constants.Constants`.
+        
+        Returns
+        -------
+        String :
+            The \(\LaTeX\) expression representing the Formula.
+        &#34;&#34;&#34;
+
         s = &#34;&#34;
         for var, coef in self.variables.items():
 
@@ -296,8 +303,8 @@ class LinearConstraint(Constraint):
 
         Returns
         ------
-        res: Formula with only minus or equal constraint
-        
+        src.formula.formula.Formula
+            A `src.formula.formula.Formula` with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
         &#39;&#39;&#39;
         from ...naryFormula.andOperator import And
         res = self.clone()
@@ -377,11 +384,11 @@ class LinearConstraint(Constraint):
 </dl>
 <h2 id="attributes">Attributes</h2>
 <dl>
-<dt><strong><code>variables</code></strong> :&ensp;<code>dict[Variable, Fraction]</code></dt>
+<dt><strong><code>variables</code></strong> :&ensp;<code>dictionnary</code> of <code>fractions.Fraction with <a title="src.variable.variable.Variable" href="../../../variable/variable.html#src.variable.variable.Variable">Variable</a> as key</code></dt>
 <dd>The variables in the constraint, associated with their coefficient</dd>
-<dt><strong><code>operator</code></strong> :&ensp;<code>ConstraintOperator</code></dt>
+<dt><strong><code>operator</code></strong> :&ensp;<code><a title="src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator" href="constraintOperator.html#src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator">ConstraintOperator</a></code></dt>
 <dd>The operator of the constraint</dd>
-<dt><strong><code>bound</code></strong> :&ensp;<code>Fraction</code></dt>
+<dt><strong><code>bound</code></strong> :&ensp;<code>fractions.Fraction</code></dt>
 <dd>The bound of the constraint</dd>
 <dt><strong><code>children</code></strong> :&ensp;<code>None</code></dt>
 <dd>The children of the current node. Since a cosntraint doesn't have any,
@@ -415,11 +422,11 @@ it's None.</dd>
         
     Attributes
     ----------
-    variables: dict[Variable, Fraction]
+    variables: dictionnary of fractions.Fraction with src.variable.variable.Variable as key
         The variables in the constraint, associated with their coefficient
-    operator: ConstraintOperator
+    operator: src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator
         The operator of the constraint
-    bound: Fraction
+    bound: fractions.Fraction
         The bound of the constraint
     children: None
         The children of the current node. Since a cosntraint doesn&#39;t have any,
@@ -507,7 +514,7 @@ it's None.</dd>
 
         Returns
         -------
-        variables: set of Variable
+        variables: set of src.variable.variable.Variable
             All the variables used in the Formula.
         &#39;&#39;&#39;
         
@@ -524,7 +531,7 @@ it's None.</dd>
 
         Returns
         -------
-        res: list of list of Constraint
+        list of list of src.formula.nullaryFormula.constraint.constraint.Constraint
             2D list containing all the constraints of discute vraiment de l&#39;implémentationthe adherence of the Formula,
             in Disjunctive Normal Form.
         &#39;&#39;&#39;
@@ -542,7 +549,7 @@ it's None.</dd>
 
         Returns
         -------
-        res: list of list of Constraint
+        list of list of src.formula.nullaryFormula.constraint.constraint.Constraint
             2D list containing all the constraints of the adherence of the Formula,
             in Disjunctive Normal Form under Negation.
         &#39;&#39;&#39;
@@ -556,9 +563,7 @@ it's None.</dd>
         return res
     
     def getTuple(self, variables : list) -&gt; tuple:
-        &#34;&#34;&#34;
-        
-        &#34;&#34;&#34;
+
         tabVar = []
         op = self.operator
         bound = self.bound
@@ -603,6 +608,15 @@ it's None.</dd>
         return s
     
     def toLatex(self):
+        r&#34;&#34;&#34;
+        Method returning a \(\LaTeX\) expression representing the Formula. Operators are customisable in `src.constants.Constants`.
+        
+        Returns
+        -------
+        String :
+            The \(\LaTeX\) expression representing the Formula.
+        &#34;&#34;&#34;
+
         s = &#34;&#34;
         for var, coef in self.variables.items():
 
@@ -640,8 +654,8 @@ it's None.</dd>
 
         Returns
         ------
-        res: Formula with only minus or equal constraint
-        
+        src.formula.formula.Formula
+            A `src.formula.formula.Formula` with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
         &#39;&#39;&#39;
         from ...naryFormula.andOperator import And
         res = self.clone()
@@ -709,23 +723,6 @@ it's None.</dd>
 </dl>
 <h3>Methods</h3>
 <dl>
-<dt id="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint.clone"><code class="name flex">
-<span>def <span class="ident">clone</span></span>(<span>self) ‑> <a title="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint" href="#src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint">LinearConstraint</a></span>
-</code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def clone(self) -&gt; LinearConstraint:
-    clonedLc = LinearConstraint(&#34;&#34;)
-    clonedLc.variables = self.variables.copy()
-    clonedLc.operator = self.operator
-    clonedLc.bound = self.bound
-    return clonedLc</code></pre>
-</details>
-</dd>
 <dt id="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint.getAdherence"><code class="name flex">
 <span>def <span class="ident">getAdherence</span></span>(<span>self, var: Variable) ‑> list[list[<a title="src.formula.nullaryFormula.constraint.constraint.Constraint" href="constraint.html#src.formula.nullaryFormula.constraint.constraint.Constraint">Constraint</a>]]</span>
 </code></dt>
@@ -739,7 +736,7 @@ the Formula, in Disjunctive Normal Form.</p>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><strong><code>res</code></strong> :&ensp;<code>list</code> of <code>list</code> of <code>Constraint</code></dt>
+<dt><code>list</code> of <code>list</code> of <code><a title="src.formula.nullaryFormula.constraint.constraint.Constraint" href="constraint.html#src.formula.nullaryFormula.constraint.constraint.Constraint">Constraint</a></code></dt>
 <dd>2D list containing all the constraints of discute vraiment de l'implémentationthe adherence of the Formula,
 in Disjunctive Normal Form.</dd>
 </dl></div>
@@ -758,7 +755,7 @@ in Disjunctive Normal Form.</dd>
 
     Returns
     -------
-    res: list of list of Constraint
+    list of list of src.formula.nullaryFormula.constraint.constraint.Constraint
         2D list containing all the constraints of discute vraiment de l&#39;implémentationthe adherence of the Formula,
         in Disjunctive Normal Form.
     &#39;&#39;&#39;
@@ -775,9 +772,7 @@ in Disjunctive Normal Form.</dd>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def getTuple(self, variables : list) -&gt; tuple:
-    &#34;&#34;&#34;
-    
-    &#34;&#34;&#34;
+
     tabVar = []
     op = self.operator
     bound = self.bound
@@ -792,6 +787,35 @@ in Disjunctive Normal Form.</dd>
         op = ConstraintOperator.LEQ
     
     return (tabVar, op, bound)</code></pre>
+</details>
+</dd>
+<dt id="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint.getVariables"><code class="name flex">
+<span>def <span class="ident">getVariables</span></span>(<span>self) ‑> set[<a title="src.variable.variable.Variable" href="../../../variable/variable.html#src.variable.variable.Variable">Variable</a>]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Method recurcivly returning a set containing all the variables used in
+the Formula.</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>variables</code></strong> :&ensp;<code>set</code> of <code><a title="src.variable.variable.Variable" href="../../../variable/variable.html#src.variable.variable.Variable">Variable</a></code></dt>
+<dd>All the variables used in the Formula.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getVariables(self) -&gt; set[Variable]:
+    &#39;&#39;&#39;
+    Method recurcivly returning a set containing all the variables used in
+    the Formula.
+
+    Returns
+    -------
+    variables: set of src.variable.variable.Variable
+        All the variables used in the Formula.
+    &#39;&#39;&#39;
+    
+    return self.variables.keys()</code></pre>
 </details>
 </dd>
 <dt id="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint.replace"><code class="name flex">
@@ -810,46 +834,45 @@ in Disjunctive Normal Form.</dd>
     if len(self.variables) == 0: raise IndexError(&#34;Not enough values in constraint&#34;)</code></pre>
 </details>
 </dd>
-<dt id="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint.toLatex"><code class="name flex">
-<span>def <span class="ident">toLatex</span></span>(<span>self)</span>
+<dt id="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint.toLessOrEqConstraint"><code class="name flex">
+<span>def <span class="ident">toLessOrEqConstraint</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Method used to transforming formula to anoter formula without equality or greater constraint</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code><a title="src.formula.formula.Formula" href="../../formula.html#src.formula.formula.Formula">Formula</a></code></dt>
+<dd>A <code><a title="src.formula.formula.Formula" href="../../formula.html#src.formula.formula.Formula">Formula</a></code> with only <code><a title="src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ" href="constraintOperator.html#src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ">ConstraintOperator.LEQ</a></code> constraints.</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def toLatex(self):
-    s = &#34;&#34;
-    for var, coef in self.variables.items():
+<pre><code class="python">def toLessOrEqConstraint(self):
+    &#39;&#39;&#39;
+    Method used to transforming formula to anoter formula without equality or greater constraint
 
-        if int(coef) == coef:
-            if abs(coef) == 1:
-                coefString = &#34;&#34;
-            else:
-                coefString = str(abs(int(coef)))
-        else:
-            coefString = &#34; \\frac{&#34; + str(abs(coef.numerator)) + &#34;}{&#34; + str(coef.denominator) + &#34;}&#34;
+    Returns
+    ------
+    src.formula.formula.Formula
+        A `src.formula.formula.Formula` with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
+    &#39;&#39;&#39;
+    from ...naryFormula.andOperator import And
+    res = self.clone()
 
-        if coef &lt; 0:
-            s += &#34;- &#34;
-        else:
-            s += &#34;+ &#34; 
+    if self.operator == ConstraintOperator.GEQ :
+        for variable in res.variables.keys():
+            res.variables[variable] *= -1
+        res.bound *= -1
+        res.operator = ConstraintOperator.LEQ
+    elif self.operator == ConstraintOperator.EQ:
+        res = [self.clone()]
+        res[0].operator = ConstraintOperator.GEQ
+        res.append(res[0].toLessOrEqConstraint())
+        res[0].operator = ConstraintOperator.LEQ
+        res = And(formulaSet=set(res))
 
-        s += coefString
-        
-        s+= str(var) + &#34; &#34;
-
-    if (s[0] == &#34;+&#34;):
-        s = s[2:]
-    elif (s[0] == &#34;-&#34;):
-        s = s[0] + s[2:]
-    s += str(self.operator.getLatexOperator()) + &#34; &#34;
-    if (int(self.bound) == self.bound):
-        s +=  str(self.bound)
-    else:
-        s +=  &#34;\\frac{&#34; + str(self.bound.numerator) + &#34;}{&#34; + str(self.bound.denominator) + &#34;}&#34;
-    return s</code></pre>
+    return res</code></pre>
 </details>
 </dd>
 </dl>
@@ -857,9 +880,9 @@ in Disjunctive Normal Form.</dd>
 <ul class="hlist">
 <li><code><b><a title="src.formula.nullaryFormula.constraint.constraint.Constraint" href="constraint.html#src.formula.nullaryFormula.constraint.constraint.Constraint">Constraint</a></b></code>:
 <ul class="hlist">
-<li><code><a title="src.formula.nullaryFormula.constraint.constraint.Constraint.getVariables" href="../../formula.html#src.formula.formula.Formula.getVariables">getVariables</a></code></li>
+<li><code><a title="src.formula.nullaryFormula.constraint.constraint.Constraint.clone" href="../../formula.html#src.formula.formula.Formula.clone">clone</a></code></li>
 <li><code><a title="src.formula.nullaryFormula.constraint.constraint.Constraint.toDNF" href="../nullaryFormula.html#src.formula.nullaryFormula.nullaryFormula.NullaryFormula.toDNF">toDNF</a></code></li>
-<li><code><a title="src.formula.nullaryFormula.constraint.constraint.Constraint.toLessOrEqConstraint" href="../../formula.html#src.formula.formula.Formula.toLessOrEqConstraint">toLessOrEqConstraint</a></code></li>
+<li><code><a title="src.formula.nullaryFormula.constraint.constraint.Constraint.toLatex" href="../../formula.html#src.formula.formula.Formula.toLatex">toLatex</a></code></li>
 </ul>
 </li>
 </ul>
@@ -882,14 +905,14 @@ in Disjunctive Normal Form.</dd>
 <ul>
 <li>
 <h4><code><a title="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint" href="#src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint">LinearConstraint</a></code></h4>
-<ul class="two-column">
+<ul class="">
 <li><code><a title="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint.bound" href="#src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint.bound">bound</a></code></li>
-<li><code><a title="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint.clone" href="#src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint.clone">clone</a></code></li>
 <li><code><a title="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint.getAdherence" href="#src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint.getAdherence">getAdherence</a></code></li>
 <li><code><a title="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint.getTuple" href="#src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint.getTuple">getTuple</a></code></li>
+<li><code><a title="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint.getVariables" href="#src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint.getVariables">getVariables</a></code></li>
 <li><code><a title="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint.operator" href="#src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint.operator">operator</a></code></li>
 <li><code><a title="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint.replace" href="#src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint.replace">replace</a></code></li>
-<li><code><a title="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint.toLatex" href="#src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint.toLatex">toLatex</a></code></li>
+<li><code><a title="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint.toLessOrEqConstraint" href="#src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint.toLessOrEqConstraint">toLessOrEqConstraint</a></code></li>
 <li><code><a title="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint.variables" href="#src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint.variables">variables</a></code></li>
 </ul>
 </li>

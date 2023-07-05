@@ -53,12 +53,12 @@ class Or(NaryFormula):
 
     Parameters
     ----------
-    *formulas: Formula
+    *formulas: list of src.formula.formula.Formula
         The formulas meant as components of the Or operator.
 
     Attributes
     ----------
-    children: set(Formula) 
+    children: set of src.formula.formula.Formula
         The children of the current node.
     &#39;&#39;&#39;
     
@@ -70,7 +70,7 @@ class Or(NaryFormula):
 
         Returns
         -------
-        formula: Formula
+        src.formula.formula.Formula
             The current Formula in Disjunctive Normal Form.
         &#39;&#39;&#39;
         
@@ -83,7 +83,7 @@ class Or(NaryFormula):
 
         Returns
         -------
-        formula: Formula
+        src.formula.formula.Formula
             The current Formula in Disjunctive Normal Form under Negation.
         &#39;&#39;&#39;
         
@@ -129,7 +129,7 @@ class Or(NaryFormula):
 
         Returns
         -------
-        res: list of list of Constraint
+        list of list of src.formula.nullaryFormula.constraint.constraint.Constraint
             2D list containing all the constraints of discute vraiment de l&#39;implémentationthe adherence of the Formula,
             in Disjunctive Normal Form.
         &#39;&#39;&#39;
@@ -154,7 +154,7 @@ class Or(NaryFormula):
 
         Returns
         -------
-        res: list of list of Constraint
+        list of list of Constraint
             2D list containing all the constraints of the adherence of the Formula,
             in Disjunctive Normal Form under Negation.
         &#39;&#39;&#39;
@@ -174,8 +174,8 @@ class Or(NaryFormula):
 
         Returns
         ------
-        res: Formula with only minus or equal constraint
-        
+        src.formula.formula.Formula
+            Formula with only minus or equal constraint
         &#39;&#39;&#39;
         childrenModified = set()
         
@@ -199,6 +199,14 @@ class Or(NaryFormula):
         return s
     
     def toLatex(self):
+        r&#34;&#34;&#34;
+        Method returning a \(\LaTeX\) expression representing the Formula. Operators are customisable in `src.constants.Constants`.
+        
+        Returns
+        -------
+        String :
+            The \(\LaTeX\) expression representing the Formula.
+        &#34;&#34;&#34;
 
         symbol = Constants.OR_LATEX_OPERATOR
 
@@ -231,12 +239,12 @@ class Or(NaryFormula):
 greater than 1 in PCMLC as a syntax tree.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt><strong><code>*formulas</code></strong> :&ensp;<code>Formula</code></dt>
+<dt><strong><code>*formulas</code></strong> :&ensp;<code>list</code> of <code><a title="src.formula.formula.Formula" href="../formula.html#src.formula.formula.Formula">Formula</a></code></dt>
 <dd>The formulas meant as components of the Or operator.</dd>
 </dl>
 <h2 id="attributes">Attributes</h2>
 <dl>
-<dt><strong><code>children</code></strong> :&ensp;<code>set(Formula) </code></dt>
+<dt><strong><code>children</code></strong> :&ensp;<code>set</code> of <code><a title="src.formula.formula.Formula" href="../formula.html#src.formula.formula.Formula">Formula</a></code></dt>
 <dd>The children of the current node.</dd>
 </dl></div>
 <details class="source">
@@ -250,12 +258,12 @@ greater than 1 in PCMLC as a syntax tree.</p>
 
     Parameters
     ----------
-    *formulas: Formula
+    *formulas: list of src.formula.formula.Formula
         The formulas meant as components of the Or operator.
 
     Attributes
     ----------
-    children: set(Formula) 
+    children: set of src.formula.formula.Formula
         The children of the current node.
     &#39;&#39;&#39;
     
@@ -267,7 +275,7 @@ greater than 1 in PCMLC as a syntax tree.</p>
 
         Returns
         -------
-        formula: Formula
+        src.formula.formula.Formula
             The current Formula in Disjunctive Normal Form.
         &#39;&#39;&#39;
         
@@ -280,7 +288,7 @@ greater than 1 in PCMLC as a syntax tree.</p>
 
         Returns
         -------
-        formula: Formula
+        src.formula.formula.Formula
             The current Formula in Disjunctive Normal Form under Negation.
         &#39;&#39;&#39;
         
@@ -326,7 +334,7 @@ greater than 1 in PCMLC as a syntax tree.</p>
 
         Returns
         -------
-        res: list of list of Constraint
+        list of list of src.formula.nullaryFormula.constraint.constraint.Constraint
             2D list containing all the constraints of discute vraiment de l&#39;implémentationthe adherence of the Formula,
             in Disjunctive Normal Form.
         &#39;&#39;&#39;
@@ -351,7 +359,7 @@ greater than 1 in PCMLC as a syntax tree.</p>
 
         Returns
         -------
-        res: list of list of Constraint
+        list of list of Constraint
             2D list containing all the constraints of the adherence of the Formula,
             in Disjunctive Normal Form under Negation.
         &#39;&#39;&#39;
@@ -371,8 +379,8 @@ greater than 1 in PCMLC as a syntax tree.</p>
 
         Returns
         ------
-        res: Formula with only minus or equal constraint
-        
+        src.formula.formula.Formula
+            Formula with only minus or equal constraint
         &#39;&#39;&#39;
         childrenModified = set()
         
@@ -396,6 +404,14 @@ greater than 1 in PCMLC as a syntax tree.</p>
         return s
     
     def toLatex(self):
+        r&#34;&#34;&#34;
+        Method returning a \(\LaTeX\) expression representing the Formula. Operators are customisable in `src.constants.Constants`.
+        
+        Returns
+        -------
+        String :
+            The \(\LaTeX\) expression representing the Formula.
+        &#34;&#34;&#34;
 
         symbol = Constants.OR_LATEX_OPERATOR
 
@@ -430,7 +446,7 @@ the Formula, in Disjunctive Normal Form.</p>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><strong><code>res</code></strong> :&ensp;<code>list</code> of <code>list</code> of <code>Constraint</code></dt>
+<dt><code>list</code> of <code>list</code> of <code><a title="src.formula.nullaryFormula.constraint.constraint.Constraint" href="../nullaryFormula/constraint/constraint.html#src.formula.nullaryFormula.constraint.constraint.Constraint">Constraint</a></code></dt>
 <dd>2D list containing all the constraints of discute vraiment de l'implémentationthe adherence of the Formula,
 in Disjunctive Normal Form.</dd>
 </dl></div>
@@ -449,7 +465,7 @@ in Disjunctive Normal Form.</dd>
 
     Returns
     -------
-    res: list of list of Constraint
+    list of list of src.formula.nullaryFormula.constraint.constraint.Constraint
         2D list containing all the constraints of discute vraiment de l&#39;implémentationthe adherence of the Formula,
         in Disjunctive Normal Form.
     &#39;&#39;&#39;
@@ -463,28 +479,62 @@ in Disjunctive Normal Form.</dd>
     return res</code></pre>
 </details>
 </dd>
-<dt id="src.formula.naryFormula.orOperator.Or.toLatex"><code class="name flex">
-<span>def <span class="ident">toLatex</span></span>(<span>self)</span>
+<dt id="src.formula.naryFormula.orOperator.Or.toDNF"><code class="name flex">
+<span>def <span class="ident">toDNF</span></span>(<span>self) ‑> <a title="src.formula.formula.Formula" href="../formula.html#src.formula.formula.Formula">Formula</a></span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Method returning the current Formula in Disjunctive Normal Form.</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code><a title="src.formula.formula.Formula" href="../formula.html#src.formula.formula.Formula">Formula</a></code></dt>
+<dd>The current Formula in Disjunctive Normal Form.</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def toLatex(self):
+<pre><code class="python">def toDNF(self) -&gt; Formula:
+    &#39;&#39;&#39;
+    Method returning the current Formula in Disjunctive Normal Form.
 
-    symbol = Constants.OR_LATEX_OPERATOR
-
-    if len(self.children) == 1:
-        return list(self.children)[0].toLatex()
+    Returns
+    -------
+    src.formula.formula.Formula
+        The current Formula in Disjunctive Normal Form.
+    &#39;&#39;&#39;
     
-    s = &#34;&#34;
+    return Or(formulaSet = {child.toDNF() for child in self.children})</code></pre>
+</details>
+</dd>
+<dt id="src.formula.naryFormula.orOperator.Or.toLessOrEqConstraint"><code class="name flex">
+<span>def <span class="ident">toLessOrEqConstraint</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Method used to transforming formula to anoter formula without equality or greater constraint</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code><a title="src.formula.formula.Formula" href="../formula.html#src.formula.formula.Formula">Formula</a></code></dt>
+<dd>Formula with only minus or equal constraint</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def toLessOrEqConstraint(self):
+    &#39;&#39;&#39;
+    Method used to transforming formula to anoter formula without equality or greater constraint
+
+    Returns
+    ------
+    src.formula.formula.Formula
+        Formula with only minus or equal constraint
+    &#39;&#39;&#39;
+    childrenModified = set()
+    
     for child in self.children:
-        s += &#34;(&#34; + child.toLatex() + &#34;) &#34; + symbol + &#34; &#34;
-    toRemove = len(symbol) + 2
-    s = s[:-toRemove] + &#34;&#34;
-    return s</code></pre>
+        childrenModified.add(child.toLessOrEqConstraint())
+
+    return Or(formulaSet = childrenModified)</code></pre>
 </details>
 </dd>
 </dl>
@@ -492,9 +542,9 @@ in Disjunctive Normal Form.</dd>
 <ul class="hlist">
 <li><code><b><a title="src.formula.naryFormula.naryFormula.NaryFormula" href="naryFormula.html#src.formula.naryFormula.naryFormula.NaryFormula">NaryFormula</a></b></code>:
 <ul class="hlist">
+<li><code><a title="src.formula.naryFormula.naryFormula.NaryFormula.clone" href="../formula.html#src.formula.formula.Formula.clone">clone</a></code></li>
 <li><code><a title="src.formula.naryFormula.naryFormula.NaryFormula.getVariables" href="naryFormula.html#src.formula.naryFormula.naryFormula.NaryFormula.getVariables">getVariables</a></code></li>
-<li><code><a title="src.formula.naryFormula.naryFormula.NaryFormula.toDNF" href="../formula.html#src.formula.formula.Formula.toDNF">toDNF</a></code></li>
-<li><code><a title="src.formula.naryFormula.naryFormula.NaryFormula.toLessOrEqConstraint" href="../formula.html#src.formula.formula.Formula.toLessOrEqConstraint">toLessOrEqConstraint</a></code></li>
+<li><code><a title="src.formula.naryFormula.naryFormula.NaryFormula.toLatex" href="../formula.html#src.formula.formula.Formula.toLatex">toLatex</a></code></li>
 </ul>
 </li>
 </ul>
@@ -519,7 +569,8 @@ in Disjunctive Normal Form.</dd>
 <h4><code><a title="src.formula.naryFormula.orOperator.Or" href="#src.formula.naryFormula.orOperator.Or">Or</a></code></h4>
 <ul class="">
 <li><code><a title="src.formula.naryFormula.orOperator.Or.getAdherence" href="#src.formula.naryFormula.orOperator.Or.getAdherence">getAdherence</a></code></li>
-<li><code><a title="src.formula.naryFormula.orOperator.Or.toLatex" href="#src.formula.naryFormula.orOperator.Or.toLatex">toLatex</a></code></li>
+<li><code><a title="src.formula.naryFormula.orOperator.Or.toDNF" href="#src.formula.naryFormula.orOperator.Or.toDNF">toDNF</a></code></li>
+<li><code><a title="src.formula.naryFormula.orOperator.Or.toLessOrEqConstraint" href="#src.formula.naryFormula.orOperator.Or.toLessOrEqConstraint">toLessOrEqConstraint</a></code></li>
 </ul>
 </li>
 </ul>

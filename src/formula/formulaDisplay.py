@@ -32,11 +32,11 @@ class FormulaDisplay:
         '''
         Function used to display a formula in dnf form.
 
-        Params
+        Parameters
         ----------
-        formulas : dict[Formula, str]
+        formulas : dictionary of String with src.formula.formula.Formula as key
             Dictionary witch link a formula with a color
-        variables: set[Variable]
+        variables: set of src.variable.variable.Variable
             List of variables witch will be displayed
         '''
         for phi in formulas.keys():
@@ -70,9 +70,9 @@ class FormulaDisplay:
         ----------
         phi:
             A formula
-        variables: set[Variable]
+        variables: set of src.variable.variable.Variable
             List of variables 
-        values : list[Fraction]
+        values : list of fracitons.Fraction
             List of values for each formulas
         '''
         res : bool

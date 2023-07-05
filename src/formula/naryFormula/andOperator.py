@@ -21,12 +21,12 @@ class And(NaryFormula):
 
     Parameters
     ----------
-    *formulas: Formula
+    *formulas: list of src.formula.formula.Formula
         The formulas meant as components of the And operator.
 
     Attributes
     ----------
-    children: set[Formula]
+    children: set of src.formula.formula.Formula
         The children of the current node.
     '''
     
@@ -38,7 +38,7 @@ class And(NaryFormula):
 
         Returns
         -------
-        formula: Formula
+        src.formula.formula.Formula
             The current Formula in Disjunctive Normal Form.
         '''
                 
@@ -81,7 +81,7 @@ class And(NaryFormula):
 
         Returns
         -------
-        formula: Formula
+        src.formula.formula.Formula
             The current Formula in Disjunctive Normal Form under Negation.
         '''
         
@@ -100,7 +100,7 @@ class And(NaryFormula):
 
         Returns
         -------
-        res: list of list of Constraint
+        list of list of src.formula.nullaryFormula.constraint.constraint.Constraint
             2D list containing all the constraints of discute vraiment de l'implémentationthe adherence of the Formula,
             in Disjunctive Normal Form.
         '''
@@ -126,7 +126,7 @@ class And(NaryFormula):
 
         Returns
         -------
-        res: list of list of Constraint
+        list of list of src.formula.nullaryFormula.constraint.constraint.Constraint
             2D list containing all the constraints of the adherence of the Formula,
             in Disjunctive Normal Form under Negation.
         '''
@@ -145,8 +145,8 @@ class And(NaryFormula):
 
         Returns
         ------
-        res: Formula with only minus or equal constraint
-        
+        src.formula.formula.Formula
+            Formula with only minus or equal constraint
         '''
         childrenModified = set()
         
@@ -170,6 +170,14 @@ class And(NaryFormula):
         return s
     
     def toLatex(self):
+        r"""
+        Method returning a \(\LaTeX\) expression representing the Formula. Operators are customisable in `src.constants.Constants`.
+        
+        Returns
+        -------
+        String :
+            The \(\LaTeX\) expression representing the Formula.
+        """
 
         symbol = Constants.AND_LATEX_OPERATOR
 

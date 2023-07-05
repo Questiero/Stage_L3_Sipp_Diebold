@@ -42,11 +42,16 @@ from .. import Formula
 
 class Equivalence(BinaryFormula):
     &#39;&#39;&#39;
-     Class representing the equivalence operator.
+    Class representing the equivalence operator.
+
+    Parameters
+    ----------
+    formulaTuple: tuple of Formulas
+        The formulas meant as components of the equivalence operator.
 
     Attributes
     ----------
-    children: tuple of Formulas
+    children: tuple of src.formula.formula.Formula
         The children of the current node.
     &#39;&#39;&#39;
     
@@ -55,13 +60,14 @@ class Equivalence(BinaryFormula):
     def _eliminate(self) -&gt; Formula:
         &#39;&#39;&#39;
         Method returning the simplified form for the equivalence operator,
-        using only Not, And and Or.In this case, it&#39;s (a AND b) OR (NOT a AND NOT b).
+        using only Not, And and Or.
+        In this case, it&#39;s (a AND b) OR (NOT a AND NOT b).
 
         Returns
         -------
-        formula: Formula
-            The simplified version of the equivalence operator. In this case,
-            it&#39;s (a AND b) OR (NOT a AND NOT b).
+        src.formula.formula.Formula
+            The simplified version of the equivalence operator.
+            In this case, it&#39;s (a AND b) OR (NOT a AND NOT b).
         &#39;&#39;&#39;
            
         return (self.children[0] &amp; self.children[1]) | (~self.children[0] &amp; ~self.children[1])
@@ -102,9 +108,14 @@ class Equivalence(BinaryFormula):
 </code></dt>
 <dd>
 <div class="desc"><p>Class representing the equivalence operator.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>formulaTuple</code></strong> :&ensp;<code>tuple</code> of <code>Formulas</code></dt>
+<dd>The formulas meant as components of the equivalence operator.</dd>
+</dl>
 <h2 id="attributes">Attributes</h2>
 <dl>
-<dt><strong><code>children</code></strong> :&ensp;<code>tuple</code> of <code>Formulas</code></dt>
+<dt><strong><code>children</code></strong> :&ensp;<code>tuple</code> of <code><a title="src.formula.formula.Formula" href="../formula.html#src.formula.formula.Formula">Formula</a></code></dt>
 <dd>The children of the current node.</dd>
 </dl></div>
 <details class="source">
@@ -113,11 +124,16 @@ class Equivalence(BinaryFormula):
 </summary>
 <pre><code class="python">class Equivalence(BinaryFormula):
     &#39;&#39;&#39;
-     Class representing the equivalence operator.
+    Class representing the equivalence operator.
+
+    Parameters
+    ----------
+    formulaTuple: tuple of Formulas
+        The formulas meant as components of the equivalence operator.
 
     Attributes
     ----------
-    children: tuple of Formulas
+    children: tuple of src.formula.formula.Formula
         The children of the current node.
     &#39;&#39;&#39;
     
@@ -126,13 +142,14 @@ class Equivalence(BinaryFormula):
     def _eliminate(self) -&gt; Formula:
         &#39;&#39;&#39;
         Method returning the simplified form for the equivalence operator,
-        using only Not, And and Or.In this case, it&#39;s (a AND b) OR (NOT a AND NOT b).
+        using only Not, And and Or.
+        In this case, it&#39;s (a AND b) OR (NOT a AND NOT b).
 
         Returns
         -------
-        formula: Formula
-            The simplified version of the equivalence operator. In this case,
-            it&#39;s (a AND b) OR (NOT a AND NOT b).
+        src.formula.formula.Formula
+            The simplified version of the equivalence operator.
+            In this case, it&#39;s (a AND b) OR (NOT a AND NOT b).
         &#39;&#39;&#39;
            
         return (self.children[0] &amp; self.children[1]) | (~self.children[0] &amp; ~self.children[1])
@@ -165,17 +182,33 @@ class Equivalence(BinaryFormula):
 </ul>
 <h3>Methods</h3>
 <dl>
-<dt id="src.formula.binaryFormula.equivalenceOperator.Equivalence.toLatex"><code class="name flex">
-<span>def <span class="ident">toLatex</span></span>(<span>self)</span>
+<dt id="src.formula.binaryFormula.equivalenceOperator.Equivalence.toLessOrEqConstraint"><code class="name flex">
+<span>def <span class="ident">toLessOrEqConstraint</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Method used to transforming formula to anoter formula without equality or greater constraint</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>res</code></strong> :&ensp;<code>Formula with only minus</code> or <code>equal constraint</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def toLatex(self):
-    return &#34;(&#34; + self.children[0].toLatex() + &#34;) &#34; + Constants.EQUIVALENCE_LATEX_OPERATOR +  &#34; (&#34; + self.children[1].toLatex() + &#34;)&#34;</code></pre>
+<pre><code class="python">def toLessOrEqConstraint(self):
+    &#39;&#39;&#39;
+    Method used to transforming formula to anoter formula without equality or greater constraint
+
+    Returns
+    ------
+    res: Formula with only minus or equal constraint
+    
+    &#39;&#39;&#39;
+    childrenModified = []
+    for child in self.children: childrenModified.append(child.toLessOrEqConstraint())
+
+    return Equivalence(childrenModified[0], childrenModified[1])</code></pre>
 </details>
 </dd>
 </dl>
@@ -183,10 +216,11 @@ class Equivalence(BinaryFormula):
 <ul class="hlist">
 <li><code><b><a title="src.formula.binaryFormula.binaryFormula.BinaryFormula" href="binaryFormula.html#src.formula.binaryFormula.binaryFormula.BinaryFormula">BinaryFormula</a></b></code>:
 <ul class="hlist">
+<li><code><a title="src.formula.binaryFormula.binaryFormula.BinaryFormula.clone" href="../formula.html#src.formula.formula.Formula.clone">clone</a></code></li>
 <li><code><a title="src.formula.binaryFormula.binaryFormula.BinaryFormula.getAdherence" href="binaryFormula.html#src.formula.binaryFormula.binaryFormula.BinaryFormula.getAdherence">getAdherence</a></code></li>
-<li><code><a title="src.formula.binaryFormula.binaryFormula.BinaryFormula.getVariables" href="../formula.html#src.formula.formula.Formula.getVariables">getVariables</a></code></li>
+<li><code><a title="src.formula.binaryFormula.binaryFormula.BinaryFormula.getVariables" href="binaryFormula.html#src.formula.binaryFormula.binaryFormula.BinaryFormula.getVariables">getVariables</a></code></li>
 <li><code><a title="src.formula.binaryFormula.binaryFormula.BinaryFormula.toDNF" href="binaryFormula.html#src.formula.binaryFormula.binaryFormula.BinaryFormula.toDNF">toDNF</a></code></li>
-<li><code><a title="src.formula.binaryFormula.binaryFormula.BinaryFormula.toLessOrEqConstraint" href="../formula.html#src.formula.formula.Formula.toLessOrEqConstraint">toLessOrEqConstraint</a></code></li>
+<li><code><a title="src.formula.binaryFormula.binaryFormula.BinaryFormula.toLatex" href="../formula.html#src.formula.formula.Formula.toLatex">toLatex</a></code></li>
 </ul>
 </li>
 </ul>
@@ -210,7 +244,7 @@ class Equivalence(BinaryFormula):
 <li>
 <h4><code><a title="src.formula.binaryFormula.equivalenceOperator.Equivalence" href="#src.formula.binaryFormula.equivalenceOperator.Equivalence">Equivalence</a></code></h4>
 <ul class="">
-<li><code><a title="src.formula.binaryFormula.equivalenceOperator.Equivalence.toLatex" href="#src.formula.binaryFormula.equivalenceOperator.Equivalence.toLatex">toLatex</a></code></li>
+<li><code><a title="src.formula.binaryFormula.equivalenceOperator.Equivalence.toLessOrEqConstraint" href="#src.formula.binaryFormula.equivalenceOperator.Equivalence.toLessOrEqConstraint">toLessOrEqConstraint</a></code></li>
 </ul>
 </li>
 </ul>

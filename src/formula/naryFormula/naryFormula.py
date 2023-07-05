@@ -13,21 +13,21 @@ from ..formulaManager import FormulaManager
 from ...variable import Variable
 
 class NaryFormula(Formula):
-    '''
+    r"""
     Abstract class, representing an operator with an arity equal or greater
     than 1 in PCMLC as a syntax tree.
     The operator is asummed symmetric.
 
     Parameters
     ----------
-    *formulas: Formula
-        The formulas meant as components of the n-ary operator.
+    *formulas: list of src.formula.formula.Formula
+        The formulas meant as components of the \(n\)-ary operator.
 
     Attributes
     ----------
-    children: set(Formula)
+    children: set of src.formula.formula.Formula
         The children of the current node.
-    '''
+    """
         
     def __init__(self, *formulas: Formula, formulaSet: set[Formula]=None, name: str = None):
         
@@ -53,15 +53,15 @@ class NaryFormula(Formula):
             FormulaManager.declare(name, self)
 
     def getVariables(self) -> set[Variable]:
-        '''
+        r"""
         Method recurcivly returning a set containing all the variables used in
         the n-ary Formula's children.
 
         Returns
         -------
-        variables: set of Variable
-            All the variables used in the n-ary Formula or its children.
-        '''
+        set of src.variable.variable.Variable
+            All the variables used in the \(n\)-ary `src.formula.formula.Formula` or its children.
+        """
         
         tempChildren = self.children.copy()
         variables = tempChildren.pop().getVariables();
@@ -72,5 +72,13 @@ class NaryFormula(Formula):
         return variables
     
     def clone(self) -> Formula:
+        """
+        Method returning a clone of the current Formula.
+
+        Returns:
+        src.formula.formula.Formula
+            Clone of the current `src.formula.formula.Formula`.
+        """
+
         clone = self.__class__(formulaSet = self.children)
         return clone

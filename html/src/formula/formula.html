@@ -56,13 +56,13 @@ class Formula(ABC):
     @abstractmethod
     def getVariables(self) -&gt; set[Variable]:
         &#39;&#39;&#39;
-        Method recurcivly returning a set containing all the variables used in
+        Method recurcively returning a set containing all the variables used in
         the Formula.
 
         Returns
         -------
-        variables: set of Variable
-            All the variables used in the Formula.
+        set of src.variable.variable.Variable
+            All the variables used in the `src.formula.formula.Formula`.
         &#39;&#39;&#39;
         pass
     
@@ -73,8 +73,8 @@ class Formula(ABC):
 
         Returns
         -------
-        formula: Formula
-            The current Formula in Disjunctive Normal Form.
+        src.formula.formula.Formula
+            The current `src.formula.formula.Formula` in Disjunctive Normal Form.
         &#39;&#39;&#39;
         pass
     
@@ -86,7 +86,7 @@ class Formula(ABC):
 
         Returns
         -------
-        formula: Formula
+        src.formula.formula.Formula
             The current Formula in Disjunctive Normal Form under Negation.
         &#39;&#39;&#39;
         pass
@@ -99,11 +99,12 @@ class Formula(ABC):
 
         Attributes
         ----------
-        var : variable used in case of inequality
+        var : src.variable.variable.Variable
+            variable used in case of inequality
 
         Returns
         -------
-        res: list of list of constraint.Constraint
+        list of list of src.formula.nullaryFormula.constraint.constraint.Constraint
             2D list containing all the constraints of discute vraiment de l&#39;implémentationthe adherence of the Formula,
             in Disjunctive Normal Form.
         &#39;&#39;&#39;
@@ -116,9 +117,14 @@ class Formula(ABC):
         constraints of the adherence of the Formula, used when a Negation is in play
         instead of getAdherence().
 
+        Attributes
+        ----------
+        var : src.variable.variable.Variable
+            `src.variable.variable.Variable` used in case of inequality
+
         Returns
         -------
-        res: list of list of constraint.Constraint
+        list of list of src.formula.nullaryFormula.constraint.constraint.Constraint
             2D list containing all the constraints of the adherence of the Formula,
             in Disjunctive Normal Form under Negation.
         &#39;&#39;&#39;
@@ -127,16 +133,24 @@ class Formula(ABC):
     @abstractmethod
     def toLessOrEqConstraint(self):
         &#39;&#39;&#39;
-        Method used to transforming formula to anoter formula without equality or greater constraint
+        Method used to transforming formula to anoter formula with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
 
         Returns
         ------
-        res: Formula with only minus or equal constraint
-        
+        src.formula.formula.Formula
+            A `src.formula.formula.Formula` with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
         &#39;&#39;&#39;
         pass
         
     def clone(self) -&gt; Formula:
+        &#34;&#34;&#34;
+        Method returning a clone of the current Formula.
+
+        Returns:
+        src.formula.formula.Formula
+            Clone of the current `src.formula.formula.Formula`.
+        &#34;&#34;&#34;
+
         clone = self.__class__(self.children)
         return clone
     
@@ -155,7 +169,16 @@ class Formula(ABC):
         pass
 
     @abstractmethod
-    def toLatex(self):
+    def toLatex(self) -&gt; str:
+        r&#34;&#34;&#34;
+        Method returning a \(\LaTeX\) expression representing the Formula. Operators are customisable in `src.constants.Constants`.
+        
+        Returns
+        -------
+        String :
+            The \(\LaTeX\) expression representing the Formula.
+        &#34;&#34;&#34;
+
         pass
     
     def __or__(self, a):
@@ -223,13 +246,13 @@ Typing depends of the formula's arity.</dd>
     @abstractmethod
     def getVariables(self) -&gt; set[Variable]:
         &#39;&#39;&#39;
-        Method recurcivly returning a set containing all the variables used in
+        Method recurcively returning a set containing all the variables used in
         the Formula.
 
         Returns
         -------
-        variables: set of Variable
-            All the variables used in the Formula.
+        set of src.variable.variable.Variable
+            All the variables used in the `src.formula.formula.Formula`.
         &#39;&#39;&#39;
         pass
     
@@ -240,8 +263,8 @@ Typing depends of the formula's arity.</dd>
 
         Returns
         -------
-        formula: Formula
-            The current Formula in Disjunctive Normal Form.
+        src.formula.formula.Formula
+            The current `src.formula.formula.Formula` in Disjunctive Normal Form.
         &#39;&#39;&#39;
         pass
     
@@ -253,7 +276,7 @@ Typing depends of the formula's arity.</dd>
 
         Returns
         -------
-        formula: Formula
+        src.formula.formula.Formula
             The current Formula in Disjunctive Normal Form under Negation.
         &#39;&#39;&#39;
         pass
@@ -266,11 +289,12 @@ Typing depends of the formula's arity.</dd>
 
         Attributes
         ----------
-        var : variable used in case of inequality
+        var : src.variable.variable.Variable
+            variable used in case of inequality
 
         Returns
         -------
-        res: list of list of constraint.Constraint
+        list of list of src.formula.nullaryFormula.constraint.constraint.Constraint
             2D list containing all the constraints of discute vraiment de l&#39;implémentationthe adherence of the Formula,
             in Disjunctive Normal Form.
         &#39;&#39;&#39;
@@ -283,9 +307,14 @@ Typing depends of the formula's arity.</dd>
         constraints of the adherence of the Formula, used when a Negation is in play
         instead of getAdherence().
 
+        Attributes
+        ----------
+        var : src.variable.variable.Variable
+            `src.variable.variable.Variable` used in case of inequality
+
         Returns
         -------
-        res: list of list of constraint.Constraint
+        list of list of src.formula.nullaryFormula.constraint.constraint.Constraint
             2D list containing all the constraints of the adherence of the Formula,
             in Disjunctive Normal Form under Negation.
         &#39;&#39;&#39;
@@ -294,16 +323,24 @@ Typing depends of the formula's arity.</dd>
     @abstractmethod
     def toLessOrEqConstraint(self):
         &#39;&#39;&#39;
-        Method used to transforming formula to anoter formula without equality or greater constraint
+        Method used to transforming formula to anoter formula with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
 
         Returns
         ------
-        res: Formula with only minus or equal constraint
-        
+        src.formula.formula.Formula
+            A `src.formula.formula.Formula` with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
         &#39;&#39;&#39;
         pass
         
     def clone(self) -&gt; Formula:
+        &#34;&#34;&#34;
+        Method returning a clone of the current Formula.
+
+        Returns:
+        src.formula.formula.Formula
+            Clone of the current `src.formula.formula.Formula`.
+        &#34;&#34;&#34;
+
         clone = self.__class__(self.children)
         return clone
     
@@ -322,7 +359,16 @@ Typing depends of the formula's arity.</dd>
         pass
 
     @abstractmethod
-    def toLatex(self):
+    def toLatex(self) -&gt; str:
+        r&#34;&#34;&#34;
+        Method returning a \(\LaTeX\) expression representing the Formula. Operators are customisable in `src.constants.Constants`.
+        
+        Returns
+        -------
+        String :
+            The \(\LaTeX\) expression representing the Formula.
+        &#34;&#34;&#34;
+
         pass
     
     def __or__(self, a):
@@ -373,12 +419,23 @@ Typing depends of the formula's arity.</dd>
 <span>def <span class="ident">clone</span></span>(<span>self) ‑> <a title="src.formula.formula.Formula" href="#src.formula.formula.Formula">Formula</a></span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Method returning a clone of the current Formula.</p>
+<p>Returns:
+src.formula.formula.Formula
+Clone of the current <code><a title="src.formula.formula.Formula" href="#src.formula.formula.Formula">Formula</a></code>.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def clone(self) -&gt; Formula:
+    &#34;&#34;&#34;
+    Method returning a clone of the current Formula.
+
+    Returns:
+    src.formula.formula.Formula
+        Clone of the current `src.formula.formula.Formula`.
+    &#34;&#34;&#34;
+
     clone = self.__class__(self.children)
     return clone</code></pre>
 </details>
@@ -391,12 +448,12 @@ Typing depends of the formula's arity.</dd>
 the Formula, in Disjunctive Normal Form.</p>
 <h2 id="attributes">Attributes</h2>
 <dl>
-<dt><strong><code>var</code></strong> :&ensp;<code>variable used in case</code> of <code>inequality</code></dt>
-<dd>&nbsp;</dd>
+<dt><strong><code>var</code></strong> :&ensp;<code><a title="src.variable.variable.Variable" href="../variable/variable.html#src.variable.variable.Variable">Variable</a></code></dt>
+<dd>variable used in case of inequality</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><strong><code>res</code></strong> :&ensp;<code>list</code> of <code>list</code> of <code>constraint.Constraint</code></dt>
+<dt><code>list</code> of <code>list</code> of <code><a title="src.formula.nullaryFormula.constraint.constraint.Constraint" href="nullaryFormula/constraint/constraint.html#src.formula.nullaryFormula.constraint.constraint.Constraint">Constraint</a></code></dt>
 <dd>2D list containing all the constraints of discute vraiment de l'implémentationthe adherence of the Formula,
 in Disjunctive Normal Form.</dd>
 </dl></div>
@@ -412,11 +469,12 @@ def getAdherence(self, var : Variable) -&gt; list[list[Formula]]:
 
     Attributes
     ----------
-    var : variable used in case of inequality
+    var : src.variable.variable.Variable
+        variable used in case of inequality
 
     Returns
     -------
-    res: list of list of constraint.Constraint
+    list of list of src.formula.nullaryFormula.constraint.constraint.Constraint
         2D list containing all the constraints of discute vraiment de l&#39;implémentationthe adherence of the Formula,
         in Disjunctive Normal Form.
     &#39;&#39;&#39;
@@ -427,12 +485,12 @@ def getAdherence(self, var : Variable) -&gt; list[list[Formula]]:
 <span>def <span class="ident">getVariables</span></span>(<span>self) ‑> set[<a title="src.variable.variable.Variable" href="../variable/variable.html#src.variable.variable.Variable">Variable</a>]</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Method recurcivly returning a set containing all the variables used in
+<div class="desc"><p>Method recurcively returning a set containing all the variables used in
 the Formula.</p>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><strong><code>variables</code></strong> :&ensp;<code>set</code> of <code>Variable</code></dt>
-<dd>All the variables used in the Formula.</dd>
+<dt><code>set</code> of <code><a title="src.variable.variable.Variable" href="../variable/variable.html#src.variable.variable.Variable">Variable</a></code></dt>
+<dd>All the variables used in the <code><a title="src.formula.formula.Formula" href="#src.formula.formula.Formula">Formula</a></code>.</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -441,13 +499,13 @@ the Formula.</p>
 <pre><code class="python">@abstractmethod
 def getVariables(self) -&gt; set[Variable]:
     &#39;&#39;&#39;
-    Method recurcivly returning a set containing all the variables used in
+    Method recurcively returning a set containing all the variables used in
     the Formula.
 
     Returns
     -------
-    variables: set of Variable
-        All the variables used in the Formula.
+    set of src.variable.variable.Variable
+        All the variables used in the `src.formula.formula.Formula`.
     &#39;&#39;&#39;
     pass</code></pre>
 </details>
@@ -459,8 +517,8 @@ def getVariables(self) -&gt; set[Variable]:
 <div class="desc"><p>Method returning the current Formula in Disjunctive Normal Form.</p>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><strong><code>formula</code></strong> :&ensp;<code><a title="src.formula.formula.Formula" href="#src.formula.formula.Formula">Formula</a></code></dt>
-<dd>The current Formula in Disjunctive Normal Form.</dd>
+<dt><code><a title="src.formula.formula.Formula" href="#src.formula.formula.Formula">Formula</a></code></dt>
+<dd>The current <code><a title="src.formula.formula.Formula" href="#src.formula.formula.Formula">Formula</a></code> in Disjunctive Normal Form.</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -473,23 +531,37 @@ def toDNF(self) -&gt; Formula:
 
     Returns
     -------
-    formula: Formula
-        The current Formula in Disjunctive Normal Form.
+    src.formula.formula.Formula
+        The current `src.formula.formula.Formula` in Disjunctive Normal Form.
     &#39;&#39;&#39;
     pass</code></pre>
 </details>
 </dd>
 <dt id="src.formula.formula.Formula.toLatex"><code class="name flex">
-<span>def <span class="ident">toLatex</span></span>(<span>self)</span>
+<span>def <span class="ident">toLatex</span></span>(<span>self) ‑> str</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Method returning a <span><span class="MathJax_Preview">\LaTeX</span><script type="math/tex">\LaTeX</script></span> expression representing the Formula. Operators are customisable in <code><a title="src.constants.Constants" href="../constants.html#src.constants.Constants">Constants</a></code>.</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>String :</code></dt>
+<dd>The <span><span class="MathJax_Preview">\LaTeX</span><script type="math/tex">\LaTeX</script></span> expression representing the Formula.</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@abstractmethod
-def toLatex(self):
+def toLatex(self) -&gt; str:
+    r&#34;&#34;&#34;
+    Method returning a \(\LaTeX\) expression representing the Formula. Operators are customisable in `src.constants.Constants`.
+    
+    Returns
+    -------
+    String :
+        The \(\LaTeX\) expression representing the Formula.
+    &#34;&#34;&#34;
+
     pass</code></pre>
 </details>
 </dd>
@@ -497,11 +569,11 @@ def toLatex(self):
 <span>def <span class="ident">toLessOrEqConstraint</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Method used to transforming formula to anoter formula without equality or greater constraint</p>
+<div class="desc"><p>Method used to transforming formula to anoter formula with only <code><a title="src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ" href="nullaryFormula/constraint/constraintOperator.html#src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ">ConstraintOperator.LEQ</a></code> constraints.</p>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><strong><code>res</code></strong> :&ensp;<code><a title="src.formula.formula.Formula" href="#src.formula.formula.Formula">Formula</a> with only minus</code> or <code>equal constraint</code></dt>
-<dd>&nbsp;</dd>
+<dt><code><a title="src.formula.formula.Formula" href="#src.formula.formula.Formula">Formula</a></code></dt>
+<dd>A <code><a title="src.formula.formula.Formula" href="#src.formula.formula.Formula">Formula</a></code> with only <code><a title="src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ" href="nullaryFormula/constraint/constraintOperator.html#src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ">ConstraintOperator.LEQ</a></code> constraints.</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -510,12 +582,12 @@ def toLatex(self):
 <pre><code class="python">@abstractmethod
 def toLessOrEqConstraint(self):
     &#39;&#39;&#39;
-    Method used to transforming formula to anoter formula without equality or greater constraint
+    Method used to transforming formula to anoter formula with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
 
     Returns
     ------
-    res: Formula with only minus or equal constraint
-    
+    src.formula.formula.Formula
+        A `src.formula.formula.Formula` with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
     &#39;&#39;&#39;
     pass</code></pre>
 </details>
