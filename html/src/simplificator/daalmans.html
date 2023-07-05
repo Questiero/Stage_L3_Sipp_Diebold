@@ -47,13 +47,13 @@ class Daalmans(Simplificator):
     &#34;&#34;&#34;
     Implementation of the Daalmans method for simplification of conjunction of literals (i.e `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint` or
     `src.formula.unaryFormula.notOperator.Not`).
-    This method is split in two algorithm :
-    - The first algorithm is concerned with detecting fixed variables. Fixed variables are variables that can only have one value.
+    This method is split into two algorithm :\n
+    - The first algorithm is concerned with detecting fixed variables. Fixed variables are variables that can only have one value.\n
     - The second algorithm deals with the removal of redundant mixed linear constraints.
 
     Parameters
     ----------
-    src.mlo_solver.MLOSolver.MLOSolver
+    solver: src.mlo_solver.MLOSolver.MLOSolver
         The `src.mlo_solver.MLOSolver.MLOSolver` used to solve optimization problems.
     &#34;&#34;&#34;
 
@@ -64,7 +64,7 @@ class Daalmans(Simplificator):
     
     def run(self, phi: Formula) -&gt; Formula:
         r&#34;&#34;&#34;
-        Main method of `src.simplificator.caron.Caron`, allowing to simplify a given `src.formula.formula.Formula`.
+        Main method of `src.simplificator.daalmans.Daalmans`, allowing to simplify a given `src.formula.formula.Formula`.
 
         Parameters
         ----------
@@ -167,12 +167,20 @@ class Daalmans(Simplificator):
 <dd>
 <div class="desc"><p>Implementation of the Daalmans method for simplification of conjunction of literals (i.e <code><a title="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint" href="../formula/nullaryFormula/constraint/linearConstraint.html#src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint">LinearConstraint</a></code> or
 <code><a title="src.formula.unaryFormula.notOperator.Not" href="../formula/unaryFormula/notOperator.html#src.formula.unaryFormula.notOperator.Not">Not</a></code>).
-This method is split in two algorithm :
-- The first algorithm is concerned with detecting fixed variables. Fixed variables are variables that can only have one value.
-- The second algorithm deals with the removal of redundant mixed linear constraints.</p>
+This method is split into two algorithm :</p>
+<ul>
+<li>
+<p>The first algorithm is concerned with detecting fixed variables. Fixed variables are variables that can only have one value.</p>
+</li>
+<li>
+<p>The second algorithm deals with the removal of redundant mixed linear constraints.</p>
+</li>
+</ul>
 <h2 id="parameters">Parameters</h2>
-<p>src.mlo_solver.MLOSolver.MLOSolver
-The <code><a title="src.mlo_solver.MLOSolver.MLOSolver" href="../mlo_solver/MLOSolver.html#src.mlo_solver.MLOSolver.MLOSolver">MLOSolver</a></code> used to solve optimization problems.</p></div>
+<dl>
+<dt><strong><code>solver</code></strong> :&ensp;<code><a title="src.mlo_solver.MLOSolver.MLOSolver" href="../mlo_solver/MLOSolver.html#src.mlo_solver.MLOSolver.MLOSolver">MLOSolver</a></code></dt>
+<dd>The <code><a title="src.mlo_solver.MLOSolver.MLOSolver" href="../mlo_solver/MLOSolver.html#src.mlo_solver.MLOSolver.MLOSolver">MLOSolver</a></code> used to solve optimization problems.</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -181,13 +189,13 @@ The <code><a title="src.mlo_solver.MLOSolver.MLOSolver" href="../mlo_solver/MLOS
     &#34;&#34;&#34;
     Implementation of the Daalmans method for simplification of conjunction of literals (i.e `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint` or
     `src.formula.unaryFormula.notOperator.Not`).
-    This method is split in two algorithm :
-    - The first algorithm is concerned with detecting fixed variables. Fixed variables are variables that can only have one value.
+    This method is split into two algorithm :\n
+    - The first algorithm is concerned with detecting fixed variables. Fixed variables are variables that can only have one value.\n
     - The second algorithm deals with the removal of redundant mixed linear constraints.
 
     Parameters
     ----------
-    src.mlo_solver.MLOSolver.MLOSolver
+    solver: src.mlo_solver.MLOSolver.MLOSolver
         The `src.mlo_solver.MLOSolver.MLOSolver` used to solve optimization problems.
     &#34;&#34;&#34;
 
@@ -198,7 +206,7 @@ The <code><a title="src.mlo_solver.MLOSolver.MLOSolver" href="../mlo_solver/MLOS
     
     def run(self, phi: Formula) -&gt; Formula:
         r&#34;&#34;&#34;
-        Main method of `src.simplificator.caron.Caron`, allowing to simplify a given `src.formula.formula.Formula`.
+        Main method of `src.simplificator.daalmans.Daalmans`, allowing to simplify a given `src.formula.formula.Formula`.
 
         Parameters
         ----------
@@ -295,7 +303,7 @@ The <code><a title="src.mlo_solver.MLOSolver.MLOSolver" href="../mlo_solver/MLOS
 <span>def <span class="ident">run</span></span>(<span>self, phi: Formula) ‑> <a title="src.formula.formula.Formula" href="../formula/formula.html#src.formula.formula.Formula">Formula</a></span>
 </code></dt>
 <dd>
-<div class="desc"><p>Main method of <code><a title="src.simplificator.caron.Caron" href="caron.html#src.simplificator.caron.Caron">Caron</a></code>, allowing to simplify a given <code><a title="src.formula.formula.Formula" href="../formula/formula.html#src.formula.formula.Formula">Formula</a></code>.</p>
+<div class="desc"><p>Main method of <code><a title="src.simplificator.daalmans.Daalmans" href="#src.simplificator.daalmans.Daalmans">Daalmans</a></code>, allowing to simplify a given <code><a title="src.formula.formula.Formula" href="../formula/formula.html#src.formula.formula.Formula">Formula</a></code>.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>phi</code></strong> :&ensp;<code><a title="src.formula.formula.Formula" href="../formula/formula.html#src.formula.formula.Formula">Formula</a></code></dt>
@@ -312,7 +320,7 @@ The <code><a title="src.mlo_solver.MLOSolver.MLOSolver" href="../mlo_solver/MLOS
 </summary>
 <pre><code class="python">def run(self, phi: Formula) -&gt; Formula:
     r&#34;&#34;&#34;
-    Main method of `src.simplificator.caron.Caron`, allowing to simplify a given `src.formula.formula.Formula`.
+    Main method of `src.simplificator.daalmans.Daalmans`, allowing to simplify a given `src.formula.formula.Formula`.
 
     Parameters
     ----------

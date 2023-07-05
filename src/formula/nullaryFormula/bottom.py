@@ -76,7 +76,7 @@ class Bottom(NullaryFormula):
         
         Returns
         -------
-        String :
+        String
             The \(\LaTeX\) expression representing the Formula.
         """
                 

@@ -89,12 +89,12 @@ class Not(UnaryFormula):
     
     def toLessOrEqConstraint(self):
         '''
-        Method used to transforming formula to anoter formula without equality or greater constraint
+        Method used to transform a `src.formula.formula.Formula` into another one, with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
 
         Returns
         ------
         src.formula.formula.Formula
-            A `src.formula.formula.Formula` with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.        
+            A `src.formula.formula.Formula` with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
         '''
         return Not(self.children.toLessOrEqConstraint())
     
@@ -135,7 +135,7 @@ class Not(UnaryFormula):
         
         Returns
         -------
-        String :
+        String
             The \(\LaTeX\) expression representing the Formula.
         """
 

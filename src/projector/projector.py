@@ -20,7 +20,7 @@ class Projector (ABC):
         Parameters
         ----------
         phi: src.formula.formula.Formula
-            The src.formula.formula.Formula to project.
+            The `src.formula.formula.Formula` to project.
         variables: set of src.variable.variable.Variable
             The subset of `src.variable.variable.Variable` to project on.
         

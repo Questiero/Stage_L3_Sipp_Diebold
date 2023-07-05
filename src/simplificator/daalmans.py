@@ -16,13 +16,13 @@ class Daalmans(Simplificator):
     """
     Implementation of the Daalmans method for simplification of conjunction of literals (i.e `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint` or
     `src.formula.unaryFormula.notOperator.Not`).
-    This method is split in two algorithm :
-    - The first algorithm is concerned with detecting fixed variables. Fixed variables are variables that can only have one value.
+    This method is split into two algorithm :\n
+    - The first algorithm is concerned with detecting fixed variables. Fixed variables are variables that can only have one value.\n
     - The second algorithm deals with the removal of redundant mixed linear constraints.
 
     Parameters
     ----------
-    src.mlo_solver.MLOSolver.MLOSolver
+    solver: src.mlo_solver.MLOSolver.MLOSolver
         The `src.mlo_solver.MLOSolver.MLOSolver` used to solve optimization problems.
     """
 
@@ -33,7 +33,7 @@ class Daalmans(Simplificator):
     
     def run(self, phi: Formula) -> Formula:
         r"""
-        Main method of `src.simplificator.caron.Caron`, allowing to simplify a given `src.formula.formula.Formula`.
+        Main method of `src.simplificator.daalmans.Daalmans`, allowing to simplify a given `src.formula.formula.Formula`.
 
         Parameters
         ----------

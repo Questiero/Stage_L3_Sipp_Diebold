@@ -262,7 +262,7 @@ class LinearConstraint(Constraint):
         
         Returns
         -------
-        String :
+        String
             The \(\LaTeX\) expression representing the Formula.
         &#34;&#34;&#34;
 
@@ -299,7 +299,7 @@ class LinearConstraint(Constraint):
             
     def toLessOrEqConstraint(self):
         &#39;&#39;&#39;
-        Method used to transforming formula to anoter formula without equality or greater constraint
+        Method used to transform a `src.formula.formula.Formula` into another one, with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
 
         Returns
         ------
@@ -324,6 +324,15 @@ class LinearConstraint(Constraint):
         return res
     
     def clone(self) -&gt; LinearConstraint:
+        &#34;&#34;&#34;
+        Method returning a clone of the current Formula.
+
+        Returns
+        -------
+        src.formula.formula.Formula
+            Clone of the current `src.formula.formula.Formula`.
+        &#34;&#34;&#34;
+                
         clonedLc = LinearConstraint(&#34;&#34;)
         clonedLc.variables = self.variables.copy()
         clonedLc.operator = self.operator
@@ -613,7 +622,7 @@ it's None.</dd>
         
         Returns
         -------
-        String :
+        String
             The \(\LaTeX\) expression representing the Formula.
         &#34;&#34;&#34;
 
@@ -650,7 +659,7 @@ it's None.</dd>
             
     def toLessOrEqConstraint(self):
         &#39;&#39;&#39;
-        Method used to transforming formula to anoter formula without equality or greater constraint
+        Method used to transform a `src.formula.formula.Formula` into another one, with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
 
         Returns
         ------
@@ -675,6 +684,15 @@ it's None.</dd>
         return res
     
     def clone(self) -&gt; LinearConstraint:
+        &#34;&#34;&#34;
+        Method returning a clone of the current Formula.
+
+        Returns
+        -------
+        src.formula.formula.Formula
+            Clone of the current `src.formula.formula.Formula`.
+        &#34;&#34;&#34;
+                
         clonedLc = LinearConstraint(&#34;&#34;)
         clonedLc.variables = self.variables.copy()
         clonedLc.operator = self.operator
@@ -834,47 +852,6 @@ the Formula.</p>
     if len(self.variables) == 0: raise IndexError(&#34;Not enough values in constraint&#34;)</code></pre>
 </details>
 </dd>
-<dt id="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint.toLessOrEqConstraint"><code class="name flex">
-<span>def <span class="ident">toLessOrEqConstraint</span></span>(<span>self)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Method used to transforming formula to anoter formula without equality or greater constraint</p>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code><a title="src.formula.formula.Formula" href="../../formula.html#src.formula.formula.Formula">Formula</a></code></dt>
-<dd>A <code><a title="src.formula.formula.Formula" href="../../formula.html#src.formula.formula.Formula">Formula</a></code> with only <code><a title="src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ" href="constraintOperator.html#src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ">ConstraintOperator.LEQ</a></code> constraints.</dd>
-</dl></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def toLessOrEqConstraint(self):
-    &#39;&#39;&#39;
-    Method used to transforming formula to anoter formula without equality or greater constraint
-
-    Returns
-    ------
-    src.formula.formula.Formula
-        A `src.formula.formula.Formula` with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
-    &#39;&#39;&#39;
-    from ...naryFormula.andOperator import And
-    res = self.clone()
-
-    if self.operator == ConstraintOperator.GEQ :
-        for variable in res.variables.keys():
-            res.variables[variable] *= -1
-        res.bound *= -1
-        res.operator = ConstraintOperator.LEQ
-    elif self.operator == ConstraintOperator.EQ:
-        res = [self.clone()]
-        res[0].operator = ConstraintOperator.GEQ
-        res.append(res[0].toLessOrEqConstraint())
-        res[0].operator = ConstraintOperator.LEQ
-        res = And(formulaSet=set(res))
-
-    return res</code></pre>
-</details>
-</dd>
 </dl>
 <h3>Inherited members</h3>
 <ul class="hlist">
@@ -883,6 +860,7 @@ the Formula.</p>
 <li><code><a title="src.formula.nullaryFormula.constraint.constraint.Constraint.clone" href="../../formula.html#src.formula.formula.Formula.clone">clone</a></code></li>
 <li><code><a title="src.formula.nullaryFormula.constraint.constraint.Constraint.toDNF" href="../nullaryFormula.html#src.formula.nullaryFormula.nullaryFormula.NullaryFormula.toDNF">toDNF</a></code></li>
 <li><code><a title="src.formula.nullaryFormula.constraint.constraint.Constraint.toLatex" href="../../formula.html#src.formula.formula.Formula.toLatex">toLatex</a></code></li>
+<li><code><a title="src.formula.nullaryFormula.constraint.constraint.Constraint.toLessOrEqConstraint" href="../../formula.html#src.formula.formula.Formula.toLessOrEqConstraint">toLessOrEqConstraint</a></code></li>
 </ul>
 </li>
 </ul>
@@ -905,14 +883,13 @@ the Formula.</p>
 <ul>
 <li>
 <h4><code><a title="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint" href="#src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint">LinearConstraint</a></code></h4>
-<ul class="">
+<ul class="two-column">
 <li><code><a title="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint.bound" href="#src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint.bound">bound</a></code></li>
 <li><code><a title="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint.getAdherence" href="#src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint.getAdherence">getAdherence</a></code></li>
 <li><code><a title="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint.getTuple" href="#src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint.getTuple">getTuple</a></code></li>
 <li><code><a title="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint.getVariables" href="#src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint.getVariables">getVariables</a></code></li>
 <li><code><a title="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint.operator" href="#src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint.operator">operator</a></code></li>
 <li><code><a title="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint.replace" href="#src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint.replace">replace</a></code></li>
-<li><code><a title="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint.toLessOrEqConstraint" href="#src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint.toLessOrEqConstraint">toLessOrEqConstraint</a></code></li>
 <li><code><a title="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint.variables" href="#src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint.variables">variables</a></code></li>
 </ul>
 </li>

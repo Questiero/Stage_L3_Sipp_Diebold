@@ -32,7 +32,7 @@ class Top(NullaryFormula):
 
         Returns
         -------
-         None
+        set of src.variable.variable.Variable
             All the variables used in Top, so None.
         '''
         
@@ -76,7 +76,7 @@ class Top(NullaryFormula):
         
         Returns
         -------
-        String :
+        String
             The \(\LaTeX\) expression representing the Formula.
         """
 

@@ -19,7 +19,7 @@ class Caron(Simplificator):
 
     Parameters
     ----------
-    src.mlo_solver.MLOSolver.MLOSolver
+    solver: src.mlo_solver.MLOSolver.MLOSolver
         The `src.mlo_solver.MLOSolver.MLOSolver` used to solve optimization problems.
     """
 

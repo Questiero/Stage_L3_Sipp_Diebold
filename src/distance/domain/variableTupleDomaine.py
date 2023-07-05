@@ -1,5 +1,5 @@
 """
-Class reprensenting a domain on which a distance function is defined on a tuple of src.variable.variable.Variable.
+Class reprensenting a domain on which a distance function is defined on a tuple of `src.variable.variable.Variable`.
 """
 
 from __future__ import annotations
@@ -9,7 +9,7 @@ from .domain import Domain
 
 class VariableTupleDomaine(Domain):
     """
-    Class reprensenting a domain on which a distance function is defined on a tuple of src.variable.variable.Variable.
+    Class reprensenting a domain on which a distance function is defined on a tuple of `src.variable.variable.Variable`.
 
     Parameters
     ----------

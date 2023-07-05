@@ -44,12 +44,12 @@ class Implication(BinaryFormula):
     
     def toLessOrEqConstraint(self):
         '''
-        Method used to transforming formula to anoter formula without equality or greater constraint
+        Method used to transform a `src.formula.formula.Formula` into another one, with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
 
         Returns
         ------
-        res: Formula with only minus or equal constraint
-        
+        src.formula.formula.Formula
+            A `src.formula.formula.Formula` with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
         '''
         childrenModified = []
         for child in self.children: childrenModified.append(child.toLessOrEqConstraint())

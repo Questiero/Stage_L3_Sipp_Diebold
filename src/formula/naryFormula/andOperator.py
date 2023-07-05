@@ -96,7 +96,9 @@ class And(NaryFormula):
 
         Attributes
         ----------
-        var : variable used in case of inequality
+        var : src.variable.variable.Variable
+            Variable used in case of inequality.
+
 
         Returns
         -------
@@ -122,7 +124,9 @@ class And(NaryFormula):
 
         Attributes
         ----------
-        var : variable used in case of inequality
+        var : src.variable.variable.Variable
+            Variable used in case of inequality.
+
 
         Returns
         -------
@@ -141,12 +145,12 @@ class And(NaryFormula):
 
     def toLessOrEqConstraint(self):
         '''
-        Method used to transforming formula to anoter formula without equality or greater constraint
+        Method used to transform a `src.formula.formula.Formula` into another one, with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
 
         Returns
         ------
         src.formula.formula.Formula
-            Formula with only minus or equal constraint
+            A `src.formula.formula.Formula` with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
         '''
         childrenModified = set()
         
@@ -175,7 +179,7 @@ class And(NaryFormula):
         
         Returns
         -------
-        String :
+        String
             The \(\LaTeX\) expression representing the Formula.
         """
 

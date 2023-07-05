@@ -103,7 +103,7 @@ class Formula(ABC):
     @abstractmethod
     def toLessOrEqConstraint(self):
         '''
-        Method used to transforming formula to anoter formula with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
+        Method used to transform a `src.formula.formula.Formula` into another one, with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
 
         Returns
         ------
@@ -116,7 +116,8 @@ class Formula(ABC):
         """
         Method returning a clone of the current Formula.
 
-        Returns:
+        Returns
+        -------
         src.formula.formula.Formula
             Clone of the current `src.formula.formula.Formula`.
         """
@@ -145,7 +146,7 @@ class Formula(ABC):
         
         Returns
         -------
-        String :
+        String
             The \(\LaTeX\) expression representing the Formula.
         """
 

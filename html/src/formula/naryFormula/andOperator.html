@@ -128,7 +128,9 @@ class And(NaryFormula):
 
         Attributes
         ----------
-        var : variable used in case of inequality
+        var : src.variable.variable.Variable
+            Variable used in case of inequality.
+
 
         Returns
         -------
@@ -154,7 +156,9 @@ class And(NaryFormula):
 
         Attributes
         ----------
-        var : variable used in case of inequality
+        var : src.variable.variable.Variable
+            Variable used in case of inequality.
+
 
         Returns
         -------
@@ -173,12 +177,12 @@ class And(NaryFormula):
 
     def toLessOrEqConstraint(self):
         &#39;&#39;&#39;
-        Method used to transforming formula to anoter formula without equality or greater constraint
+        Method used to transform a `src.formula.formula.Formula` into another one, with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
 
         Returns
         ------
         src.formula.formula.Formula
-            Formula with only minus or equal constraint
+            A `src.formula.formula.Formula` with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
         &#39;&#39;&#39;
         childrenModified = set()
         
@@ -207,7 +211,7 @@ class And(NaryFormula):
         
         Returns
         -------
-        String :
+        String
             The \(\LaTeX\) expression representing the Formula.
         &#34;&#34;&#34;
 
@@ -336,7 +340,9 @@ greater than 1 in PCMLC as a syntax tree.</p>
 
         Attributes
         ----------
-        var : variable used in case of inequality
+        var : src.variable.variable.Variable
+            Variable used in case of inequality.
+
 
         Returns
         -------
@@ -362,7 +368,9 @@ greater than 1 in PCMLC as a syntax tree.</p>
 
         Attributes
         ----------
-        var : variable used in case of inequality
+        var : src.variable.variable.Variable
+            Variable used in case of inequality.
+
 
         Returns
         -------
@@ -381,12 +389,12 @@ greater than 1 in PCMLC as a syntax tree.</p>
 
     def toLessOrEqConstraint(self):
         &#39;&#39;&#39;
-        Method used to transforming formula to anoter formula without equality or greater constraint
+        Method used to transform a `src.formula.formula.Formula` into another one, with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
 
         Returns
         ------
         src.formula.formula.Formula
-            Formula with only minus or equal constraint
+            A `src.formula.formula.Formula` with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
         &#39;&#39;&#39;
         childrenModified = set()
         
@@ -415,7 +423,7 @@ greater than 1 in PCMLC as a syntax tree.</p>
         
         Returns
         -------
-        String :
+        String
             The \(\LaTeX\) expression representing the Formula.
         &#34;&#34;&#34;
 
@@ -447,8 +455,8 @@ greater than 1 in PCMLC as a syntax tree.</p>
 the Formula, in Disjunctive Normal Form.</p>
 <h2 id="attributes">Attributes</h2>
 <dl>
-<dt><strong><code>var</code></strong> :&ensp;<code>variable used in case</code> of <code>inequality</code></dt>
-<dd>&nbsp;</dd>
+<dt><strong><code>var</code></strong> :&ensp;<code><a title="src.variable.variable.Variable" href="../../variable/variable.html#src.variable.variable.Variable">Variable</a></code></dt>
+<dd>Variable used in case of inequality.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
@@ -467,7 +475,9 @@ in Disjunctive Normal Form.</dd>
 
     Attributes
     ----------
-    var : variable used in case of inequality
+    var : src.variable.variable.Variable
+        Variable used in case of inequality.
+
 
     Returns
     -------
@@ -543,37 +553,6 @@ in Disjunctive Normal Form.</dd>
     return Or(formulaSet = set(dnfFormula))</code></pre>
 </details>
 </dd>
-<dt id="src.formula.naryFormula.andOperator.And.toLessOrEqConstraint"><code class="name flex">
-<span>def <span class="ident">toLessOrEqConstraint</span></span>(<span>self)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Method used to transforming formula to anoter formula without equality or greater constraint</p>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code><a title="src.formula.formula.Formula" href="../formula.html#src.formula.formula.Formula">Formula</a></code></dt>
-<dd>Formula with only minus or equal constraint</dd>
-</dl></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def toLessOrEqConstraint(self):
-    &#39;&#39;&#39;
-    Method used to transforming formula to anoter formula without equality or greater constraint
-
-    Returns
-    ------
-    src.formula.formula.Formula
-        Formula with only minus or equal constraint
-    &#39;&#39;&#39;
-    childrenModified = set()
-    
-    for child in self.children:
-        childrenModified.add(child.toLessOrEqConstraint())
-
-    return And(formulaSet = childrenModified)</code></pre>
-</details>
-</dd>
 </dl>
 <h3>Inherited members</h3>
 <ul class="hlist">
@@ -582,6 +561,7 @@ in Disjunctive Normal Form.</dd>
 <li><code><a title="src.formula.naryFormula.naryFormula.NaryFormula.clone" href="../formula.html#src.formula.formula.Formula.clone">clone</a></code></li>
 <li><code><a title="src.formula.naryFormula.naryFormula.NaryFormula.getVariables" href="naryFormula.html#src.formula.naryFormula.naryFormula.NaryFormula.getVariables">getVariables</a></code></li>
 <li><code><a title="src.formula.naryFormula.naryFormula.NaryFormula.toLatex" href="../formula.html#src.formula.formula.Formula.toLatex">toLatex</a></code></li>
+<li><code><a title="src.formula.naryFormula.naryFormula.NaryFormula.toLessOrEqConstraint" href="../formula.html#src.formula.formula.Formula.toLessOrEqConstraint">toLessOrEqConstraint</a></code></li>
 </ul>
 </li>
 </ul>
@@ -607,7 +587,6 @@ in Disjunctive Normal Form.</dd>
 <ul class="">
 <li><code><a title="src.formula.naryFormula.andOperator.And.getAdherence" href="#src.formula.naryFormula.andOperator.And.getAdherence">getAdherence</a></code></li>
 <li><code><a title="src.formula.naryFormula.andOperator.And.toDNF" href="#src.formula.naryFormula.andOperator.And.toDNF">toDNF</a></code></li>
-<li><code><a title="src.formula.naryFormula.andOperator.And.toLessOrEqConstraint" href="#src.formula.naryFormula.andOperator.And.toLessOrEqConstraint">toLessOrEqConstraint</a></code></li>
 </ul>
 </li>
 </ul>

@@ -74,12 +74,12 @@ class Implication(BinaryFormula):
     
     def toLessOrEqConstraint(self):
         &#39;&#39;&#39;
-        Method used to transforming formula to anoter formula without equality or greater constraint
+        Method used to transform a `src.formula.formula.Formula` into another one, with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
 
         Returns
         ------
-        res: Formula with only minus or equal constraint
-        
+        src.formula.formula.Formula
+            A `src.formula.formula.Formula` with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
         &#39;&#39;&#39;
         childrenModified = []
         for child in self.children: childrenModified.append(child.toLessOrEqConstraint())
@@ -156,12 +156,12 @@ class Implication(BinaryFormula):
     
     def toLessOrEqConstraint(self):
         &#39;&#39;&#39;
-        Method used to transforming formula to anoter formula without equality or greater constraint
+        Method used to transform a `src.formula.formula.Formula` into another one, with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
 
         Returns
         ------
-        res: Formula with only minus or equal constraint
-        
+        src.formula.formula.Formula
+            A `src.formula.formula.Formula` with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
         &#39;&#39;&#39;
         childrenModified = []
         for child in self.children: childrenModified.append(child.toLessOrEqConstraint())
@@ -180,38 +180,6 @@ class Implication(BinaryFormula):
 <li><a title="src.formula.formula.Formula" href="../formula.html#src.formula.formula.Formula">Formula</a></li>
 <li>abc.ABC</li>
 </ul>
-<h3>Methods</h3>
-<dl>
-<dt id="src.formula.binaryFormula.implicationOperator.Implication.toLessOrEqConstraint"><code class="name flex">
-<span>def <span class="ident">toLessOrEqConstraint</span></span>(<span>self)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Method used to transforming formula to anoter formula without equality or greater constraint</p>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>res</code></strong> :&ensp;<code>Formula with only minus</code> or <code>equal constraint</code></dt>
-<dd>&nbsp;</dd>
-</dl></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def toLessOrEqConstraint(self):
-    &#39;&#39;&#39;
-    Method used to transforming formula to anoter formula without equality or greater constraint
-
-    Returns
-    ------
-    res: Formula with only minus or equal constraint
-    
-    &#39;&#39;&#39;
-    childrenModified = []
-    for child in self.children: childrenModified.append(child.toLessOrEqConstraint())
-
-    return Implication(childrenModified[0], childrenModified[1])</code></pre>
-</details>
-</dd>
-</dl>
 <h3>Inherited members</h3>
 <ul class="hlist">
 <li><code><b><a title="src.formula.binaryFormula.binaryFormula.BinaryFormula" href="binaryFormula.html#src.formula.binaryFormula.binaryFormula.BinaryFormula">BinaryFormula</a></b></code>:
@@ -221,6 +189,7 @@ class Implication(BinaryFormula):
 <li><code><a title="src.formula.binaryFormula.binaryFormula.BinaryFormula.getVariables" href="binaryFormula.html#src.formula.binaryFormula.binaryFormula.BinaryFormula.getVariables">getVariables</a></code></li>
 <li><code><a title="src.formula.binaryFormula.binaryFormula.BinaryFormula.toDNF" href="binaryFormula.html#src.formula.binaryFormula.binaryFormula.BinaryFormula.toDNF">toDNF</a></code></li>
 <li><code><a title="src.formula.binaryFormula.binaryFormula.BinaryFormula.toLatex" href="../formula.html#src.formula.formula.Formula.toLatex">toLatex</a></code></li>
+<li><code><a title="src.formula.binaryFormula.binaryFormula.BinaryFormula.toLessOrEqConstraint" href="../formula.html#src.formula.formula.Formula.toLessOrEqConstraint">toLessOrEqConstraint</a></code></li>
 </ul>
 </li>
 </ul>
@@ -243,9 +212,6 @@ class Implication(BinaryFormula):
 <ul>
 <li>
 <h4><code><a title="src.formula.binaryFormula.implicationOperator.Implication" href="#src.formula.binaryFormula.implicationOperator.Implication">Implication</a></code></h4>
-<ul class="">
-<li><code><a title="src.formula.binaryFormula.implicationOperator.Implication.toLessOrEqConstraint" href="#src.formula.binaryFormula.implicationOperator.Implication.toLessOrEqConstraint">toLessOrEqConstraint</a></code></li>
-</ul>
 </li>
 </ul>
 </li>

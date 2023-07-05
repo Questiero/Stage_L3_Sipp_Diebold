@@ -75,7 +75,8 @@ class NaryFormula(Formula):
         """
         Method returning a clone of the current Formula.
 
-        Returns:
+        Returns
+        -------
         src.formula.formula.Formula
             Clone of the current `src.formula.formula.Formula`.
         """

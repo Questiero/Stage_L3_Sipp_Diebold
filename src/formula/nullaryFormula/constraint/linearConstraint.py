@@ -232,7 +232,7 @@ class LinearConstraint(Constraint):
         
         Returns
         -------
-        String :
+        String
             The \(\LaTeX\) expression representing the Formula.
         """
 
@@ -269,7 +269,7 @@ class LinearConstraint(Constraint):
             
     def toLessOrEqConstraint(self):
         '''
-        Method used to transforming formula to anoter formula without equality or greater constraint
+        Method used to transform a `src.formula.formula.Formula` into another one, with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
 
         Returns
         ------
@@ -294,6 +294,15 @@ class LinearConstraint(Constraint):
         return res
     
     def clone(self) -> LinearConstraint:
+        """
+        Method returning a clone of the current Formula.
+
+        Returns
+        -------
+        src.formula.formula.Formula
+            Clone of the current `src.formula.formula.Formula`.
+        """
+                
         clonedLc = LinearConstraint("")
         clonedLc.variables = self.variables.copy()
         clonedLc.operator = self.operator

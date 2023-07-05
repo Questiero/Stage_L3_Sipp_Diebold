@@ -1,5 +1,5 @@
 """
-Rounded approximation of src.mlo_solver.scipySolver.ScipySolver, reducing floating point approximations.
+Rounded approximation of `src.mlo_solver.scipySolver.ScipySolver`, reducing floating point approximations.
 """
 
 from __future__ import annotations
@@ -14,7 +14,7 @@ import numpy as np
 
 class ScipySolverRounded(ScipySolver):
     """
-    Rounded approximation of src.mlo_solver.scipySolver.ScipySolver, reducing floating point approximations.
+    Rounded approximation of `src.mlo_solver.scipySolver.ScipySolver`, reducing floating point approximations.
 
     Parameters
     ----------

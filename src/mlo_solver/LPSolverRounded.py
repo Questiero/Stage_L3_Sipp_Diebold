@@ -1,5 +1,5 @@
 """
-Rounded approximation of src.mlo_solver.LPSolver.LPSolver, reducing floating point approximations.
+Rounded approximation of `src.mlo_solver.LPSolver.LPSolver`, reducing floating point approximations.
 """
 
 from __future__ import annotations
@@ -14,7 +14,7 @@ from fractions import Fraction
 
 class LPSolverRounded(LPSolver):
     """
-    Rounded approximation of src.mlo_solver.LPSolver.LPSolver, reducing floating point approximations.
+    Rounded approximation of `src.mlo_solver.LPSolver.LPSolver`, reducing floating point approximations.
 
     Parameters
     ----------
