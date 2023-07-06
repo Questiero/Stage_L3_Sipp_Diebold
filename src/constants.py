@@ -6,10 +6,10 @@ class Constants():
     
 
     ONLY_ONE_SOLUTION = True
-    r"""
+    """
     If set to `True`, the revision algorithm will by default only return one point that satisfies \(\psi \circ \mu\).
     If not, it will return all solutions.
-    By default, this constant is set to `True`.\n
+    By default, this constant is set to `True`.
 
     Note that this only change the default value of the `onlyOneSolution` parameter of `src.revision.Revision`, it could still be changed
     on a case-by-case basis for every new instance of this class.
@@ -51,7 +51,7 @@ class Constants():
     IMPLICATION_LATEX_OPERATOR = "\\rightarrow" #: Value for the operator used in `src.formula.formula.Formula.toLatex` for the `src.formula.binaryFormula.implicationOperator.Implication` operator, defaulted as `\rightarrow`.
     EQUIVALENCE_LATEX_OPERATOR = "\\leftrightarrow" #: Value for the operator used in `src.formula.formula.Formula.toLatex` for the `src.formula.binaryFormula.equivalenceOperator.Equivalence` operator, defaulted as `\leftrightarrow`.
     TOP_LATEX_OPERATOR = "\\top" #: Value for the operator used in `src.formula.formula.Formula.toLatex` for the `src.formula.nullaryFormula.top.Top` operator, defaulted as `\top`.
-    BOTTOM_LATEX_OPERATOR = "\\bot" #: Value for the operator used in `src.formula.formula.Formula.toLatex` for the `src.formula.nullaryFormula.bottom.Bottom` operator, defaulted as `\top`.
+    BOTTOM_LATEX_OPERATOR = "\\bot" #: Value for the operator used in `src.formula.formula.Formula.toLatex` for the `src.formula.nullaryFormula.bottom.Bottom` operator, defaulted as `\bot`.
     EQ_LATEX_OPERATOR = "=" #: Value for the operator used in `src.formula.formula.Formula.toLatex` for the `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.EQ` operator, defaulted as `=`.
     LEQ_LATEX_OPERATOR = "\\leqslant" #: Value for the operator used in `src.formula.formula.Formula.toLatex` for the `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` operator, defaulted as `\leqslant`.
-    GEQ_LATEX_OPERATOR = "\\geqslant" #: Value for the operator used in `src.formula.formula.Formula.toLatex` for the `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.GEQ` operator, defaulted as \geqslant`.
+    GEQ_LATEX_OPERATOR = "\\geqslant" #: Value for the operator used in `src.formula.formula.Formula.toLatex` for the `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.GEQ` operator, defaulted as `\geqslant`.

@@ -32,7 +32,7 @@ class Bottom(NullaryFormula):
 
         Returns
         -------
-        None
+        set of src.variable.variable.Variable
             All the variables used in Bottom, so None.
         '''
         
