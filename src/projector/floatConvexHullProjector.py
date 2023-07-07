@@ -390,33 +390,31 @@ class FloatConvexHullProjector (Projector):
     
     def __createConstraintPointSegment(self, x, y, variables):
 
-        constraintSet = set()
+        constraintSet = self.__createConstraintPoint(x, variables).children
 
-        lc = self.__createConstraintPoint(x, variables).children
+        for lc in constraintSet
 
-        sum = Fraction("0")
-        for i in range(len(variables)):
-            coef = lc.variables.get(variables[i])
-            if coef:
-                ##print(coef)
-                ##print(vertex)
-                sum += round(Fraction(y[i]), self.__rounding)*coef
-                ##print(sum)
+            sum = Fraction("0")
+            for i in range(len(variables)):
+                coef = lc.variables.get(variables[i])
+                if coef:
+                    ##print(coef)
+                    ##print(vertex)
+                    sum += round(Fraction(y[i]), self.__rounding)*coef
+                    ##print(sum)
 
-            if(sum < lc.bound):
-                s+= "< " + str(lc.bound)
-                lc.operator = ConstraintOperator.LEQ
-                break
-            elif(sum > lc.bound):
-                s += "> " + str(lc.bound)
-                lc.operator = ConstraintOperator.GEQ
-                break
-            
-        if sum is None:
-            lc.operator = ConstraintOperator.EQ
+                if(sum < lc.bound):
+                    s+= "< " + str(lc.bound)
+                    lc.operator = ConstraintOperator.LEQ
+                    break
+                elif(sum > lc.bound):
+                    s += "> " + str(lc.bound)
+                    lc.operator = ConstraintOperator.GEQ
+                    break
+                
+            if sum is None:
+                lc.operator = ConstraintOperator.EQ
 
-        #print(simplex, ":", sum, s, ":", lc)
-
-        constraintSet.add(lc)
+            #print(simplex, ":", sum, s, ":", lc)
 
         return And(formulaSet=constraintSet)
