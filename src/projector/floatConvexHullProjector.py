@@ -392,7 +392,7 @@ class FloatConvexHullProjector (Projector):
 
         constraintSet = self.__createConstraintPoint(x, variables).children
 
-        for lc in constraintSet
+        for lc in constraintSet:
 
             sum = Fraction("0")
             for i in range(len(variables)):
