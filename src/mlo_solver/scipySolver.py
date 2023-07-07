@@ -78,5 +78,11 @@ class ScipySolver(MLOSolver) :
             res = (OptimizationValues.OPTIMAL, [Fraction(x) for x in result.x], result.fun)
         elif result.status == 3:
             res = (OptimizationValues.UNBOUNDED, [], float(np.inf))
+        elif result.status == 4:
+            for i in range(0,len(objectif)): objectif[i] *= -1
+            result = milp(c=objectif, integrality=integers, constraints=lc, bounds=Bounds(boundsLower, boundsUpper), options={"presolve":False})
+            if result.status == 0 or result.status == 3:
+                res = (OptimizationValues.UNBOUNDED, [], float(np.inf))
+            else: res = (OptimizationValues.INFEASIBLE, [], float(np.inf))
         else: res = (OptimizationValues.INFEASIBLE, [], float(np.inf))
         return res
