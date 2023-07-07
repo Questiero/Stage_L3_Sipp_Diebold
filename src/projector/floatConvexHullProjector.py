@@ -358,8 +358,6 @@ class FloatConvexHullProjector (Projector):
         normal = normal * np.linalg.norm(normal, 1)
         normal = [round(Fraction(n), self.__rounding) for n in normal]
         
-        constraintSet = set()
-
         # Build constraint
         lc = LinearConstraint("")
         for i in range(len(normal)):
@@ -368,22 +366,57 @@ class FloatConvexHullProjector (Projector):
         lc.bound = round(Fraction(np.sum(normal * centroid)), self.__rounding)
         lc.operator = ConstraintOperator.EQ
 
-        constraintSet.add(lc)
+        constraints = And(lc)
 
-        for point in points:
-            constraintSet.add(self.__createConstraintPoint(point, variables))
+        constraints = constraints & self.__createConstraintPointSegment(x, y, variables) & self.__createConstraintPointSegment(y, x, variables)
 
-        return And(formulaSet=constraintSet)
+        return constraints
     
     def __createConstraintPoint(self, point, variables):
 
-        lc = LinearConstraint("")
+        constraintSet = set()
 
         for i in range(len(point)):
 
+            lc = LinearConstraint("")
+
             lc.variables[variables[i]] = Fraction(1)
             lc.bound = round(Fraction(point[i]), self.__rounding)
+            lc.operator = ConstraintOperator.EQ
 
-        lc.operator = ConstraintOperator.EQ
+            constraintSet.add(lc)
 
-        return lc
+        return And(formulaSet=constraintSet)
+    
+    def __createConstraintPointSegment(self, x, y, variables):
+
+        constraintSet = set()
+
+        lc = self.__createConstraintPoint(x, variables).children
+
+        sum = Fraction("0")
+        for i in range(len(variables)):
+            coef = lc.variables.get(variables[i])
+            if coef:
+                ##print(coef)
+                ##print(vertex)
+                sum += round(Fraction(y[i]), self.__rounding)*coef
+                ##print(sum)
+
+            if(sum < lc.bound):
+                s+= "< " + str(lc.bound)
+                lc.operator = ConstraintOperator.LEQ
+                break
+            elif(sum > lc.bound):
+                s += "> " + str(lc.bound)
+                lc.operator = ConstraintOperator.GEQ
+                break
+            
+        if sum is None:
+            lc.operator = ConstraintOperator.EQ
+
+        #print(simplex, ":", sum, s, ":", lc)
+
+        constraintSet.add(lc)
+
+        return And(formulaSet=constraintSet)
