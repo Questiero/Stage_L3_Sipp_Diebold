@@ -55,6 +55,7 @@ class FormulaInterpreter:
         """
 
         if self.__simplifiers == None:
+            # If no simplifier was entered, we return the original phi
             return phi
         else:
             if not isinstance(phi, Or) : phi = Or(phi)
@@ -85,6 +86,7 @@ class FormulaInterpreter:
         variables.append(self._eVar)
 
         for lc in phi.getAdherence(self._eVar):
+            # build tabs for solver
             constraints = []
             for constraint in lc:
                 constraintP = []
@@ -103,6 +105,8 @@ class FormulaInterpreter:
             constraints.append((constraintP, ConstraintOperator.LEQ, Fraction(0)))
 
             res = self.__MLOSolver.solve(variables, list(map(lambda v : Fraction(-1) if v == self._eVar else Fraction(0), variables)), constraints)
+
+            # Interpretion of the mlo solver result
             if res[0] == OptimizationValues.OPTIMAL :
                 if res[1][variables.index(self._eVar)] != Fraction(0):
                     return True
@@ -141,7 +145,7 @@ class FormulaInterpreter:
         src.formula.formula.Formula
             `src.formula.formula.Formula` representing a point \(y \in \mathcal{M}(\mu)\) that satisfies the optimization problem above. 
         """
-
+        # Reorder variables order
         variablesTest = []
         neg = None
         for var in variables:
@@ -152,10 +156,13 @@ class FormulaInterpreter:
         variables = variablesTest
         constraints = self.__buildConstraints(variables, psi, mu)
 
+        # creation of the objective function
         obj = [0]*len(variables)*2
         for variable in variables:
             obj.append(self.__distanceFunction.getWeights()[variable])
         res = self.__MLOSolver.solve(variables*3, obj, constraints)
+
+        # interpretation of the mlo solver result
         if(res[0] == OptimizationValues.INFEASIBLE): 
             raise Exception("Optimize couple impossible") 
         
