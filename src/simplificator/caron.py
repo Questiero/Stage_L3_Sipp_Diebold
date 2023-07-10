@@ -56,7 +56,7 @@ class Caron(Simplificator):
             constraint : LinearConstraint
             constraint = litteral.children if isinstance(litteral, Not) else litteral
             
-
+            # for all litteral, want to maximise his values
             finalConstraints.remove(litteral)
             newPhi = And(*finalConstraints)
             phiTab = self._toTab(newPhi, e, variables=variables) 
@@ -67,6 +67,7 @@ class Caron(Simplificator):
             xStar = res[1]
             if res[0] == OptimizationValues.OPTIMAL:
                 mustBeDeleted = False
+                # if the maximum values is <= bound we deleted the litteral
                 if isinstance(constraint, NullaryFormula):
                     sum = 0
                     for i in range(0,len(variables)): 

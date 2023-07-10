@@ -72,6 +72,7 @@ class ScipySolver(MLOSolver) :
                 limitUp.append(constraint[2])
 
         lc = LinearConstraint(tab, limitInf, limitUp)
+        # presolve at false to fixed status 4
         result = milp(c=objectif, integrality=integers, constraints=lc, bounds=Bounds(boundsLower, boundsUpper), options={"presolve":False})
         res : tuple
         if result.status == 0:
@@ -79,6 +80,9 @@ class ScipySolver(MLOSolver) :
         elif result.status == 3:
             res = (OptimizationValues.UNBOUNDED, [], float(np.inf))
         elif result.status == 4:
+            # in fact status 4 can be return
+            # to detect if the problem is unbounded we test if the objectiv function * -1 is unbounded
+            # if it's not, the problem is infeasible
             for i in range(0,len(objectif)): objectif[i] *= -1
             result = milp(c=objectif, integrality=integers, constraints=lc, bounds=Bounds(boundsLower, boundsUpper), options={"presolve":False})
             if result.status == 0 or result.status == 3:
