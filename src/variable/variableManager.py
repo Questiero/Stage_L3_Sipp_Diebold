@@ -42,9 +42,10 @@ class VariableManager:
         TypeError
             If the object is already defined with another type or its name is not valid.
         """
-
+        # We verifie constraint linked to the name of the variable
         if not re.match(VariableManager.__namePatern, name):
             raise NameError(f"{name} is not a valide name for a variable")
+        # And then we test the classe of the variable
         if name in __class__.instance and cls !=  __class__.instance[name].__class__:
             raise TypeError(f"{name} is already define with another type.")
 
