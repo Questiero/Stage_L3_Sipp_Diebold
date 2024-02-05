@@ -14,6 +14,7 @@ from .simplificator import Simplificator
 from .projector import Projector
 
 from fractions import Fraction
+
 import math
 
 class Revision:
@@ -39,7 +40,6 @@ class Revision:
     
     __distance : DistanceFunction
     __interpreter : FormulaInterpreter
-    __projector : Projector
     _onlyOneSolution: bool
 
     def __init__(self, solverInit : MLOSolver, distance : DistanceFunction, simplifiers : list[Simplificator] = [], onlyOneSolution: bool = Constants.ONLY_ONE_SOLUTION, projector: Projector = None) -> None:        
@@ -154,8 +154,8 @@ class Revision:
             psiPrime = self.__expand(psi, lambdaEpsilon)
             return(dStar, psiPrime & mu)
     
-    def __executeConstraint(self, psi: Formula, mu: Formula) -> tuple[Fraction, Formula]:
-        return self.__interpreter.optimizeCouple(psi, mu)
+    def __executeConstraint(self, phi: Formula, mu: Formula) -> tuple[Fraction, Formula]:
+        return self.__interpreter.optimizeCouple(phi, mu)
     
     def __convertExplicit(self, phi: Formula) -> Formula:
         
