@@ -1,0 +1,3 @@
+class Adaptation:
+
+    pass
