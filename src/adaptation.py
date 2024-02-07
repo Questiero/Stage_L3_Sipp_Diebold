@@ -1,15 +1,12 @@
 from __future__ import annotations
 
-from .formula import Formula, Or, And, UnaryFormula, NullaryFormula, LinearConstraint, Not, ConstraintOperator
-from .formulaInterpreter import FormulaInterpreter
+from .formula import Formula, And
 from .mlo_solver import MLOSolver
 from .distance import DistanceFunction
 from .constants import Constants
 from .simplificator import Simplificator
 from .projector import Projector
 from .revision import Revision
-
-from fractions import Fraction
 
 class Adaptation:
 
