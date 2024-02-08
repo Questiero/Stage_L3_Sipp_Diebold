@@ -14,3 +14,4 @@ from .variable import *
 from .constants import *
 from .formulaInterpreter import *
 from .revision import *
+from .adaptation import *
