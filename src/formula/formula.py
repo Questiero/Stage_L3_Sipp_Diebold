@@ -111,6 +111,18 @@ class Formula(ABC):
             A `src.formula.formula.Formula` with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
         '''
         pass
+
+    @abstractmethod
+    def toPCMLC(self) -> Formula:
+        '''
+        Method used to transform a `src.formula.formula.Formula` into a new one, in the PCMLC formalism.
+
+        Returns
+        -------
+        src.formula.formula.Formula
+            A `src.formula.formula.Formula` in the PCMLC formalism.
+        '''
+        pass
         
     def clone(self) -> Formula:
         """

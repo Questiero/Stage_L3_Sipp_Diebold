@@ -121,3 +121,14 @@ class BinaryFormula(Formula):
             in Disjunctive Normal Form under Negation.
         '''
         return self._eliminate()._getAdherenceNeg(var)
+    
+    def toPCMLC(self) -> Formula:
+        '''
+        Method used to transform a `src.formula.formula.Formula` into a new one, in the PCMLC formalism.
+
+        Returns
+        -------
+        src.formula.formula.Formula
+            A `src.formula.formula.Formula` in the PCMLC formalism.
+        '''
+        return BinaryFormula(self.children[0].toPCMLC(), self.children[1].toPCMLC())

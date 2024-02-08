@@ -4,6 +4,8 @@ Representation of a LinearConstraint in PCMLC.
 
 from __future__ import annotations
 
+from src.formula.formula import Formula
+
 from .constraint import Constraint
 from ....variable import VariableManager
 from .constraintOperator import ConstraintOperator
@@ -292,6 +294,17 @@ class LinearConstraint(Constraint):
             res = And(formulaSet=set(res))
 
         return res
+    
+    def toPCMLC(self) -> Formula:
+        '''
+        Method used to transform a `src.formula.formula.Formula` into a new one, in the PCMLC formalism.
+
+        Returns
+        -------
+        src.formula.formula.Formula
+            A `src.formula.formula.Formula` in the PCMLC formalism.
+        '''
+        return self
     
     def clone(self) -> LinearConstraint:
         """
