@@ -151,7 +151,10 @@ class Revision:
             return (dStar, psiPrime & mu)
         else:
             lambdaEpsilon = dStar + epsilon
-            psiPrime = self.__expand(psi, lambdaEpsilon)
+            if (self._onlyOneSolution):
+                psiPrime = self.__expandLiteral(psi, lambdaEpsilon)
+            else:
+                psiPrime = self.__expand(psi, lambdaEpsilon)
             return(dStar, psiPrime & mu)
     
     def __executeConstraint(self, phi: Formula, mu: Formula) -> tuple[Fraction, Formula]:
@@ -227,7 +230,9 @@ class Revision:
             distanceConstraint.variables[zVariables[z]] = self.__distance.getWeights()[z]
         constraints.append(distanceConstraint)
 
-        return self.__projector.projectOn(And(formulaSet = set(constraints)), yVariables.keys())
+        expandConstraint = And(formulaSet = set(constraints))
+
+        return self.__projector.projectOn(expandConstraint, yVariables.keys())
 
         #try:
         #    return self.__projector.projectOn(And(formulaSet = set(constraints)), yVariables.keys())
@@ -236,33 +241,27 @@ class Revision:
         #        return And(formulaSet = {self.__expandLiteral(c, lambdaEpsilon) for c in psi.children})
         #    else:
         #        return self.__expandLiteral(psi, lambdaEpsilon)
-
-    def __expandLiteral(self, psi: Formula, lambdaEpsilon: Fraction):
         
-        if isinstance(psi, Not):
+    def __expandLiteral(self, psi: Formula, lambdaEpsilon: Fraction) -> Formula:
 
-            lc = psi.children.clone()
+        constraints = set()
+
+        for unary in psi.children:
+            if isinstance(unary, Not):
+                constraints.add(Not(self.__expandSingleLc(unary.children.clone(), -lambdaEpsilon)))
+            else:
+                constraints.add(self.__expandSingleLc(unary.clone(), lambdaEpsilon))
+
+        return And(*constraints)
+
+    def __expandSingleLc(self, lc: LinearConstraint, lambdaEpsilon):
+
+        match lc.operator:
+            case ConstraintOperator.LEQ:
+                lc.bound += lambdaEpsilon
+            case ConstraintOperator.GEQ:
+                lc.bound -= lambdaEpsilon
+            case ConstraintOperator.EQ:
+                return And(formulaSet = {self.__expandSingleLc(c) for c in lc.toLessOrEqConstraint().children})
             
-            match lc.operator:
-                case ConstraintOperator.LEQ:
-                    lc.bound += lambdaEpsilon
-                case ConstraintOperator.GEQ:
-                    lc.bound -= lambdaEpsilon
-                case ConstraintOperator.EQ:
-                    return And(formulaSet = {Not(self.__expandLiteral(c)) for c in psi.toLessOrEqConstraint().children})
-
-            return Not(lc)
-
-        else:
-
-            lc = psi.clone()
-
-            match lc.operator:
-                case ConstraintOperator.LEQ:
-                    lc.bound += lambdaEpsilon
-                case ConstraintOperator.GEQ:
-                    lc.bound -= lambdaEpsilon
-                case ConstraintOperator.EQ:
-                    return And(formulaSet = {self.__expandLiteral(c) for c in psi.toLessOrEqConstraint().children})
-
-            return lc
+        return lc
