@@ -82,6 +82,10 @@ class Revision:
         print(propToInt)
 
         psiDNF, muDNF = psi.toPCMLC(propToInt).toLessOrEqConstraint().toDNF(), mu.toPCMLC(propToInt).toLessOrEqConstraint().toDNF()
+        
+        print(psiDNF)
+        print(muDNF)
+        
         return self.__executeDNF(self.__convertExplicit(psiDNF), self.__convertExplicit(muDNF))
         
     def __executeDNF(self, psi: Formula, mu: Formula) -> tuple[Fraction, Formula]:

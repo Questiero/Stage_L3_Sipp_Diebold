@@ -132,3 +132,6 @@ class BinaryFormula(Formula):
             A `src.formula.formula.Formula` in the PCMLC formalism.
         '''
         return self.__class__(self.children[0].toPCMLC(varDict), self.children[1].toPCMLC(varDict))
+    
+    def _toPCMLCNeg(self, varDict) -> Formula:
+        return self.__class__(self.children[0]._toPCMLCNeg(varDict), self.children[1]._toPCMLCNeg(varDict))

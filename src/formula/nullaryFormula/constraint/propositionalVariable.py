@@ -68,6 +68,21 @@ class PropositionalVariable(Constraint):
         LC.bound = Fraction(1)
         return LC
     
+    def _toPCMLCNeg(self, varDict) -> Formula:
+        '''
+        Method used to transform a `src.formula.formula.Formula` into a new one, in the PCMLC formalism.
+
+        Returns
+        -------
+        src.formula.formula.Formula
+            A `src.formula.formula.Formula` in the PCMLC formalism.
+        '''
+        LC = LinearConstraint("")
+        LC.variables = {varDict[self]: Fraction(1)}
+        LC.operator = ConstraintOperator.LEQ
+        LC.bound = Fraction(0)
+        return LC
+    
     def clone(self) -> PropositionalVariable:
         """
         Method returning a clone of the current Formula.

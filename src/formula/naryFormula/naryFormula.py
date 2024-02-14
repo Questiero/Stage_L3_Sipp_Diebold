@@ -81,6 +81,9 @@ class NaryFormula(Formula):
             A `src.formula.formula.Formula` in the PCMLC formalism.
         '''
         return self.__class__(*{formul.toPCMLC(varDict) for formul in self.children})
+
+    def _toPCMLCNeg(self, varDict) -> Formula:
+        return self.__class__(*{formul._toPCMLCNeg(varDict) for formul in self.children})
     
     def clone(self) -> Formula:
         """

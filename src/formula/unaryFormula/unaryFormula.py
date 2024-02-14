@@ -40,16 +40,5 @@ class UnaryFormula(Formula):
         
         return self.children.getVariables()
     
-    def toPCMLC(self, varDict) -> Formula:
-        '''
-        Method used to transform a `src.formula.formula.Formula` into a new one, in the PCMLC formalism.
-
-        Returns
-        -------
-        src.formula.formula.Formula
-            A `src.formula.formula.Formula` in the PCMLC formalism.
-        '''
-        return self.__class__(self.children.toPCMLC(varDict))
-    
     def __hash__(self):
         return hash(self.children)

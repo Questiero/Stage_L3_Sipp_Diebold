@@ -123,6 +123,10 @@ class Formula(ABC):
             A `src.formula.formula.Formula` in the PCMLC formalism.
         '''
         pass
+
+    @abstractmethod
+    def _toPCMLCNeg(self, varDict) -> Formula:
+        pass
         
     def clone(self) -> Formula:
         """

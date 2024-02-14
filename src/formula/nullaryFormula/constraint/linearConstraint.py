@@ -306,6 +306,11 @@ class LinearConstraint(Constraint):
         '''
         return self
     
+    def _toPCMLCNeg(self, varDict) -> Formula:
+        from ...unaryFormula import Not
+
+        return Not(self)
+    
     def clone(self) -> LinearConstraint:
         """
         Method returning a clone of the current Formula.
