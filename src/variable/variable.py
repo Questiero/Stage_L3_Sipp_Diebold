@@ -169,6 +169,9 @@ class Variable(ABC):
         pass
 
     def __str__(self):
+        if self.name[0] in "0123456789":
+            return self.name[len(str(id(self))):]
+
         return self.name
     
     def __eq__(self, other):
