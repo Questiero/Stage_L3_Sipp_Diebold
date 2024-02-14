@@ -168,8 +168,8 @@ class Revision:
             return(dStar, psiPrime & mu)
     
     def __executeConstraint(self, phi: Formula, mu: Formula) -> tuple[Fraction, Formula]:
-        #print("phi ", phi)
-        #print("mu ", mu)
+        print("phi ", phi)
+        print("mu ", mu)
         return self.__interpreter.optimizeCouple(phi, mu)
     
     def __convertExplicit(self, phi: Formula) -> Formula:

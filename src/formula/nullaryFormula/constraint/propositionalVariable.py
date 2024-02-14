@@ -63,8 +63,8 @@ class PropositionalVariable(Constraint):
             A `src.formula.formula.Formula` in the PCMLC formalism.
         '''
         LC = LinearConstraint("")
-        LC.variables = {varDict[self]: Fraction(-1)}
-        LC.operator = ConstraintOperator.LEQ
+        LC.variables = {varDict[self]: Fraction(1)}
+        LC.operator = ConstraintOperator.GEQ
         LC.bound = Fraction(1)
         return LC
     
