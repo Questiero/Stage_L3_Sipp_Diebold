@@ -126,7 +126,7 @@ class Not(UnaryFormula):
                 
         return copyNeg
     
-    def toPCMLC(self) -> Formula:
+    def toPCMLC(self, varDict) -> Formula:
         '''
         Method used to transform a `src.formula.formula.Formula` into a new one, in the PCMLC formalism.
 
@@ -135,7 +135,7 @@ class Not(UnaryFormula):
         src.formula.formula.Formula
             A `src.formula.formula.Formula` in the PCMLC formalism.
         '''
-        return Not(self.children.toPCMLC())
+        return Not(self.children.toPCMLC(varDict))
     
     def __str__(self):
         return Constants.NOT_STRING_OPERATOR + "(" + str(self.children) + ")"

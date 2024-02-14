@@ -122,7 +122,7 @@ class BinaryFormula(Formula):
         '''
         return self._eliminate()._getAdherenceNeg(var)
     
-    def toPCMLC(self) -> Formula:
+    def toPCMLC(self, varDict) -> Formula:
         '''
         Method used to transform a `src.formula.formula.Formula` into a new one, in the PCMLC formalism.
 
@@ -131,4 +131,4 @@ class BinaryFormula(Formula):
         src.formula.formula.Formula
             A `src.formula.formula.Formula` in the PCMLC formalism.
         '''
-        return BinaryFormula(self.children[0].toPCMLC(), self.children[1].toPCMLC())
+        return self.__class__(self.children[0].toPCMLC(varDict), self.children[1].toPCMLC(varDict))

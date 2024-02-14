@@ -113,7 +113,7 @@ class Formula(ABC):
         pass
 
     @abstractmethod
-    def toPCMLC(self) -> Formula:
+    def toPCMLC(self, varDict) -> Formula:
         '''
         Method used to transform a `src.formula.formula.Formula` into a new one, in the PCMLC formalism.
 

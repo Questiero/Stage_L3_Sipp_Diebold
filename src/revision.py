@@ -5,13 +5,14 @@ Main class of the module, allowing the user to make the knowledge revision betwe
 
 from __future__ import annotations
 
-from .formula import Formula, Or, And, UnaryFormula, NullaryFormula, LinearConstraint, Not, ConstraintOperator
+from .formula import Formula, Or, And, UnaryFormula, NullaryFormula, LinearConstraint, Not, ConstraintOperator, PropositionalVariable
 from .formulaInterpreter import FormulaInterpreter
 from .mlo_solver import MLOSolver
 from .distance import DistanceFunction
 from .constants import Constants
 from .simplificator import Simplificator
 from .projector import Projector
+from .variable import IntegerVariable
 
 from fractions import Fraction
 
@@ -70,7 +71,15 @@ class Revision:
             Result of the knowledge revison of \(\psi\) by \(\mu\).
         """
 
-        psiDNF, muDNF = psi.toLessOrEqConstraint().toDNF(), mu.toLessOrEqConstraint().toDNF()
+        propToInt = dict()
+        weights = self.__distance.getWeights()
+        for var in weights.keys():
+            if var is PropositionalVariable:
+                intVar = IntegerVariable.declareAnonymous("e_" + var.name)
+                self.__distance.weights[intVar] = self.__distance.weights[var]
+                propToInt[var] = intVar
+
+        psiDNF, muDNF = psi.toLessOrEqConstraint().toPCMLC(propToInt).toDNF(), mu.toLessOrEqConstraint().toPCMLC(propToInt).toDNF()
         return self.__executeDNF(self.__convertExplicit(psiDNF), self.__convertExplicit(muDNF))
         
     def __executeDNF(self, psi: Formula, mu: Formula) -> tuple[Fraction, Formula]:
