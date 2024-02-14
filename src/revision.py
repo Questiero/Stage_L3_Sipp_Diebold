@@ -75,7 +75,7 @@ class Revision:
         weights = self.__distance.getWeights()
         for var in weights.copy().keys():
             if isinstance(var, PropositionalVariable):
-                intVar = IntegerVariable.declareAnonymous("e_" + var.name)
+                intVar = IntegerVariable.declareAnonymous("e_" + var.nameVariable)
                 weights[intVar] = weights[var]
                 propToInt[var] = intVar
 
