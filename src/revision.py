@@ -73,13 +73,15 @@ class Revision:
 
         propToInt = dict()
         weights = self.__distance.getWeights()
-        for var in weights.keys():
-            if var is PropositionalVariable:
+        for var in weights.copy().keys():
+            if isinstance(var, PropositionalVariable):
                 intVar = IntegerVariable.declareAnonymous("e_" + var.name)
-                self.__distance.weights[intVar] = self.__distance.weights[var]
+                weights[intVar] = weights[var]
                 propToInt[var] = intVar
 
-        psiDNF, muDNF = psi.toLessOrEqConstraint().toPCMLC(propToInt).toDNF(), mu.toLessOrEqConstraint().toPCMLC(propToInt).toDNF()
+        print(propToInt)
+
+        psiDNF, muDNF = psi.toPCMLC(propToInt).toLessOrEqConstraint().toDNF(), mu.toPCMLC(propToInt).toLessOrEqConstraint().toDNF()
         return self.__executeDNF(self.__convertExplicit(psiDNF), self.__convertExplicit(muDNF))
         
     def __executeDNF(self, psi: Formula, mu: Formula) -> tuple[Fraction, Formula]:

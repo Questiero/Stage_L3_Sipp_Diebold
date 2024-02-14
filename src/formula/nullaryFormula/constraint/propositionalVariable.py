@@ -3,8 +3,11 @@ Representation of a PropositionalVariable in CPC.
 """
 
 from __future__ import annotations
+from fractions import Fraction
 
-from . import Constraint
+from ....formula.formula import Formula
+
+from . import Constraint, LinearConstraint, ConstraintOperator
 from ...formulaManager import FormulaManager
 # Typing only imports
 from ....variable.variable import Variable
@@ -50,6 +53,21 @@ class PropositionalVariable(Constraint):
         '''
         raise NotImplementedError("toLessOrEqConstraint cannot be use here, the Formula contains a PropositionalVariable")
     
+    def toPCMLC(self, varDict) -> Formula:
+        '''
+        Method used to transform a `src.formula.formula.Formula` into a new one, in the PCMLC formalism.
+
+        Returns
+        -------
+        src.formula.formula.Formula
+            A `src.formula.formula.Formula` in the PCMLC formalism.
+        '''
+        LC = LinearConstraint("")
+        LC.variables = {varDict[self]: Fraction(1)}
+        LC.operator = ConstraintOperator.GEQ
+        LC.bound = Fraction(1)
+        return LC
+    
     def clone(self) -> PropositionalVariable:
         """
         Method returning a clone of the current Formula.
@@ -72,5 +90,3 @@ class PropositionalVariable(Constraint):
         
     def __hash__(self):
         return hash(str(self))
-
-
