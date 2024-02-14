@@ -79,13 +79,8 @@ class Revision:
                 weights[intVar] = weights[var]
                 propToInt[var] = intVar
 
-        print(propToInt)
-
         psiDNF, muDNF = psi.toPCMLC(propToInt).toLessOrEqConstraint().toDNF(), mu.toPCMLC(propToInt).toLessOrEqConstraint().toDNF()
-        
-        print(psiDNF)
-        print(muDNF)
-        
+                
         return self.__executeDNF(self.__convertExplicit(psiDNF), self.__convertExplicit(muDNF))
         
     def __executeDNF(self, psi: Formula, mu: Formula) -> tuple[Fraction, Formula]:
@@ -173,6 +168,8 @@ class Revision:
             return(dStar, psiPrime & mu)
     
     def __executeConstraint(self, phi: Formula, mu: Formula) -> tuple[Fraction, Formula]:
+        print("phi ", phi)
+        print("mu ", mu)
         return self.__interpreter.optimizeCouple(phi, mu)
     
     def __convertExplicit(self, phi: Formula) -> Formula:
