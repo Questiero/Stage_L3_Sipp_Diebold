@@ -96,7 +96,8 @@ class Revision:
             for minipsi in psi.children:
                 for miniMu in mu.children:
                     
-                    print(i, "/", maxIter)
+                    if (i%500==0):
+                        print(i, "/", maxIter)
                     i += 1
 
                     lit = self.__executeLiteral(minipsi, miniMu)
