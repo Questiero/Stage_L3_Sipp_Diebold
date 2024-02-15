@@ -65,7 +65,7 @@ class PropositionalVariable(Constraint):
         LC = LinearConstraint("")
         LC.variables = {varDict[self]: Fraction(-1)}
         LC.operator = ConstraintOperator.LEQ
-        LC.bound = Fraction(1)
+        LC.bound = Fraction(-1)
         return LC
     
     def _toPCMLCNeg(self, varDict) -> Formula:
