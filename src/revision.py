@@ -90,9 +90,15 @@ class Revision:
 
         if(self._onlyOneSolution):
             
+            maxIter = len(psi.children)*len(mu.children)
+            i = 1
+
             for minipsi in psi.children:
                 for miniMu in mu.children:
                     
+                    print(i, "/", maxIter)
+                    i += 1
+
                     lit = self.__executeLiteral(minipsi, miniMu)
 
                     if not (lit[0] is None):
@@ -110,8 +116,13 @@ class Revision:
 
             setRes = set()
             
+            maxIter = len(psi.children)*len(mu.children)
+            i = 1
             for minipsi in psi.children:
                 for miniMu in mu.children:
+                    
+                    print(i, "/", maxIter)
+                    i += 1
                     
                     lit = self.__executeLiteral(minipsi, miniMu)
                     #print("---")
