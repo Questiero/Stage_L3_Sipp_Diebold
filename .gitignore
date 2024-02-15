@@ -2,5 +2,6 @@
 __pycache__/
 *.py[cod]
 
+test2.py
 test.py
 testSimplification.py
