@@ -95,6 +95,7 @@ class Revision:
             
             maxIter = len(satPsi)*len(satMu)
             i = 1
+            print(i, "/", maxIter)
 
             for minipsi in satPsi:
                 for miniMu in satMu:
