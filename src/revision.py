@@ -88,13 +88,16 @@ class Revision:
         res = None
         disRes = None
 
+        satPsi = {miniPsi for miniPsi in psi.children if self.__interpreter.sat(miniPsi)}
+        satMu = {miniMu for miniMu in mu.children if self.__interpreter.sat(miniMu)}
+
         if(self._onlyOneSolution):
             
-            maxIter = len(psi.children)*len(mu.children)
+            maxIter = len(satPsi)*len(satMu)
             i = 1
 
-            for minipsi in psi.children:
-                for miniMu in mu.children:
+            for minipsi in satPsi:
+                for miniMu in satMu:
                     
                     if (i%500==0):
                         print(i, "/", maxIter)
