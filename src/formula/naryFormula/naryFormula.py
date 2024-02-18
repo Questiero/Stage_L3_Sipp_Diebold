@@ -71,20 +71,6 @@ class NaryFormula(Formula):
             
         return variables
     
-    def toPCMLC(self, varDict) -> Formula:
-        '''
-        Method used to transform a `src.formula.formula.Formula` into a new one, in the PCMLC formalism.
-
-        Returns
-        -------
-        src.formula.formula.Formula
-            A `src.formula.formula.Formula` in the PCMLC formalism.
-        '''
-        return self.__class__(*{formul.toPCMLC(varDict) for formul in self.children})
-
-    def _toPCMLCNeg(self, varDict) -> Formula:
-        return self.__class__(*{formul._toPCMLCNeg(varDict) for formul in self.children})
-    
     def clone(self) -> Formula:
         """
         Method returning a clone of the current Formula.

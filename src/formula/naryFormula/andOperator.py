@@ -43,7 +43,7 @@ class And(NaryFormula):
         '''
                 
         from .orOperator import Or
-        
+
         dnfChildren = {child.toDNF() for child in self.children}
 			
         orChildren = set()
@@ -55,10 +55,10 @@ class And(NaryFormula):
         dnfChildren = dnfChildren - orChildren
                 
         if len(orChildren) == 0:
-            return And(formulaSet = dnfChildren)
+            return And(*dnfChildren)
         
         combinations = [{orChild} for orChild in orChildren.pop().children]
-    
+
         tempcomb = []
         for orChild in orChildren:
             for elem in orChild.children:
@@ -69,10 +69,9 @@ class And(NaryFormula):
             combinations = tempcomb
             tempcomb = []
                 
-        dnfFormula = [And(formulaSet=comb.union(dnfChildren)) for comb in combinations]
-            
-        #print(dnfFormula)
-        return Or(formulaSet = set(dnfFormula))
+        dnfFormula = {And(*comb.union(dnfChildren)) for comb in combinations}
+
+        return Or(*dnfFormula)
     
     def _toDNFNeg(self) -> Formula:
         '''
@@ -87,8 +86,25 @@ class And(NaryFormula):
         
         from .orOperator import Or
         
-        return Or(formulaSet = {child._toDNFNeg() for child in self.children})
+        return Or(*{child._toDNFNeg() for child in self.children})
     
+    def toPCMLC(self, varDict) -> Formula:
+        '''
+        Method used to transform a `src.formula.formula.Formula` into a new one, in the PCMLC formalism.
+
+        Returns
+        -------
+        src.formula.formula.Formula
+            A `src.formula.formula.Formula` in the PCMLC formalism.
+        '''
+        return And(*{formul.toPCMLC(varDict) for formul in self.children})
+
+    def _toPCMLCNeg(self, varDict) -> Formula:
+
+        from .orOperator import Or
+
+        return Or(*{formul._toPCMLCNeg(varDict) for formul in self.children})
+
     def getAdherence(self, var : Variable) -> list[list[Constraint]]:
         '''
         Returns a 2D list containing all the constraints of the adherence of 
@@ -157,7 +173,7 @@ class And(NaryFormula):
         for child in self.children:
             childrenModified.add(child.toLessOrEqConstraint())
 
-        return And(formulaSet = childrenModified)
+        return And(*childrenModified)
     
     def __str__(self):
 

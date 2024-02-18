@@ -87,6 +87,20 @@ class BinaryFormula(Formula):
         
         return self._eliminate()._toDNFNeg()
     
+    def toLessOrEqConstraint(self):
+        '''
+        Method used to transform a `src.formula.formula.Formula` into another one, with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
+
+        Returns
+        ------
+        src.formula.formula.Formula
+            A `src.formula.formula.Formula` with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
+        '''
+        childrenModified = []
+        for child in self.children: childrenModified.append(child.toLessOrEqConstraint())
+
+        return self.__class__(childrenModified[0], childrenModified[1])
+        
     def getAdherence(self, var : Variable) -> list[list[Constraint]]:
         '''
         Returns a 2D list containing all the constraints of the adherence of 

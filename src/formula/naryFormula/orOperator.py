@@ -42,7 +42,7 @@ class Or(NaryFormula):
             The current Formula in Disjunctive Normal Form.
         '''
         
-        return Or(formulaSet = {child.toDNF() for child in self.children})
+        return Or(*{child.toDNF() for child in self.children})
     
     def _toDNFNeg(self) -> Formula:
         '''
@@ -68,7 +68,7 @@ class Or(NaryFormula):
         dnfChildren = dnfChildren - orChildren
                 
         if len(orChildren) == 0:
-            return And(formulaSet = dnfChildren)
+            return And(*dnfChildren)
 					
         combinations = [{orChild} for orChild in orChildren.pop().children]
 	
@@ -82,9 +82,9 @@ class Or(NaryFormula):
             combinations = tempcomb
             tempcomb = []
 
-        dnfFormula = [And(formulaSet=comb.union(dnfChildren)) for comb in combinations]
+        dnfFormula = {And(*comb.union(dnfChildren)) for comb in combinations}
             
-        return Or(formulaSet = set(dnfFormula))
+        return Or(*dnfFormula)
     
     def getAdherence(self, var : Variable) -> list[list[Constraint]]:
         '''
@@ -151,7 +151,25 @@ class Or(NaryFormula):
         for child in self.children:
             childrenModified.add(child.toLessOrEqConstraint())
 
-        return Or(formulaSet = childrenModified)
+        return Or(*childrenModified)
+        
+    def toPCMLC(self, varDict) -> Formula:
+        '''
+        Method used to transform a `src.formula.formula.Formula` into a new one, in the PCMLC formalism.
+
+        Returns
+        -------
+        src.formula.formula.Formula
+            A `src.formula.formula.Formula` in the PCMLC formalism.
+        '''
+        return Or(*{formul.toPCMLC(varDict) for formul in self.children})
+
+    def _toPCMLCNeg(self, varDict) -> Formula:
+
+        from . import And
+
+        return And(*{formul._toPCMLCNeg(varDict) for formul in self.children})
+
     
     def __str__(self):
 
