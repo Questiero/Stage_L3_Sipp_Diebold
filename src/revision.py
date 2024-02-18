@@ -50,7 +50,7 @@ class Revision:
 
         self.__projector = projector
 
-    def execute(self, psi : Formula, mu : Formula) -> tuple[Fraction, Formula]:
+    def execute(self, psi : Formula, mu : Formula, propToInt : dict[PropositionalVariable, IntegerVariable] = None) -> tuple[Fraction, Formula]:
         r"""
         Execute the revision of \(\psi\) by \(\mu\).
 
@@ -71,13 +71,21 @@ class Revision:
             Result of the knowledge revison of \(\psi\) by \(\mu\).
         """
 
-        propToInt = dict()
+        if propToInt is None:
+            propToInt = dict()
+
         weights = self.__distance.getWeights()
+
         for var in weights.copy().keys():
             if isinstance(var, PropositionalVariable):
-                intVar = IntegerVariable.declareAnonymous("e_" + var.nameVariable)
+
+                if propToInt.get(var) is None:
+                    tempVar = IntegerVariable.declareAnonymous("e_" + var.nameVariable)
+                    propToInt[var] = tempVar
+
+                intVar = propToInt[var]
+
                 weights[intVar] = weights[var]
-                propToInt[var] = intVar
 
         psiDNF, muDNF = psi.toPCMLC(propToInt).toLessOrEqConstraint().toDNF(), mu.toPCMLC(propToInt).toLessOrEqConstraint().toDNF()
                 

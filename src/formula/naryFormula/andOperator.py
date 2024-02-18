@@ -9,6 +9,8 @@ from .naryFormula import NaryFormula
 from ...constants import Constants
 # local import of Or
 
+import itertools
+
 # Typing only imports
 from .. import Formula
 from ..nullaryFormula import Constraint
@@ -61,14 +63,11 @@ class And(NaryFormula):
 
         tempcomb = []
         for orChild in orChildren:
-            for elem in orChild.children:
-                for comb in combinations:
-                    tempc = comb.copy()
-                    tempc.add(elem)
-                    tempcomb.append(tempc)
+            for comb in itertools.product(*[orChild.children, *combinations]):
+                tempcomb.append(set(comb))
             combinations = tempcomb
             tempcomb = []
-                
+
         dnfFormula = {And(*comb.union(dnfChildren)) for comb in combinations}
 
         return Or(*dnfFormula)
