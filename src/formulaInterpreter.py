@@ -65,7 +65,7 @@ class FormulaInterpreter:
                 for simplifier in self.__simplifiers:
                     newMiniPhi = simplifier.run(newMiniPhi.toLessOrEqConstraint().toDNF())
                 orChild.append(newMiniPhi)
-            return Or(formulaSet= set(orChild))
+            return Or(*orChild)
 
     def sat(self, phi : Formula) -> bool:
         r"""
@@ -175,7 +175,7 @@ class FormulaInterpreter:
                 lc.operator = ConstraintOperator.EQ
                 lc.bound = Fraction(values[len(variables)+i])
                 resSet.add(lc)
-        return (res[2], And(formulaSet=resSet))
+        return (res[2], And(*resSet))
 
     def __buildConstraints(self, variables : list[Variable], psi : And, mu : And) -> dict[tuple[dict[Fraction], ConstraintOperator, Fraction]]:
         '''
@@ -298,5 +298,5 @@ class FormulaInterpreter:
             else:
                 andSet.add(andChild)
             
-        return And(formulaSet = andSet)
+        return And(*andSet)
          

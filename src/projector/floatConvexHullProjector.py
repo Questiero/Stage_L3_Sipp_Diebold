@@ -346,7 +346,7 @@ class FloatConvexHullProjector (Projector):
                 else:
                     print("Euuuuh")           
 
-            return And(formulaSet = constraintSet)
+            return And(*constraintSet)
 
     def __createConstraintSegment(self, x, y, variables):
         
@@ -386,7 +386,7 @@ class FloatConvexHullProjector (Projector):
 
             constraintSet.add(lc)
 
-        return And(formulaSet=constraintSet)
+        return And(*constraintSet)
     
     def __createConstraintPointSegment(self, x, y, variables):
 
@@ -417,4 +417,4 @@ class FloatConvexHullProjector (Projector):
 
             #print(simplex, ":", sum, s, ":", lc)
 
-        return And(formulaSet=constraintSet)
+        return And(*constraintSet)

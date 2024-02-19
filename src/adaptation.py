@@ -28,5 +28,4 @@ class Adaptation:
 
     def execute(self, psi : Formula, mu : Formula):
 
-        
-        return self.__revision.execute(And(formulaSet={psi}.union(self.__domainKnowledge)), And(formulaSet={mu}.union(self.__domainKnowledge)))
+        return self.__revision.execute(And(*{psi}.union(self.__domainKnowledge)), And(*{mu}.union(self.__domainKnowledge)))

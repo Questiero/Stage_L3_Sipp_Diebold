@@ -154,7 +154,7 @@ class Revision:
                         if (disRes is None):
                             setRes.add(lit[1])
             
-            res = Or(formulaSet = setRes).toDNF()
+            res = Or(*setRes).toDNF()
 
         return (disRes, self.__interpreter.simplifyMLC(res.toLessOrEqConstraint().toDNF()))
     
@@ -209,7 +209,7 @@ class Revision:
                     orSet.add(miniPhi)
                 else:
                     orSet.add(And(miniPhi))
-            return Or(formulaSet = orSet)
+            return Or(*orSet)
 
     def __expand(self, psi: Formula, lambdaEpsilon: Fraction) -> Formula:
         
@@ -266,15 +266,15 @@ class Revision:
             distanceConstraint.variables[zVariables[z]] = self.__distance.getWeights()[z]
         constraints.append(distanceConstraint)
 
-        expandConstraint = And(formulaSet = set(constraints))
+        expandConstraint = And(*constraints)
 
         return self.__projector.projectOn(expandConstraint, yVariables.keys())
 
         #try:
-        #    return self.__projector.projectOn(And(formulaSet = set(constraints)), yVariables.keys())
+        #    return self.__projector.projectOn(And(*set(constraints)), yVariables.keys())
         #except RuntimeError:
         #    if isinstance(psi, NaryFormula):
-        #        return And(formulaSet = {self.__expandLiteral(c, lambdaEpsilon) for c in psi.children})
+        #        return And(*{self.__expandLiteral(c, lambdaEpsilon) for c in psi.children})
         #    else:
         #        return self.__expandLiteral(psi, lambdaEpsilon)
         
@@ -298,6 +298,6 @@ class Revision:
             case ConstraintOperator.GEQ:
                 lc.bound -= lambdaEpsilon
             case ConstraintOperator.EQ:
-                return And(formulaSet = {self.__expandSingleLc(c) for c in lc.toLessOrEqConstraint().children})
+                return And(*{self.__expandSingleLc(c) for c in lc.toLessOrEqConstraint().children})
             
         return lc

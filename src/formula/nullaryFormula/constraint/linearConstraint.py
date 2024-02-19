@@ -291,7 +291,7 @@ class LinearConstraint(Constraint):
             res[0].operator = ConstraintOperator.GEQ
             res.append(res[0].toLessOrEqConstraint())
             res[0].operator = ConstraintOperator.LEQ
-            res = And(formulaSet=set(res))
+            res = And(*res)
 
         return res
     

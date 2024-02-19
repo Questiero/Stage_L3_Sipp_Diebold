@@ -29,12 +29,9 @@ class NaryFormula(Formula):
         The children of the current node.
     """
         
-    def __init__(self, *formulas: Formula, formulaSet: set[Formula]=None, name: str = None):
+    def __init__(self, *formulas: Formula, name: str = None):
         
-        if formulaSet is None:
-            self.children = set(formulas)
-        else:
-            self.children = formulaSet
+        self.children = set(formulas)
                 
         if len(self.children) >= 1:
             tempF = set()
@@ -81,5 +78,5 @@ class NaryFormula(Formula):
             Clone of the current `src.formula.formula.Formula`.
         """
 
-        clone = self.__class__(formulaSet = self.children)
+        clone = self.__class__(*self.children)
         return clone

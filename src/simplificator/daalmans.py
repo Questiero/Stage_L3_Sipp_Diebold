@@ -108,12 +108,12 @@ class Daalmans(Simplificator):
             actualConstraints.remove(constraint)
 
             actualConstraints.add(neg)
-            form = And(formulaSet=actualConstraints).toLessOrEqConstraint().toDNF()
+            form = And(*actualConstraints).toLessOrEqConstraint().toDNF()
             if self._interpreter.sat(form) :
                 actualConstraints.add(constraint)
             actualConstraints.remove(neg)
 
-        return And(formulaSet=actualConstraints)
+        return And(*actualConstraints)
 
     
     def __solve(self, variables, obj, constraints):
