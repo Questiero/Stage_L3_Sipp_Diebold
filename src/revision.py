@@ -113,11 +113,11 @@ class Revision:
                     i += 1
 
                     print("----")
-                    print("miniPsi:", minipsi)
-                    print("miniMu:", miniMu)
+                    #print("miniPsi:", minipsi)
+                    #print("miniMu:", miniMu)
                     lit = self.__executeLiteral(minipsi, miniMu)
-                    print(str(lit[0]) + ";", lit[1])
-                    print(self.__interpreter.sat(lit[1]))
+                    #print(str(lit[0]) + ";", lit[1])
+                    print(str(lit[0]) + ";", self.__interpreter.sat(lit[1]))
 
                     if self.__interpreter.sat(lit[1]):
                         if not (lit[0] is None):
@@ -167,8 +167,8 @@ class Revision:
     def __executeLiteral(self, psi: Formula, mu: Formula) -> tuple[Fraction, Formula]:
 
         # first step: check if psi and mu are coherent
-        if((not self.__interpreter.sat(psi)) or (not self.__interpreter.sat(mu))):
-            return (None, mu) # None = inf
+        #if((not self.__interpreter.sat(psi)) or (not self.__interpreter.sat(mu))):
+        #    return (None, mu) # None = inf
         
         # second step: find dStar (and psiPrime if onlyOneSoltuion)
         dStar, psiPrime = self.__executeConstraint(self.__interpreter.removeNot(psi), self.__interpreter.removeNot(mu))
