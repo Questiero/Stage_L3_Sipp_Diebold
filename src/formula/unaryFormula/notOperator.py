@@ -7,6 +7,8 @@ from __future__ import annotations
 from .unaryFormula import UnaryFormula
 from ...constants import Constants
 
+from fractions import Fraction
+
 # Typing only imports
 from .. import Formula
 from ..nullaryFormula.constraint.constraint import Constraint
@@ -120,8 +122,8 @@ class Not(UnaryFormula):
 
         for key in copyNeg.variables:
             copyNeg.variables[key] = -copyNeg.variables[key]
-        if copyNeg.operator == ConstraintOperator.GEQ: copyNeg.variables[e] = -1
-        else: copyNeg.variables[e] = 1
+        if copyNeg.operator == ConstraintOperator.GEQ: copyNeg.variables[e] = Fraction(-1)
+        else: copyNeg.variables[e] = Fraction(1)
         copyNeg.bound = -copyNeg.bound
                 
         return copyNeg

@@ -12,7 +12,7 @@ from .distance import DistanceFunction
 from .constants import Constants
 from .simplificator import Simplificator
 from .projector import Projector
-from .variable import IntegerVariable
+from .variable import IntegerVariable, RealVariable
 
 from fractions import Fraction
 
@@ -112,18 +112,24 @@ class Revision:
                         print(i, "/", maxIter)
                     i += 1
 
+                    print("----")
+                    print("miniPsi:", minipsi)
+                    print("miniMu:", miniMu)
                     lit = self.__executeLiteral(minipsi, miniMu)
+                    print(str(lit[0]) + ";", lit[1])
+                    print(self.__interpreter.sat(lit[1]))
 
-                    if not (lit[0] is None):
-                        if (disRes is None):
-                            disRes = lit[0]
-                            res = lit[1]
-                        elif (disRes > lit[0]):
-                            disRes = lit[0]
-                            res = lit[1]
-                    else:
-                        if (disRes is None) & (res is None):
-                            res = lit[1]
+                    if self.__interpreter.sat(lit[1]):
+                        if not (lit[0] is None):
+                            if (disRes is None):
+                                disRes = lit[0]
+                                res = lit[1]
+                            elif (disRes > lit[0]):
+                                disRes = lit[0]
+                                res = lit[1]
+                        else:
+                            if (disRes is None) & (res is None):
+                                res = lit[1]
 
         else:
 
@@ -166,6 +172,7 @@ class Revision:
         
         # second step: find dStar (and psiPrime if onlyOneSoltuion)
         dStar, psiPrime = self.__executeConstraint(self.__interpreter.removeNot(psi), self.__interpreter.removeNot(mu))
+        print("psiPrime:", psiPrime)
 
         # third step: lambdaEpsilon
         epsilon = self.__distance._epsilon
@@ -186,9 +193,10 @@ class Revision:
         else:
             lambdaEpsilon = dStar + epsilon
             if (self._onlyOneSolution):
-                psiPrime = self.__expandLiteral(psi, lambdaEpsilon)
+                psiPrime = self.expandLiteral(psiPrime, lambdaEpsilon)
             else:
                 psiPrime = self.__expand(psi, lambdaEpsilon)
+            print("psiPrime2:", psiPrime)
             return(dStar, psiPrime & mu)
     
     def __executeConstraint(self, phi: Formula, mu: Formula) -> tuple[Fraction, Formula]:
@@ -269,16 +277,8 @@ class Revision:
         expandConstraint = And(*constraints)
 
         return self.__projector.projectOn(expandConstraint, yVariables.keys())
-
-        #try:
-        #    return self.__projector.projectOn(And(*set(constraints)), yVariables.keys())
-        #except RuntimeError:
-        #    if isinstance(psi, NaryFormula):
-        #        return And(*{self.__expandLiteral(c, lambdaEpsilon) for c in psi.children})
-        #    else:
-        #        return self.__expandLiteral(psi, lambdaEpsilon)
         
-    def __expandLiteral(self, psi: Formula, lambdaEpsilon: Fraction) -> Formula:
+    def expandLiteral(self, psi: Formula, lambdaEpsilon: Fraction) -> Formula:
 
         constraints = set()
 
@@ -292,12 +292,24 @@ class Revision:
 
     def __expandSingleLc(self, lc: LinearConstraint, lambdaEpsilon):
 
+        if not isinstance(list(lc.variables.keys())[0], RealVariable):
+            lambdaEpsilon = 1
+
         match lc.operator:
             case ConstraintOperator.LEQ:
                 lc.bound += lambdaEpsilon
             case ConstraintOperator.GEQ:
                 lc.bound -= lambdaEpsilon
             case ConstraintOperator.EQ:
-                return And(*{self.__expandSingleLc(c) for c in lc.toLessOrEqConstraint().children})
+
+                geq = lc.clone()
+                geq.operator = ConstraintOperator.GEQ
+                geq.bound -= lambdaEpsilon
+
+                leq = lc.clone()
+                leq.operator = ConstraintOperator.LEQ
+                leq.bound += lambdaEpsilon
+                
+                return And(geq, leq)
             
         return lc
