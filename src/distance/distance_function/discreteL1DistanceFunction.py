@@ -33,7 +33,7 @@ class discreteL1DistanceFunction(distanceFunctionOnNumericalTuple):
         The `src.distance.domain.domain.Domain` on which the distance function is defined.
     """
 
-    def __init__(self, weights : dict[Variable, Fraction], epsilon : Fraction = Fraction("1e-6"), domaine : Domain = None):
+    def __init__(self, weights : dict[Variable, Fraction], epsilon : Fraction = Fraction("1e-3"), domaine : Domain = None):
         self._distance = l1DistanceFunction(weights, domaine)
         self._epsilon = epsilon
 
