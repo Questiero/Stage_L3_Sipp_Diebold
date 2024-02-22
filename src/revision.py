@@ -73,7 +73,7 @@ class Revision:
             Result of the knowledge revison of \(\psi\) by \(\mu\).
         """
 
-        self.timeStart = time.perf_counter()
+        self.__timeStart = time.perf_counter()
 
         if propToInt is None:
             propToInt = dict()
@@ -305,4 +305,4 @@ class Revision:
         return self.__projector.projectOn(expandConstraint, yVariables.keys())
     
     def getTime(self):
-        return f"{int((time.perf_counter()-self.timeStart)//60)}m{(time.perf_counter()-self.timeStart)%60:0.3f}s"
+        return f"{int((time.perf_counter()-self.__timeStart)//60)}m{(time.perf_counter()-self.__timeStart)%60:0.3f}s"
