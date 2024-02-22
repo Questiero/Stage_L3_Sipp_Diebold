@@ -124,14 +124,14 @@ class Revision:
 
         print(f"{len(satPsi)} satisfiable children of Psi found")
 
-        if len(satMu) == 0:
-            raise(AttributeError("Mu is not satisfiable"))
-
         print("")
         satMu = set()
         for miniMu in tqdm(mu.children, "Testing satisfiability of each child of Mu"):
             if self.__interpreter.sat(miniMu):
                 satMu.add(miniMu)
+
+        if len(satMu) == 0:
+            raise(AttributeError("Mu is not satisfiable"))
 
         print(f"{len(satMu)} satisfiable children of Psi found")
 
