@@ -185,7 +185,7 @@ class Revision:
         # fifth step
         if dStar % epsilon != 0:
             #print("dStar % epsilon != 0")
-            if not self.__interpreter.sat(psiPrime & mu):
+            if self._onlyOneSolution & (not self.__interpreter.sat(psiPrime & mu)):
                 psiPrime = self.__interpreter.optimizeCoupleWithLimit(self.__interpreter.removeNot(psi, epsilon), self.__interpreter.removeNot(mu, epsilon), lambdaEpsilon)[1]
             #print("psiPrime2:", psiPrime)
             return (lambdaEpsilon, psiPrime & mu)
