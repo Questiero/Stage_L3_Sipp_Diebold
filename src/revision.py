@@ -139,10 +139,9 @@ class Revision:
         print("")
         print(f"{maxIter} combinations of conjunctions found")
 
-        print("")
         if(self._onlyOneSolution):
             
-            with tqdm(total=maxIter) as pbar:
+            with tqdm(total=maxIter, desc="Revision of each combination") as pbar:
                 for minipsi in satPsi:
                     for miniMu in satMu:
                     
@@ -166,7 +165,7 @@ class Revision:
 
             setRes = set()
             
-            with tqdm(total=maxIter) as pbar:
+            with tqdm(total=maxIter, desc="Revision of each combination") as pbar:
                 for minipsi in satPsi:
                     for miniMu in satMu:
                                             
