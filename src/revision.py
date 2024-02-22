@@ -305,4 +305,12 @@ class Revision:
         return self.__projector.projectOn(expandConstraint, yVariables.keys())
     
     def getTime(self):
-        return f"{int((time.perf_counter()-self.__timeStart)//60)}m{(time.perf_counter()-self.__timeStart)%60:0.3f}s"
+
+        timeNow = time.perf_counter()-self.__timeStart
+        m = int(timeNow//60)
+
+        s = timeNow%60
+        sbfr = int(s)
+        saftr = int((s-sbfr)*1000)
+
+        return "{:0>2d}m{:0>2d}.{:0>3d}s |".format(m, sbfr, saftr)
