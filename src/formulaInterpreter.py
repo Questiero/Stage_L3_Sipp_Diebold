@@ -146,14 +146,7 @@ class FormulaInterpreter:
             `src.formula.formula.Formula` representing a point \(y \in \mathcal{M}(\mu)\) that satisfies the optimization problem above. 
         """
         # Reorder variables order
-        variablesTest = []
-        neg = None
-        for var in variables:
-            if var.name == '@':
-                neg = var
-            else: variablesTest.append(var)
-        variablesTest.append(neg)
-        variables = variablesTest
+        variables = list(variables)
         constraints = self.__buildConstraints(variables, psi, mu)
 
         # creation of the objective function
@@ -169,12 +162,11 @@ class FormulaInterpreter:
         values = res[1]
         resSet = set([])
         for i in range(0,len(variables)):
-            if variables[i].name != "@":
-                lc = LinearConstraint("") 
-                lc.variables = {variables[i]: Fraction(1)}
-                lc.operator = ConstraintOperator.EQ
-                lc.bound = Fraction(values[len(variables)+i])
-                resSet.add(lc)
+            lc = LinearConstraint("") 
+            lc.variables = {variables[i]: Fraction(1)}
+            lc.operator = ConstraintOperator.EQ
+            lc.bound = Fraction(values[len(variables)+i])
+            resSet.add(lc)
         return (res[2], And(*resSet))
 
     def __buildConstraints(self, variables : list[Variable], psi : And, mu : And) -> dict[tuple[dict[Fraction], ConstraintOperator, Fraction]]:
@@ -194,7 +186,7 @@ class FormulaInterpreter:
         constraints = []
         i = 0
         for formula in [psi, mu]:
-            for lc in formula.getAdherence(self._eVar):
+            for lc in formula.getAdherence():
                 for constraint in lc:
                     constraintP = []
                     for _ in range(0,(len(variables)) *i):
@@ -259,13 +251,10 @@ class FormulaInterpreter:
         """
 
         variables = list(And(psi,mu).getVariables())
-        e = RealVariable("@")
-        if not e in variables: variables.append(e)
-        self.__distanceFunction.getWeights()[e] = 0
 
         return self.findOneSolution(variables, psi, mu)    
 
-    def removeNot(self, phi: And) -> And:
+    def removeNot(self, phi: And, epsilon = 0) -> And:
         r"""
         Method used to transform a conjunction of litterals (i.e `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint`
         and `src.formula.unaryFormula.notOperator.Not` of `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint`) in a conjunction of `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint`,
@@ -287,16 +276,46 @@ class FormulaInterpreter:
         """
 
         andSet = set()
-        negConstraint = LinearConstraint("")
-        negConstraint.variables[self._eVar] = -1
-        negConstraint.bound = 0
-        negConstraint.operator = ConstraintOperator.LEQ
-        andSet.add(negConstraint)
+
         for andChild in phi.children:
             if isinstance(andChild, Not):
-                andSet.add(andChild.copyNegLitteral(self._eVar))
+                andSet.add(andChild.copyNegLitteral(epsilon))
             else:
                 andSet.add(andChild)
             
         return And(*andSet)
-         
+
+    def findOneSolutionWithLimit(self, variables : list[Variable], psi : And, mu : And, lambdaEpsilon) -> tuple[Fraction, Formula]:
+
+            # Reorder variables order
+            variables = list(variables)
+            constraints = self.__buildConstraints(variables, psi, mu)
+
+            # creation of the objective function
+            obj = [0]*len(variables)*2
+            constraintLambdaEpsilon = [0]*len(variables)*2
+            for variable in variables:
+                obj.append(self.__distanceFunction.getWeights()[variable])
+                constraintLambdaEpsilon.append(-self.__distanceFunction.getWeights()[variable])
+            constraints.append((constraintLambdaEpsilon, ConstraintOperator.LEQ, -lambdaEpsilon))
+            res = self.__MLOSolver.solve(variables*3, obj, constraints)
+
+            # interpretation of the mlo solver result
+            if(res[0] == OptimizationValues.INFEASIBLE): 
+                raise Exception("Optimize couple impossible") 
+            
+            values = res[1]
+            resSet = set([])
+            for i in range(0,len(variables)):
+                lc = LinearConstraint("") 
+                lc.variables = {variables[i]: Fraction(1)}
+                lc.operator = ConstraintOperator.EQ
+                lc.bound = Fraction(values[len(variables)+i])
+                resSet.add(lc)
+            return (res[2], And(*resSet))
+
+    def optimizeCoupleWithLimit(self, psi : And, mu : And, lambdaEpsilon) -> tuple[Fraction, Formula]:
+
+        variables = list(And(psi,mu).getVariables())
+
+        return self.findOneSolutionWithLimit(variables, psi, mu, lambdaEpsilon)  

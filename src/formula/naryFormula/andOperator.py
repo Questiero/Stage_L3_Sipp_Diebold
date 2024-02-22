@@ -104,7 +104,7 @@ class And(NaryFormula):
 
         return Or(*{formul._toPCMLCNeg(varDict) for formul in self.children})
 
-    def getAdherence(self, var : Variable) -> list[list[Constraint]]:
+    def getAdherence(self, var : Variable = None) -> list[list[Constraint]]:
         '''
         Returns a 2D list containing all the constraints of the adherence of 
         the Formula, in Disjunctive Normal Form.
@@ -131,7 +131,7 @@ class And(NaryFormula):
                     
         return [res]
     
-    def _getAdherenceNeg(self, var : Variable)  -> list[list[Constraint]]:
+    def _getAdherenceNeg(self, var : Variable = None)  -> list[list[Constraint]]:
         '''
         Protected method used in the algorithm to recursivly determine the
         constraints of the adherence of the Formula, used when a Negation is in play

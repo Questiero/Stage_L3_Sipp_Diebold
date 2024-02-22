@@ -165,43 +165,43 @@ class Revision:
         return (disRes, self.__interpreter.simplifyMLC(res.toLessOrEqConstraint().toDNF()))
     
     def __executeLiteral(self, psi: Formula, mu: Formula) -> tuple[Fraction, Formula]:
-
-        # first step: check if psi and mu are coherent
-        #if((not self.__interpreter.sat(psi)) or (not self.__interpreter.sat(mu))):
-        #    return (None, mu) # None = inf
         
+        epsilon = self.__distance._epsilon
+
         # second step: find dStar (and psiPrime if onlyOneSoltuion)
         dStar, psiPrime = self.__executeConstraint(self.__interpreter.removeNot(psi), self.__interpreter.removeNot(mu))
-        print("psiPrime:", psiPrime)
 
         # third step: lambdaEpsilon
-        epsilon = self.__distance._epsilon
         if dStar % epsilon == 0:
             lambdaEpsilon = dStar
         else:
             lambdaEpsilon = epsilon * math.ceil(dStar / epsilon)
             
+        print(lambdaEpsilon, psiPrime)
         # fourth step: find psiPrime (only if not onlyOneSolution)
         if(not self._onlyOneSolution):
             psiPrime = self.__expand(psi, lambdaEpsilon)
     
         # fifth step
         if dStar % epsilon != 0:
+            print("dStar % epsilon != 0")
+            if not self.__interpreter.sat(psiPrime & mu):
+                psiPrime = self.__interpreter.optimizeCoupleWithLimit(self.__interpreter.removeNot(psi, epsilon), self.__interpreter.removeNot(mu, epsilon), lambdaEpsilon)[1]
+            print("psiPrime2:", psiPrime)
             return (lambdaEpsilon, psiPrime & mu)
         elif self.__interpreter.sat(psiPrime & mu):
             return (dStar, psiPrime & mu)
         else:
+            print("else")
             lambdaEpsilon = dStar + epsilon
             if (self._onlyOneSolution):
-                psiPrime = self.expandLiteral(psiPrime, lambdaEpsilon)
+                psiPrime = self.__interpreter.optimizeCoupleWithLimit(self.__interpreter.removeNot(psi, epsilon), self.__interpreter.removeNot(mu, epsilon), lambdaEpsilon)[1]
             else:
                 psiPrime = self.__expand(psi, lambdaEpsilon)
             print("psiPrime2:", psiPrime)
             return(dStar, psiPrime & mu)
     
     def __executeConstraint(self, phi: Formula, mu: Formula) -> tuple[Fraction, Formula]:
-        #print("phi ", phi)
-        #print("mu ", mu)
         return self.__interpreter.optimizeCouple(phi, mu)
     
     def __convertExplicit(self, phi: Formula) -> Formula:
@@ -277,39 +277,3 @@ class Revision:
         expandConstraint = And(*constraints)
 
         return self.__projector.projectOn(expandConstraint, yVariables.keys())
-        
-    def expandLiteral(self, psi: Formula, lambdaEpsilon: Fraction) -> Formula:
-
-        constraints = set()
-
-        for unary in psi.children:
-            if isinstance(unary, Not):
-                constraints.add(Not(self.__expandSingleLc(unary.children.clone(), -lambdaEpsilon)))
-            else:
-                constraints.add(self.__expandSingleLc(unary.clone(), lambdaEpsilon))
-
-        return And(*constraints)
-
-    def __expandSingleLc(self, lc: LinearConstraint, lambdaEpsilon):
-
-        if not isinstance(list(lc.variables.keys())[0], RealVariable):
-            lambdaEpsilon = 1
-
-        match lc.operator:
-            case ConstraintOperator.LEQ:
-                lc.bound += lambdaEpsilon
-            case ConstraintOperator.GEQ:
-                lc.bound -= lambdaEpsilon
-            case ConstraintOperator.EQ:
-
-                geq = lc.clone()
-                geq.operator = ConstraintOperator.GEQ
-                geq.bound -= lambdaEpsilon
-
-                leq = lc.clone()
-                leq.operator = ConstraintOperator.LEQ
-                leq.bound += lambdaEpsilon
-                
-                return And(geq, leq)
-            
-        return lc

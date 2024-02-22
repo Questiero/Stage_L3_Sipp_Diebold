@@ -27,13 +27,13 @@ class PropositionalVariable(Constraint):
         '''
         raise NotImplementedError("getVariables cannot be use here, the Formula contains a PropositionalVariable")
     
-    def getAdherence(self, var : Variable):
+    def getAdherence(self, var : Variable = None):
         '''
         Not applicable here
         '''
         raise NotImplementedError("getAdherence cannot be use here, the Formula contains a PropositionalVariable")
 
-    def _getAdherenceNeg(self, var : Variable):
+    def _getAdherenceNeg(self, var : Variable = None):
         '''
         Not applicable here
         '''

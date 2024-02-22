@@ -141,7 +141,7 @@ class LinearConstraint(Constraint):
         
         return self.variables.keys()
     
-    def getAdherence(self, var : Variable) -> list[list[Constraint]]:
+    def getAdherence(self, var : Variable = None) -> list[list[Constraint]]:
         '''
         Returns a 2D list containing all the constraints of the adherence of 
         the Formula, in Disjunctive Normal Form.
@@ -158,7 +158,7 @@ class LinearConstraint(Constraint):
         '''
         return [[self]]
 
-    def _getAdherenceNeg(self, var : Variable)  -> list[list[Constraint]]:
+    def _getAdherenceNeg(self, var : Variable = None)  -> list[list[Constraint]]:
         '''
         Protected method used in the algorithm to recursivly determine the
         constraints of the adherence of the Formula, used when a Negation is in play
@@ -177,7 +177,8 @@ class LinearConstraint(Constraint):
         copyConstrainte = self.clone()
         for variable in copyConstrainte.variables.keys():
             copyConstrainte.variables[variable] *= -1
-        copyConstrainte.variables[var] = Fraction(1,1)
+        if var is not None:
+            copyConstrainte.variables[var] = Fraction(1,1)
         copyConstrainte.bound *= -1
         res = [[copyConstrainte]]
 

@@ -62,7 +62,7 @@ class Formula(ABC):
         pass
 
     @abstractmethod
-    def getAdherence(self, var : Variable) -> list[list[Formula]]:
+    def getAdherence(self, var : Variable = None) -> list[list[Formula]]:
         '''
         Returns a 2D list containing all the constraints of the adherence of 
         the Formula, in Disjunctive Normal Form.
@@ -81,7 +81,7 @@ class Formula(ABC):
         pass
 
     @abstractmethod
-    def _getAdherenceNeg(self, var : Variable)  -> list[list[Formula]]:
+    def _getAdherenceNeg(self, var : Variable = None)  -> list[list[Formula]]:
         '''
         Protected method used in the algorithm to recursivly determine the
         constraints of the adherence of the Formula, used when a Negation is in play

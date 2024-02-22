@@ -101,7 +101,7 @@ class BinaryFormula(Formula):
 
         return self.__class__(childrenModified[0], childrenModified[1])
         
-    def getAdherence(self, var : Variable) -> list[list[Constraint]]:
+    def getAdherence(self, var : Variable = None) -> list[list[Constraint]]:
         '''
         Returns a 2D list containing all the constraints of the adherence of 
         the Formula, in Disjunctive Normal Form.
@@ -118,7 +118,7 @@ class BinaryFormula(Formula):
         '''
         return self._eliminate().getAdherence(var)
 
-    def _getAdherenceNeg(self, var : Variable)  -> list[list[Constraint]]:
+    def _getAdherenceNeg(self, var : Variable = None)  -> list[list[Constraint]]:
         '''
         Protected method used in the algorithm to recursivly determine the
         constraints of the adherence of the Formula, used when a Negation is in play
