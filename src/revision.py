@@ -15,6 +15,8 @@ from .projector import Projector
 from .variable import IntegerVariable, RealVariable
 
 from fractions import Fraction
+from tqdm import tqdm
+import time
 
 import math
 
@@ -71,6 +73,8 @@ class Revision:
             Result of the knowledge revison of \(\psi\) by \(\mu\).
         """
 
+        timeStart = time.perf_counter()
+
         if propToInt is None:
             propToInt = dict()
 
@@ -87,78 +91,95 @@ class Revision:
 
                 weights[intVar] = weights[var]
 
-        psiDNF, muDNF = psi.toPCMLC(propToInt).toLessOrEqConstraint().toDNF(), mu.toPCMLC(propToInt).toLessOrEqConstraint().toDNF()
-                
-        return self.__executeDNF(self.__convertExplicit(psiDNF), self.__convertExplicit(muDNF))
+        print("")
+        print("Transforming Psi in DNF form")
+        psiDNF = psi.toPCMLC(propToInt).toLessOrEqConstraint().toDNF()
+
+        print("")
+        print("Transforming Mu in DNF form")
+        muDNF = mu.toPCMLC(propToInt).toLessOrEqConstraint().toDNF()
+
+        res = self.__executeDNF(self.__convertExplicit(psiDNF), self.__convertExplicit(muDNF))
+
+        print("")
+        print(f"Solution found in {int((time.perf_counter()-timeStart)//60)}m{(time.perf_counter()-timeStart)%60:0.3f}s with distance of {res[0]}:")
+        print(res[1])
+        print("")
+
+        return res
         
     def __executeDNF(self, psi: Formula, mu: Formula) -> tuple[Fraction, Formula]:
         
         res = None
         disRes = None
 
-        satPsi = {miniPsi for miniPsi in psi.children if self.__interpreter.sat(miniPsi)}
-        satMu = {miniMu for miniMu in mu.children if self.__interpreter.sat(miniMu)}
+        print("")
+        satPsi = set()
+        for miniPsi in tqdm(psi.children, "Testing satisfiability of each child of Psi"):
+            if self.__interpreter.sat(miniPsi):
+                satPsi.add(miniPsi)
 
+        print(f"{len(satPsi)} satisfiable children of Psi found")
+
+        print("")
+        satMu = set()
+        for miniMu in tqdm(mu.children, "Testing satisfiability of each child of Mu"):
+            if self.__interpreter.sat(miniMu):
+                satMu.add(miniMu)
+
+        print(f"{len(satMu)} satisfiable children of Psi found")
+
+        maxIter = len(satPsi)*len(satMu)
+        print("")
+        print(f"{maxIter} combinations of conjunctions found")
+
+        print("")
         if(self._onlyOneSolution):
             
-            maxIter = len(satPsi)*len(satMu)
-            i = 1
-            print(i, "/", maxIter)
-
-            for minipsi in satPsi:
-                for miniMu in satMu:
+            with tqdm(total=maxIter) as pbar:
+                for minipsi in satPsi:
+                    for miniMu in satMu:
                     
-                    if (i%500==0):
-                        print(i, "/", maxIter)
-                    i += 1
+                        lit = self.__executeLiteral(minipsi, miniMu)
 
-                    # print("----")
-                    # print("miniPsi:", minipsi)
-                    # print("miniMu:", miniMu)
-                    lit = self.__executeLiteral(minipsi, miniMu)
-                    # print(str(lit[0]) + ";", lit[1])
-                    # print(str(lit[0]) + ";", self.__interpreter.sat(lit[1]))
+                        if self.__interpreter.sat(lit[1]):
+                            if not (lit[0] is None):
+                                if (disRes is None):
+                                    disRes = lit[0]
+                                    res = lit[1]
+                                elif (disRes > lit[0]):
+                                    disRes = lit[0]
+                                    res = lit[1]
+                            else:
+                                if (disRes is None) & (res is None):
+                                    res = lit[1]
 
-                    if self.__interpreter.sat(lit[1]):
-                        if not (lit[0] is None):
-                            if (disRes is None):
-                                disRes = lit[0]
-                                res = lit[1]
-                            elif (disRes > lit[0]):
-                                disRes = lit[0]
-                                res = lit[1]
-                        else:
-                            if (disRes is None) & (res is None):
-                                res = lit[1]
+                        pbar.update(1)
 
         else:
 
             setRes = set()
             
-            maxIter = len(psi.children)*len(mu.children)
-            i = 1
-            for minipsi in psi.children:
-                for miniMu in mu.children:
-                    
-                    print(i, "/", maxIter)
-                    i += 1
-                    
-                    lit = self.__executeLiteral(minipsi, miniMu)
-                    # print("---")
-                    # print(str(lit[0]) + "; " + str(lit[1]))
-                    
-                    if not (lit[0] is None):
-                        if (disRes is None):
-                            disRes = lit[0]
-                            setRes = {lit[1]}
-                        elif (disRes == lit[0]):
-                            setRes.add(lit[1])
-                        elif (disRes > lit[0]):
-                            disRes = lit[0]
-                            setRes = {lit[1]}
-                    else:
-                        if (disRes is None):
-                            setRes.add(lit[1])
+            with tqdm(total=maxIter) as pbar:
+                for minipsi in satPsi:
+                    for miniMu in satMu:
+                                            
+                        lit = self.__executeLiteral(minipsi, miniMu)
+                        
+                        if not (lit[0] is None):
+                            if (disRes is None):
+                                disRes = lit[0]
+                                setRes = {lit[1]}
+                            elif (disRes == lit[0]):
+                                setRes.add(lit[1])
+                            elif (disRes > lit[0]):
+                                disRes = lit[0]
+                                setRes = {lit[1]}
+                        else:
+                            if (disRes is None):
+                                setRes.add(lit[1])
+
+                        pbar.update(1)
             
             res = Or(*setRes).toDNF()
 
