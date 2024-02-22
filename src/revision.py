@@ -102,7 +102,7 @@ class Revision:
         res = self.__executeDNF(self.__convertExplicit(psiDNF), self.__convertExplicit(muDNF))
 
         print("")
-        print(self.getTime(), f"Solution found with distance of {res[0]}")
+        print(self.getTime(), f"Solution found with distance of {res[0]}:")
         print(res[1])
         print("")
 
