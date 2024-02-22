@@ -73,7 +73,7 @@ class Revision:
             Result of the knowledge revison of \(\psi\) by \(\mu\).
         """
 
-        timeStart = time.perf_counter()
+        self.timeStart = time.perf_counter()
 
         if propToInt is None:
             propToInt = dict()
@@ -92,17 +92,17 @@ class Revision:
                 weights[intVar] = weights[var]
 
         print("")
-        print("Transforming Psi in DNF form")
+        print(self.getTime(), "Transforming Psi in DNF form")
         psiDNF = psi.toPCMLC(propToInt).toLessOrEqConstraint().toDNF()
 
         print("")
-        print("Transforming Mu in DNF form")
+        print(self.getTime(), "Transforming Mu in DNF form")
         muDNF = mu.toPCMLC(propToInt).toLessOrEqConstraint().toDNF()
 
         res = self.__executeDNF(self.__convertExplicit(psiDNF), self.__convertExplicit(muDNF))
 
         print("")
-        print(f"Solution found in {int((time.perf_counter()-timeStart)//60)}m{(time.perf_counter()-timeStart)%60:0.3f}s with distance of {res[0]}:")
+        print(self.getTime(), f"Solution found with distance of {res[0]}")
         print(res[1])
         print("")
 
@@ -122,7 +122,7 @@ class Revision:
         if len(satPsi) == 0:
             raise(AttributeError("Psi is not satisfiable"))
 
-        print(f"{len(satPsi)} satisfiable children of Psi found")
+        print(self.getTime(), f"{len(satPsi)} satisfiable children of Psi found")
 
         print("")
         satMu = set()
@@ -133,11 +133,11 @@ class Revision:
         if len(satMu) == 0:
             raise(AttributeError("Mu is not satisfiable"))
 
-        print(f"{len(satMu)} satisfiable children of Psi found")
+        print(self.getTime(), f"{len(satMu)} satisfiable children of Psi found")
 
         maxIter = len(satPsi)*len(satMu)
         print("")
-        print(f"{maxIter} combinations of conjunctions found")
+        print(self.getTime(), f"{maxIter} combinations of conjunctions found")
 
         if(self._onlyOneSolution):
             
@@ -303,3 +303,6 @@ class Revision:
         expandConstraint = And(*constraints)
 
         return self.__projector.projectOn(expandConstraint, yVariables.keys())
+    
+    def getTime(self):
+        return f"{int((time.perf_counter()-self.timeStart)//60)}m{(time.perf_counter()-self.timeStart)%60:0.3f}s"
