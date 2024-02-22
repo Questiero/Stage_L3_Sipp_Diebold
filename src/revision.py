@@ -112,12 +112,12 @@ class Revision:
                         print(i, "/", maxIter)
                     i += 1
 
-                    print("----")
+                    #print("----")
                     #print("miniPsi:", minipsi)
                     #print("miniMu:", miniMu)
                     lit = self.__executeLiteral(minipsi, miniMu)
                     #print(str(lit[0]) + ";", lit[1])
-                    print(str(lit[0]) + ";", self.__interpreter.sat(lit[1]))
+                    #print(str(lit[0]) + ";", self.__interpreter.sat(lit[1]))
 
                     if self.__interpreter.sat(lit[1]):
                         if not (lit[0] is None):
@@ -177,28 +177,28 @@ class Revision:
         else:
             lambdaEpsilon = epsilon * math.ceil(dStar / epsilon)
             
-        print(lambdaEpsilon, psiPrime)
+        #print(lambdaEpsilon, psiPrime)
         # fourth step: find psiPrime (only if not onlyOneSolution)
         if(not self._onlyOneSolution):
             psiPrime = self.__expand(psi, lambdaEpsilon)
     
         # fifth step
         if dStar % epsilon != 0:
-            print("dStar % epsilon != 0")
+            #print("dStar % epsilon != 0")
             if not self.__interpreter.sat(psiPrime & mu):
                 psiPrime = self.__interpreter.optimizeCoupleWithLimit(self.__interpreter.removeNot(psi, epsilon), self.__interpreter.removeNot(mu, epsilon), lambdaEpsilon)[1]
-            print("psiPrime2:", psiPrime)
+            #print("psiPrime2:", psiPrime)
             return (lambdaEpsilon, psiPrime & mu)
         elif self.__interpreter.sat(psiPrime & mu):
             return (dStar, psiPrime & mu)
         else:
-            print("else")
+            #print("else")
             lambdaEpsilon = dStar + epsilon
             if (self._onlyOneSolution):
                 psiPrime = self.__interpreter.optimizeCoupleWithLimit(self.__interpreter.removeNot(psi, epsilon), self.__interpreter.removeNot(mu, epsilon), lambdaEpsilon)[1]
             else:
                 psiPrime = self.__expand(psi, lambdaEpsilon)
-            print("psiPrime2:", psiPrime)
+            #print("psiPrime2:", psiPrime)
             return(dStar, psiPrime & mu)
     
     def __executeConstraint(self, phi: Formula, mu: Formula) -> tuple[Fraction, Formula]:
