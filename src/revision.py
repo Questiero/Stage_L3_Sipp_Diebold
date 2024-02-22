@@ -119,7 +119,13 @@ class Revision:
             if self.__interpreter.sat(miniPsi):
                 satPsi.add(miniPsi)
 
+        if len(satPsi) == 0:
+            raise(AttributeError("Psi is not satisfiable"))
+
         print(f"{len(satPsi)} satisfiable children of Psi found")
+
+        if len(satMu) == 0:
+            raise(AttributeError("Mu is not satisfiable"))
 
         print("")
         satMu = set()
