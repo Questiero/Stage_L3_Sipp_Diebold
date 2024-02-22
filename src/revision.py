@@ -115,7 +115,7 @@ class Revision:
 
         print("")
         satPsi = set()
-        for miniPsi in tqdm(psi.children, f"{self.getTime()} Testing satisfiability of each child of Psi"):
+        for miniPsi in tqdm(psi.children, desc=f"{self.getTime()} Testing satisfiability of each child of Psi"):
             if self.__interpreter.sat(miniPsi):
                 satPsi.add(miniPsi)
 
@@ -126,7 +126,7 @@ class Revision:
 
         print("")
         satMu = set()
-        for miniMu in tqdm(mu.children, f"{self.getTime()} Testing satisfiability of each child of Mu"):
+        for miniMu in tqdm(mu.children, desc=f"{self.getTime()} Testing satisfiability of each child of Mu"):
             if self.__interpreter.sat(miniMu):
                 satMu.add(miniMu)
 
