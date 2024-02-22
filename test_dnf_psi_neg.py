@@ -27,11 +27,6 @@ mu = (LinearConstraint("x + y >= 6") & LinearConstraint("5*x + y <= 25") & Linea
 rev = Revision(solver, discreteL1DistanceFunction(weights), simplifier, onlyOneSolution=False, projector=projector)
 res = rev.execute(psi, mu)
 
-print("-------")
-print(str(res[0]) + "; " + str(res[1]))
-
-print("Satisfiable ?", simplifier[0]._interpreter.sat(res[1].toLessOrEqConstraint().toDNF()))
-
 from src.formula.formulaDisplay import FormulaDisplay
 display = FormulaDisplay()
 display.display({psi.toLessOrEqConstraint() : 'blue', mu.toLessOrEqConstraint() : 'green', res[1].toLessOrEqConstraint() : 'red'}, [x,y])

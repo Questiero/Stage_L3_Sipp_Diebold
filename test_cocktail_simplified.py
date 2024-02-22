@@ -26,8 +26,3 @@ mu = LinearConstraint("vol_alcool = 0") & cd
 
 rev = Revision(solver, discreteL1DistanceFunction(weights), simplifier, onlyOneSolution=False, projector=projector)
 res = rev.execute(psi, mu)
-
-print("-------")
-print(str(res[0]) + "; " + str(res[1]))
-
-print("Satisfiable ?", simplifier[0]._interpreter.sat(res[1].toLessOrEqConstraint().toDNF()))
