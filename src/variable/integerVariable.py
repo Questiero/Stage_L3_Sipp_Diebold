@@ -22,33 +22,6 @@ class IntegerVariable(Variable):
         The name of the `src.variable.integerVariable.IntegerVariable`.
     """
 
-    def haveBound(self) -> tuple[bool, bool]:
-        """
-        Method use to say if the variable have lower and upper bound
-
-        Returns
-        -------
-        res: 
-            true,true if the variable have a lower and an upper bound
-            true, false if the variable have a lower and not an upper bound
-            etc...
-        """
-
-        return False, False
-
-    def getBounds(self) -> tuple[Fraction, Fraction]:
-        """
-        Method use to known bounds of the variables
-
-        Returns
-        -------
-        res: 
-            can be None, None if the variable have no limits,
-            or Fraction, Fraction.
-        """
-
-        return None, None
-
     def isInteger(self) -> bool:
         """
         Method used to known if the variable must have intergers values.

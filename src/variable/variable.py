@@ -24,11 +24,12 @@ class Variable(ABC):
     #: Name of the variable, by which they are identified.
     name : str = ""
 
-    def __init__(self, name):
+    def __init__(self, name, lower = None, upper = None):
         self.name = name
+        self.bounds = (lower, upper)
 
     @classmethod
-    def declareAnonymous(cls, ending: str = None) -> Variable:
+    def declareAnonymous(cls, ending: str = None, lower = None, upper = None) -> Variable:
         """
         Class method, allowing the user to declare an anonymous variable meant to be used inside algorithms without risking any
         naming conflit with the standardly defined variables.\n
@@ -67,10 +68,11 @@ class Variable(ABC):
         if ending:
             name += ending
         v.name = name
+        v.bounds = (lower, upper)
         return v 
 
     @classmethod
-    def declare(cls, name : str) -> Variable:
+    def declare(cls, name : str, lower = None, upper = None) -> Variable:
         """
         Class method used to declare a new variable based on its name.
         A Variable name should respect the following naming conventions:
@@ -95,10 +97,10 @@ class Variable(ABC):
 
         from .variableManager import VariableManager
 
-        return VariableManager.add(cls(name))
+        return VariableManager.add(cls(name, lower, upper))
 
     @classmethod
-    def declareBulk(cls, *lname: str) -> list[Variable]:
+    def declareBulk(cls, *lname: str, lower = None, upper = None) -> list[Variable]:
         """
         Class method used to declare multiple new instances of `src.variable.variable.Variable` at the same time.
         A Variable name should respect the following naming conventions:
@@ -125,24 +127,9 @@ class Variable(ABC):
 
         vars = []
         for name in lname:
-            vars.append(VariableManager.add(cls(name)))
+            vars.append(VariableManager.add(cls(name, lower, upper)))
         return vars
 
-    @abstractmethod
-    def haveBound(self) -> tuple[bool, bool]:
-        """
-        Method use to say if the variable have lower and upper bound
-
-        Returns
-        -------
-        res: 
-            true,true if the variable have a lower and an upper bound
-            true, false if the variable have a lower and not an upper bound
-            etc...
-        """
-        pass
-
-    @abstractmethod
     def getBounds(self) -> tuple[Fraction, Fraction]:
         """
         Method use to known bounds of the variables
@@ -153,7 +140,7 @@ class Variable(ABC):
             can be None, None if the variable have no limits,
             or Fraction, Fraction.
         """
-        pass
+        return self.bounds
     
     @abstractmethod
     def isInteger(self) -> bool:

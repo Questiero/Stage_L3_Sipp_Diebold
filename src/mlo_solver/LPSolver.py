@@ -51,14 +51,14 @@ class LPSolver(MLOSolver):
             if(variables[i].isInteger()): 
                 lp_solve.lpsolve('set_int', lp,i+1, 1)
 
-            haveBoundL, haveBoundR = variables[i].haveBound()
-            if(not haveBoundL and not haveBoundR):
+            getBoundL, getBoundR = variables[i].getBounds()
+            if(not getBoundL and not getBoundR):
                 lp_solve.lpsolve('set_unbounded', lp, i+1)
             else:
                 lower, upper = variables[i].getBounds()
                 if(lower == None): lower = -1e30
                 if(upper == None): upper = 1e30
-                lp_solve.lpsolve('set_bounds', lp, i+1)
+                lp_solve.lpsolve('set_bounds', lp, i+1, float(lower), float(upper))
 
         lp_solve.lpsolve('set_obj', lp, objectif)
         for constraint in constraints:

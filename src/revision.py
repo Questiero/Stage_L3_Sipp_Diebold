@@ -145,7 +145,9 @@ class Revision:
                 for miniPsi in satPsi:
                     for miniMu in satMu:
 
-                        lit = self.__executeLiteral(minipsi, miniMu)
+                        # print("-----------------")
+                        # print("miniPsi:", miniPsi)
+                        # print("miniMu:", miniMu)
                         lit = self.__executeLiteral(miniPsi, miniMu)
 
                         if self.__interpreter.sat(lit[1]):

@@ -54,8 +54,8 @@ class ScipySolver(MLOSolver) :
             lower, upper = variable.getBounds()
             if(lower == None): lower = -np.inf
             if(upper == None): upper = np.inf
-            boundsLower.append(lower)
-            boundsUpper.append(upper)
+            boundsLower.append(float(lower))
+            boundsUpper.append(float(upper))
         tab = []
         limitInf = []
         limitUp = []
