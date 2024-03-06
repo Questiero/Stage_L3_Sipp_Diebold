@@ -24,12 +24,12 @@ class Variable(ABC):
     #: Name of the variable, by which they are identified.
     name : str = ""
 
-    def __init__(self, name, lower = None, upper = None):
+    def __init__(self, name, lowerBound = None, upperBound = None):
         self.name = name
-        self.bounds = (lower, upper)
+        self.bounds = (lowerBound, upperBound)
 
     @classmethod
-    def declareAnonymous(cls, ending: str = None, lower = None, upper = None) -> Variable:
+    def declareAnonymous(cls, ending: str = None, lowerBound = None, upperBound = None) -> Variable:
         """
         Class method, allowing the user to declare an anonymous variable meant to be used inside algorithms without risking any
         naming conflit with the standardly defined variables.\n
@@ -68,11 +68,11 @@ class Variable(ABC):
         if ending:
             name += ending
         v.name = name
-        v.bounds = (lower, upper)
+        v.bounds = (lowerBound, upperBound)
         return v 
 
     @classmethod
-    def declare(cls, name : str, lower = None, upper = None) -> Variable:
+    def declare(cls, name : str, lowerBound = None, upperBound = None) -> Variable:
         """
         Class method used to declare a new variable based on its name.
         A Variable name should respect the following naming conventions:
@@ -97,10 +97,10 @@ class Variable(ABC):
 
         from .variableManager import VariableManager
 
-        return VariableManager.add(cls(name, lower, upper))
+        return VariableManager.add(cls(name, lowerBound, upperBound))
 
     @classmethod
-    def declareBulk(cls, *lname: str, lower = None, upper = None) -> list[Variable]:
+    def declareBulk(cls, *lname: str, lowerBound = None, upperBound = None) -> list[Variable]:
         """
         Class method used to declare multiple new instances of `src.variable.variable.Variable` at the same time.
         A Variable name should respect the following naming conventions:
@@ -127,7 +127,7 @@ class Variable(ABC):
 
         vars = []
         for name in lname:
-            vars.append(VariableManager.add(cls(name, lower, upper)))
+            vars.append(VariableManager.add(cls(name, lowerBound, upperBound)))
         return vars
 
     def getBounds(self) -> tuple[Fraction, Fraction]:
