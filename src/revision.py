@@ -142,10 +142,11 @@ class Revision:
         if(self._onlyOneSolution):
             
             with tqdm(total=maxIter, desc=f"{self.getTime()} Revision of every combination", mininterval=0.5) as pbar:
-                for minipsi in satPsi:
+                for miniPsi in satPsi:
                     for miniMu in satMu:
-                    
+
                         lit = self.__executeLiteral(minipsi, miniMu)
+                        lit = self.__executeLiteral(miniPsi, miniMu)
 
                         if self.__interpreter.sat(lit[1]):
                             if not (lit[0] is None):
@@ -166,10 +167,10 @@ class Revision:
             setRes = set()
             
             with tqdm(total=maxIter, desc="Revision of every combination", mininterval=0.5) as pbar:
-                for minipsi in satPsi:
+                for miniPsi in satPsi:
                     for miniMu in satMu:
                                             
-                        lit = self.__executeLiteral(minipsi, miniMu)
+                        lit = self.__executeLiteral(miniPsi, miniMu)
                         
                         if not (lit[0] is None):
                             if (disRes is None):
@@ -252,16 +253,16 @@ class Revision:
         constraints = list()
 
         # Create x in M(psi) constraints and change variables
-        for minipsi in psi.children:
-            if isinstance(minipsi, Not):
-                const = minipsi.children.clone()
+        for miniPsi in psi.children:
+            if isinstance(miniPsi, Not):
+                const = miniPsi.children.clone()
                 iterVar = const.variables.copy()
                 for key in iterVar:
                     const.variables[yVariables[key]] = const.variables[key]
                     del const.variables[key]
                 constraints.append(Not(const))
             else:
-                const = minipsi.clone()
+                const = miniPsi.clone()
                 iterVar = const.variables.copy()
                 for key in iterVar:
                     const.variables[yVariables[key]] = const.variables[key]
