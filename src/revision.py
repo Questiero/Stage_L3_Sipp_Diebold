@@ -52,7 +52,20 @@ class Revision:
 
         self.__projector = projector
 
-    def execute(self, psi : Formula, mu : Formula, propToInt : dict[PropositionalVariable, IntegerVariable] = None) -> tuple[Fraction, Formula]:
+    def preload(self):
+
+        weights = self.__distance.getWeights()
+        self.boolToInt = dict()
+
+        for var in weights.copy().keys():
+            if isinstance(var, PropositionalVariable):
+
+                intVar = IntegerVariable.declare("b2i_" + var.nameVariable)
+
+                self.boolToInt[var] = intVar
+                weights[intVar] = weights[var]
+
+    def execute(self, psi : Formula, mu : Formula) -> tuple[Fraction, Formula]:
         r"""
         Execute the revision of \(\psi\) by \(\mu\).
 
@@ -75,29 +88,13 @@ class Revision:
 
         self.__timeStart = time.perf_counter()
 
-        if propToInt is None:
-            propToInt = dict()
-
-        weights = self.__distance.getWeights()
-
-        for var in weights.copy().keys():
-            if isinstance(var, PropositionalVariable):
-
-                if propToInt.get(var) is None:
-                    tempVar = IntegerVariable.declareAnonymous("e_" + var.nameVariable)
-                    propToInt[var] = tempVar
-
-                intVar = propToInt[var]
-
-                weights[intVar] = weights[var]
-
         print("")
         print(self.getTime(), "Transforming Psi in DNF form")
-        psiDNF = psi.toPCMLC(propToInt).toLessOrEqConstraint().toDNF()
+        psiDNF = psi.toPCMLC(self.boolToInt).toLessOrEqConstraint().toDNF()
 
         print("")
         print(self.getTime(), "Transforming Mu in DNF form")
-        muDNF = mu.toPCMLC(propToInt).toLessOrEqConstraint().toDNF()
+        muDNF = mu.toPCMLC(self.boolToInt).toLessOrEqConstraint().toDNF()
 
         res = self.__executeDNF(self.__convertExplicit(psiDNF), self.__convertExplicit(muDNF))
 

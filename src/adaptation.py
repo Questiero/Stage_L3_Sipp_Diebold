@@ -16,16 +16,10 @@ class Adaptation:
     def __init__(self, solverInit : MLOSolver, distance : DistanceFunction, simplifiers : list[Simplificator] = [], onlyOneSolution: bool = Constants.ONLY_ONE_SOLUTION, projector: Projector = None) -> None:        
         
         self.__revision = Revision(solverInit, distance, simplifiers, onlyOneSolution, projector)
-        self.__domainKnowledge = set()
 
-    def addToDK(self, knowledge : Formula):
+    def preload(self):
+        self.__revision.preload()
 
-        self.__domainKnowledge.add(knowledge)
+    def execute(self, psi : Formula, mu : Formula, dk : Formula):
 
-    def removeFromDK(self, knowledge : Formula):
-
-        self.__domainKnowledge.pop(knowledge)
-
-    def execute(self, psi : Formula, mu : Formula):
-
-        return self.__revision.execute(And(*{psi}.union(self.__domainKnowledge)), And(*{mu}.union(self.__domainKnowledge)))
+        return self.__revision.execute(psi & dk, mu & dk)
