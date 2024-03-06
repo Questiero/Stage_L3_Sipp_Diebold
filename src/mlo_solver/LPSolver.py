@@ -47,6 +47,8 @@ class LPSolver(MLOSolver):
         lp = lp_solve.lpsolve('make_lp', 0, len(variables))
         lp_solve.lpsolve('set_verbose', lp, lp_solve.IMPORTANT)
 
+        infinite = lp_solve.lpsolve("get_infinite", lp)
+
         for i in range(0,len(variables)):
             if(variables[i].isInteger()): 
                 lp_solve.lpsolve('set_int', lp,i+1, 1)
@@ -56,8 +58,8 @@ class LPSolver(MLOSolver):
                 lp_solve.lpsolve('set_unbounded', lp, i+1)
             else:
                 lower, upper = variables[i].getBounds()
-                if(lower == None): lower = -1e30
-                if(upper == None): upper = 1e30
+                if(lower == None): lower = -infinite
+                if(upper == None): upper = infinite
                 lp_solve.lpsolve('set_bounds', lp, i+1, float(lower), float(upper))
 
         lp_solve.lpsolve('set_obj', lp, objectif)
