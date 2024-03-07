@@ -60,7 +60,7 @@ class Revision:
         for var in weights.copy().keys():
             if isinstance(var, PropositionalVariable):
 
-                intVar = IntegerVariable.declare("b2i_" + var.nameVariable)
+                intVar = IntegerVariable.declare("b2i_" + var.nameVariable, lowerBound=Fraction(0), upperBound=Fraction(1))
 
                 self.boolToInt[var] = intVar
                 weights[intVar] = weights[var]
