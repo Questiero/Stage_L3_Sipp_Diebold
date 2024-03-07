@@ -1,5 +1,5 @@
-from src.formula import LinearConstraint, Equivalence, Implication, Xor, PropositionalVariable
-from src.mlo_solver import LPSolverRounded, ScipySolverRounded
+from src.formula import LinearConstraint, PropositionalVariable
+from src.mlo_solver import  ScipySolverRounded
 from src import Adaptation
 from src.variable import RealVariable, IntegerVariable
 from src.distance import discreteL1DistanceFunction
