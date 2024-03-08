@@ -5,7 +5,7 @@ Main class of the module, allowing the user to make the knowledge revision betwe
 
 from __future__ import annotations
 
-from .formula import Formula, Or, And, UnaryFormula, NullaryFormula, LinearConstraint, Not, ConstraintOperator, PropositionalVariable
+from .formula import Formula, Or, And, UnaryFormula, NullaryFormula, LinearConstraint, Not, ConstraintOperator, PropositionalVariable, EnumeratedType
 from .formulaInterpreter import FormulaInterpreter
 from .mlo_solver import MLOSolver
 from .distance import DistanceFunction
@@ -43,12 +43,15 @@ class Revision:
     
     __distance : DistanceFunction
     __interpreter : FormulaInterpreter
+    __e2bConstraints: set[Formula]
     _onlyOneSolution: bool
 
     def __init__(self, solverInit : MLOSolver, distance : DistanceFunction, simplifiers : list[Simplificator] = [], onlyOneSolution: bool = Constants.ONLY_ONE_SOLUTION, projector: Projector = None) -> None:        
         self.__distance = distance 
         self.__interpreter = FormulaInterpreter(solverInit, distance, simplifiers)
         self._onlyOneSolution = onlyOneSolution
+
+        self.__e2bConstraints = set()
 
         self.__projector = projector
 
@@ -58,12 +61,24 @@ class Revision:
         self.boolToInt = dict()
 
         for var in weights.copy().keys():
+
             if isinstance(var, PropositionalVariable):
+                self.__b2iPreload(var, weights)
 
-                intVar = IntegerVariable.declare("b2i_" + var.nameVariable, lowerBound=Fraction(0), upperBound=Fraction(1))
+            if isinstance(var, EnumeratedType):
 
-                self.boolToInt[var] = intVar
-                weights[intVar] = weights[var]
+                self.__e2bConstraints.add(var.generateConstraints())
+
+                for value in var.values.values():
+                    weights[value] = weights[var]
+                    self.__b2iPreload(value, weights)
+
+    def __b2iPreload(self, var, weights):
+
+        intVar = IntegerVariable.declare("b2i_" + var.nameVariable, lowerBound=Fraction(0), upperBound=Fraction(1))
+
+        self.boolToInt[var] = intVar
+        weights[intVar] = weights[var]
 
     def execute(self, psi : Formula, mu : Formula) -> tuple[Fraction, Formula]:
         r"""
@@ -90,11 +105,11 @@ class Revision:
 
         print("")
         print(self.getTime(), "Transforming Psi in DNF form")
-        psiDNF = psi.toPCMLC(self.boolToInt).toLessOrEqConstraint().toDNF()
+        psiDNF = And(psi, And(*self.__e2bConstraints)).toPCMLC(self.boolToInt).toLessOrEqConstraint().toDNF()
 
         print("")
         print(self.getTime(), "Transforming Mu in DNF form")
-        muDNF = mu.toPCMLC(self.boolToInt).toLessOrEqConstraint().toDNF()
+        muDNF = And(mu, And(*self.__e2bConstraints)).toPCMLC(self.boolToInt).toLessOrEqConstraint().toDNF()
 
         res = self.__executeDNF(self.__convertExplicit(psiDNF), self.__convertExplicit(muDNF))
 
