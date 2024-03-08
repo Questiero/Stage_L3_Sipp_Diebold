@@ -103,13 +103,17 @@ class Revision:
 
         self.__timeStart = time.perf_counter()
 
+        if len(self.__e2bConstraints) >= 1:
+            psi &= And(*self.__e2bConstraints)
+            mu &= And(*self.__e2bConstraints)
+
         print("")
         print(self.getTime(), "Transforming Psi in DNF form")
-        psiDNF = And(psi, And(*self.__e2bConstraints)).toPCMLC(self.boolToInt).toLessOrEqConstraint().toDNF()
+        psiDNF = psi.toPCMLC(self.boolToInt).toLessOrEqConstraint().toDNF()
 
         print("")
         print(self.getTime(), "Transforming Mu in DNF form")
-        muDNF = And(mu, And(*self.__e2bConstraints)).toPCMLC(self.boolToInt).toLessOrEqConstraint().toDNF()
+        muDNF = psi.toPCMLC(self.boolToInt).toLessOrEqConstraint().toDNF()
 
         res = self.__executeDNF(self.__convertExplicit(psiDNF), self.__convertExplicit(muDNF))
 

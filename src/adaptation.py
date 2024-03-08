@@ -20,6 +20,6 @@ class Adaptation:
     def preload(self):
         self.__revision.preload()
 
-    def execute(self, psi : Formula, mu : Formula, dk : Formula):
+    def execute(self, x_src : Formula, y_trgt : Formula, dk : Formula):
 
-        return self.__revision.execute(psi & dk, mu & dk)
+        return self.__revision.execute(x_src & dk, y_trgt & dk)
