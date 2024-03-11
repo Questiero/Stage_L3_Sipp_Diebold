@@ -108,11 +108,11 @@ dk &=  (PropositionalVariable("milkshake") >> PropositionalVariable("dessert"))\
      & (PropositionalVariable("dessert") >> ~PropositionalVariable("bitter"))
 
 # Règle...
-dk &=  (PropositionalVariable("banana") // ~LinearConstraint(f"banana_g <= 0"))\
-     & (PropositionalVariable("kiwi") // ~LinearConstraint(f"kiwi_g <= 0"))\
-     & (PropositionalVariable("cowMilk") // ~LinearConstraint(f"cowMilk_g <= 0"))\
-     & (PropositionalVariable("soyMilk") // ~LinearConstraint(f"soyMilk_g <= 0"))\
-     & (PropositionalVariable("almondMilk") // ~LinearConstraint(f"almondMilk_g <= 0"))\
+dk &=  (PropositionalVariable("banana") // ~LinearConstraint("banana_g <= 0"))\
+     & (PropositionalVariable("kiwi") // ~LinearConstraint("kiwi_g <= 0"))\
+     & (PropositionalVariable("cowMilk") // ~LinearConstraint("cowMilk_g <= 0"))\
+     & (PropositionalVariable("soyMilk") // ~LinearConstraint("soyMilk_g <= 0"))\
+     & (PropositionalVariable("almondMilk") // ~LinearConstraint("almondMilk_g <= 0"))\
      & (PropositionalVariable("granulatedSugar") // ~LinearConstraint("granulatedSugar_g <= 0"))\
      & (PropositionalVariable("vanillaSugar") // ~LinearConstraint("vanillaSugar_g <= 0"))\
      & (PropositionalVariable("iceCube") // ~LinearConstraint("iceCube_g <= 0"))\
