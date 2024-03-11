@@ -68,16 +68,16 @@ adaptator.preload()
 """
 
 # Règle...
-DK =  PropositionalVariable("banana") >> PropositionalVariable("fruit")\
+dk =  PropositionalVariable("banana") >> PropositionalVariable("fruit")\
      & (PropositionalVariable("kiwi") >> PropositionalVariable("fruit"))
 
 # Règle...
-DK &=  LinearConstraint("fruit_g - banana_g - kiwi_g = 0")\
+dk &=  LinearConstraint("fruit_g - banana_g - kiwi_g = 0")\
      & LinearConstraint("food_g - fruit_g - milk_g - granulatedSugar_g - iceCube_g - vanillaSugar_g = 0")\
      & LinearConstraint("milk_g - almondMilk_g - cowMilk_g - soyMilk_g = 0")
 
 # Règle...
-DK &=  LinearConstraint("banana_g - 115 * banana_u = 0")\
+dk &=  LinearConstraint("banana_g - 115 * banana_u = 0")\
      & LinearConstraint("cowMilk_g - 1030 * cowMilk_L = 0")\
      & LinearConstraint("soyMilk_g - 1030 * soyMilk_L = 0")\
      & LinearConstraint("almondMilk_g - 1030 * almondMilk_L = 0")\
@@ -87,7 +87,7 @@ DK &=  LinearConstraint("banana_g - 115 * banana_u = 0")\
      & LinearConstraint("iceCube_g - 24.759 * iceCube_u = 0")
 
 # Règle...
-DK &= LinearConstraint("sweeteningPower_g  - granulatedSugar_g\
+dk &= LinearConstraint("sweeteningPower_g  - granulatedSugar_g\
                                            - 0.158 * banana_g\
                                            - 0.0899 * kiwi_g\
                                            - 0.98 * vanillaSugar_g\
@@ -96,19 +96,19 @@ DK &= LinearConstraint("sweeteningPower_g  - granulatedSugar_g\
                                            - 0.04 * almondMilk_g = 0")
 
 # Règle...
-DK &=   ((PropositionalVariable("almondMilk") | PropositionalVariable("cowMilk") | PropositionalVariable("soyMilk"))\
+dk &=   ((PropositionalVariable("almondMilk") | PropositionalVariable("cowMilk") | PropositionalVariable("soyMilk"))\
      // PropositionalVariable("milk"))
 
 # Règle...
-DK &=   ((PropositionalVariable("cowMilk") | PropositionalVariable("soyMilk")) & PropositionalVariable("kiwi")) \
+dk &=   ((PropositionalVariable("cowMilk") | PropositionalVariable("soyMilk")) & PropositionalVariable("kiwi")) \
      >> PropositionalVariable("bitter")
 
 # Règle...
-DK &=  (PropositionalVariable("milkshake") >> PropositionalVariable("dessert"))\
+dk &=  (PropositionalVariable("milkshake") >> PropositionalVariable("dessert"))\
      & (PropositionalVariable("dessert") >> ~PropositionalVariable("bitter"))
 
 # Règle...
-DK &=  (PropositionalVariable("banana") // ~LinearConstraint("banana_g <= 0"))\
+dk &=  (PropositionalVariable("banana") // ~LinearConstraint("banana_g <= 0"))\
      & (PropositionalVariable("kiwi") // ~LinearConstraint("kiwi_g <= 0"))\
      & (PropositionalVariable("cowMilk") // ~LinearConstraint("cowMilk_g <= 0"))\
      & (PropositionalVariable("soyMilk") // ~LinearConstraint("soyMilk_g <= 0"))\
@@ -118,7 +118,7 @@ DK &=  (PropositionalVariable("banana") // ~LinearConstraint("banana_g <= 0"))\
      & (PropositionalVariable("iceCube") // ~LinearConstraint("iceCube_g <= 0"))\
 
 # Règle...
-DK &= LinearConstraint("nb_fruitTypes - b2i_banana - b2i_kiwi = 0")
+dk &= LinearConstraint("nb_fruitTypes - b2i_banana - b2i_kiwi = 0")
 
 """
      SPECIFICATION OF THE SOURCE CASE AND OF THE TARGET PROBLEM
@@ -138,4 +138,4 @@ x_src =  LinearConstraint("banana_u = 2")\
 # Target problem...
 y_trgt = PropositionalVariable("kiwi") & PropositionalVariable("milkshake")
 
-res = adaptator.execute(x_src, y_trgt, DK)
+res = adaptator.execute(x_src, y_trgt, dk)
