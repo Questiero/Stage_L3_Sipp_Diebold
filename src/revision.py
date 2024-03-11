@@ -113,7 +113,7 @@ class Revision:
 
         print("")
         print(self.getTime(), "Transforming Mu in DNF form")
-        muDNF = psi.toPCMLC(self.boolToInt).toLessOrEqConstraint().toDNF()
+        muDNF = mu.toPCMLC(self.boolToInt).toLessOrEqConstraint().toDNF()
 
         res = self.__executeDNF(self.__convertExplicit(psiDNF), self.__convertExplicit(muDNF))
 
