@@ -15,7 +15,7 @@ class EnumeratedType:
             self.name = name
             et = self.get(name)
             self.values = et.values
-        elif len(values) >= 2:
+        elif len(values) >= 3:
             self.values = {val:PropositionalVariable("e2b_" + name + ":" + val) for val in values}
             self.name = name
         else:
