@@ -14,7 +14,6 @@ from fractions import Fraction
 
 weights = {
     
-
     PropositionalVariable("almondMilk"): Fraction("1e-6"),
     PropositionalVariable("banana"): Fraction(1),
     PropositionalVariable("bitter"): Fraction("1e6"),
