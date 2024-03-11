@@ -6,6 +6,7 @@ class EnumeratedType:
 
     name: str
     values: dict[str, PropositionalVariable]
+
     __instances = {}
 
     def __init__(self, name: str, values: list[str] = None):
@@ -32,6 +33,8 @@ class EnumeratedType:
     
     @staticmethod
     def get(name: str):
+
+        # TODO check erreur
         return __class__.__instances[name]
 
     def __getitem__(self, key: str):
