@@ -21,7 +21,7 @@ class VariableManager:
     """
     
     instance = {}
-    __namePatern = "^[a-zA-Z]([a-zA-Z0-9_])*$"
+    __namePatern = "^[a-zA-Z]([a-zA-Z0-9:_])*$"
 
     @staticmethod
     def verify(name: str, cls: type[Variable]) -> None:

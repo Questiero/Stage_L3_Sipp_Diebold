@@ -11,7 +11,6 @@ from .revision import Revision
 class Adaptation:
 
     __revision : Revision
-    __domainKnowledge : set[Formula]
 
     def __init__(self, solverInit : MLOSolver, distance : DistanceFunction, simplifiers : list[Simplificator] = [], onlyOneSolution: bool = Constants.ONLY_ONE_SOLUTION, projector: Projector = None) -> None:        
         

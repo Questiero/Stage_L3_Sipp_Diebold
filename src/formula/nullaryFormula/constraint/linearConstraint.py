@@ -68,7 +68,7 @@ class LinearConstraint(Constraint):
 
         self.variables = {}
         # rule 1, only accepted characters 
-        unknownChar = re.match(r"[^\d a-zA-Z/\*+\-<>=\.]", string)
+        unknownChar = re.match(r"[^\d a-zA-Z/\:\*+\-<>=\.]", string)
         if unknownChar:
             raise SyntaxError(f"Unknown character {unknownChar}")
         

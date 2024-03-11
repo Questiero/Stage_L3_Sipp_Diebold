@@ -11,7 +11,7 @@ class EnumeratedType:
     def __init__(self, name: str, values: list[str] = None):
         
         #TODO verif au moins 2 éléments
-        self.values = {val:PropositionalVariable("e2b_" + name + "_" + val) for val in values}
+        self.values = {val:PropositionalVariable("e2b_" + name + ":" + val) for val in values}
         self.name = name
 
     @staticmethod

@@ -43,7 +43,7 @@ class FormulaManager():
         '''
         ParserElement.enablePackrat()
         
-        formWord = Word(srange("[a-zA-Z_]"), srange("[a-zA-Z0-9_]"))
+        formWord = Word(srange("[a-zA-Z_]"), srange("[a-zA-Z0-9_:]"))
 
         expr = infix_notation(formWord,
                               [(Literal(Constants.AND_PARSER_OPERATOR), 2, OpAssoc.LEFT),
