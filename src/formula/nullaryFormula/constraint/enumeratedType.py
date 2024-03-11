@@ -10,13 +10,21 @@ class EnumeratedType:
 
     def __init__(self, name: str, values: list[str] = None):
         
-        #TODO verif au moins 2 éléments
-        self.values = {val:PropositionalVariable("e2b_" + name + ":" + val) for val in values}
-        self.name = name
+        if values is None:
+            self.name = name
+            et = self.get(name)
+            self.values = et.values
+        elif len(values) >= 2:
+            self.values = {val:PropositionalVariable("e2b_" + name + ":" + val) for val in values}
+            self.name = name
+        else:
+            raise(AttributeError("values array should contain at least two elements"))
+
 
     @staticmethod
     def declare(name: str, values: list[str]):
         
+        #TODO Check if name already declared
         newType = EnumeratedType(name, values)
         __class__.__instances[name] = newType
 
@@ -43,3 +51,12 @@ class EnumeratedType:
             constraints &= ~And(*propTuple)
 
         return constraints
+    
+    def __eq__(self, o) -> bool:
+        if o.__class__ != self.__class__:
+            return False
+        else:
+            return (o.nameVariable == self.nameVariable)
+        
+    def __hash__(self):
+        return hash(str(self))
