@@ -19,7 +19,7 @@ class EnumeratedType:
             self.values = {val:PropositionalVariable("e2b_" + name + ":" + val) for val in values}
             self.name = name
         else:
-            raise(AttributeError("values array should contain at least two elements"))
+            raise(AttributeError("values array should contain at least three elements"))
 
 
     @staticmethod
