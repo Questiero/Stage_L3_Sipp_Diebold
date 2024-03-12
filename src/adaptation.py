@@ -12,9 +12,9 @@ class Adaptation:
 
     __revision : Revision
 
-    def __init__(self, solverInit : MLOSolver, distance : DistanceFunction, simplifiers : list[Simplificator] = [], onlyOneSolution: bool = Constants.ONLY_ONE_SOLUTION, projector: Projector = None) -> None:        
+    def __init__(self, solverInit : MLOSolver, distance : DistanceFunction, simplifiers : list[Simplificator] = [], onlyOneSolution: bool = Constants.ONLY_ONE_SOLUTION, verbose: bool = Constants.SET_VERBOSE, projector: Projector = None) -> None:        
         
-        self.__revision = Revision(solverInit, distance, simplifiers, onlyOneSolution, projector)
+        self.__revision = Revision(solverInit, distance, simplifiers, onlyOneSolution, verbose, projector)
 
     def preload(self):
         self.__revision.preload()

@@ -17,6 +17,7 @@ from .variable import IntegerVariable, RealVariable
 from fractions import Fraction
 from tqdm import tqdm
 import time
+from contextlib import ExitStack
 
 import math
 
@@ -46,10 +47,11 @@ class Revision:
     __e2bConstraints: set[Formula]
     _onlyOneSolution: bool
 
-    def __init__(self, solverInit : MLOSolver, distance : DistanceFunction, simplifiers : list[Simplificator] = [], onlyOneSolution: bool = Constants.ONLY_ONE_SOLUTION, projector: Projector = None) -> None:        
+    def __init__(self, solverInit : MLOSolver, distance : DistanceFunction, simplifiers : list[Simplificator] = [], onlyOneSolution: bool = Constants.ONLY_ONE_SOLUTION, verbose: bool = Constants.SET_VERBOSE, projector: Projector = None) -> None:        
         self.__distance = distance 
         self.__interpreter = FormulaInterpreter(solverInit, distance, simplifiers)
         self._onlyOneSolution = onlyOneSolution
+        self.__verbose = verbose
 
         self.__e2bConstraints = set()
 
@@ -107,20 +109,18 @@ class Revision:
             psi &= And(*self.__e2bConstraints)
             mu &= And(*self.__e2bConstraints)
 
-        print("")
-        print(self.getTime(), "Transforming Psi in DNF form")
+        if self.__verbose:
+            print("\n" + self.getTime(), "Transforming Psi in DNF form")
         psiDNF = psi.toPCMLC(self.boolToInt).toLessOrEqConstraint().toDNF()
 
-        print("")
-        print(self.getTime(), "Transforming Mu in DNF form")
+        if self.__verbose:
+            print("\n" + self.getTime(), "Transforming Mu in DNF form")
         muDNF = mu.toPCMLC(self.boolToInt).toLessOrEqConstraint().toDNF()
 
         res = self.__executeDNF(self.__convertExplicit(psiDNF), self.__convertExplicit(muDNF))
 
-        print("")
-        print(self.getTime(), f"Solution found with distance of {res[0]}:")
-        print(res[1])
-        print("")
+        if self.__verbose:
+            print("\n" + self.getTime(), f"Solution found with distance of {res[0]}:\n", res[1], "\n")
 
         return res
         
@@ -129,35 +129,47 @@ class Revision:
         res = None
         disRes = None
 
-        print("")
+        if self.__verbose:
+            print("")
+            psiIter = tqdm(psi.children, desc=f"{self.getTime()} Testing satisfiability of every child of Psi", mininterval=0.5)
+        else:
+            psiIter = psi.children
+
         satPsi = set()
-        for miniPsi in tqdm(psi.children, desc=f"{self.getTime()} Testing satisfiability of every child of Psi", mininterval=0.5):
+        for miniPsi in psiIter:
             if self.__interpreter.sat(miniPsi):
                 satPsi.add(miniPsi)
 
         if len(satPsi) == 0:
             raise(AttributeError("Psi is not satisfiable"))
 
-        print(self.getTime(), f"{len(satPsi)} satisfiable children of Psi found")
-
-        print("")
+        if self.__verbose:
+            print(self.getTime(), f"{len(satPsi)} satisfiable children of Psi found\n")
+            muIter = tqdm(mu.children, desc=f"{self.getTime()} Testing satisfiability of every child of Mu", mininterval=0.5)
+        else:
+            muIter = mu.children
+            
         satMu = set()
-        for miniMu in tqdm(mu.children, desc=f"{self.getTime()} Testing satisfiability of every child of Mu", mininterval=0.5):
+        for miniMu in muIter:
             if self.__interpreter.sat(miniMu):
                 satMu.add(miniMu)
 
         if len(satMu) == 0:
             raise(AttributeError("Mu is not satisfiable"))
 
-        print(self.getTime(), f"{len(satMu)} satisfiable children of Psi found")
-
         maxIter = len(satPsi)*len(satMu)
-        print("")
-        print(self.getTime(), f"{maxIter} combinations of conjunctions found")
+
+        if self.__verbose:
+            print(self.getTime(), f"{len(satMu)} satisfiable children of Psi found")
+            print("\n" + self.getTime(), f"{maxIter} combinations of conjunctions found")
 
         if(self._onlyOneSolution):
-            
-            with tqdm(total=maxIter, desc=f"{self.getTime()} Revision of every combination", mininterval=0.5) as pbar:
+
+            with ExitStack() as stack:
+
+                if self.__verbose:
+                    pbar = stack.enter_context(tqdm(total=maxIter, desc=f"{self.getTime()} Revision of every combination", mininterval=0.5))
+
                 for miniPsi in satPsi:
                     for miniMu in satMu:
 
@@ -178,13 +190,18 @@ class Revision:
                                 if (disRes is None) & (res is None):
                                     res = lit[1]
 
-                        pbar.update(1)
+                        if self.__verbose:
+                            pbar.update(1)
 
         else:
 
             setRes = set()
             
-            with tqdm(total=maxIter, desc="Revision of every combination", mininterval=0.5) as pbar:
+            with ExitStack() as stack:
+
+                if self.__verbose:
+                    pbar = stack.enter_context(tqdm(total=maxIter, desc=f"{self.getTime()} Revision of every combination", mininterval=0.5))
+
                 for miniPsi in satPsi:
                     for miniMu in satMu:
                                             
@@ -203,8 +220,9 @@ class Revision:
                             if (disRes is None):
                                 setRes.add(lit[1])
 
-                        pbar.update(1)
-            
+                        if self.__verbose:
+                            pbar.update(1)
+
             res = Or(*setRes).toDNF()
 
         return (disRes, self.__interpreter.simplifyMLC(res.toLessOrEqConstraint().toDNF()))

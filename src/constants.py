@@ -14,6 +14,8 @@ class Constants():
     Note that this only change the default value of the `onlyOneSolution` parameter of `src.revision.Revision`, it could still be changed
     on a case-by-case basis for every new instance of this class.
     """
+    SET_VERBOSE = True
+    DISPLAY_DEPENDENCIES_WARNING = True
 
     # ---------------------------------------------------
     # Operator used in `src.formula.formulaManager.FormulaManager.parser`.

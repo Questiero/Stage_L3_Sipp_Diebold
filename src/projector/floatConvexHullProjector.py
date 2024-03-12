@@ -6,9 +6,8 @@ Projector of a `src.formula.formula.Formula` to a sub-set of its variables, usin
 from __future__ import annotations
 
 from ..formula import And, LinearConstraint, Not, ConstraintOperator
-from ..simplificator import Simplificator, Caron
+from ..simplificator import Simplificator
 from .projector import Projector
-from ..mlo_solver import LPSolver
 from ..variable import Variable
 
 import itertools
@@ -38,7 +37,7 @@ class FloatConvexHullProjector (Projector):
     """
     By default, used simplifier is a single Caron using lp_solve
     """
-    def __init__(self, rounding: int = 12, simplifiers: list[Simplificator] = [Caron(LPSolver())]):
+    def __init__(self, rounding: int = 12, simplifiers: list[Simplificator] = None):
         self.__rounding = rounding
         self.__simplifier = simplifiers
 

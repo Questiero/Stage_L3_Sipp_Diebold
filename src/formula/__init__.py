@@ -46,7 +46,15 @@ Implication(formulaName = "psi", ~(a | b), ~b)
 
 from .formula import Formula
 from .formulaManager import FormulaManager
-from .formulaDisplay import FormulaDisplay
+
+try:
+    from .formulaDisplay import FormulaDisplay
+except ModuleNotFoundError:
+
+    from ..constants import Constants
+
+    if Constants.DISPLAY_DEPENDENCIES_WARNING:
+        print("Missing MatPlotLib, Scipy or Numpy dependency: FormulaDisplay cannot be used without it. If you wish to disable these warnings, set the DISPLAY_DEPENDENCIES_WARNING constant to False.")
 
 from .nullaryFormula import *
 from .unaryFormula import *
