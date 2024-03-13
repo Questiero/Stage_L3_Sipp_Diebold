@@ -86,7 +86,7 @@ dk &= (PropositionalVariable("water") // ~LinearConstraint("water_g <= 0"))\
     & (PropositionalVariable("lemonJuice") // ~LinearConstraint("lemonJuice_g <= 0"))
 
 # Adaptation Knowledge...
-ak = LinearConstraint("ak1 - vinegar_g + water_g + lemonJuice_g = 0")\
+ak = LinearConstraint("ak1 - vinegar_g - water_g - lemonJuice_g = 0")\
     & LinearConstraint("ak2 - water_g + lemonJuice_g = 0")
 
 """
