@@ -15,11 +15,11 @@ from fractions import Fraction
 weights = {
     PropositionalVariable("lettuce"): Fraction(1),
     PropositionalVariable("escarole"): Fraction(1),
-    PropositionalVariable("greenSalad"): Fraction(1),
-    PropositionalVariable("bacon"): Fraction(1),
+    PropositionalVariable("greenSalad"): Fraction(1e6),
+    PropositionalVariable("bacon"): Fraction(1e6),
     PropositionalVariable("vinegar"): Fraction(1),
-    PropositionalVariable("saladDish"): Fraction(1),
-    PropositionalVariable("oliveOil"): Fraction(1),
+    PropositionalVariable("saladDish"): Fraction(1e6),
+    PropositionalVariable("oliveOil"): Fraction(1e6),
     PropositionalVariable("lemonJuice"): Fraction(1),
     PropositionalVariable("water"): Fraction(1),
 
@@ -31,18 +31,18 @@ weights = {
     RealVariable.declare("oliveOil_g", lowerBound = Fraction(0)): Fraction(1),
     RealVariable.declare("lemonJuice_g", lowerBound = Fraction(0)): Fraction(1),
     RealVariable.declare("water_g", lowerBound = Fraction(0)): Fraction(1),
-    RealVariable.declare("water_L", lowerBound = Fraction(0)): Fraction(1),
+    RealVariable.declare("water_L", lowerBound = Fraction(0)): Fraction(1000),
     RealVariable.declare("food_g", lowerBound = Fraction(0)): Fraction(1),
-    RealVariable.declare("vinegar_L", lowerBound = Fraction(0)): Fraction(1),
-    RealVariable.declare("oliveOil_L", lowerBound = Fraction(0)): Fraction(1),
-    RealVariable.declare("lemonJuice_L", lowerBound = Fraction(0)): Fraction(1),
+    RealVariable.declare("vinegar_L", lowerBound = Fraction(0)): Fraction(1010),
+    RealVariable.declare("oliveOil_L", lowerBound = Fraction(0)): Fraction(913.7),
+    RealVariable.declare("lemonJuice_L", lowerBound = Fraction(0)): Fraction(1100),
 
-    IntegerVariable.declare("lettuce_u", lowerBound = Fraction(0)): Fraction(1),
-    IntegerVariable.declare("escarole_u", lowerBound = Fraction(0)): Fraction(1),
-    IntegerVariable.declare("bacon_u", lowerBound = Fraction(0)): Fraction(1),
+    IntegerVariable.declare("lettuce_u", lowerBound = Fraction(0)): Fraction(344),
+    IntegerVariable.declare("escarole_u", lowerBound = Fraction(0)): Fraction(530),
+    IntegerVariable.declare("bacon_u", lowerBound = Fraction(0)): Fraction(15),
 
-    RealVariable.declare("ak1"): Fraction(1),
-    RealVariable.declare("ak2"): Fraction(1)
+    RealVariable.declare("ak1"): Fraction(1e12),
+    RealVariable.declare("ak2"): Fraction(1e12)
 }
 
 """
