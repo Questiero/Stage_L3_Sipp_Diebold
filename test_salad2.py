@@ -14,8 +14,8 @@ from fractions import Fraction
 
 # _cup => 1 metric cup
 weights = {
-    PropositionalVariable("greenCabbage"): Fraction(1e6),
-    PropositionalVariable("carrot"): Fraction(1e6),
+    PropositionalVariable("greenCabbage"): Fraction(1),
+    PropositionalVariable("carrot"): Fraction(1),
     PropositionalVariable("shallot"): Fraction(1e6),
     PropositionalVariable("soySauce"): Fraction(1e6),
     PropositionalVariable("vinegar"): Fraction(1),
@@ -33,7 +33,7 @@ weights = {
     RealVariable.declare("oliveOil_g", lowerBound = Fraction(0)): Fraction(1),
     RealVariable.declare("lemonJuice_g", lowerBound = Fraction(0)): Fraction(1),
     RealVariable.declare("water_g", lowerBound = Fraction(0)): Fraction(1),
-    RealVariable.declare("food_g", lowerBound = Fraction(0)): Fraction(1),
+    RealVariable.declare("food_g", lowerBound = Fraction(0)): Fraction(1e6),
     RealVariable.declare("vinegar_L", lowerBound = Fraction(0)): Fraction(1010),
     RealVariable.declare("oliveOil_L", lowerBound = Fraction(0)): Fraction(913.7),
     RealVariable.declare("lemonJuice_L", lowerBound = Fraction(0)): Fraction(1100),
@@ -79,6 +79,7 @@ dk &= LinearConstraint("water_g - 1000 * water_L = 0")\
 dk &= (PropositionalVariable("water") // ~LinearConstraint("water_g <= 0"))\
     & (PropositionalVariable("vinegar") // ~LinearConstraint("vinegar_g <= 0"))\
     & (PropositionalVariable("oliveOil") // ~LinearConstraint("oliveOil_g <= 0"))\
+    & (PropositionalVariable("lemonJuice") // ~LinearConstraint("lemonJuice_g <= 0"))\
     & (PropositionalVariable("greenCabbage") // ~LinearConstraint("greenCabbage_g <= 0"))\
     & (PropositionalVariable("carrot") // ~LinearConstraint("carrot_g <= 0"))\
     & (PropositionalVariable("shallot") // ~LinearConstraint("shallot_g <= 0"))\
