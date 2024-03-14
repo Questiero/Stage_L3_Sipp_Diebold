@@ -100,16 +100,11 @@ adaptator.preload()
      SPECIFICATION OF DOMAIN KNOWLEDGE
 """
 
-# Règle...
+# DK1: Bananas and kiwis are fruits
 dk =  PropositionalVariable("banana") >> PropositionalVariable("fruit")\
      & (PropositionalVariable("kiwi") >> PropositionalVariable("fruit"))
 
-# Règle...
-dk &=  LinearConstraint("fruit_g - banana_g - kiwi_g = 0")\
-     & LinearConstraint("food_g - fruit_g - milk_g - granulatedSugar_g - iceCube_g - vanillaSugar_g = 0")\
-     & LinearConstraint("milk_g - almondMilk_g - cowMilk_g - soyMilk_g = 0")
-
-# Règle...
+# DK2: For each food type and unit, there is a known correspondence of one unit of this food type to its mass
 dk &=  LinearConstraint("banana_g - 115 * banana_u = 0")\
      & LinearConstraint("cowMilk_g - 1030 * cowMilk_L = 0")\
      & LinearConstraint("soyMilk_g - 1030 * soyMilk_L = 0")\
@@ -119,7 +114,7 @@ dk &=  LinearConstraint("banana_g - 115 * banana_u = 0")\
      & LinearConstraint("granulatedSugar_g - 15 * granulatedSugar_tsp = 0")\
      & LinearConstraint("iceCube_g - 24.759 * iceCube_u = 0")
 
-# Règle...
+# DK3: The sweetening power is known for every ingredient type, e.g. 0.158 for bananas (1 gram of banana has the same sweetening power as 0.158 gram of granulated sugar), 1 for granulated sugar, etc.
 dk &= LinearConstraint("sweeteningPower_g  - granulatedSugar_g\
                                            - 0.158 * banana_g\
                                            - 0.0899 * kiwi_g\
@@ -128,19 +123,24 @@ dk &= LinearConstraint("sweeteningPower_g  - granulatedSugar_g\
                                            - 0.0368 * soyMilk_g\
                                            - 0.04 * almondMilk_g = 0")
 
-# Règle...
+# DK4: Almond milk, cow milk and soy milk are 3 types of milks (and, to make it simpler, it can be assumed that there are no other types of milk in my fridge)
 dk &=   ((PropositionalVariable("almondMilk") | PropositionalVariable("cowMilk") | PropositionalVariable("soyMilk"))\
      // PropositionalVariable("milk"))
 
-# Règle...
+# DK5: Cow milk and soy milk associated to kiwis give a bitter taste
 dk &=   ((PropositionalVariable("cowMilk") | PropositionalVariable("soyMilk")) & PropositionalVariable("kiwi")) \
      >> PropositionalVariable("bitter")
 
-# Règle...
+# DK6: A milkshake is a dessert and a dessert must not be bitter
 dk &=  (PropositionalVariable("milkshake") >> PropositionalVariable("dessert"))\
      & (PropositionalVariable("dessert") >> ~PropositionalVariable("bitter"))
 
-# Règle...
+# DK??: Abstract mass of different food classes (such as fruits, milk and food in general)
+dk &=  LinearConstraint("fruit_g - banana_g - kiwi_g = 0")\
+     & LinearConstraint("food_g - fruit_g - milk_g - granulatedSugar_g - iceCube_g - vanillaSugar_g = 0")\
+     & LinearConstraint("milk_g - almondMilk_g - cowMilk_g - soyMilk_g = 0")
+
+# DK??: For each food type, its presence means its mass is positive and vice versa (e.g. if we have 1 gram of banana, there are some banana in our recipe)
 dk &=  (PropositionalVariable("banana") // ~LinearConstraint("banana_g <= 0"))\
      & (PropositionalVariable("kiwi") // ~LinearConstraint("kiwi_g <= 0"))\
      & (PropositionalVariable("cowMilk") // ~LinearConstraint("cowMilk_g <= 0"))\
@@ -150,7 +150,7 @@ dk &=  (PropositionalVariable("banana") // ~LinearConstraint("banana_g <= 0"))\
      & (PropositionalVariable("vanillaSugar") // ~LinearConstraint("vanillaSugar_g <= 0"))\
      & (PropositionalVariable("iceCube") // ~LinearConstraint("iceCube_g <= 0"))\
 
-# Règle...
+# DK??: The number of types of fruits must be constant before and after the adaptation
 dk &= LinearConstraint("nb_fruitTypes - b2i_banana - b2i_kiwi = 0")
 
 """
@@ -159,9 +159,9 @@ dk &= LinearConstraint("nb_fruitTypes - b2i_banana - b2i_kiwi = 0")
 
 # Source case... (variables dans le même ordre que article)
 x_src =  LinearConstraint("banana_u = 2")\
-     & LinearConstraint("vanillaSugar_u = 2")\
-     & LinearConstraint("cowMilk_g = 1030.")\
      & LinearConstraint("granulatedSugar_tsp = 4")\
+     & LinearConstraint("vanillaSugar_u = 2")\
+     & LinearConstraint("cowMilk_L = 1.")\
      & LinearConstraint("iceCube_u = 4")\
      & LinearConstraint("kiwi_g = 0")\
      & LinearConstraint("soyMilk_g = 0.")\
