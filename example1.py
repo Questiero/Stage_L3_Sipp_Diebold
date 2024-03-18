@@ -153,14 +153,12 @@ dk &= LinearConstraint("sweeteningPower_g  - granulatedSugar_g\
                                            - 0.0368 * soyMilk_g\
                                            - 0.04 * almondMilk_g = 0")
 
-
 """
      DK4: Almond milk, cow milk and soy milk are 3 types of milks (and, to make it simpler, it can be assumed that there
          are no other types of milk in my fridge).
 """
 dk &=   ((PropositionalVariable("almondMilk") | PropositionalVariable("cowMilk") | PropositionalVariable("soyMilk"))\
      // PropositionalVariable("milk"))
-
 
 """
      DK5: Cow milk and soy milk associated to kiwis give a bitter taste.
@@ -185,7 +183,6 @@ dk &=  (PropositionalVariable("banana") // ~LinearConstraint("banana_g <= 0"))\
      & (PropositionalVariable("granulatedSugar") // ~LinearConstraint("granulatedSugar_g <= 0"))\
      & (PropositionalVariable("vanillaSugar") // ~LinearConstraint("vanillaSugar_g <= 0"))\
      & (PropositionalVariable("iceCube") // ~LinearConstraint("iceCube_g <= 0"))\
-
 
 """
      DK??: The number of types of fruits must be constant before and after the adaptation.
