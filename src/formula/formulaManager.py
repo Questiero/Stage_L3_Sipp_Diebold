@@ -26,7 +26,7 @@ class FormulaManager():
         and customizable operators.
 
         While more intuitive due to the less restrictive scope of usable operators, this method of declaring formulas assume you 
-        previously named them, either via the `name` attribute in their constructor or thanks to `src.formula.formulaManager.FormulaManager.declare`.
+        previously named them, either via the `fmName` attribute in their constructor or thanks to `src.formula.formulaManager.FormulaManager.declare`.
         The operators could be customized in `src.constants.Constants` but are by default:\n
 
         * `&` for the and operator, represented by `src.formula.naryFormula.andOperator.And`\n

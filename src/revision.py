@@ -121,11 +121,10 @@ class Revision:
 
         if self.__verbose:
             print("\n" + self.getTime(), f"Solution found with distance of {res[0]}:\n")
-            # try:
-            #     self.organizedPrintResult(res[1])
-            # except:
-            #     print(res[1])
-            self.organizedPrintResult(res[1])
+            try:
+                self.organizedPrintResult(res[1])
+            except:
+                print(res[1])
 
         return res
         

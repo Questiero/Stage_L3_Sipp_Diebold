@@ -126,12 +126,12 @@ dk = FormulaManager.parser("(banana -> fruit) & (kiwi -> fruit)")
 """
 dk &=  LinearConstraint("banana_g - 115 * banana_u = 0")\
      & LinearConstraint("cowMilk_g - 1030 * cowMilk_L = 0")\
-     # & LinearConstraint("soyMilk_g - 1030 * soyMilk_L = 0")\
-     # & LinearConstraint("almondMilk_g - 1030 * almondMilk_L = 0")\
-     # & LinearConstraint("kiwi_g -  100 * kiwi_u = 0")\
-     # & LinearConstraint("vanillaSugar_g - 7.5 * vanillaSugar_u = 0")\
-     # & LinearConstraint("granulatedSugar_g - 15 * granulatedSugar_tbsp = 0")\
-     # & LinearConstraint("iceCube_g - 24.759 * iceCube_u = 0")
+     & LinearConstraint("soyMilk_g - 1030 * soyMilk_L = 0")\
+     & LinearConstraint("almondMilk_g - 1030 * almondMilk_L = 0")\
+     & LinearConstraint("kiwi_g -  100 * kiwi_u = 0")\
+     & LinearConstraint("vanillaSugar_g - 7.5 * vanillaSugar_u = 0")\
+     & LinearConstraint("granulatedSugar_g - 15 * granulatedSugar_tbsp = 0")\
+     & LinearConstraint("iceCube_g - 24.759 * iceCube_u = 0")
 
 """
      DK??: Abstract mass of different food classes (such as fruits, milk and food in general).
