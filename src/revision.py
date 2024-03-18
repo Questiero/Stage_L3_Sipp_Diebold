@@ -120,7 +120,12 @@ class Revision:
         res = self.__executeDNF(self.__convertExplicit(psiDNF), self.__convertExplicit(muDNF))
 
         if self.__verbose:
-            print("\n" + self.getTime(), f"Solution found with distance of {res[0]}:\n", res[1], "\n")
+            print("\n" + self.getTime(), f"Solution found with distance of {res[0]}:\n")
+            # try:
+            #     self.organizedPrintResult(res[1])
+            # except:
+            #     print(res[1])
+            self.organizedPrintResult(res[1])
 
         return res
         
@@ -351,3 +356,38 @@ class Revision:
         saftr = int((s-sbfr)*1000)
 
         return "{:0>2d}m{:0>2d}.{:0>3d}s |".format(m, sbfr, saftr)
+    
+    def organizedPrintResult(self, res):
+
+        variables = list()
+
+        if self._onlyOneSolution:
+            
+            resAnd = None
+            if len(res.children) > 1:
+                raise AttributeError("res isn't a \"onlyoneSolution\"")
+            else:
+                for formula in res.children:
+                    resAnd = formula
+
+            for const in resAnd.children:
+
+                lc = const.clone()
+
+                if not lc.operator == ConstraintOperator.EQ:
+                    # TODO, min/max pour déterminer bound de chaque variable
+                    raise AttributeError("Can't print (yet) if not EQ")
+                elif len(lc.variables) > 1:
+                    raise AttributeError("Can't print (yet) if more than one variable per constraint")
+                else:
+                    var = lc.variables.popitem()
+                    if (var[0].name[0:4] != "b2i_") & (not var[0].name[1].isnumeric()):
+                        variables.append((var[0].name, lc.bound / var[1])) # Taking coefficients into account, even though it should always be 1
+
+            for name, value in sorted(variables, key=lambda x: x[0].lower()):
+                print(name + ":", value)
+
+            print("")
+
+        else:
+            raise NotImplementedError("")
