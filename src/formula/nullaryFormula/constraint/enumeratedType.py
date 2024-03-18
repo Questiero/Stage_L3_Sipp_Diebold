@@ -59,7 +59,7 @@ class EnumeratedType:
         if o.__class__ != self.__class__:
             return False
         else:
-            return (o.nameVariable == self.nameVariable)
+            return (o.name == self.name)
         
     def __hash__(self):
         return hash(str(self))

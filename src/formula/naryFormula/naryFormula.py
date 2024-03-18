@@ -29,7 +29,7 @@ class NaryFormula(Formula):
         The children of the current node.
     """
         
-    def __init__(self, *formulas: Formula, name: str = None):
+    def __init__(self, *formulas: Formula, fmName: str = None):
         
         self.children = set(formulas)
                 
@@ -46,8 +46,8 @@ class NaryFormula(Formula):
         else:
             raise Exception("nary operators need at least one child")
         
-        if(name is not None):
-            FormulaManager.declare(name, self)
+        if(fmName is not None):
+            FormulaManager.declare(fmName, self)
 
     def getVariables(self) -> set[Variable]:
         r"""

@@ -15,11 +15,11 @@ from ....variable.variable import Variable
 
 class PropositionalVariable(Constraint):
 
-    def __init__(self, nameVariable: str, name: str = None):
-        self.nameVariable = nameVariable
+    def __init__(self, name: str, fmName: str = None):
+        self.name = name
        # Declare if name
-        if(name is not None):
-            FormulaManager.declare(name, self)
+        if(fmName is not None):
+            FormulaManager.declare(fmName, self)
     
     def getVariables(self):
         '''
@@ -41,11 +41,11 @@ class PropositionalVariable(Constraint):
     
     def __str__(self):
 
-        return self.nameVariable
+        return self.name
     
     def toLatex(self):
 
-        return self.nameVariable
+        return self.name
             
     def toLessOrEqConstraint(self):
         '''
@@ -94,14 +94,14 @@ class PropositionalVariable(Constraint):
         """
                 
         clonedPv = PropositionalVariable("")
-        clonedPv.nameVariable = self.nameVariable.copy()
+        clonedPv.name = self.name.copy()
         return clonedPv
       
     def __eq__(self, o) -> bool: #BRAVO
         if o.__class__ != self.__class__:
             return False
         else:
-            return o.nameVariable == self.nameVariable
+            return o.name == self.name
         
     def __hash__(self):
         return hash(str(self))

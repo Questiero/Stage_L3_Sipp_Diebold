@@ -58,7 +58,7 @@ class LinearConstraint(Constraint):
     operator: ConstraintOperator
     bound: Fraction
     
-    def __init__(self, string: str, name: str = None):
+    def __init__(self, string: str, fmName: str = None):
 
         if(string == ""):
             self.variables = dict()
@@ -125,8 +125,8 @@ class LinearConstraint(Constraint):
                 self.variables[var] = coef
 
         # Declare if name
-        if(name is not None):
-            FormulaManager.declare(name, self)
+        if(fmName is not None):
+            FormulaManager.declare(fmName, self)
 
     def getVariables(self) -> set[Variable]:
         '''

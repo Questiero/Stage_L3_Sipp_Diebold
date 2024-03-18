@@ -1,4 +1,4 @@
-from src.formula import LinearConstraint, PropositionalVariable
+from src.formula import LinearConstraint, PropositionalVariable, FormulaManager
 from src.mlo_solver import  ScipySolverRounded
 from src import Adaptation
 from src.variable import RealVariable, IntegerVariable
@@ -14,31 +14,31 @@ from fractions import Fraction
 weights = {
     
     # Presence of almond milk, a boolean variable with a light weight
-    PropositionalVariable("almondMilk"): Fraction("1e-6"),
+    PropositionalVariable("almondMilk", fmName="almondMilk"): Fraction("1e-6"),
     # Presence of banana, a boolean variable with a TODO
-    PropositionalVariable("banana"): Fraction(1),
+    PropositionalVariable("banana", fmName="banana"): Fraction(1),
     # Presence of bitterness, a boolean variable with a heavy weight
-    PropositionalVariable("bitter"): Fraction("1e6"),
+    PropositionalVariable("bitter", fmName="bitter"): Fraction("1e6"),
     # Presence of cow milk, a boolean variable with a light weight
-    PropositionalVariable("cowMilk"): Fraction("1e-6"),
+    PropositionalVariable("cowMilk", fmName="cowMilk"): Fraction("1e-6"),
     # Is the recipe for a dessert, a boolean variable with a heavy weight
-    PropositionalVariable("dessert"): Fraction("1e6"),
+    PropositionalVariable("dessert", fmName="dessert"): Fraction("1e6"),
     # Presence of fruit, a boolean variable with a heavy weight
-    PropositionalVariable("fruit"): Fraction("1e6"),
+    PropositionalVariable("fruit", fmName="fruit"): Fraction("1e6"),
     # Presence of granulated sugar, a boolean variable with a heavy weight
-    PropositionalVariable("granulatedSugar"): Fraction("1e6"),
+    PropositionalVariable("granulatedSugar", fmName="granulatedSugar"): Fraction("1e6"),
     # Presence of ice cubes, a boolean variable with a heavy weight
-    PropositionalVariable("iceCube"): Fraction("1e6"),
+    PropositionalVariable("iceCube", fmName="iceCube"): Fraction("1e6"),
     # Presence of kiwi, a boolean variable with a TODO
-    PropositionalVariable("kiwi"): Fraction(1),
+    PropositionalVariable("kiwi", fmName="kiwi"): Fraction(1),
     # Presence of milk, a boolean variable with a heavy weight
-    PropositionalVariable("milk"): Fraction("1e6"),
+    PropositionalVariable("milk", fmName="milk"): Fraction("1e6"),
     # Is the recipe for a milkshake, a boolean variable with a heavy weight
-    PropositionalVariable("milkshake"): Fraction("1e6"),
+    PropositionalVariable("milkshake", fmName="milkshake"): Fraction("1e6"),
     # Presence of soy milk, a boolean variable with a light weight
-    PropositionalVariable("soyMilk"): Fraction("1e-6"),
+    PropositionalVariable("soyMilk", fmName="soyMilk"): Fraction("1e-6"),
     # Presence of vanilla sugar, a boolean variable with a heavy weight
-    PropositionalVariable("vanillaSugar"): Fraction("1e6"),
+    PropositionalVariable("vanillaSugar", fmName="vanillaSugar"): Fraction("1e6"),
 
     # Mass (in grams) of almond milk, a nonnegative real (hence lowerBound to 0) with a TODO
     RealVariable.declare("almondMilk_g", lowerBound = Fraction(0)): Fraction(1),
@@ -118,8 +118,7 @@ adaptator.preload()
 """
      DK1: Bananas and kiwis are fruits.
 """
-dk =  PropositionalVariable("banana") >> PropositionalVariable("fruit")\
-     & (PropositionalVariable("kiwi") >> PropositionalVariable("fruit"))
+dk = FormulaManager.parser("(banana -> fruit) & (kiwi -> fruit)")
 
 """
      DK2: For each food type and unit, there is a known correspondence of one unit of this food type to its mass,
@@ -127,12 +126,12 @@ dk =  PropositionalVariable("banana") >> PropositionalVariable("fruit")\
 """
 dk &=  LinearConstraint("banana_g - 115 * banana_u = 0")\
      & LinearConstraint("cowMilk_g - 1030 * cowMilk_L = 0")\
-     & LinearConstraint("soyMilk_g - 1030 * soyMilk_L = 0")\
-     & LinearConstraint("almondMilk_g - 1030 * almondMilk_L = 0")\
-     & LinearConstraint("kiwi_g -  100 * kiwi_u = 0")\
-     & LinearConstraint("vanillaSugar_g - 7.5 * vanillaSugar_u = 0")\
-     & LinearConstraint("granulatedSugar_g - 15 * granulatedSugar_tbsp = 0")\
-     & LinearConstraint("iceCube_g - 24.759 * iceCube_u = 0")
+     # & LinearConstraint("soyMilk_g - 1030 * soyMilk_L = 0")\
+     # & LinearConstraint("almondMilk_g - 1030 * almondMilk_L = 0")\
+     # & LinearConstraint("kiwi_g -  100 * kiwi_u = 0")\
+     # & LinearConstraint("vanillaSugar_g - 7.5 * vanillaSugar_u = 0")\
+     # & LinearConstraint("granulatedSugar_g - 15 * granulatedSugar_tbsp = 0")\
+     # & LinearConstraint("iceCube_g - 24.759 * iceCube_u = 0")
 
 """
      DK??: Abstract mass of different food classes (such as fruits, milk and food in general).
@@ -157,32 +156,29 @@ dk &= LinearConstraint("sweeteningPower_g  - granulatedSugar_g\
      DK4: Almond milk, cow milk and soy milk are 3 types of milks (and, to make it simpler, it can be assumed that there
           are no other types of milk in my fridge).
 """
-dk &=   ((PropositionalVariable("almondMilk") | PropositionalVariable("cowMilk") | PropositionalVariable("soyMilk"))\
-     // PropositionalVariable("milk"))
+dk &= FormulaManager.parser("(almondMilk | cowMilk | soyMilk) <-> milk")
 
 """
      DK5: Cow milk and soy milk associated to kiwis give a bitter taste.
 """
-dk &=   ((PropositionalVariable("cowMilk") | PropositionalVariable("soyMilk")) & PropositionalVariable("kiwi")) \
-     >> PropositionalVariable("bitter")
+dk &= FormulaManager.parser("((cowMilk | soyMilk) & kiwi) -> bitter")
 
 """
      DK6: A milkshake is a dessert and a dessert must not be bitter.
 """
-dk &=  (PropositionalVariable("milkshake") >> PropositionalVariable("dessert"))\
-     & (PropositionalVariable("dessert") >> ~PropositionalVariable("bitter"))
+dk &=  FormulaManager.parser("(milkshake -> dessert) & (dessert -> ~bitter)")
 
 """
      DK7 : Relations between propositional variables and numerical variables.
 """
 dk &=  (PropositionalVariable("banana") // ~LinearConstraint("banana_g <= 0"))\
      & (PropositionalVariable("kiwi") // ~LinearConstraint("kiwi_g <= 0"))\
-     & (PropositionalVariable("cowMilk") // ~LinearConstraint("cowMilk_g <= 0"))\
-     & (PropositionalVariable("soyMilk") // ~LinearConstraint("soyMilk_g <= 0"))\
-     & (PropositionalVariable("almondMilk") // ~LinearConstraint("almondMilk_g <= 0"))\
-     & (PropositionalVariable("granulatedSugar") // ~LinearConstraint("granulatedSugar_g <= 0"))\
-     & (PropositionalVariable("vanillaSugar") // ~LinearConstraint("vanillaSugar_g <= 0"))\
-     & (PropositionalVariable("iceCube") // ~LinearConstraint("iceCube_g <= 0"))\
+     # & (PropositionalVariable("cowMilk") // ~LinearConstraint("cowMilk_g <= 0"))\
+     # & (PropositionalVariable("soyMilk") // ~LinearConstraint("soyMilk_g <= 0"))\
+     # & (PropositionalVariable("almondMilk") // ~LinearConstraint("almondMilk_g <= 0"))\
+     # & (PropositionalVariable("granulatedSugar") // ~LinearConstraint("granulatedSugar_g <= 0"))\
+     # & (PropositionalVariable("vanillaSugar") // ~LinearConstraint("vanillaSugar_g <= 0"))\
+     # & (PropositionalVariable("iceCube") // ~LinearConstraint("iceCube_g <= 0"))\
 
 """
      DK??: The number of types of fruits must be constant before and after the adaptation.

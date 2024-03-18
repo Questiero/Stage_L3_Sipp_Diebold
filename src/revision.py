@@ -77,7 +77,7 @@ class Revision:
 
     def __b2iPreload(self, var, weights):
 
-        intVar = IntegerVariable.declare("b2i_" + var.nameVariable, lowerBound=Fraction(0), upperBound=Fraction(1))
+        intVar = IntegerVariable.declare("b2i_" + var.name, lowerBound=Fraction(0), upperBound=Fraction(1))
 
         self.boolToInt[var] = intVar
         weights[intVar] = weights[var]

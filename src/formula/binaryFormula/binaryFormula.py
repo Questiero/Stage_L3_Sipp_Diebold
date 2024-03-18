@@ -28,12 +28,12 @@ class BinaryFormula(Formula):
         The children of the current node.
     '''
         
-    def __init__(self, formulaLeft: Formula, formulaRight: Formula, name: str = None):
+    def __init__(self, formulaLeft: Formula, formulaRight: Formula, fmName: str = None):
 
         self.children = (formulaLeft, formulaRight)
 
-        if(name is not None):
-            FormulaManager.declare(name, self)
+        if(fmName is not None):
+            FormulaManager.declare(fmName, self)
 
     @abstractmethod
     def _eliminate(self) -> Formula:

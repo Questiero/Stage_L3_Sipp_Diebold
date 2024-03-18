@@ -20,12 +20,12 @@ class UnaryFormula(Formula):
         The child of the current node.
     '''
 
-    def __init__(self, formulaInit: Formula, name: str = None):
+    def __init__(self, formulaInit: Formula, fmName: str = None):
         
         self.children = formulaInit
 
-        if(name is not None):
-            FormulaManager.declare(name, self)
+        if(fmName is not None):
+            FormulaManager.declare(fmName, self)
         
     def getVariables(self) -> set[Variable]:
         '''
