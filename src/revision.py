@@ -164,7 +164,7 @@ class Revision:
         maxIter = len(satPsi)*len(satMu)
 
         if self.__verbose:
-            print(self.getTime(), f"{len(satMu)} satisfiable children of Psi found")
+            print(self.getTime(), f"{len(satMu)} satisfiable children of Mu found")
             print("\n" + self.getTime(), f"{maxIter} combinations of conjunctions found")
 
         if(self._onlyOneSolution):
