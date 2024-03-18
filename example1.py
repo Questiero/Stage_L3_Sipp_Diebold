@@ -173,12 +173,12 @@ dk &=  FormulaManager.parser("(milkshake -> dessert) & (dessert -> ~bitter)")
 """
 dk &=  (PropositionalVariable("banana") // ~LinearConstraint("banana_g <= 0"))\
      & (PropositionalVariable("kiwi") // ~LinearConstraint("kiwi_g <= 0"))\
-     # & (PropositionalVariable("cowMilk") // ~LinearConstraint("cowMilk_g <= 0"))\
-     # & (PropositionalVariable("soyMilk") // ~LinearConstraint("soyMilk_g <= 0"))\
-     # & (PropositionalVariable("almondMilk") // ~LinearConstraint("almondMilk_g <= 0"))\
-     # & (PropositionalVariable("granulatedSugar") // ~LinearConstraint("granulatedSugar_g <= 0"))\
-     # & (PropositionalVariable("vanillaSugar") // ~LinearConstraint("vanillaSugar_g <= 0"))\
-     # & (PropositionalVariable("iceCube") // ~LinearConstraint("iceCube_g <= 0"))\
+     & (PropositionalVariable("cowMilk") // ~LinearConstraint("cowMilk_g <= 0"))\
+     & (PropositionalVariable("soyMilk") // ~LinearConstraint("soyMilk_g <= 0"))\
+     & (PropositionalVariable("almondMilk") // ~LinearConstraint("almondMilk_g <= 0"))\
+     & (PropositionalVariable("granulatedSugar") // ~LinearConstraint("granulatedSugar_g <= 0"))\
+     & (PropositionalVariable("vanillaSugar") // ~LinearConstraint("vanillaSugar_g <= 0"))\
+     & (PropositionalVariable("iceCube") // ~LinearConstraint("iceCube_g <= 0"))\
 
 """
      DK??: The number of types of fruits must be constant before and after the adaptation.
