@@ -123,7 +123,7 @@ dk =  PropositionalVariable("banana") >> PropositionalVariable("fruit")\
 
 """
      DK2: For each food type and unit, there is a known correspondence of one unit of this food type to its mass,
-     e.g. the mass of 1 banana and the mass of 1 tablespoon of granulated sugar.
+          e.g. the mass of 1 banana and the mass of 1 tablespoon of granulated sugar.
 """
 dk &=  LinearConstraint("banana_g - 115 * banana_u = 0")\
      & LinearConstraint("cowMilk_g - 1030 * cowMilk_L = 0")\
@@ -143,7 +143,7 @@ dk &=  LinearConstraint("fruit_g - banana_g - kiwi_g = 0")\
 
 """
      DK3: The sweetening power is known for every ingredient type, e.g. 0.158 for bananas (1 gram of banana has the same
-         sweetening power as 0.158 gram of granulated sugar), 1 for granulated sugar, etc.
+          sweetening power as 0.158 gram of granulated sugar), 1 for granulated sugar, etc.
 """
 dk &= LinearConstraint("sweeteningPower_g  - granulatedSugar_g\
                                            - 0.158 * banana_g\
@@ -155,7 +155,7 @@ dk &= LinearConstraint("sweeteningPower_g  - granulatedSugar_g\
 
 """
      DK4: Almond milk, cow milk and soy milk are 3 types of milks (and, to make it simpler, it can be assumed that there
-         are no other types of milk in my fridge).
+          are no other types of milk in my fridge).
 """
 dk &=   ((PropositionalVariable("almondMilk") | PropositionalVariable("cowMilk") | PropositionalVariable("soyMilk"))\
      // PropositionalVariable("milk"))
