@@ -150,7 +150,7 @@ dk &= FormulaManager.parser("((cowMilk | soyMilk) & kiwi) -> bitter")
 # DK6: A milkshake is a dessert and a dessert must not be bitter.
 dk &=  FormulaManager.parser("(milkshake -> dessert) & (dessert -> ~bitter)")
 
-# DK7 : Relations between propositional variables and numerical variables.
+# DK7: Relations between propositional variables and numerical variables.
 dk &=  (PropositionalVariable("banana") // ~LinearConstraint("banana_g <= 0"))\
      & (PropositionalVariable("kiwi") // ~LinearConstraint("kiwi_g <= 0"))\
      & (PropositionalVariable("cowMilk") // ~LinearConstraint("cowMilk_g <= 0"))\
