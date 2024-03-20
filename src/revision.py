@@ -381,12 +381,17 @@ class Revision:
                 else:
                     var = lc.variables.popitem()
                     if (var[0].name[0:4] != "b2i_") & (not var[0].name[1].isnumeric()):
-                        variables.append((var[0].name, lc.bound / var[1])) # Taking coefficients into account, even though it should always be 1
+                        variables.append((var[0], lc.bound / var[1])) # Taking coefficients into account, even though it should always be 1
 
-            maxVarLength = max([len(var[0]) for var in variables])
+            maxVarLength = max([len(var[0].name) for var in variables])
 
-            for name, value in sorted(variables, key=lambda x: x[0].lower()):
-                print(name.rjust(maxVarLength) + "=", value)
+            for var, value in sorted(variables, key=lambda x: x[0].lower()):
+
+                # TODO régler les bugs
+                if isinstance(var, IntegerVariable):
+                    print(var.name.rjust(maxVarLength) + " =", int(value))
+                else:
+                    print(var.name.rjust(maxVarLength) + " =", float(value))
 
             print("")
 

@@ -25,10 +25,6 @@ weights = {
     PropositionalVariable("dessert", fmName="dessert"): Fraction("1e6"),
     # Presence of fruit, a boolean variable with a heavy weight
     PropositionalVariable("fruit", fmName="fruit"): Fraction("1e6"),
-    # Presence of granulated sugar, a boolean variable with a heavy weight
-    PropositionalVariable("granulatedSugar", fmName="granulatedSugar"): Fraction("1e6"),
-    # Presence of ice cubes, a boolean variable with a heavy weight
-    PropositionalVariable("iceCube", fmName="iceCube"): Fraction("1e6"),
     # Presence of kiwi, a boolean variable with a TODO
     PropositionalVariable("kiwi", fmName="kiwi"): Fraction(1),
     # Presence of milk, a boolean variable with a heavy weight
@@ -37,8 +33,6 @@ weights = {
     PropositionalVariable("milkshake", fmName="milkshake"): Fraction("1e6"),
     # Presence of soy milk, a boolean variable with a light weight
     PropositionalVariable("soyMilk", fmName="soyMilk"): Fraction("1e-6"),
-    # Presence of vanilla sugar, a boolean variable with a heavy weight
-    PropositionalVariable("vanillaSugar", fmName="vanillaSugar"): Fraction("1e6"),
 
     # Mass (in grams) of almond milk, a nonnegative real (hence lowerBound to 0) with a TODO
     RealVariable.declare("almondMilk_g", lowerBound = Fraction(0)): Fraction(1),
@@ -96,17 +90,17 @@ solver = ScipySolverRounded()
 
 # Declaration of the simplification algorithms used for this example.
 # Here, we chose to only use Daalmans' algorithm.
-simplifier = [Daalmans(solver)]
+simplifiers = [Daalmans(solver)]
 
 # Declaration of the discretized Manhattan distance function used for this example, using the weights declared above and an epsilon of 1e-4.
 distanceFunction = discreteL1DistanceFunction(weights, epsilon=Fraction("1e-4"))
 
 # Declaration of the Adaptation object used for this example, using all the variables declared beforehand and specifying
 # that we wish to have only one valid solution instead of all the possible ones.
-adaptator = Adaptation(solver, distanceFunction, simplifier, onlyOneSolution=True)
+adaptator = Adaptation(solver, distanceFunction, simplifiers, onlyOneSolution=True)
 
 # Preloading the adaptator, initializaing all the b2i_ variables and making it so the user can use them in the following parts of the script
-# (Necessary for DK??, the nb_ingredients constraint)
+# (Necessary for DK8, the nb_ingredients constraint)
 adaptator.preload()
 
 """
@@ -118,24 +112,26 @@ dk = FormulaManager.parser("(banana -> fruit) & (kiwi -> fruit)")
 
 # DK2: For each food type and unit, there is a known correspondence of one unit of this food type to its mass,
 #      e.g. the mass of 1 banana and the mass of 1 tablespoon of granulated sugar.
+# Source: Mass coming from USDA (https://fdc.nal.usda.gov/)
+#                          Vahine (URL) (for vanilla sugar)
 dk &=  LinearConstraint("banana_g - 115 * banana_u = 0")\
      & LinearConstraint("cowMilk_g - 1030 * cowMilk_L = 0")\
      & LinearConstraint("soyMilk_g - 1030 * soyMilk_L = 0")\
      & LinearConstraint("almondMilk_g - 1030 * almondMilk_L = 0")\
-     & LinearConstraint("kiwi_g -  100 * kiwi_u = 0")\
+     & LinearConstraint("kiwi_g - 100 * kiwi_u = 0")\
      & LinearConstraint("vanillaSugar_g - 7.5 * vanillaSugar_u = 0")\
      & LinearConstraint("granulatedSugar_g - 15 * granulatedSugar_tbsp = 0")\
      & LinearConstraint("iceCube_g - 24.759 * iceCube_u = 0")
 
-# DK3: The sweetening power is known for every ingredient type, e.g. 0.158 for bananas (1 gram of banana has the same
-#      sweetening power as 0.158 gram of granulated sugar), 1 for granulated sugar, etc.
-dk &= LinearConstraint("sweeteningPower_g  - granulatedSugar_g\
-                                           - 0.158 * banana_g\
-                                           - 0.0899 * kiwi_g\
-                                           - 0.98 * vanillaSugar_g\
-                                           - 0.0489 * cowMilk_g\
-                                           - 0.0368 * soyMilk_g\
-                                           - 0.04 * almondMilk_g = 0")\
+# DK3: Relation between each type of food and its subtypes in the taxonomy (TODO reprendre après envoie)
+# Source: The sweetening power of each ingredient is coming from USDA (https://fdc.nal.usda.gov/)
+dk &= LinearConstraint("sweeteningPower_g - granulatedSugar_g\
+                                          - 0.158 * banana_g\
+                                          - 0.0899 * kiwi_g\
+                                          - 0.98 * vanillaSugar_g\
+                                          - 0.0489 * cowMilk_g\
+                                          - 0.0368 * soyMilk_g\
+                                          - 0.04 * almondMilk_g = 0")\
      & LinearConstraint("fruit_g - banana_g - kiwi_g = 0")\
      & LinearConstraint("food_g - fruit_g - milk_g - granulatedSugar_g - iceCube_g - vanillaSugar_g = 0")\
      & LinearConstraint("milk_g - almondMilk_g - cowMilk_g - soyMilk_g = 0")
@@ -156,9 +152,6 @@ dk &=  (PropositionalVariable("banana") // ~LinearConstraint("banana_g <= 0"))\
      & (PropositionalVariable("cowMilk") // ~LinearConstraint("cowMilk_g <= 0"))\
      & (PropositionalVariable("soyMilk") // ~LinearConstraint("soyMilk_g <= 0"))\
      & (PropositionalVariable("almondMilk") // ~LinearConstraint("almondMilk_g <= 0"))\
-     & (PropositionalVariable("granulatedSugar") // ~LinearConstraint("granulatedSugar_g <= 0"))\
-     & (PropositionalVariable("vanillaSugar") // ~LinearConstraint("vanillaSugar_g <= 0"))\
-     & (PropositionalVariable("iceCube") // ~LinearConstraint("iceCube_g <= 0"))\
 
 # DK8: The number of types of fruits must be constant before and after the adaptation.
 dk &= LinearConstraint("nb_fruitTypes - b2i_banana - b2i_kiwi = 0")
@@ -173,12 +166,12 @@ srce_case =  LinearConstraint("banana_u = 2")\
      & LinearConstraint("vanillaSugar_u = 2")\
      & LinearConstraint("cowMilk_L = 1.")\
      & LinearConstraint("iceCube_u = 4")\
-     & LinearConstraint("kiwi_g = 0")\
+     & LinearConstraint("kiwi_g = 0.")\
      & LinearConstraint("soyMilk_g = 0.")\
      & LinearConstraint("almondMilk_g = 0.")\
      & PropositionalVariable("milkshake")\
 
 # Target problem
-tgt_problem = PropositionalVariable("kiwi") & PropositionalVariable("milkshake")
+tgt_problem = FormulaManager.parser("kiwi & milkshake")
 
 tgt_case = adaptator.execute(srce_case, tgt_problem, dk)[1]

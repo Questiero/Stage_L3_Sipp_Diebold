@@ -79,7 +79,8 @@ weights = {
     IntegerVariable.declare("iceCube_u", lowerBound = Fraction(0)): Fraction(24.759),
     # Number of kiwis, a nonnegative integer (hence lowerBound to 0) with a TODO
     IntegerVariable.declare("kiwi_u", lowerBound = Fraction(0)): Fraction(100),
-    # Number of fruit types, a nonnegative integer (hence lowerBound to 0) with a heavy weight
+    # Number of fruit types, a nonnegative integer (hence lowerBound to 0) with a heavy weight to preserve
+    # the same number of fruit types in the recipe
     IntegerVariable.declare("nb_fruitTypes", lowerBound = Fraction(0)): Fraction(100),
     # Number of bags of vanilla sugar, a nonnegative integer (hence lowerBound to 0) with a TODO
     IntegerVariable.declare("vanillaSugar_u", lowerBound = Fraction(0)): Fraction(7.5),
@@ -106,7 +107,7 @@ distanceFunction = discreteL1DistanceFunction(weights, epsilon=Fraction("1e-4"))
 adaptator = Adaptation(solver, distanceFunction, simplifier, onlyOneSolution=True)
 
 # Preloading the adaptator, initializaing all the b2i_ variables and making it so the user can use them in the following parts of the script
-# (Necessary for DK??, the nb_ingredients constraint)
+# (Necessary for DK??, the nb_fruitTypes constraint)
 adaptator.preload()
 
 """
