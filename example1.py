@@ -150,9 +150,9 @@ dk &=  FormulaManager.parser("(milkshake -> dessert) & (dessert -> ~bitter)")
 # DK7: Relations between propositional variables and numerical variables.
 dk &=  (PropositionalVariable("banana") // ~LinearConstraint("banana_g <= 0"))\
      & (PropositionalVariable("kiwi") // ~LinearConstraint("kiwi_g <= 0"))\
-     # & (PropositionalVariable("cowMilk") // ~LinearConstraint("cowMilk_g <= 0"))\
-     # & (PropositionalVariable("soyMilk") // ~LinearConstraint("soyMilk_g <= 0"))\
-     # & (PropositionalVariable("almondMilk") // ~LinearConstraint("almondMilk_g <= 0"))\
+     & (PropositionalVariable("cowMilk") // ~LinearConstraint("cowMilk_g <= 0"))\
+     & (PropositionalVariable("soyMilk") // ~LinearConstraint("soyMilk_g <= 0"))\
+     & (PropositionalVariable("almondMilk") // ~LinearConstraint("almondMilk_g <= 0"))\
 
 # DK8: The number of types of fruits must be constant before and after the adaptation.
 dk &= LinearConstraint("nb_fruitTypes - b2i_banana - b2i_kiwi = 0")
