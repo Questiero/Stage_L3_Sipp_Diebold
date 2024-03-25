@@ -7,7 +7,6 @@ from src import Adaptation
 from src.variable import RealVariable, IntegerVariable
 from src.distance import discreteL1DistanceFunction
 from src.simplificator import Daalmans
-from src.projector import FloatConvexHullProjector
 
 from fractions import Fraction
 
