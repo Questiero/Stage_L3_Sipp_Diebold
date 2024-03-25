@@ -84,8 +84,8 @@ class ScipySolver(MLOSolver) :
             lower, upper = variable.getBounds()
             if(lower == None): lower = -np.inf
             if(upper == None): upper = np.inf
-            boundsLower.append(lower)
-            boundsUpper.append(upper)
+            boundsLower.append(float(lower))
+            boundsUpper.append(float(upper))
         tab = []
         limitInf = []
         limitUp = []
@@ -102,12 +102,22 @@ class ScipySolver(MLOSolver) :
                 limitUp.append(constraint[2])
 
         lc = LinearConstraint(tab, limitInf, limitUp)
+        # presolve at false to fixed status 4
         result = milp(c=objectif, integrality=integers, constraints=lc, bounds=Bounds(boundsLower, boundsUpper), options={&#34;presolve&#34;:False})
         res : tuple
         if result.status == 0:
             res = (OptimizationValues.OPTIMAL, [Fraction(x) for x in result.x], result.fun)
         elif result.status == 3:
             res = (OptimizationValues.UNBOUNDED, [], float(np.inf))
+        elif result.status == 4:
+            # in fact status 4 can be return
+            # to detect if the problem is unbounded we test if the objectiv function * -1 is unbounded
+            # if it&#39;s not, the problem is infeasible
+            for i in range(0,len(objectif)): objectif[i] *= -1
+            result = milp(c=objectif, integrality=integers, constraints=lc, bounds=Bounds(boundsLower, boundsUpper), options={&#34;presolve&#34;:False})
+            if result.status == 0 or result.status == 3:
+                res = (OptimizationValues.UNBOUNDED, [], float(np.inf))
+            else: res = (OptimizationValues.INFEASIBLE, [], float(np.inf))
         else: res = (OptimizationValues.INFEASIBLE, [], float(np.inf))
         return res</code></pre>
 </details>
@@ -170,8 +180,8 @@ class ScipySolver(MLOSolver) :
             lower, upper = variable.getBounds()
             if(lower == None): lower = -np.inf
             if(upper == None): upper = np.inf
-            boundsLower.append(lower)
-            boundsUpper.append(upper)
+            boundsLower.append(float(lower))
+            boundsUpper.append(float(upper))
         tab = []
         limitInf = []
         limitUp = []
@@ -188,12 +198,22 @@ class ScipySolver(MLOSolver) :
                 limitUp.append(constraint[2])
 
         lc = LinearConstraint(tab, limitInf, limitUp)
+        # presolve at false to fixed status 4
         result = milp(c=objectif, integrality=integers, constraints=lc, bounds=Bounds(boundsLower, boundsUpper), options={&#34;presolve&#34;:False})
         res : tuple
         if result.status == 0:
             res = (OptimizationValues.OPTIMAL, [Fraction(x) for x in result.x], result.fun)
         elif result.status == 3:
             res = (OptimizationValues.UNBOUNDED, [], float(np.inf))
+        elif result.status == 4:
+            # in fact status 4 can be return
+            # to detect if the problem is unbounded we test if the objectiv function * -1 is unbounded
+            # if it&#39;s not, the problem is infeasible
+            for i in range(0,len(objectif)): objectif[i] *= -1
+            result = milp(c=objectif, integrality=integers, constraints=lc, bounds=Bounds(boundsLower, boundsUpper), options={&#34;presolve&#34;:False})
+            if result.status == 0 or result.status == 3:
+                res = (OptimizationValues.UNBOUNDED, [], float(np.inf))
+            else: res = (OptimizationValues.INFEASIBLE, [], float(np.inf))
         else: res = (OptimizationValues.INFEASIBLE, [], float(np.inf))
         return res</code></pre>
 </details>

@@ -63,7 +63,7 @@ class discreteL1DistanceFunction(distanceFunctionOnNumericalTuple):
         The `src.distance.domain.domain.Domain` on which the distance function is defined.
     &#34;&#34;&#34;
 
-    def __init__(self, weights : dict[Variable, Fraction], epsilon : Fraction = Fraction(&#34;1e-6&#34;), domaine : Domain = None):
+    def __init__(self, weights : dict[Variable, Fraction], epsilon : Fraction = Fraction(&#34;1e-3&#34;), domaine : Domain = None):
         self._distance = l1DistanceFunction(weights, domaine)
         self._epsilon = epsilon
 
@@ -102,7 +102,7 @@ class discreteL1DistanceFunction(distanceFunctionOnNumericalTuple):
 <dl>
 <dt id="src.distance.distance_function.discreteL1DistanceFunction.discreteL1DistanceFunction"><code class="flex name class">
 <span>class <span class="ident">discreteL1DistanceFunction</span></span>
-<span>(</span><span>weights: dict[Variable, Fraction], epsilon: Fraction = Fraction(1, 1000000), domaine: Domain = None)</span>
+<span>(</span><span>weights: dict[Variable, Fraction], epsilon: Fraction = Fraction(1, 1000), domaine: Domain = None)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Class representing a discretized l1 distance function <span><span class="MathJax_Preview">d_\varepsilon</span><script type="math/tex">d_\varepsilon</script></span>, also called cityblock or Manhattan, defined as such:</p>
@@ -148,7 +148,7 @@ d_{\varepsilon}(x,y)=\varepsilon \biggl\lceil \frac{d(x,y)}{\varepsilon} \biggl\
         The `src.distance.domain.domain.Domain` on which the distance function is defined.
     &#34;&#34;&#34;
 
-    def __init__(self, weights : dict[Variable, Fraction], epsilon : Fraction = Fraction(&#34;1e-6&#34;), domaine : Domain = None):
+    def __init__(self, weights : dict[Variable, Fraction], epsilon : Fraction = Fraction(&#34;1e-3&#34;), domaine : Domain = None):
         self._distance = l1DistanceFunction(weights, domaine)
         self._epsilon = epsilon
 

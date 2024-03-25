@@ -37,15 +37,20 @@ Main class of the module, allowing the user to make the knowledge revision betwe
 
 from __future__ import annotations
 
-from .formula import Formula, Or, And, UnaryFormula, NullaryFormula, LinearConstraint, Not, ConstraintOperator
+from .formula import Formula, Or, And, UnaryFormula, NullaryFormula, LinearConstraint, Not, ConstraintOperator, PropositionalVariable, EnumeratedType
 from .formulaInterpreter import FormulaInterpreter
 from .mlo_solver import MLOSolver
 from .distance import DistanceFunction
 from .constants import Constants
 from .simplificator import Simplificator
 from .projector import Projector
+from .variable import IntegerVariable, RealVariable
 
 from fractions import Fraction
+from tqdm import tqdm
+import time
+from contextlib import ExitStack
+
 import math
 
 class Revision:
@@ -71,15 +76,43 @@ class Revision:
     
     __distance : DistanceFunction
     __interpreter : FormulaInterpreter
-    __projector : Projector
+    __e2bConstraints: set[Formula]
     _onlyOneSolution: bool
 
-    def __init__(self, solverInit : MLOSolver, distance : DistanceFunction, simplifiers : list[Simplificator] = [], onlyOneSolution: bool = Constants.ONLY_ONE_SOLUTION, projector: Projector = None) -&gt; None:        
+    def __init__(self, solverInit : MLOSolver, distance : DistanceFunction, simplifiers : list[Simplificator] = [], onlyOneSolution: bool = Constants.ONLY_ONE_SOLUTION, verbose: bool = Constants.SET_VERBOSE, projector: Projector = None) -&gt; None:        
         self.__distance = distance 
         self.__interpreter = FormulaInterpreter(solverInit, distance, simplifiers)
         self._onlyOneSolution = onlyOneSolution
+        self.__verbose = verbose
+
+        self.__e2bConstraints = set()
 
         self.__projector = projector
+
+    def preload(self):
+
+        weights = self.__distance.getWeights()
+        self.boolToInt = dict()
+
+        for var in weights.copy().keys():
+
+            if isinstance(var, PropositionalVariable):
+                self.__b2iPreload(var, weights)
+
+            if isinstance(var, EnumeratedType):
+
+                self.__e2bConstraints.add(var.generateConstraints())
+
+                for value in var.values.values():
+                    weights[value] = weights[var]
+                    self.__b2iPreload(value, weights)
+
+    def __b2iPreload(self, var, weights):
+
+        intVar = IntegerVariable.declare(&#34;b2i_&#34; + var.name, lowerBound=Fraction(0), upperBound=Fraction(1))
+
+        self.boolToInt[var] = intVar
+        weights[intVar] = weights[var]
 
     def execute(self, psi : Formula, mu : Formula) -&gt; tuple[Fraction, Formula]:
         r&#34;&#34;&#34;
@@ -102,92 +135,176 @@ class Revision:
             Result of the knowledge revison of \(\psi\) by \(\mu\).
         &#34;&#34;&#34;
 
-        psiDNF, muDNF = psi.toLessOrEqConstraint().toDNF(), mu.toLessOrEqConstraint().toDNF()
-        return self.__executeDNF(self.__convertExplicit(psiDNF), self.__convertExplicit(muDNF))
+        self.__timeStart = time.perf_counter()
+
+        if len(self.__e2bConstraints) &gt;= 1:
+            psi &amp;= And(*self.__e2bConstraints)
+            mu &amp;= And(*self.__e2bConstraints)
+
+        if self.__verbose:
+            print(&#34;\n&#34; + self.getTime(), &#34;Transforming Psi in DNF form&#34;)
+        psiDNF = psi.toPCMLC(self.boolToInt).toLessOrEqConstraint().toDNF()
+
+        if self.__verbose:
+            print(&#34;\n&#34; + self.getTime(), &#34;Transforming Mu in DNF form&#34;)
+        muDNF = mu.toPCMLC(self.boolToInt).toLessOrEqConstraint().toDNF()
+
+        res = self.__executeDNF(self.__convertExplicit(psiDNF), self.__convertExplicit(muDNF))
+
+        if self.__verbose:
+            print(&#34;\n&#34; + self.getTime(), f&#34;Solution found with distance of {res[0]}:\n&#34;)
+            try:
+                self.organizedPrintResult(res[1])
+            except:
+                print(res[1])
+
+        return res
         
     def __executeDNF(self, psi: Formula, mu: Formula) -&gt; tuple[Fraction, Formula]:
         
         res = None
         disRes = None
 
-        if(self._onlyOneSolution):
-            
-            for minipsi in psi.children:
-                for miniMu in mu.children:
-                    
-                    lit = self.__executeLiteral(minipsi, miniMu)
+        if self.__verbose:
+            print(&#34;&#34;)
+            psiIter = tqdm(psi.children, desc=f&#34;{self.getTime()} Testing satisfiability of every child of Psi&#34;, mininterval=0.5)
+        else:
+            psiIter = psi.children
 
-                    if not (lit[0] is None):
-                        if (disRes is None):
-                            disRes = lit[0]
-                            res = lit[1]
-                        elif (disRes &gt; lit[0]):
-                            disRes = lit[0]
-                            res = lit[1]
-                    else:
-                        if (disRes is None) &amp; (res is None):
-                            res = lit[1]
+        satPsi = set()
+        for miniPsi in psiIter:
+            if self.__interpreter.sat(miniPsi):
+                satPsi.add(miniPsi)
+
+        if len(satPsi) == 0:
+            raise(AttributeError(&#34;Psi is not satisfiable&#34;))
+
+        if self.__verbose:
+            print(self.getTime(), f&#34;{len(satPsi)} satisfiable children of Psi found\n&#34;)
+            muIter = tqdm(mu.children, desc=f&#34;{self.getTime()} Testing satisfiability of every child of Mu&#34;, mininterval=0.5)
+        else:
+            muIter = mu.children
+            
+        satMu = set()
+        for miniMu in muIter:
+            if self.__interpreter.sat(miniMu):
+                satMu.add(miniMu)
+
+        if len(satMu) == 0:
+            raise(AttributeError(&#34;Mu is not satisfiable&#34;))
+
+        maxIter = len(satPsi)*len(satMu)
+
+        if self.__verbose:
+            print(self.getTime(), f&#34;{len(satMu)} satisfiable children of Mu found&#34;)
+            print(&#34;\n&#34; + self.getTime(), f&#34;{maxIter} combinations of conjunctions found&#34;)
+
+        if(self._onlyOneSolution):
+
+            with ExitStack() as stack:
+
+                if self.__verbose:
+                    pbar = stack.enter_context(tqdm(total=maxIter, desc=f&#34;{self.getTime()} Revision of every combination&#34;, mininterval=0.5))
+
+                for miniPsi in satPsi:
+                    for miniMu in satMu:
+
+                        # print(&#34;-----------------&#34;)
+                        # print(&#34;miniPsi:&#34;, miniPsi)
+                        # print(&#34;miniMu:&#34;, miniMu)
+                        lit = self.__executeLiteral(miniPsi, miniMu)
+
+                        if self.__interpreter.sat(lit[1]):
+
+                            if not (lit[0] is None):
+                                if (disRes is None):
+                                    disRes = lit[0]
+                                    res = lit[1]
+                                elif (disRes &gt; lit[0]):
+                                    disRes = lit[0]
+                                    res = lit[1]
+                            else:
+                                if (disRes is None) &amp; (res is None):
+                                    res = lit[1]
+                        else:
+                            print(&#34;\nWarning: one revised litteral isn&#39;t satisfiable, consider using a bigger Epsilon value for the distance function.\n&#34;)
+
+                        if self.__verbose:
+                            pbar.update(1)
 
         else:
 
             setRes = set()
             
-            for minipsi in psi.children:
-                for miniMu in mu.children:
-                    
-                    lit = self.__executeLiteral(minipsi, miniMu)
-                    #print(&#34;---&#34;)
-                    #print(str(lit[0]) + &#34;; &#34; + str(lit[1]))
-                    
-                    if not (lit[0] is None):
-                        if (disRes is None):
-                            disRes = lit[0]
-                            setRes = {lit[1]}
-                        elif (disRes == lit[0]):
-                            setRes.add(lit[1])
-                        elif (disRes &gt; lit[0]):
-                            disRes = lit[0]
-                            setRes = {lit[1]}
-                    else:
-                        if (disRes is None):
-                            setRes.add(lit[1])
-            
-            res = Or(formulaSet = setRes).toDNF()
+            with ExitStack() as stack:
+
+                if self.__verbose:
+                    pbar = stack.enter_context(tqdm(total=maxIter, desc=f&#34;{self.getTime()} Revision of every combination&#34;, mininterval=0.5))
+
+                for miniPsi in satPsi:
+                    for miniMu in satMu:
+                                            
+                        lit = self.__executeLiteral(miniPsi, miniMu)
+                        
+                        if not (lit[0] is None):
+                            if (disRes is None):
+                                disRes = lit[0]
+                                setRes = {lit[1]}
+                            elif (disRes == lit[0]):
+                                setRes.add(lit[1])
+                            elif (disRes &gt; lit[0]):
+                                disRes = lit[0]
+                                setRes = {lit[1]}
+                        else:
+                            if (disRes is None):
+                                setRes.add(lit[1])
+
+                        if self.__verbose:
+                            pbar.update(1)
+
+            res = Or(*setRes).toDNF()
 
         return (disRes, self.__interpreter.simplifyMLC(res.toLessOrEqConstraint().toDNF()))
     
     def __executeLiteral(self, psi: Formula, mu: Formula) -&gt; tuple[Fraction, Formula]:
-
-        # first step: check if psi and mu are coherent
-        if((not self.__interpreter.sat(psi)) or (not self.__interpreter.sat(mu))):
-            return (None, mu) # None = inf
         
+        epsilon = self.__distance._epsilon
+
         # second step: find dStar (and psiPrime if onlyOneSoltuion)
         dStar, psiPrime = self.__executeConstraint(self.__interpreter.removeNot(psi), self.__interpreter.removeNot(mu))
 
         # third step: lambdaEpsilon
-        epsilon = self.__distance._epsilon
         if dStar % epsilon == 0:
             lambdaEpsilon = dStar
         else:
             lambdaEpsilon = epsilon * math.ceil(dStar / epsilon)
             
+        # print(lambdaEpsilon, psiPrime)
         # fourth step: find psiPrime (only if not onlyOneSolution)
         if(not self._onlyOneSolution):
             psiPrime = self.__expand(psi, lambdaEpsilon)
     
         # fifth step
         if dStar % epsilon != 0:
+            # print(&#34;dStar % epsilon != 0&#34;)
+            if self._onlyOneSolution &amp; (not self.__interpreter.sat(psiPrime &amp; mu)):
+                psiPrime = self.__interpreter.optimizeCoupleWithLimit(self.__interpreter.removeNot(psi, epsilon), self.__interpreter.removeNot(mu, epsilon), lambdaEpsilon)[1]
+            # print(&#34;psiPrime2:&#34;, psiPrime)
             return (lambdaEpsilon, psiPrime &amp; mu)
         elif self.__interpreter.sat(psiPrime &amp; mu):
             return (dStar, psiPrime &amp; mu)
         else:
+            # print(&#34;else&#34;)
             lambdaEpsilon = dStar + epsilon
-            psiPrime = self.__expand(psi, lambdaEpsilon)
+            if (self._onlyOneSolution):
+                psiPrime = self.__interpreter.optimizeCoupleWithLimit(self.__interpreter.removeNot(psi, epsilon), self.__interpreter.removeNot(mu, epsilon), lambdaEpsilon)[1]
+            else:
+                psiPrime = self.__expand(psi, lambdaEpsilon)
+            # print(&#34;psiPrime2:&#34;, psiPrime)
             return(dStar, psiPrime &amp; mu)
     
-    def __executeConstraint(self, psi: Formula, mu: Formula) -&gt; tuple[Fraction, Formula]:
-        return self.__interpreter.optimizeCouple(psi, mu)
+    def __executeConstraint(self, phi: Formula, mu: Formula) -&gt; tuple[Fraction, Formula]:
+        return self.__interpreter.optimizeCouple(phi, mu)
     
     def __convertExplicit(self, phi: Formula) -&gt; Formula:
         
@@ -202,7 +319,7 @@ class Revision:
                     orSet.add(miniPhi)
                 else:
                     orSet.add(And(miniPhi))
-            return Or(formulaSet = orSet)
+            return Or(*orSet)
 
     def __expand(self, psi: Formula, lambdaEpsilon: Fraction) -&gt; Formula:
         
@@ -211,16 +328,16 @@ class Revision:
         constraints = list()
 
         # Create x in M(psi) constraints and change variables
-        for minipsi in psi.children:
-            if isinstance(minipsi, Not):
-                const = minipsi.children.clone()
+        for miniPsi in psi.children:
+            if isinstance(miniPsi, Not):
+                const = miniPsi.children.clone()
                 iterVar = const.variables.copy()
                 for key in iterVar:
                     const.variables[yVariables[key]] = const.variables[key]
                     del const.variables[key]
                 constraints.append(Not(const))
             else:
-                const = minipsi.clone()
+                const = miniPsi.clone()
                 iterVar = const.variables.copy()
                 for key in iterVar:
                     const.variables[yVariables[key]] = const.variables[key]
@@ -259,45 +376,61 @@ class Revision:
             distanceConstraint.variables[zVariables[z]] = self.__distance.getWeights()[z]
         constraints.append(distanceConstraint)
 
-        return self.__projector.projectOn(And(formulaSet = set(constraints)), yVariables.keys())
+        expandConstraint = And(*constraints)
 
-        #try:
-        #    return self.__projector.projectOn(And(formulaSet = set(constraints)), yVariables.keys())
-        #except RuntimeError:
-        #    if isinstance(psi, NaryFormula):
-        #        return And(formulaSet = {self.__expandLiteral(c, lambdaEpsilon) for c in psi.children})
-        #    else:
-        #        return self.__expandLiteral(psi, lambdaEpsilon)
+        return self.__projector.projectOn(expandConstraint, yVariables.keys())
+    
+    def getTime(self):
 
-    def __expandLiteral(self, psi: Formula, lambdaEpsilon: Fraction):
-        
-        if isinstance(psi, Not):
+        timeNow = time.perf_counter()-self.__timeStart
+        m = int(timeNow//60)
 
-            lc = psi.children.clone()
+        s = timeNow%60
+        sbfr = int(s)
+        saftr = int((s-sbfr)*1000)
+
+        return &#34;{:0&gt;2d}m{:0&gt;2d}.{:0&gt;3d}s |&#34;.format(m, sbfr, saftr)
+    
+    def organizedPrintResult(self, res):
+
+        variables = list()
+
+        if self._onlyOneSolution:
             
-            match lc.operator:
-                case ConstraintOperator.LEQ:
-                    lc.bound += lambdaEpsilon
-                case ConstraintOperator.GEQ:
-                    lc.bound -= lambdaEpsilon
-                case ConstraintOperator.EQ:
-                    return And(formulaSet = {Not(self.__expandLiteral(c)) for c in psi.toLessOrEqConstraint().children})
+            resAnd = None
+            if len(res.children) &gt; 1:
+                raise AttributeError(&#34;res isn&#39;t a \&#34;onlyoneSolution\&#34;&#34;)
+            else:
+                for formula in res.children:
+                    resAnd = formula
 
-            return Not(lc)
+            for const in resAnd.children:
+
+                lc = const.clone()
+
+                if not lc.operator == ConstraintOperator.EQ:
+                    # TODO, min/max pour déterminer bound de chaque variable
+                    raise AttributeError(&#34;Can&#39;t print (yet) if not EQ&#34;)
+                elif len(lc.variables) &gt; 1:
+                    raise AttributeError(&#34;Can&#39;t print (yet) if more than one variable per constraint&#34;)
+                else:
+                    var = lc.variables.popitem()
+                    if (var[0].name[0:4] != &#34;b2i_&#34;) &amp; (not var[0].name[1].isnumeric()):
+                        variables.append((var[0], lc.bound / var[1])) # Taking coefficients into account, even though it should always be 1
+
+            maxVarLength = max([len(var[0].name) for var in variables])
+
+            for var, value in sorted(variables, key=lambda x: x[0].name.lower()):
+
+                if isinstance(var, IntegerVariable):
+                    print(var.name.rjust(maxVarLength) + &#34; =&#34;, int(value))
+                else:
+                    print(var.name.rjust(maxVarLength) + &#34; =&#34;, float(value))
+
+            print(&#34;&#34;)
 
         else:
-
-            lc = psi.clone()
-
-            match lc.operator:
-                case ConstraintOperator.LEQ:
-                    lc.bound += lambdaEpsilon
-                case ConstraintOperator.GEQ:
-                    lc.bound -= lambdaEpsilon
-                case ConstraintOperator.EQ:
-                    return And(formulaSet = {self.__expandLiteral(c) for c in psi.toLessOrEqConstraint().children})
-
-            return lc</code></pre>
+            raise NotImplementedError(&#34;&#34;)</code></pre>
 </details>
 </section>
 <section>
@@ -311,7 +444,7 @@ class Revision:
 <dl>
 <dt id="src.revision.Revision"><code class="flex name class">
 <span>class <span class="ident">Revision</span></span>
-<span>(</span><span>solverInit: MLOSolver, distance: DistanceFunction, simplifiers: list[Simplificator] = [], onlyOneSolution: bool = True, projector: Projector = None)</span>
+<span>(</span><span>solverInit: MLOSolver, distance: DistanceFunction, simplifiers: list[Simplificator] = [], onlyOneSolution: bool = True, verbose: bool = True, projector: Projector = None)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Main class of the module, allowing the user to make the knowledge revision between two <code><a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a></code>
@@ -358,15 +491,43 @@ By default, this constant is set to whichever one was chosen in <code><a title="
     
     __distance : DistanceFunction
     __interpreter : FormulaInterpreter
-    __projector : Projector
+    __e2bConstraints: set[Formula]
     _onlyOneSolution: bool
 
-    def __init__(self, solverInit : MLOSolver, distance : DistanceFunction, simplifiers : list[Simplificator] = [], onlyOneSolution: bool = Constants.ONLY_ONE_SOLUTION, projector: Projector = None) -&gt; None:        
+    def __init__(self, solverInit : MLOSolver, distance : DistanceFunction, simplifiers : list[Simplificator] = [], onlyOneSolution: bool = Constants.ONLY_ONE_SOLUTION, verbose: bool = Constants.SET_VERBOSE, projector: Projector = None) -&gt; None:        
         self.__distance = distance 
         self.__interpreter = FormulaInterpreter(solverInit, distance, simplifiers)
         self._onlyOneSolution = onlyOneSolution
+        self.__verbose = verbose
+
+        self.__e2bConstraints = set()
 
         self.__projector = projector
+
+    def preload(self):
+
+        weights = self.__distance.getWeights()
+        self.boolToInt = dict()
+
+        for var in weights.copy().keys():
+
+            if isinstance(var, PropositionalVariable):
+                self.__b2iPreload(var, weights)
+
+            if isinstance(var, EnumeratedType):
+
+                self.__e2bConstraints.add(var.generateConstraints())
+
+                for value in var.values.values():
+                    weights[value] = weights[var]
+                    self.__b2iPreload(value, weights)
+
+    def __b2iPreload(self, var, weights):
+
+        intVar = IntegerVariable.declare(&#34;b2i_&#34; + var.name, lowerBound=Fraction(0), upperBound=Fraction(1))
+
+        self.boolToInt[var] = intVar
+        weights[intVar] = weights[var]
 
     def execute(self, psi : Formula, mu : Formula) -&gt; tuple[Fraction, Formula]:
         r&#34;&#34;&#34;
@@ -389,92 +550,176 @@ By default, this constant is set to whichever one was chosen in <code><a title="
             Result of the knowledge revison of \(\psi\) by \(\mu\).
         &#34;&#34;&#34;
 
-        psiDNF, muDNF = psi.toLessOrEqConstraint().toDNF(), mu.toLessOrEqConstraint().toDNF()
-        return self.__executeDNF(self.__convertExplicit(psiDNF), self.__convertExplicit(muDNF))
+        self.__timeStart = time.perf_counter()
+
+        if len(self.__e2bConstraints) &gt;= 1:
+            psi &amp;= And(*self.__e2bConstraints)
+            mu &amp;= And(*self.__e2bConstraints)
+
+        if self.__verbose:
+            print(&#34;\n&#34; + self.getTime(), &#34;Transforming Psi in DNF form&#34;)
+        psiDNF = psi.toPCMLC(self.boolToInt).toLessOrEqConstraint().toDNF()
+
+        if self.__verbose:
+            print(&#34;\n&#34; + self.getTime(), &#34;Transforming Mu in DNF form&#34;)
+        muDNF = mu.toPCMLC(self.boolToInt).toLessOrEqConstraint().toDNF()
+
+        res = self.__executeDNF(self.__convertExplicit(psiDNF), self.__convertExplicit(muDNF))
+
+        if self.__verbose:
+            print(&#34;\n&#34; + self.getTime(), f&#34;Solution found with distance of {res[0]}:\n&#34;)
+            try:
+                self.organizedPrintResult(res[1])
+            except:
+                print(res[1])
+
+        return res
         
     def __executeDNF(self, psi: Formula, mu: Formula) -&gt; tuple[Fraction, Formula]:
         
         res = None
         disRes = None
 
-        if(self._onlyOneSolution):
-            
-            for minipsi in psi.children:
-                for miniMu in mu.children:
-                    
-                    lit = self.__executeLiteral(minipsi, miniMu)
+        if self.__verbose:
+            print(&#34;&#34;)
+            psiIter = tqdm(psi.children, desc=f&#34;{self.getTime()} Testing satisfiability of every child of Psi&#34;, mininterval=0.5)
+        else:
+            psiIter = psi.children
 
-                    if not (lit[0] is None):
-                        if (disRes is None):
-                            disRes = lit[0]
-                            res = lit[1]
-                        elif (disRes &gt; lit[0]):
-                            disRes = lit[0]
-                            res = lit[1]
-                    else:
-                        if (disRes is None) &amp; (res is None):
-                            res = lit[1]
+        satPsi = set()
+        for miniPsi in psiIter:
+            if self.__interpreter.sat(miniPsi):
+                satPsi.add(miniPsi)
+
+        if len(satPsi) == 0:
+            raise(AttributeError(&#34;Psi is not satisfiable&#34;))
+
+        if self.__verbose:
+            print(self.getTime(), f&#34;{len(satPsi)} satisfiable children of Psi found\n&#34;)
+            muIter = tqdm(mu.children, desc=f&#34;{self.getTime()} Testing satisfiability of every child of Mu&#34;, mininterval=0.5)
+        else:
+            muIter = mu.children
+            
+        satMu = set()
+        for miniMu in muIter:
+            if self.__interpreter.sat(miniMu):
+                satMu.add(miniMu)
+
+        if len(satMu) == 0:
+            raise(AttributeError(&#34;Mu is not satisfiable&#34;))
+
+        maxIter = len(satPsi)*len(satMu)
+
+        if self.__verbose:
+            print(self.getTime(), f&#34;{len(satMu)} satisfiable children of Mu found&#34;)
+            print(&#34;\n&#34; + self.getTime(), f&#34;{maxIter} combinations of conjunctions found&#34;)
+
+        if(self._onlyOneSolution):
+
+            with ExitStack() as stack:
+
+                if self.__verbose:
+                    pbar = stack.enter_context(tqdm(total=maxIter, desc=f&#34;{self.getTime()} Revision of every combination&#34;, mininterval=0.5))
+
+                for miniPsi in satPsi:
+                    for miniMu in satMu:
+
+                        # print(&#34;-----------------&#34;)
+                        # print(&#34;miniPsi:&#34;, miniPsi)
+                        # print(&#34;miniMu:&#34;, miniMu)
+                        lit = self.__executeLiteral(miniPsi, miniMu)
+
+                        if self.__interpreter.sat(lit[1]):
+
+                            if not (lit[0] is None):
+                                if (disRes is None):
+                                    disRes = lit[0]
+                                    res = lit[1]
+                                elif (disRes &gt; lit[0]):
+                                    disRes = lit[0]
+                                    res = lit[1]
+                            else:
+                                if (disRes is None) &amp; (res is None):
+                                    res = lit[1]
+                        else:
+                            print(&#34;\nWarning: one revised litteral isn&#39;t satisfiable, consider using a bigger Epsilon value for the distance function.\n&#34;)
+
+                        if self.__verbose:
+                            pbar.update(1)
 
         else:
 
             setRes = set()
             
-            for minipsi in psi.children:
-                for miniMu in mu.children:
-                    
-                    lit = self.__executeLiteral(minipsi, miniMu)
-                    #print(&#34;---&#34;)
-                    #print(str(lit[0]) + &#34;; &#34; + str(lit[1]))
-                    
-                    if not (lit[0] is None):
-                        if (disRes is None):
-                            disRes = lit[0]
-                            setRes = {lit[1]}
-                        elif (disRes == lit[0]):
-                            setRes.add(lit[1])
-                        elif (disRes &gt; lit[0]):
-                            disRes = lit[0]
-                            setRes = {lit[1]}
-                    else:
-                        if (disRes is None):
-                            setRes.add(lit[1])
-            
-            res = Or(formulaSet = setRes).toDNF()
+            with ExitStack() as stack:
+
+                if self.__verbose:
+                    pbar = stack.enter_context(tqdm(total=maxIter, desc=f&#34;{self.getTime()} Revision of every combination&#34;, mininterval=0.5))
+
+                for miniPsi in satPsi:
+                    for miniMu in satMu:
+                                            
+                        lit = self.__executeLiteral(miniPsi, miniMu)
+                        
+                        if not (lit[0] is None):
+                            if (disRes is None):
+                                disRes = lit[0]
+                                setRes = {lit[1]}
+                            elif (disRes == lit[0]):
+                                setRes.add(lit[1])
+                            elif (disRes &gt; lit[0]):
+                                disRes = lit[0]
+                                setRes = {lit[1]}
+                        else:
+                            if (disRes is None):
+                                setRes.add(lit[1])
+
+                        if self.__verbose:
+                            pbar.update(1)
+
+            res = Or(*setRes).toDNF()
 
         return (disRes, self.__interpreter.simplifyMLC(res.toLessOrEqConstraint().toDNF()))
     
     def __executeLiteral(self, psi: Formula, mu: Formula) -&gt; tuple[Fraction, Formula]:
-
-        # first step: check if psi and mu are coherent
-        if((not self.__interpreter.sat(psi)) or (not self.__interpreter.sat(mu))):
-            return (None, mu) # None = inf
         
+        epsilon = self.__distance._epsilon
+
         # second step: find dStar (and psiPrime if onlyOneSoltuion)
         dStar, psiPrime = self.__executeConstraint(self.__interpreter.removeNot(psi), self.__interpreter.removeNot(mu))
 
         # third step: lambdaEpsilon
-        epsilon = self.__distance._epsilon
         if dStar % epsilon == 0:
             lambdaEpsilon = dStar
         else:
             lambdaEpsilon = epsilon * math.ceil(dStar / epsilon)
             
+        # print(lambdaEpsilon, psiPrime)
         # fourth step: find psiPrime (only if not onlyOneSolution)
         if(not self._onlyOneSolution):
             psiPrime = self.__expand(psi, lambdaEpsilon)
     
         # fifth step
         if dStar % epsilon != 0:
+            # print(&#34;dStar % epsilon != 0&#34;)
+            if self._onlyOneSolution &amp; (not self.__interpreter.sat(psiPrime &amp; mu)):
+                psiPrime = self.__interpreter.optimizeCoupleWithLimit(self.__interpreter.removeNot(psi, epsilon), self.__interpreter.removeNot(mu, epsilon), lambdaEpsilon)[1]
+            # print(&#34;psiPrime2:&#34;, psiPrime)
             return (lambdaEpsilon, psiPrime &amp; mu)
         elif self.__interpreter.sat(psiPrime &amp; mu):
             return (dStar, psiPrime &amp; mu)
         else:
+            # print(&#34;else&#34;)
             lambdaEpsilon = dStar + epsilon
-            psiPrime = self.__expand(psi, lambdaEpsilon)
+            if (self._onlyOneSolution):
+                psiPrime = self.__interpreter.optimizeCoupleWithLimit(self.__interpreter.removeNot(psi, epsilon), self.__interpreter.removeNot(mu, epsilon), lambdaEpsilon)[1]
+            else:
+                psiPrime = self.__expand(psi, lambdaEpsilon)
+            # print(&#34;psiPrime2:&#34;, psiPrime)
             return(dStar, psiPrime &amp; mu)
     
-    def __executeConstraint(self, psi: Formula, mu: Formula) -&gt; tuple[Fraction, Formula]:
-        return self.__interpreter.optimizeCouple(psi, mu)
+    def __executeConstraint(self, phi: Formula, mu: Formula) -&gt; tuple[Fraction, Formula]:
+        return self.__interpreter.optimizeCouple(phi, mu)
     
     def __convertExplicit(self, phi: Formula) -&gt; Formula:
         
@@ -489,7 +734,7 @@ By default, this constant is set to whichever one was chosen in <code><a title="
                     orSet.add(miniPhi)
                 else:
                     orSet.add(And(miniPhi))
-            return Or(formulaSet = orSet)
+            return Or(*orSet)
 
     def __expand(self, psi: Formula, lambdaEpsilon: Fraction) -&gt; Formula:
         
@@ -498,16 +743,16 @@ By default, this constant is set to whichever one was chosen in <code><a title="
         constraints = list()
 
         # Create x in M(psi) constraints and change variables
-        for minipsi in psi.children:
-            if isinstance(minipsi, Not):
-                const = minipsi.children.clone()
+        for miniPsi in psi.children:
+            if isinstance(miniPsi, Not):
+                const = miniPsi.children.clone()
                 iterVar = const.variables.copy()
                 for key in iterVar:
                     const.variables[yVariables[key]] = const.variables[key]
                     del const.variables[key]
                 constraints.append(Not(const))
             else:
-                const = minipsi.clone()
+                const = miniPsi.clone()
                 iterVar = const.variables.copy()
                 for key in iterVar:
                     const.variables[yVariables[key]] = const.variables[key]
@@ -546,45 +791,61 @@ By default, this constant is set to whichever one was chosen in <code><a title="
             distanceConstraint.variables[zVariables[z]] = self.__distance.getWeights()[z]
         constraints.append(distanceConstraint)
 
-        return self.__projector.projectOn(And(formulaSet = set(constraints)), yVariables.keys())
+        expandConstraint = And(*constraints)
 
-        #try:
-        #    return self.__projector.projectOn(And(formulaSet = set(constraints)), yVariables.keys())
-        #except RuntimeError:
-        #    if isinstance(psi, NaryFormula):
-        #        return And(formulaSet = {self.__expandLiteral(c, lambdaEpsilon) for c in psi.children})
-        #    else:
-        #        return self.__expandLiteral(psi, lambdaEpsilon)
+        return self.__projector.projectOn(expandConstraint, yVariables.keys())
+    
+    def getTime(self):
 
-    def __expandLiteral(self, psi: Formula, lambdaEpsilon: Fraction):
-        
-        if isinstance(psi, Not):
+        timeNow = time.perf_counter()-self.__timeStart
+        m = int(timeNow//60)
 
-            lc = psi.children.clone()
+        s = timeNow%60
+        sbfr = int(s)
+        saftr = int((s-sbfr)*1000)
+
+        return &#34;{:0&gt;2d}m{:0&gt;2d}.{:0&gt;3d}s |&#34;.format(m, sbfr, saftr)
+    
+    def organizedPrintResult(self, res):
+
+        variables = list()
+
+        if self._onlyOneSolution:
             
-            match lc.operator:
-                case ConstraintOperator.LEQ:
-                    lc.bound += lambdaEpsilon
-                case ConstraintOperator.GEQ:
-                    lc.bound -= lambdaEpsilon
-                case ConstraintOperator.EQ:
-                    return And(formulaSet = {Not(self.__expandLiteral(c)) for c in psi.toLessOrEqConstraint().children})
+            resAnd = None
+            if len(res.children) &gt; 1:
+                raise AttributeError(&#34;res isn&#39;t a \&#34;onlyoneSolution\&#34;&#34;)
+            else:
+                for formula in res.children:
+                    resAnd = formula
 
-            return Not(lc)
+            for const in resAnd.children:
+
+                lc = const.clone()
+
+                if not lc.operator == ConstraintOperator.EQ:
+                    # TODO, min/max pour déterminer bound de chaque variable
+                    raise AttributeError(&#34;Can&#39;t print (yet) if not EQ&#34;)
+                elif len(lc.variables) &gt; 1:
+                    raise AttributeError(&#34;Can&#39;t print (yet) if more than one variable per constraint&#34;)
+                else:
+                    var = lc.variables.popitem()
+                    if (var[0].name[0:4] != &#34;b2i_&#34;) &amp; (not var[0].name[1].isnumeric()):
+                        variables.append((var[0], lc.bound / var[1])) # Taking coefficients into account, even though it should always be 1
+
+            maxVarLength = max([len(var[0].name) for var in variables])
+
+            for var, value in sorted(variables, key=lambda x: x[0].name.lower()):
+
+                if isinstance(var, IntegerVariable):
+                    print(var.name.rjust(maxVarLength) + &#34; =&#34;, int(value))
+                else:
+                    print(var.name.rjust(maxVarLength) + &#34; =&#34;, float(value))
+
+            print(&#34;&#34;)
 
         else:
-
-            lc = psi.clone()
-
-            match lc.operator:
-                case ConstraintOperator.LEQ:
-                    lc.bound += lambdaEpsilon
-                case ConstraintOperator.GEQ:
-                    lc.bound -= lambdaEpsilon
-                case ConstraintOperator.EQ:
-                    return And(formulaSet = {self.__expandLiteral(c) for c in psi.toLessOrEqConstraint().children})
-
-            return lc</code></pre>
+            raise NotImplementedError(&#34;&#34;)</code></pre>
 </details>
 <h3>Methods</h3>
 <dl>
@@ -633,8 +894,130 @@ given at the initialization of the class) between <span><span class="MathJax_Pre
         Result of the knowledge revison of \(\psi\) by \(\mu\).
     &#34;&#34;&#34;
 
-    psiDNF, muDNF = psi.toLessOrEqConstraint().toDNF(), mu.toLessOrEqConstraint().toDNF()
-    return self.__executeDNF(self.__convertExplicit(psiDNF), self.__convertExplicit(muDNF))</code></pre>
+    self.__timeStart = time.perf_counter()
+
+    if len(self.__e2bConstraints) &gt;= 1:
+        psi &amp;= And(*self.__e2bConstraints)
+        mu &amp;= And(*self.__e2bConstraints)
+
+    if self.__verbose:
+        print(&#34;\n&#34; + self.getTime(), &#34;Transforming Psi in DNF form&#34;)
+    psiDNF = psi.toPCMLC(self.boolToInt).toLessOrEqConstraint().toDNF()
+
+    if self.__verbose:
+        print(&#34;\n&#34; + self.getTime(), &#34;Transforming Mu in DNF form&#34;)
+    muDNF = mu.toPCMLC(self.boolToInt).toLessOrEqConstraint().toDNF()
+
+    res = self.__executeDNF(self.__convertExplicit(psiDNF), self.__convertExplicit(muDNF))
+
+    if self.__verbose:
+        print(&#34;\n&#34; + self.getTime(), f&#34;Solution found with distance of {res[0]}:\n&#34;)
+        try:
+            self.organizedPrintResult(res[1])
+        except:
+            print(res[1])
+
+    return res</code></pre>
+</details>
+</dd>
+<dt id="src.revision.Revision.getTime"><code class="name flex">
+<span>def <span class="ident">getTime</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getTime(self):
+
+    timeNow = time.perf_counter()-self.__timeStart
+    m = int(timeNow//60)
+
+    s = timeNow%60
+    sbfr = int(s)
+    saftr = int((s-sbfr)*1000)
+
+    return &#34;{:0&gt;2d}m{:0&gt;2d}.{:0&gt;3d}s |&#34;.format(m, sbfr, saftr)</code></pre>
+</details>
+</dd>
+<dt id="src.revision.Revision.organizedPrintResult"><code class="name flex">
+<span>def <span class="ident">organizedPrintResult</span></span>(<span>self, res)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def organizedPrintResult(self, res):
+
+    variables = list()
+
+    if self._onlyOneSolution:
+        
+        resAnd = None
+        if len(res.children) &gt; 1:
+            raise AttributeError(&#34;res isn&#39;t a \&#34;onlyoneSolution\&#34;&#34;)
+        else:
+            for formula in res.children:
+                resAnd = formula
+
+        for const in resAnd.children:
+
+            lc = const.clone()
+
+            if not lc.operator == ConstraintOperator.EQ:
+                # TODO, min/max pour déterminer bound de chaque variable
+                raise AttributeError(&#34;Can&#39;t print (yet) if not EQ&#34;)
+            elif len(lc.variables) &gt; 1:
+                raise AttributeError(&#34;Can&#39;t print (yet) if more than one variable per constraint&#34;)
+            else:
+                var = lc.variables.popitem()
+                if (var[0].name[0:4] != &#34;b2i_&#34;) &amp; (not var[0].name[1].isnumeric()):
+                    variables.append((var[0], lc.bound / var[1])) # Taking coefficients into account, even though it should always be 1
+
+        maxVarLength = max([len(var[0].name) for var in variables])
+
+        for var, value in sorted(variables, key=lambda x: x[0].name.lower()):
+
+            if isinstance(var, IntegerVariable):
+                print(var.name.rjust(maxVarLength) + &#34; =&#34;, int(value))
+            else:
+                print(var.name.rjust(maxVarLength) + &#34; =&#34;, float(value))
+
+        print(&#34;&#34;)
+
+    else:
+        raise NotImplementedError(&#34;&#34;)</code></pre>
+</details>
+</dd>
+<dt id="src.revision.Revision.preload"><code class="name flex">
+<span>def <span class="ident">preload</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def preload(self):
+
+    weights = self.__distance.getWeights()
+    self.boolToInt = dict()
+
+    for var in weights.copy().keys():
+
+        if isinstance(var, PropositionalVariable):
+            self.__b2iPreload(var, weights)
+
+        if isinstance(var, EnumeratedType):
+
+            self.__e2bConstraints.add(var.generateConstraints())
+
+            for value in var.values.values():
+                weights[value] = weights[var]
+                self.__b2iPreload(value, weights)</code></pre>
 </details>
 </dd>
 </dl>
@@ -659,6 +1042,9 @@ given at the initialization of the class) between <span><span class="MathJax_Pre
 <h4><code><a title="src.revision.Revision" href="#src.revision.Revision">Revision</a></code></h4>
 <ul class="">
 <li><code><a title="src.revision.Revision.execute" href="#src.revision.Revision.execute">execute</a></code></li>
+<li><code><a title="src.revision.Revision.getTime" href="#src.revision.Revision.getTime">getTime</a></code></li>
+<li><code><a title="src.revision.Revision.organizedPrintResult" href="#src.revision.Revision.organizedPrintResult">organizedPrintResult</a></code></li>
+<li><code><a title="src.revision.Revision.preload" href="#src.revision.Revision.preload">preload</a></code></li>
 </ul>
 </li>
 </ul>

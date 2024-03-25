@@ -53,7 +53,7 @@ class VariableManager:
     &#34;&#34;&#34;
     
     instance = {}
-    __namePatern = &#34;^[a-zA-Z]([a-zA-Z0-9_])*$&#34;
+    __namePatern = &#34;^[a-zA-Z]([a-zA-Z0-9:_])*$&#34;
 
     @staticmethod
     def verify(name: str, cls: type[Variable]) -&gt; None:
@@ -74,9 +74,10 @@ class VariableManager:
         TypeError
             If the object is already defined with another type or its name is not valid.
         &#34;&#34;&#34;
-
+        # We verifie constraint linked to the name of the variable
         if not re.match(VariableManager.__namePatern, name):
-            raise NameError(f&#34;{name} is not a valide name for a variable&#34;)
+            raise NameError(f&#34;{name} is not a valid name for a variable&#34;)
+        # And then we test the classe of the variable
         if name in __class__.instance and cls !=  __class__.instance[name].__class__:
             raise TypeError(f&#34;{name} is already define with another type.&#34;)
 
@@ -192,7 +193,7 @@ class VariableManager:
     &#34;&#34;&#34;
     
     instance = {}
-    __namePatern = &#34;^[a-zA-Z]([a-zA-Z0-9_])*$&#34;
+    __namePatern = &#34;^[a-zA-Z]([a-zA-Z0-9:_])*$&#34;
 
     @staticmethod
     def verify(name: str, cls: type[Variable]) -&gt; None:
@@ -213,9 +214,10 @@ class VariableManager:
         TypeError
             If the object is already defined with another type or its name is not valid.
         &#34;&#34;&#34;
-
+        # We verifie constraint linked to the name of the variable
         if not re.match(VariableManager.__namePatern, name):
-            raise NameError(f&#34;{name} is not a valide name for a variable&#34;)
+            raise NameError(f&#34;{name} is not a valid name for a variable&#34;)
+        # And then we test the classe of the variable
         if name in __class__.instance and cls !=  __class__.instance[name].__class__:
             raise TypeError(f&#34;{name} is already define with another type.&#34;)
 
@@ -491,9 +493,10 @@ def verify(name: str, cls: type[Variable]) -&gt; None:
     TypeError
         If the object is already defined with another type or its name is not valid.
     &#34;&#34;&#34;
-
+    # We verifie constraint linked to the name of the variable
     if not re.match(VariableManager.__namePatern, name):
-        raise NameError(f&#34;{name} is not a valide name for a variable&#34;)
+        raise NameError(f&#34;{name} is not a valid name for a variable&#34;)
+    # And then we test the classe of the variable
     if name in __class__.instance and cls !=  __class__.instance[name].__class__:
         raise TypeError(f&#34;{name} is already define with another type.&#34;)</code></pre>
 </details>

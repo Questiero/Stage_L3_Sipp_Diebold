@@ -58,12 +58,12 @@ class BinaryFormula(Formula):
         The children of the current node.
     &#39;&#39;&#39;
         
-    def __init__(self, formulaLeft: Formula, formulaRight: Formula, name: str = None):
+    def __init__(self, formulaLeft: Formula, formulaRight: Formula, fmName: str = None):
 
         self.children = (formulaLeft, formulaRight)
 
-        if(name is not None):
-            FormulaManager.declare(name, self)
+        if(fmName is not None):
+            FormulaManager.declare(fmName, self)
 
     @abstractmethod
     def _eliminate(self) -&gt; Formula:
@@ -117,7 +117,21 @@ class BinaryFormula(Formula):
         
         return self._eliminate()._toDNFNeg()
     
-    def getAdherence(self, var : Variable) -&gt; list[list[Constraint]]:
+    def toLessOrEqConstraint(self):
+        &#39;&#39;&#39;
+        Method used to transform a `src.formula.formula.Formula` into another one, with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
+
+        Returns
+        ------
+        src.formula.formula.Formula
+            A `src.formula.formula.Formula` with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
+        &#39;&#39;&#39;
+        childrenModified = []
+        for child in self.children: childrenModified.append(child.toLessOrEqConstraint())
+
+        return self.__class__(childrenModified[0], childrenModified[1])
+        
+    def getAdherence(self, var : Variable = None) -&gt; list[list[Constraint]]:
         &#39;&#39;&#39;
         Returns a 2D list containing all the constraints of the adherence of 
         the Formula, in Disjunctive Normal Form.
@@ -134,7 +148,7 @@ class BinaryFormula(Formula):
         &#39;&#39;&#39;
         return self._eliminate().getAdherence(var)
 
-    def _getAdherenceNeg(self, var : Variable)  -&gt; list[list[Constraint]]:
+    def _getAdherenceNeg(self, var : Variable = None)  -&gt; list[list[Constraint]]:
         &#39;&#39;&#39;
         Protected method used in the algorithm to recursivly determine the
         constraints of the adherence of the Formula, used when a Negation is in play
@@ -150,7 +164,21 @@ class BinaryFormula(Formula):
             2D list containing all the constraints of the adherence of the Formula,
             in Disjunctive Normal Form under Negation.
         &#39;&#39;&#39;
-        return self._eliminate()._getAdherenceNeg(var)</code></pre>
+        return self._eliminate()._getAdherenceNeg(var)
+    
+    def toPCMLC(self, varDict) -&gt; Formula:
+        &#39;&#39;&#39;
+        Method used to transform a `src.formula.formula.Formula` into a new one, in the PCMLC formalism.
+
+        Returns
+        -------
+        src.formula.formula.Formula
+            A `src.formula.formula.Formula` in the PCMLC formalism.
+        &#39;&#39;&#39;
+        return self._eliminate().toPCMLC(varDict)
+    
+    def _toPCMLCNeg(self, varDict) -&gt; Formula:
+        return self._eliminate()._toPCMLCNeg(varDict)</code></pre>
 </details>
 </section>
 <section>
@@ -164,7 +192,7 @@ class BinaryFormula(Formula):
 <dl>
 <dt id="src.formula.binaryFormula.binaryFormula.BinaryFormula"><code class="flex name class">
 <span>class <span class="ident">BinaryFormula</span></span>
-<span>(</span><span>formulaLeft: Formula, formulaRight: Formula, name: str = None)</span>
+<span>(</span><span>formulaLeft: Formula, formulaRight: Formula, fmName: str = None)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Abstract class, representing a binary operator.</p>
@@ -197,12 +225,12 @@ class BinaryFormula(Formula):
         The children of the current node.
     &#39;&#39;&#39;
         
-    def __init__(self, formulaLeft: Formula, formulaRight: Formula, name: str = None):
+    def __init__(self, formulaLeft: Formula, formulaRight: Formula, fmName: str = None):
 
         self.children = (formulaLeft, formulaRight)
 
-        if(name is not None):
-            FormulaManager.declare(name, self)
+        if(fmName is not None):
+            FormulaManager.declare(fmName, self)
 
     @abstractmethod
     def _eliminate(self) -&gt; Formula:
@@ -256,7 +284,21 @@ class BinaryFormula(Formula):
         
         return self._eliminate()._toDNFNeg()
     
-    def getAdherence(self, var : Variable) -&gt; list[list[Constraint]]:
+    def toLessOrEqConstraint(self):
+        &#39;&#39;&#39;
+        Method used to transform a `src.formula.formula.Formula` into another one, with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
+
+        Returns
+        ------
+        src.formula.formula.Formula
+            A `src.formula.formula.Formula` with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
+        &#39;&#39;&#39;
+        childrenModified = []
+        for child in self.children: childrenModified.append(child.toLessOrEqConstraint())
+
+        return self.__class__(childrenModified[0], childrenModified[1])
+        
+    def getAdherence(self, var : Variable = None) -&gt; list[list[Constraint]]:
         &#39;&#39;&#39;
         Returns a 2D list containing all the constraints of the adherence of 
         the Formula, in Disjunctive Normal Form.
@@ -273,7 +315,7 @@ class BinaryFormula(Formula):
         &#39;&#39;&#39;
         return self._eliminate().getAdherence(var)
 
-    def _getAdherenceNeg(self, var : Variable)  -&gt; list[list[Constraint]]:
+    def _getAdherenceNeg(self, var : Variable = None)  -&gt; list[list[Constraint]]:
         &#39;&#39;&#39;
         Protected method used in the algorithm to recursivly determine the
         constraints of the adherence of the Formula, used when a Negation is in play
@@ -289,7 +331,21 @@ class BinaryFormula(Formula):
             2D list containing all the constraints of the adherence of the Formula,
             in Disjunctive Normal Form under Negation.
         &#39;&#39;&#39;
-        return self._eliminate()._getAdherenceNeg(var)</code></pre>
+        return self._eliminate()._getAdherenceNeg(var)
+    
+    def toPCMLC(self, varDict) -&gt; Formula:
+        &#39;&#39;&#39;
+        Method used to transform a `src.formula.formula.Formula` into a new one, in the PCMLC formalism.
+
+        Returns
+        -------
+        src.formula.formula.Formula
+            A `src.formula.formula.Formula` in the PCMLC formalism.
+        &#39;&#39;&#39;
+        return self._eliminate().toPCMLC(varDict)
+    
+    def _toPCMLCNeg(self, varDict) -&gt; Formula:
+        return self._eliminate()._toPCMLCNeg(varDict)</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -305,7 +361,7 @@ class BinaryFormula(Formula):
 <h3>Methods</h3>
 <dl>
 <dt id="src.formula.binaryFormula.binaryFormula.BinaryFormula.getAdherence"><code class="name flex">
-<span>def <span class="ident">getAdherence</span></span>(<span>self, var: Variable) ‑> list[list[<a title="src.formula.nullaryFormula.constraint.constraint.Constraint" href="../nullaryFormula/constraint/constraint.html#src.formula.nullaryFormula.constraint.constraint.Constraint">Constraint</a>]]</span>
+<span>def <span class="ident">getAdherence</span></span>(<span>self, var: Variable = None) ‑> list[list[<a title="src.formula.nullaryFormula.constraint.constraint.Constraint" href="../nullaryFormula/constraint/constraint.html#src.formula.nullaryFormula.constraint.constraint.Constraint">Constraint</a>]]</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Returns a 2D list containing all the constraints of the adherence of
@@ -325,7 +381,7 @@ in Disjunctive Normal Form.</dd>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def getAdherence(self, var : Variable) -&gt; list[list[Constraint]]:
+<pre><code class="python">def getAdherence(self, var : Variable = None) -&gt; list[list[Constraint]]:
     &#39;&#39;&#39;
     Returns a 2D list containing all the constraints of the adherence of 
     the Formula, in Disjunctive Normal Form.
@@ -407,6 +463,7 @@ the Formula.</p>
 <li><code><a title="src.formula.formula.Formula.clone" href="../formula.html#src.formula.formula.Formula.clone">clone</a></code></li>
 <li><code><a title="src.formula.formula.Formula.toLatex" href="../formula.html#src.formula.formula.Formula.toLatex">toLatex</a></code></li>
 <li><code><a title="src.formula.formula.Formula.toLessOrEqConstraint" href="../formula.html#src.formula.formula.Formula.toLessOrEqConstraint">toLessOrEqConstraint</a></code></li>
+<li><code><a title="src.formula.formula.Formula.toPCMLC" href="../formula.html#src.formula.formula.Formula.toPCMLC">toPCMLC</a></code></li>
 </ul>
 </li>
 </ul>

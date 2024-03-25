@@ -33,7 +33,15 @@ Allows to project a closed conjunction of `src.formula.formula.Formula` to a sub
 &#34;&#34;&#34;
 
 from .projector import Projector
-from .floatConvexHullProjector import FloatConvexHullProjector</code></pre>
+
+try:
+    from .floatConvexHullProjector import FloatConvexHullProjector
+except ModuleNotFoundError:
+
+    from ..constants import Constants
+    
+    if Constants.DISPLAY_DEPENDENCIES_WARNING:
+        print(&#34;Missing SciPy or Numpy dependency: FloatConvexHullProjector cannot be used without it. If you wish to disable these warnings, set the DISPLAY_DEPENDENCIES_WARNING constant to False.&#34;)</code></pre>
 </details>
 </section>
 <section>

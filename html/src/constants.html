@@ -44,6 +44,8 @@ class Constants():
     Note that this only change the default value of the `onlyOneSolution` parameter of `src.revision.Revision`, it could still be changed
     on a case-by-case basis for every new instance of this class.
     &#34;&#34;&#34;
+    SET_VERBOSE = True
+    DISPLAY_DEPENDENCIES_WARNING = True
 
     # ---------------------------------------------------
     # Operator used in `src.formula.formulaManager.FormulaManager.parser`.
@@ -117,6 +119,8 @@ class Constants():
     Note that this only change the default value of the `onlyOneSolution` parameter of `src.revision.Revision`, it could still be changed
     on a case-by-case basis for every new instance of this class.
     &#34;&#34;&#34;
+    SET_VERBOSE = True
+    DISPLAY_DEPENDENCIES_WARNING = True
 
     # ---------------------------------------------------
     # Operator used in `src.formula.formulaManager.FormulaManager.parser`.
@@ -180,6 +184,10 @@ class Constants():
 <dt id="src.constants.Constants.BOTTOM_STRING_OPERATOR"><code class="name">var <span class="ident">BOTTOM_STRING_OPERATOR</span></code></dt>
 <dd>
 <div class="desc"><p>Value for the operator used in <code><a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a></code>'s string display for the <code><a title="src.formula.nullaryFormula.bottom.Bottom" href="formula/nullaryFormula/bottom.html#src.formula.nullaryFormula.bottom.Bottom">Bottom</a></code> operator, defaulted as <code>BOT</code>.</p></div>
+</dd>
+<dt id="src.constants.Constants.DISPLAY_DEPENDENCIES_WARNING"><code class="name">var <span class="ident">DISPLAY_DEPENDENCIES_WARNING</span></code></dt>
+<dd>
+<div class="desc"></div>
 </dd>
 <dt id="src.constants.Constants.EQUIVALENCE_LATEX_OPERATOR"><code class="name">var <span class="ident">EQUIVALENCE_LATEX_OPERATOR</span></code></dt>
 <dd>
@@ -255,6 +263,10 @@ on a case-by-case basis for every new instance of this class.</p></div>
 <dd>
 <div class="desc"><p>Value for the operator used in <code><a title="src.formula.formula.Formula" href="formula/formula.html#src.formula.formula.Formula">Formula</a></code>'s string display for the <code><a title="src.formula.naryFormula.orOperator.Or" href="formula/naryFormula/orOperator.html#src.formula.naryFormula.orOperator.Or">Or</a></code> operator, defaulted as <code>|</code>.</p></div>
 </dd>
+<dt id="src.constants.Constants.SET_VERBOSE"><code class="name">var <span class="ident">SET_VERBOSE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
 <dt id="src.constants.Constants.TOP_LATEX_OPERATOR"><code class="name">var <span class="ident">TOP_LATEX_OPERATOR</span></code></dt>
 <dd>
 <div class="desc"><p>Value for the operator used in <code><a title="src.formula.formula.Formula.toLatex" href="formula/formula.html#src.formula.formula.Formula.toLatex">Formula.toLatex()</a></code> for the <code><a title="src.formula.nullaryFormula.top.Top" href="formula/nullaryFormula/top.html#src.formula.nullaryFormula.top.Top">Top</a></code> operator, defaulted as <code>\top</code>.</p></div>
@@ -301,6 +313,7 @@ on a case-by-case basis for every new instance of this class.</p></div>
 <li><code><a title="src.constants.Constants.AND_STRING_OPERATOR" href="#src.constants.Constants.AND_STRING_OPERATOR">AND_STRING_OPERATOR</a></code></li>
 <li><code><a title="src.constants.Constants.BOTTOM_LATEX_OPERATOR" href="#src.constants.Constants.BOTTOM_LATEX_OPERATOR">BOTTOM_LATEX_OPERATOR</a></code></li>
 <li><code><a title="src.constants.Constants.BOTTOM_STRING_OPERATOR" href="#src.constants.Constants.BOTTOM_STRING_OPERATOR">BOTTOM_STRING_OPERATOR</a></code></li>
+<li><code><a title="src.constants.Constants.DISPLAY_DEPENDENCIES_WARNING" href="#src.constants.Constants.DISPLAY_DEPENDENCIES_WARNING">DISPLAY_DEPENDENCIES_WARNING</a></code></li>
 <li><code><a title="src.constants.Constants.EQUIVALENCE_LATEX_OPERATOR" href="#src.constants.Constants.EQUIVALENCE_LATEX_OPERATOR">EQUIVALENCE_LATEX_OPERATOR</a></code></li>
 <li><code><a title="src.constants.Constants.EQUIVALENCE_PARSER_OPERATOR" href="#src.constants.Constants.EQUIVALENCE_PARSER_OPERATOR">EQUIVALENCE_PARSER_OPERATOR</a></code></li>
 <li><code><a title="src.constants.Constants.EQUIVALENCE_STRING_OPERATOR" href="#src.constants.Constants.EQUIVALENCE_STRING_OPERATOR">EQUIVALENCE_STRING_OPERATOR</a></code></li>
@@ -318,6 +331,7 @@ on a case-by-case basis for every new instance of this class.</p></div>
 <li><code><a title="src.constants.Constants.OR_LATEX_OPERATOR" href="#src.constants.Constants.OR_LATEX_OPERATOR">OR_LATEX_OPERATOR</a></code></li>
 <li><code><a title="src.constants.Constants.OR_PARSER_OPERATOR" href="#src.constants.Constants.OR_PARSER_OPERATOR">OR_PARSER_OPERATOR</a></code></li>
 <li><code><a title="src.constants.Constants.OR_STRING_OPERATOR" href="#src.constants.Constants.OR_STRING_OPERATOR">OR_STRING_OPERATOR</a></code></li>
+<li><code><a title="src.constants.Constants.SET_VERBOSE" href="#src.constants.Constants.SET_VERBOSE">SET_VERBOSE</a></code></li>
 <li><code><a title="src.constants.Constants.TOP_LATEX_OPERATOR" href="#src.constants.Constants.TOP_LATEX_OPERATOR">TOP_LATEX_OPERATOR</a></code></li>
 <li><code><a title="src.constants.Constants.TOP_STRING_OPERATOR" href="#src.constants.Constants.TOP_STRING_OPERATOR">TOP_STRING_OPERATOR</a></code></li>
 <li><code><a title="src.constants.Constants.XOR_LATEX_OPERATOR" href="#src.constants.Constants.XOR_LATEX_OPERATOR">XOR_LATEX_OPERATOR</a></code></li>

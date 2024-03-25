@@ -52,33 +52,6 @@ class IntegerVariable(Variable):
         The name of the `src.variable.integerVariable.IntegerVariable`.
     &#34;&#34;&#34;
 
-    def haveBound(self) -&gt; tuple[bool, bool]:
-        &#34;&#34;&#34;
-        Method use to say if the variable have lower and upper bound
-
-        Returns
-        -------
-        res: 
-            true,true if the variable have a lower and an upper bound
-            true, false if the variable have a lower and not an upper bound
-            etc...
-        &#34;&#34;&#34;
-
-        return False, False
-
-    def getBounds(self) -&gt; tuple[Fraction, Fraction]:
-        &#34;&#34;&#34;
-        Method use to known bounds of the variables
-
-        Returns
-        -------
-        res: 
-            can be None, None if the variable have no limits,
-            or Fraction, Fraction.
-        &#34;&#34;&#34;
-
-        return None, None
-
     def isInteger(self) -&gt; bool:
         &#34;&#34;&#34;
         Method used to known if the variable must have intergers values.
@@ -104,7 +77,7 @@ class IntegerVariable(Variable):
 <dl>
 <dt id="src.variable.integerVariable.IntegerVariable"><code class="flex name class">
 <span>class <span class="ident">IntegerVariable</span></span>
-<span>(</span><span>name)</span>
+<span>(</span><span>name, lowerBound=None, upperBound=None)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Class, representing an integer number <code><a title="src.variable.variable.Variable" href="variable.html#src.variable.variable.Variable">Variable</a></code>, meaning a <code><a title="src.variable.variable.Variable" href="variable.html#src.variable.variable.Variable">Variable</a></code> defined in <span><span class="MathJax_Preview">\mathbb{Z}</span><script type="math/tex">\mathbb{Z}</script></span>.
@@ -133,33 +106,6 @@ of <code><a title="src.variable.integerVariable.IntegerVariable" href="#src.vari
         The name of the `src.variable.integerVariable.IntegerVariable`.
     &#34;&#34;&#34;
 
-    def haveBound(self) -&gt; tuple[bool, bool]:
-        &#34;&#34;&#34;
-        Method use to say if the variable have lower and upper bound
-
-        Returns
-        -------
-        res: 
-            true,true if the variable have a lower and an upper bound
-            true, false if the variable have a lower and not an upper bound
-            etc...
-        &#34;&#34;&#34;
-
-        return False, False
-
-    def getBounds(self) -&gt; tuple[Fraction, Fraction]:
-        &#34;&#34;&#34;
-        Method use to known bounds of the variables
-
-        Returns
-        -------
-        res: 
-            can be None, None if the variable have no limits,
-            or Fraction, Fraction.
-        &#34;&#34;&#34;
-
-        return None, None
-
     def isInteger(self) -&gt; bool:
         &#34;&#34;&#34;
         Method used to known if the variable must have intergers values.
@@ -186,7 +132,6 @@ of <code><a title="src.variable.integerVariable.IntegerVariable" href="#src.vari
 <li><code><a title="src.variable.variable.Variable.declareAnonymous" href="variable.html#src.variable.variable.Variable.declareAnonymous">declareAnonymous</a></code></li>
 <li><code><a title="src.variable.variable.Variable.declareBulk" href="variable.html#src.variable.variable.Variable.declareBulk">declareBulk</a></code></li>
 <li><code><a title="src.variable.variable.Variable.getBounds" href="variable.html#src.variable.variable.Variable.getBounds">getBounds</a></code></li>
-<li><code><a title="src.variable.variable.Variable.haveBound" href="variable.html#src.variable.variable.Variable.haveBound">haveBound</a></code></li>
 <li><code><a title="src.variable.variable.Variable.isInteger" href="variable.html#src.variable.variable.Variable.isInteger">isInteger</a></code></li>
 <li><code><a title="src.variable.variable.Variable.name" href="variable.html#src.variable.variable.Variable.name">name</a></code></li>
 </ul>

@@ -92,7 +92,7 @@ class Formula(ABC):
         pass
 
     @abstractmethod
-    def getAdherence(self, var : Variable) -&gt; list[list[Formula]]:
+    def getAdherence(self, var : Variable = None) -&gt; list[list[Formula]]:
         &#39;&#39;&#39;
         Returns a 2D list containing all the constraints of the adherence of 
         the Formula, in Disjunctive Normal Form.
@@ -111,7 +111,7 @@ class Formula(ABC):
         pass
 
     @abstractmethod
-    def _getAdherenceNeg(self, var : Variable)  -&gt; list[list[Formula]]:
+    def _getAdherenceNeg(self, var : Variable = None)  -&gt; list[list[Formula]]:
         &#39;&#39;&#39;
         Protected method used in the algorithm to recursivly determine the
         constraints of the adherence of the Formula, used when a Negation is in play
@@ -140,6 +140,22 @@ class Formula(ABC):
         src.formula.formula.Formula
             A `src.formula.formula.Formula` with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
         &#39;&#39;&#39;
+        pass
+
+    @abstractmethod
+    def toPCMLC(self, varDict) -&gt; Formula:
+        &#39;&#39;&#39;
+        Method used to transform a `src.formula.formula.Formula` into a new one, in the PCMLC formalism.
+
+        Returns
+        -------
+        src.formula.formula.Formula
+            A `src.formula.formula.Formula` in the PCMLC formalism.
+        &#39;&#39;&#39;
+        pass
+
+    @abstractmethod
+    def _toPCMLCNeg(self, varDict) -&gt; Formula:
         pass
         
     def clone(self) -&gt; Formula:
@@ -283,7 +299,7 @@ Typing depends of the formula's arity.</dd>
         pass
 
     @abstractmethod
-    def getAdherence(self, var : Variable) -&gt; list[list[Formula]]:
+    def getAdherence(self, var : Variable = None) -&gt; list[list[Formula]]:
         &#39;&#39;&#39;
         Returns a 2D list containing all the constraints of the adherence of 
         the Formula, in Disjunctive Normal Form.
@@ -302,7 +318,7 @@ Typing depends of the formula's arity.</dd>
         pass
 
     @abstractmethod
-    def _getAdherenceNeg(self, var : Variable)  -&gt; list[list[Formula]]:
+    def _getAdherenceNeg(self, var : Variable = None)  -&gt; list[list[Formula]]:
         &#39;&#39;&#39;
         Protected method used in the algorithm to recursivly determine the
         constraints of the adherence of the Formula, used when a Negation is in play
@@ -331,6 +347,22 @@ Typing depends of the formula's arity.</dd>
         src.formula.formula.Formula
             A `src.formula.formula.Formula` with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
         &#39;&#39;&#39;
+        pass
+
+    @abstractmethod
+    def toPCMLC(self, varDict) -&gt; Formula:
+        &#39;&#39;&#39;
+        Method used to transform a `src.formula.formula.Formula` into a new one, in the PCMLC formalism.
+
+        Returns
+        -------
+        src.formula.formula.Formula
+            A `src.formula.formula.Formula` in the PCMLC formalism.
+        &#39;&#39;&#39;
+        pass
+
+    @abstractmethod
+    def _toPCMLCNeg(self, varDict) -&gt; Formula:
         pass
         
     def clone(self) -&gt; Formula:
@@ -446,7 +478,7 @@ Typing depends of the formula's arity.</dd>
 </details>
 </dd>
 <dt id="src.formula.formula.Formula.getAdherence"><code class="name flex">
-<span>def <span class="ident">getAdherence</span></span>(<span>self, var: Variable) ‑> list[list[<a title="src.formula.formula.Formula" href="#src.formula.formula.Formula">Formula</a>]]</span>
+<span>def <span class="ident">getAdherence</span></span>(<span>self, var: Variable = None) ‑> list[list[<a title="src.formula.formula.Formula" href="#src.formula.formula.Formula">Formula</a>]]</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Returns a 2D list containing all the constraints of the adherence of
@@ -467,7 +499,7 @@ in Disjunctive Normal Form.</dd>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@abstractmethod
-def getAdherence(self, var : Variable) -&gt; list[list[Formula]]:
+def getAdherence(self, var : Variable = None) -&gt; list[list[Formula]]:
     &#39;&#39;&#39;
     Returns a 2D list containing all the constraints of the adherence of 
     the Formula, in Disjunctive Normal Form.
@@ -597,6 +629,33 @@ def toLessOrEqConstraint(self):
     pass</code></pre>
 </details>
 </dd>
+<dt id="src.formula.formula.Formula.toPCMLC"><code class="name flex">
+<span>def <span class="ident">toPCMLC</span></span>(<span>self, varDict) ‑> <a title="src.formula.formula.Formula" href="#src.formula.formula.Formula">Formula</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Method used to transform a <code><a title="src.formula.formula.Formula" href="#src.formula.formula.Formula">Formula</a></code> into a new one, in the PCMLC formalism.</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code><a title="src.formula.formula.Formula" href="#src.formula.formula.Formula">Formula</a></code></dt>
+<dd>A <code><a title="src.formula.formula.Formula" href="#src.formula.formula.Formula">Formula</a></code> in the PCMLC formalism.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@abstractmethod
+def toPCMLC(self, varDict) -&gt; Formula:
+    &#39;&#39;&#39;
+    Method used to transform a `src.formula.formula.Formula` into a new one, in the PCMLC formalism.
+
+    Returns
+    -------
+    src.formula.formula.Formula
+        A `src.formula.formula.Formula` in the PCMLC formalism.
+    &#39;&#39;&#39;
+    pass</code></pre>
+</details>
+</dd>
 </dl>
 </dd>
 </dl>
@@ -625,6 +684,7 @@ def toLessOrEqConstraint(self):
 <li><code><a title="src.formula.formula.Formula.toDNF" href="#src.formula.formula.Formula.toDNF">toDNF</a></code></li>
 <li><code><a title="src.formula.formula.Formula.toLatex" href="#src.formula.formula.Formula.toLatex">toLatex</a></code></li>
 <li><code><a title="src.formula.formula.Formula.toLessOrEqConstraint" href="#src.formula.formula.Formula.toLessOrEqConstraint">toLessOrEqConstraint</a></code></li>
+<li><code><a title="src.formula.formula.Formula.toPCMLC" href="#src.formula.formula.Formula.toPCMLC">toPCMLC</a></code></li>
 </ul>
 </li>
 </ul>

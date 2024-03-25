@@ -63,12 +63,9 @@ class NaryFormula(Formula):
         The children of the current node.
     &#34;&#34;&#34;
         
-    def __init__(self, *formulas: Formula, formulaSet: set[Formula]=None, name: str = None):
+    def __init__(self, *formulas: Formula, fmName: str = None):
         
-        if formulaSet is None:
-            self.children = set(formulas)
-        else:
-            self.children = formulaSet
+        self.children = set(formulas)
                 
         if len(self.children) &gt;= 1:
             tempF = set()
@@ -83,8 +80,8 @@ class NaryFormula(Formula):
         else:
             raise Exception(&#34;nary operators need at least one child&#34;)
         
-        if(name is not None):
-            FormulaManager.declare(name, self)
+        if(fmName is not None):
+            FormulaManager.declare(fmName, self)
 
     def getVariables(self) -&gt; set[Variable]:
         r&#34;&#34;&#34;
@@ -98,7 +95,7 @@ class NaryFormula(Formula):
         &#34;&#34;&#34;
         
         tempChildren = self.children.copy()
-        variables = tempChildren.pop().getVariables();
+        variables = tempChildren.pop().getVariables()
         
         for child in tempChildren:
             variables = variables | child.getVariables()
@@ -115,7 +112,7 @@ class NaryFormula(Formula):
             Clone of the current `src.formula.formula.Formula`.
         &#34;&#34;&#34;
 
-        clone = self.__class__(formulaSet = self.children)
+        clone = self.__class__(*self.children)
         return clone</code></pre>
 </details>
 </section>
@@ -130,7 +127,7 @@ class NaryFormula(Formula):
 <dl>
 <dt id="src.formula.naryFormula.naryFormula.NaryFormula"><code class="flex name class">
 <span>class <span class="ident">NaryFormula</span></span>
-<span>(</span><span>*formulas: Formula, formulaSet: set[Formula] = None, name: str = None)</span>
+<span>(</span><span>*formulas: Formula, fmName: str = None)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Abstract class, representing an operator with an arity equal or greater
@@ -167,12 +164,9 @@ The operator is asummed symmetric.</p>
         The children of the current node.
     &#34;&#34;&#34;
         
-    def __init__(self, *formulas: Formula, formulaSet: set[Formula]=None, name: str = None):
+    def __init__(self, *formulas: Formula, fmName: str = None):
         
-        if formulaSet is None:
-            self.children = set(formulas)
-        else:
-            self.children = formulaSet
+        self.children = set(formulas)
                 
         if len(self.children) &gt;= 1:
             tempF = set()
@@ -187,8 +181,8 @@ The operator is asummed symmetric.</p>
         else:
             raise Exception(&#34;nary operators need at least one child&#34;)
         
-        if(name is not None):
-            FormulaManager.declare(name, self)
+        if(fmName is not None):
+            FormulaManager.declare(fmName, self)
 
     def getVariables(self) -&gt; set[Variable]:
         r&#34;&#34;&#34;
@@ -202,7 +196,7 @@ The operator is asummed symmetric.</p>
         &#34;&#34;&#34;
         
         tempChildren = self.children.copy()
-        variables = tempChildren.pop().getVariables();
+        variables = tempChildren.pop().getVariables()
         
         for child in tempChildren:
             variables = variables | child.getVariables()
@@ -219,7 +213,7 @@ The operator is asummed symmetric.</p>
             Clone of the current `src.formula.formula.Formula`.
         &#34;&#34;&#34;
 
-        clone = self.__class__(formulaSet = self.children)
+        clone = self.__class__(*self.children)
         return clone</code></pre>
 </details>
 <h3>Ancestors</h3>
@@ -261,7 +255,7 @@ the n-ary Formula's children.</p>
     &#34;&#34;&#34;
     
     tempChildren = self.children.copy()
-    variables = tempChildren.pop().getVariables();
+    variables = tempChildren.pop().getVariables()
     
     for child in tempChildren:
         variables = variables | child.getVariables()
@@ -279,6 +273,7 @@ the n-ary Formula's children.</p>
 <li><code><a title="src.formula.formula.Formula.toDNF" href="../formula.html#src.formula.formula.Formula.toDNF">toDNF</a></code></li>
 <li><code><a title="src.formula.formula.Formula.toLatex" href="../formula.html#src.formula.formula.Formula.toLatex">toLatex</a></code></li>
 <li><code><a title="src.formula.formula.Formula.toLessOrEqConstraint" href="../formula.html#src.formula.formula.Formula.toLessOrEqConstraint">toLessOrEqConstraint</a></code></li>
+<li><code><a title="src.formula.formula.Formula.toPCMLC" href="../formula.html#src.formula.formula.Formula.toPCMLC">toPCMLC</a></code></li>
 </ul>
 </li>
 </ul>

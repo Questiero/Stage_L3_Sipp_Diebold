@@ -50,12 +50,12 @@ class UnaryFormula(Formula):
         The child of the current node.
     &#39;&#39;&#39;
 
-    def __init__(self, formulaInit: Formula, name: str = None):
+    def __init__(self, formulaInit: Formula, fmName: str = None):
         
         self.children = formulaInit
 
-        if(name is not None):
-            FormulaManager.declare(name, self)
+        if(fmName is not None):
+            FormulaManager.declare(fmName, self)
         
     def getVariables(self) -&gt; set[Variable]:
         &#39;&#39;&#39;
@@ -85,7 +85,7 @@ class UnaryFormula(Formula):
 <dl>
 <dt id="src.formula.unaryFormula.unaryFormula.UnaryFormula"><code class="flex name class">
 <span>class <span class="ident">UnaryFormula</span></span>
-<span>(</span><span>formulaInit: Formula, name: str = None)</span>
+<span>(</span><span>formulaInit: Formula, fmName: str = None)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Abstract class, representing a unary operator.</p>
@@ -108,12 +108,12 @@ class UnaryFormula(Formula):
         The child of the current node.
     &#39;&#39;&#39;
 
-    def __init__(self, formulaInit: Formula, name: str = None):
+    def __init__(self, formulaInit: Formula, fmName: str = None):
         
         self.children = formulaInit
 
-        if(name is not None):
-            FormulaManager.declare(name, self)
+        if(fmName is not None):
+            FormulaManager.declare(fmName, self)
         
     def getVariables(self) -&gt; set[Variable]:
         &#39;&#39;&#39;
@@ -181,6 +181,7 @@ the Formula.</p>
 <li><code><a title="src.formula.formula.Formula.toDNF" href="../formula.html#src.formula.formula.Formula.toDNF">toDNF</a></code></li>
 <li><code><a title="src.formula.formula.Formula.toLatex" href="../formula.html#src.formula.formula.Formula.toLatex">toLatex</a></code></li>
 <li><code><a title="src.formula.formula.Formula.toLessOrEqConstraint" href="../formula.html#src.formula.formula.Formula.toLessOrEqConstraint">toLessOrEqConstraint</a></code></li>
+<li><code><a title="src.formula.formula.Formula.toPCMLC" href="../formula.html#src.formula.formula.Formula.toPCMLC">toPCMLC</a></code></li>
 </ul>
 </li>
 </ul>

@@ -38,9 +38,8 @@ Projector of a `src.formula.formula.Formula` to a sub-set of its variables, usin
 from __future__ import annotations
 
 from ..formula import And, LinearConstraint, Not, ConstraintOperator
-from ..simplificator import Simplificator, Caron
+from ..simplificator import Simplificator
 from .projector import Projector
-from ..mlo_solver import LPSolver
 from ..variable import Variable
 
 import itertools
@@ -70,7 +69,7 @@ class FloatConvexHullProjector (Projector):
     &#34;&#34;&#34;
     By default, used simplifier is a single Caron using lp_solve
     &#34;&#34;&#34;
-    def __init__(self, rounding: int = 12, simplifiers: list[Simplificator] = [Caron(LPSolver())]):
+    def __init__(self, rounding: int = 12, simplifiers: list[Simplificator] = None):
         self.__rounding = rounding
         self.__simplifier = simplifiers
 
@@ -378,7 +377,7 @@ class FloatConvexHullProjector (Projector):
                 else:
                     print(&#34;Euuuuh&#34;)           
 
-            return And(formulaSet = constraintSet)
+            return And(*constraintSet)
 
     def __createConstraintSegment(self, x, y, variables):
         
@@ -390,8 +389,6 @@ class FloatConvexHullProjector (Projector):
         normal = normal * np.linalg.norm(normal, 1)
         normal = [round(Fraction(n), self.__rounding) for n in normal]
         
-        constraintSet = set()
-
         # Build constraint
         lc = LinearConstraint(&#34;&#34;)
         for i in range(len(normal)):
@@ -400,25 +397,58 @@ class FloatConvexHullProjector (Projector):
         lc.bound = round(Fraction(np.sum(normal * centroid)), self.__rounding)
         lc.operator = ConstraintOperator.EQ
 
-        constraintSet.add(lc)
+        constraints = And(lc)
 
-        for point in points:
-            constraintSet.add(self.__createConstraintPoint(point, variables))
+        constraints = constraints &amp; self.__createConstraintPointSegment(x, y, variables) &amp; self.__createConstraintPointSegment(y, x, variables)
 
-        return And(formulaSet=constraintSet)
+        return constraints
     
     def __createConstraintPoint(self, point, variables):
 
-        lc = LinearConstraint(&#34;&#34;)
+        constraintSet = set()
 
         for i in range(len(point)):
 
+            lc = LinearConstraint(&#34;&#34;)
+
             lc.variables[variables[i]] = Fraction(1)
             lc.bound = round(Fraction(point[i]), self.__rounding)
+            lc.operator = ConstraintOperator.EQ
 
-        lc.operator = ConstraintOperator.EQ
+            constraintSet.add(lc)
 
-        return lc</code></pre>
+        return And(*constraintSet)
+    
+    def __createConstraintPointSegment(self, x, y, variables):
+
+        constraintSet = self.__createConstraintPoint(x, variables).children
+
+        for lc in constraintSet:
+
+            sum = Fraction(&#34;0&#34;)
+            for i in range(len(variables)):
+                coef = lc.variables.get(variables[i])
+                if coef:
+                    ##print(coef)
+                    ##print(vertex)
+                    sum += round(Fraction(y[i]), self.__rounding)*coef
+                    ##print(sum)
+
+                if(sum &lt; lc.bound):
+                    s+= &#34;&lt; &#34; + str(lc.bound)
+                    lc.operator = ConstraintOperator.LEQ
+                    break
+                elif(sum &gt; lc.bound):
+                    s += &#34;&gt; &#34; + str(lc.bound)
+                    lc.operator = ConstraintOperator.GEQ
+                    break
+                
+            if sum is None:
+                lc.operator = ConstraintOperator.EQ
+
+            #print(simplex, &#34;:&#34;, sum, s, &#34;:&#34;, lc)
+
+        return And(*constraintSet)</code></pre>
 </details>
 </section>
 <section>
@@ -432,7 +462,7 @@ class FloatConvexHullProjector (Projector):
 <dl>
 <dt id="src.projector.floatConvexHullProjector.FloatConvexHullProjector"><code class="flex name class">
 <span>class <span class="ident">FloatConvexHullProjector</span></span>
-<span>(</span><span>rounding: int = 12, simplifiers: list[Simplificator] = [&lt;src.simplificator.caron.Caron object&gt;])</span>
+<span>(</span><span>rounding: int = 12, simplifiers: list[Simplificator] = None)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Projector of a <code><a title="src.formula.formula.Formula" href="../formula/formula.html#src.formula.formula.Formula">Formula</a></code> to a sub-set of its variables, using floating numbers and SciPy's
@@ -469,7 +499,7 @@ in order given by the list.</dd>
     &#34;&#34;&#34;
     By default, used simplifier is a single Caron using lp_solve
     &#34;&#34;&#34;
-    def __init__(self, rounding: int = 12, simplifiers: list[Simplificator] = [Caron(LPSolver())]):
+    def __init__(self, rounding: int = 12, simplifiers: list[Simplificator] = None):
         self.__rounding = rounding
         self.__simplifier = simplifiers
 
@@ -777,7 +807,7 @@ in order given by the list.</dd>
                 else:
                     print(&#34;Euuuuh&#34;)           
 
-            return And(formulaSet = constraintSet)
+            return And(*constraintSet)
 
     def __createConstraintSegment(self, x, y, variables):
         
@@ -789,8 +819,6 @@ in order given by the list.</dd>
         normal = normal * np.linalg.norm(normal, 1)
         normal = [round(Fraction(n), self.__rounding) for n in normal]
         
-        constraintSet = set()
-
         # Build constraint
         lc = LinearConstraint(&#34;&#34;)
         for i in range(len(normal)):
@@ -799,25 +827,58 @@ in order given by the list.</dd>
         lc.bound = round(Fraction(np.sum(normal * centroid)), self.__rounding)
         lc.operator = ConstraintOperator.EQ
 
-        constraintSet.add(lc)
+        constraints = And(lc)
 
-        for point in points:
-            constraintSet.add(self.__createConstraintPoint(point, variables))
+        constraints = constraints &amp; self.__createConstraintPointSegment(x, y, variables) &amp; self.__createConstraintPointSegment(y, x, variables)
 
-        return And(formulaSet=constraintSet)
+        return constraints
     
     def __createConstraintPoint(self, point, variables):
 
-        lc = LinearConstraint(&#34;&#34;)
+        constraintSet = set()
 
         for i in range(len(point)):
 
+            lc = LinearConstraint(&#34;&#34;)
+
             lc.variables[variables[i]] = Fraction(1)
             lc.bound = round(Fraction(point[i]), self.__rounding)
+            lc.operator = ConstraintOperator.EQ
 
-        lc.operator = ConstraintOperator.EQ
+            constraintSet.add(lc)
 
-        return lc</code></pre>
+        return And(*constraintSet)
+    
+    def __createConstraintPointSegment(self, x, y, variables):
+
+        constraintSet = self.__createConstraintPoint(x, variables).children
+
+        for lc in constraintSet:
+
+            sum = Fraction(&#34;0&#34;)
+            for i in range(len(variables)):
+                coef = lc.variables.get(variables[i])
+                if coef:
+                    ##print(coef)
+                    ##print(vertex)
+                    sum += round(Fraction(y[i]), self.__rounding)*coef
+                    ##print(sum)
+
+                if(sum &lt; lc.bound):
+                    s+= &#34;&lt; &#34; + str(lc.bound)
+                    lc.operator = ConstraintOperator.LEQ
+                    break
+                elif(sum &gt; lc.bound):
+                    s += &#34;&gt; &#34; + str(lc.bound)
+                    lc.operator = ConstraintOperator.GEQ
+                    break
+                
+            if sum is None:
+                lc.operator = ConstraintOperator.EQ
+
+            #print(simplex, &#34;:&#34;, sum, s, &#34;:&#34;, lc)
+
+        return And(*constraintSet)</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -1152,7 +1213,7 @@ in order given by the list.</dd>
                 else:
                     print(&#34;Euuuuh&#34;)           
 
-            return And(formulaSet = constraintSet)</code></pre>
+            return And(*constraintSet)</code></pre>
 </details>
 </dd>
 </dl>

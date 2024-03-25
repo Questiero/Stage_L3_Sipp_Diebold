@@ -34,6 +34,8 @@ Representation of a LinearConstraint in PCMLC.
 
 from __future__ import annotations
 
+from src.formula.formula import Formula
+
 from .constraint import Constraint
 from ....variable import VariableManager
 from .constraintOperator import ConstraintOperator
@@ -86,7 +88,7 @@ class LinearConstraint(Constraint):
     operator: ConstraintOperator
     bound: Fraction
     
-    def __init__(self, string: str, name: str = None):
+    def __init__(self, string: str, fmName: str = None):
 
         if(string == &#34;&#34;):
             self.variables = dict()
@@ -96,7 +98,7 @@ class LinearConstraint(Constraint):
 
         self.variables = {}
         # rule 1, only accepted characters 
-        unknownChar = re.match(r&#34;[^\d a-zA-Z/\*+\-&lt;&gt;=\.]&#34;, string)
+        unknownChar = re.match(r&#34;[^\d a-zA-Z/\:\*+\-&lt;&gt;=\.]&#34;, string)
         if unknownChar:
             raise SyntaxError(f&#34;Unknown character {unknownChar}&#34;)
         
@@ -153,8 +155,8 @@ class LinearConstraint(Constraint):
                 self.variables[var] = coef
 
         # Declare if name
-        if(name is not None):
-            FormulaManager.declare(name, self)
+        if(fmName is not None):
+            FormulaManager.declare(fmName, self)
 
     def getVariables(self) -&gt; set[Variable]:
         &#39;&#39;&#39;
@@ -169,7 +171,7 @@ class LinearConstraint(Constraint):
         
         return self.variables.keys()
     
-    def getAdherence(self, var : Variable) -&gt; list[list[Constraint]]:
+    def getAdherence(self, var : Variable = None) -&gt; list[list[Constraint]]:
         &#39;&#39;&#39;
         Returns a 2D list containing all the constraints of the adherence of 
         the Formula, in Disjunctive Normal Form.
@@ -186,7 +188,7 @@ class LinearConstraint(Constraint):
         &#39;&#39;&#39;
         return [[self]]
 
-    def _getAdherenceNeg(self, var : Variable)  -&gt; list[list[Constraint]]:
+    def _getAdherenceNeg(self, var : Variable = None)  -&gt; list[list[Constraint]]:
         &#39;&#39;&#39;
         Protected method used in the algorithm to recursivly determine the
         constraints of the adherence of the Formula, used when a Negation is in play
@@ -205,7 +207,8 @@ class LinearConstraint(Constraint):
         copyConstrainte = self.clone()
         for variable in copyConstrainte.variables.keys():
             copyConstrainte.variables[variable] *= -1
-        copyConstrainte.variables[var] = Fraction(1,1)
+        if var is not None:
+            copyConstrainte.variables[var] = Fraction(1,1)
         copyConstrainte.bound *= -1
         res = [[copyConstrainte]]
 
@@ -319,9 +322,25 @@ class LinearConstraint(Constraint):
             res[0].operator = ConstraintOperator.GEQ
             res.append(res[0].toLessOrEqConstraint())
             res[0].operator = ConstraintOperator.LEQ
-            res = And(formulaSet=set(res))
+            res = And(*res)
 
         return res
+    
+    def toPCMLC(self, varDict) -&gt; Formula:
+        &#39;&#39;&#39;
+        Method used to transform a `src.formula.formula.Formula` into a new one, in the PCMLC formalism.
+
+        Returns
+        -------
+        src.formula.formula.Formula
+            A `src.formula.formula.Formula` in the PCMLC formalism.
+        &#39;&#39;&#39;
+        return self
+    
+    def _toPCMLCNeg(self, varDict) -&gt; Formula:
+        from ...unaryFormula import Not
+
+        return Not(self)
     
     def clone(self) -&gt; LinearConstraint:
         &#34;&#34;&#34;
@@ -369,7 +388,7 @@ class LinearConstraint(Constraint):
 <dl>
 <dt id="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint"><code class="flex name class">
 <span>class <span class="ident">LinearConstraint</span></span>
-<span>(</span><span>string: str, name: str = None)</span>
+<span>(</span><span>string: str, fmName: str = None)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Abstract Constraint class, representing a Constraint in PCMLC.</p>
@@ -446,7 +465,7 @@ it's None.</dd>
     operator: ConstraintOperator
     bound: Fraction
     
-    def __init__(self, string: str, name: str = None):
+    def __init__(self, string: str, fmName: str = None):
 
         if(string == &#34;&#34;):
             self.variables = dict()
@@ -456,7 +475,7 @@ it's None.</dd>
 
         self.variables = {}
         # rule 1, only accepted characters 
-        unknownChar = re.match(r&#34;[^\d a-zA-Z/\*+\-&lt;&gt;=\.]&#34;, string)
+        unknownChar = re.match(r&#34;[^\d a-zA-Z/\:\*+\-&lt;&gt;=\.]&#34;, string)
         if unknownChar:
             raise SyntaxError(f&#34;Unknown character {unknownChar}&#34;)
         
@@ -513,8 +532,8 @@ it's None.</dd>
                 self.variables[var] = coef
 
         # Declare if name
-        if(name is not None):
-            FormulaManager.declare(name, self)
+        if(fmName is not None):
+            FormulaManager.declare(fmName, self)
 
     def getVariables(self) -&gt; set[Variable]:
         &#39;&#39;&#39;
@@ -529,7 +548,7 @@ it's None.</dd>
         
         return self.variables.keys()
     
-    def getAdherence(self, var : Variable) -&gt; list[list[Constraint]]:
+    def getAdherence(self, var : Variable = None) -&gt; list[list[Constraint]]:
         &#39;&#39;&#39;
         Returns a 2D list containing all the constraints of the adherence of 
         the Formula, in Disjunctive Normal Form.
@@ -546,7 +565,7 @@ it's None.</dd>
         &#39;&#39;&#39;
         return [[self]]
 
-    def _getAdherenceNeg(self, var : Variable)  -&gt; list[list[Constraint]]:
+    def _getAdherenceNeg(self, var : Variable = None)  -&gt; list[list[Constraint]]:
         &#39;&#39;&#39;
         Protected method used in the algorithm to recursivly determine the
         constraints of the adherence of the Formula, used when a Negation is in play
@@ -565,7 +584,8 @@ it's None.</dd>
         copyConstrainte = self.clone()
         for variable in copyConstrainte.variables.keys():
             copyConstrainte.variables[variable] *= -1
-        copyConstrainte.variables[var] = Fraction(1,1)
+        if var is not None:
+            copyConstrainte.variables[var] = Fraction(1,1)
         copyConstrainte.bound *= -1
         res = [[copyConstrainte]]
 
@@ -679,9 +699,25 @@ it's None.</dd>
             res[0].operator = ConstraintOperator.GEQ
             res.append(res[0].toLessOrEqConstraint())
             res[0].operator = ConstraintOperator.LEQ
-            res = And(formulaSet=set(res))
+            res = And(*res)
 
         return res
+    
+    def toPCMLC(self, varDict) -&gt; Formula:
+        &#39;&#39;&#39;
+        Method used to transform a `src.formula.formula.Formula` into a new one, in the PCMLC formalism.
+
+        Returns
+        -------
+        src.formula.formula.Formula
+            A `src.formula.formula.Formula` in the PCMLC formalism.
+        &#39;&#39;&#39;
+        return self
+    
+    def _toPCMLCNeg(self, varDict) -&gt; Formula:
+        from ...unaryFormula import Not
+
+        return Not(self)
     
     def clone(self) -&gt; LinearConstraint:
         &#34;&#34;&#34;
@@ -742,7 +778,7 @@ it's None.</dd>
 <h3>Methods</h3>
 <dl>
 <dt id="src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint.getAdherence"><code class="name flex">
-<span>def <span class="ident">getAdherence</span></span>(<span>self, var: Variable) ‑> list[list[<a title="src.formula.nullaryFormula.constraint.constraint.Constraint" href="constraint.html#src.formula.nullaryFormula.constraint.constraint.Constraint">Constraint</a>]]</span>
+<span>def <span class="ident">getAdherence</span></span>(<span>self, var: Variable = None) ‑> list[list[<a title="src.formula.nullaryFormula.constraint.constraint.Constraint" href="constraint.html#src.formula.nullaryFormula.constraint.constraint.Constraint">Constraint</a>]]</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Returns a 2D list containing all the constraints of the adherence of
@@ -762,7 +798,7 @@ in Disjunctive Normal Form.</dd>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def getAdherence(self, var : Variable) -&gt; list[list[Constraint]]:
+<pre><code class="python">def getAdherence(self, var : Variable = None) -&gt; list[list[Constraint]]:
     &#39;&#39;&#39;
     Returns a 2D list containing all the constraints of the adherence of 
     the Formula, in Disjunctive Normal Form.
@@ -861,6 +897,7 @@ the Formula.</p>
 <li><code><a title="src.formula.nullaryFormula.constraint.constraint.Constraint.toDNF" href="../nullaryFormula.html#src.formula.nullaryFormula.nullaryFormula.NullaryFormula.toDNF">toDNF</a></code></li>
 <li><code><a title="src.formula.nullaryFormula.constraint.constraint.Constraint.toLatex" href="../../formula.html#src.formula.formula.Formula.toLatex">toLatex</a></code></li>
 <li><code><a title="src.formula.nullaryFormula.constraint.constraint.Constraint.toLessOrEqConstraint" href="../../formula.html#src.formula.formula.Formula.toLessOrEqConstraint">toLessOrEqConstraint</a></code></li>
+<li><code><a title="src.formula.nullaryFormula.constraint.constraint.Constraint.toPCMLC" href="../../formula.html#src.formula.formula.Formula.toPCMLC">toPCMLC</a></code></li>
 </ul>
 </li>
 </ul>

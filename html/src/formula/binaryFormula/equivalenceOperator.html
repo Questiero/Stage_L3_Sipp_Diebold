@@ -72,20 +72,6 @@ class Equivalence(BinaryFormula):
            
         return (self.children[0] &amp; self.children[1]) | (~self.children[0] &amp; ~self.children[1])
     
-    def toLessOrEqConstraint(self):
-        &#39;&#39;&#39;
-        Method used to transform a `src.formula.formula.Formula` into another one, with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
-
-        Returns
-        ------
-        src.formula.formula.Formula
-            A `src.formula.formula.Formula` with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
-        &#39;&#39;&#39;
-        childrenModified = []
-        for child in self.children: childrenModified.append(child.toLessOrEqConstraint())
-
-        return Equivalence(childrenModified[0], childrenModified[1])
-    
     def __str__(self):
         return &#34;(&#34; + str(self.children[0]) + &#34;) &#34; + Constants.EQUIVALENCE_STRING_OPERATOR +  &#34; (&#34; + str(self.children[1]) + &#34;)&#34;
 
@@ -104,7 +90,7 @@ class Equivalence(BinaryFormula):
 <dl>
 <dt id="src.formula.binaryFormula.equivalenceOperator.Equivalence"><code class="flex name class">
 <span>class <span class="ident">Equivalence</span></span>
-<span>(</span><span>formulaLeft: Formula, formulaRight: Formula, name: str = None)</span>
+<span>(</span><span>formulaLeft: Formula, formulaRight: Formula, fmName: str = None)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Class representing the equivalence operator.</p>
@@ -154,20 +140,6 @@ class Equivalence(BinaryFormula):
            
         return (self.children[0] &amp; self.children[1]) | (~self.children[0] &amp; ~self.children[1])
     
-    def toLessOrEqConstraint(self):
-        &#39;&#39;&#39;
-        Method used to transform a `src.formula.formula.Formula` into another one, with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
-
-        Returns
-        ------
-        src.formula.formula.Formula
-            A `src.formula.formula.Formula` with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
-        &#39;&#39;&#39;
-        childrenModified = []
-        for child in self.children: childrenModified.append(child.toLessOrEqConstraint())
-
-        return Equivalence(childrenModified[0], childrenModified[1])
-    
     def __str__(self):
         return &#34;(&#34; + str(self.children[0]) + &#34;) &#34; + Constants.EQUIVALENCE_STRING_OPERATOR +  &#34; (&#34; + str(self.children[1]) + &#34;)&#34;
 
@@ -190,6 +162,7 @@ class Equivalence(BinaryFormula):
 <li><code><a title="src.formula.binaryFormula.binaryFormula.BinaryFormula.toDNF" href="binaryFormula.html#src.formula.binaryFormula.binaryFormula.BinaryFormula.toDNF">toDNF</a></code></li>
 <li><code><a title="src.formula.binaryFormula.binaryFormula.BinaryFormula.toLatex" href="../formula.html#src.formula.formula.Formula.toLatex">toLatex</a></code></li>
 <li><code><a title="src.formula.binaryFormula.binaryFormula.BinaryFormula.toLessOrEqConstraint" href="../formula.html#src.formula.formula.Formula.toLessOrEqConstraint">toLessOrEqConstraint</a></code></li>
+<li><code><a title="src.formula.binaryFormula.binaryFormula.BinaryFormula.toPCMLC" href="../formula.html#src.formula.formula.Formula.toPCMLC">toPCMLC</a></code></li>
 </ul>
 </li>
 </ul>

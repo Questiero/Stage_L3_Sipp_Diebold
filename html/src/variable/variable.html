@@ -54,11 +54,12 @@ class Variable(ABC):
     #: Name of the variable, by which they are identified.
     name : str = &#34;&#34;
 
-    def __init__(self, name):
+    def __init__(self, name, lowerBound = None, upperBound = None):
         self.name = name
+        self.bounds = (lowerBound, upperBound)
 
     @classmethod
-    def declareAnonymous(cls, ending: str = None) -&gt; Variable:
+    def declareAnonymous(cls, ending: str = None, lowerBound = None, upperBound = None) -&gt; Variable:
         &#34;&#34;&#34;
         Class method, allowing the user to declare an anonymous variable meant to be used inside algorithms without risking any
         naming conflit with the standardly defined variables.\n
@@ -97,10 +98,11 @@ class Variable(ABC):
         if ending:
             name += ending
         v.name = name
+        v.bounds = (lowerBound, upperBound)
         return v 
 
     @classmethod
-    def declare(cls, name : str) -&gt; Variable:
+    def declare(cls, name : str, lowerBound = None, upperBound = None) -&gt; Variable:
         &#34;&#34;&#34;
         Class method used to declare a new variable based on its name.
         A Variable name should respect the following naming conventions:
@@ -125,10 +127,10 @@ class Variable(ABC):
 
         from .variableManager import VariableManager
 
-        return VariableManager.add(cls(name))
+        return VariableManager.add(cls(name, lowerBound, upperBound))
 
     @classmethod
-    def declareBulk(cls, *lname: str) -&gt; list[Variable]:
+    def declareBulk(cls, *lname: str, lowerBound = None, upperBound = None) -&gt; list[Variable]:
         &#34;&#34;&#34;
         Class method used to declare multiple new instances of `src.variable.variable.Variable` at the same time.
         A Variable name should respect the following naming conventions:
@@ -155,24 +157,9 @@ class Variable(ABC):
 
         vars = []
         for name in lname:
-            vars.append(VariableManager.add(cls(name)))
+            vars.append(VariableManager.add(cls(name, lowerBound, upperBound)))
         return vars
 
-    @abstractmethod
-    def haveBound(self) -&gt; tuple[bool, bool]:
-        &#34;&#34;&#34;
-        Method use to say if the variable have lower and upper bound
-
-        Returns
-        -------
-        res: 
-            true,true if the variable have a lower and an upper bound
-            true, false if the variable have a lower and not an upper bound
-            etc...
-        &#34;&#34;&#34;
-        pass
-
-    @abstractmethod
     def getBounds(self) -&gt; tuple[Fraction, Fraction]:
         &#34;&#34;&#34;
         Method use to known bounds of the variables
@@ -183,7 +170,7 @@ class Variable(ABC):
             can be None, None if the variable have no limits,
             or Fraction, Fraction.
         &#34;&#34;&#34;
-        pass
+        return self.bounds
     
     @abstractmethod
     def isInteger(self) -&gt; bool:
@@ -199,6 +186,9 @@ class Variable(ABC):
         pass
 
     def __str__(self):
+        if self.name[0] in &#34;0123456789&#34;:
+            return self.name[len(str(id(self))):]
+
         return self.name
     
     def __eq__(self, other):
@@ -221,7 +211,7 @@ class Variable(ABC):
 <dl>
 <dt id="src.variable.variable.Variable"><code class="flex name class">
 <span>class <span class="ident">Variable</span></span>
-<span>(</span><span>name)</span>
+<span>(</span><span>name, lowerBound=None, upperBound=None)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Abstract class, representing a variable. Most of the time, you <strong>shouldn't</strong> use the constructor
@@ -251,11 +241,12 @@ of a <code><a title="src.variable.variable.Variable" href="#src.variable.variabl
     #: Name of the variable, by which they are identified.
     name : str = &#34;&#34;
 
-    def __init__(self, name):
+    def __init__(self, name, lowerBound = None, upperBound = None):
         self.name = name
+        self.bounds = (lowerBound, upperBound)
 
     @classmethod
-    def declareAnonymous(cls, ending: str = None) -&gt; Variable:
+    def declareAnonymous(cls, ending: str = None, lowerBound = None, upperBound = None) -&gt; Variable:
         &#34;&#34;&#34;
         Class method, allowing the user to declare an anonymous variable meant to be used inside algorithms without risking any
         naming conflit with the standardly defined variables.\n
@@ -294,10 +285,11 @@ of a <code><a title="src.variable.variable.Variable" href="#src.variable.variabl
         if ending:
             name += ending
         v.name = name
+        v.bounds = (lowerBound, upperBound)
         return v 
 
     @classmethod
-    def declare(cls, name : str) -&gt; Variable:
+    def declare(cls, name : str, lowerBound = None, upperBound = None) -&gt; Variable:
         &#34;&#34;&#34;
         Class method used to declare a new variable based on its name.
         A Variable name should respect the following naming conventions:
@@ -322,10 +314,10 @@ of a <code><a title="src.variable.variable.Variable" href="#src.variable.variabl
 
         from .variableManager import VariableManager
 
-        return VariableManager.add(cls(name))
+        return VariableManager.add(cls(name, lowerBound, upperBound))
 
     @classmethod
-    def declareBulk(cls, *lname: str) -&gt; list[Variable]:
+    def declareBulk(cls, *lname: str, lowerBound = None, upperBound = None) -&gt; list[Variable]:
         &#34;&#34;&#34;
         Class method used to declare multiple new instances of `src.variable.variable.Variable` at the same time.
         A Variable name should respect the following naming conventions:
@@ -352,24 +344,9 @@ of a <code><a title="src.variable.variable.Variable" href="#src.variable.variabl
 
         vars = []
         for name in lname:
-            vars.append(VariableManager.add(cls(name)))
+            vars.append(VariableManager.add(cls(name, lowerBound, upperBound)))
         return vars
 
-    @abstractmethod
-    def haveBound(self) -&gt; tuple[bool, bool]:
-        &#34;&#34;&#34;
-        Method use to say if the variable have lower and upper bound
-
-        Returns
-        -------
-        res: 
-            true,true if the variable have a lower and an upper bound
-            true, false if the variable have a lower and not an upper bound
-            etc...
-        &#34;&#34;&#34;
-        pass
-
-    @abstractmethod
     def getBounds(self) -&gt; tuple[Fraction, Fraction]:
         &#34;&#34;&#34;
         Method use to known bounds of the variables
@@ -380,7 +357,7 @@ of a <code><a title="src.variable.variable.Variable" href="#src.variable.variabl
             can be None, None if the variable have no limits,
             or Fraction, Fraction.
         &#34;&#34;&#34;
-        pass
+        return self.bounds
     
     @abstractmethod
     def isInteger(self) -&gt; bool:
@@ -396,6 +373,9 @@ of a <code><a title="src.variable.variable.Variable" href="#src.variable.variabl
         pass
 
     def __str__(self):
+        if self.name[0] in &#34;0123456789&#34;:
+            return self.name[len(str(id(self))):]
+
         return self.name
     
     def __eq__(self, other):
@@ -425,7 +405,7 @@ of a <code><a title="src.variable.variable.Variable" href="#src.variable.variabl
 <h3>Static methods</h3>
 <dl>
 <dt id="src.variable.variable.Variable.declare"><code class="name flex">
-<span>def <span class="ident">declare</span></span>(<span>name: str) ‑> <a title="src.variable.variable.Variable" href="#src.variable.variable.Variable">Variable</a></span>
+<span>def <span class="ident">declare</span></span>(<span>name: str, lowerBound=None, upperBound=None) ‑> <a title="src.variable.variable.Variable" href="#src.variable.variable.Variable">Variable</a></span>
 </code></dt>
 <dd>
 <div class="desc"><p>Class method used to declare a new variable based on its name.
@@ -461,7 +441,7 @@ A Variable name should respect the following naming conventions:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@classmethod
-def declare(cls, name : str) -&gt; Variable:
+def declare(cls, name : str, lowerBound = None, upperBound = None) -&gt; Variable:
     &#34;&#34;&#34;
     Class method used to declare a new variable based on its name.
     A Variable name should respect the following naming conventions:
@@ -486,11 +466,11 @@ def declare(cls, name : str) -&gt; Variable:
 
     from .variableManager import VariableManager
 
-    return VariableManager.add(cls(name))</code></pre>
+    return VariableManager.add(cls(name, lowerBound, upperBound))</code></pre>
 </details>
 </dd>
 <dt id="src.variable.variable.Variable.declareAnonymous"><code class="name flex">
-<span>def <span class="ident">declareAnonymous</span></span>(<span>ending: str = None) ‑> <a title="src.variable.variable.Variable" href="#src.variable.variable.Variable">Variable</a></span>
+<span>def <span class="ident">declareAnonymous</span></span>(<span>ending: str = None, lowerBound=None, upperBound=None) ‑> <a title="src.variable.variable.Variable" href="#src.variable.variable.Variable">Variable</a></span>
 </code></dt>
 <dd>
 <div class="desc"><p>Class method, allowing the user to declare an anonymous variable meant to be used inside algorithms without risking any
@@ -523,7 +503,7 @@ it's object's id. The user can also specify an ending to an anonymous variable n
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@classmethod
-def declareAnonymous(cls, ending: str = None) -&gt; Variable:
+def declareAnonymous(cls, ending: str = None, lowerBound = None, upperBound = None) -&gt; Variable:
     &#34;&#34;&#34;
     Class method, allowing the user to declare an anonymous variable meant to be used inside algorithms without risking any
     naming conflit with the standardly defined variables.\n
@@ -562,11 +542,12 @@ def declareAnonymous(cls, ending: str = None) -&gt; Variable:
     if ending:
         name += ending
     v.name = name
+    v.bounds = (lowerBound, upperBound)
     return v </code></pre>
 </details>
 </dd>
 <dt id="src.variable.variable.Variable.declareBulk"><code class="name flex">
-<span>def <span class="ident">declareBulk</span></span>(<span>*lname: str) ‑> list[<a title="src.variable.variable.Variable" href="#src.variable.variable.Variable">Variable</a>]</span>
+<span>def <span class="ident">declareBulk</span></span>(<span>*lname: str, lowerBound=None, upperBound=None) ‑> list[<a title="src.variable.variable.Variable" href="#src.variable.variable.Variable">Variable</a>]</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Class method used to declare multiple new instances of <code><a title="src.variable.variable.Variable" href="#src.variable.variable.Variable">Variable</a></code> at the same time.
@@ -602,7 +583,7 @@ A Variable name should respect the following naming conventions:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@classmethod
-def declareBulk(cls, *lname: str) -&gt; list[Variable]:
+def declareBulk(cls, *lname: str, lowerBound = None, upperBound = None) -&gt; list[Variable]:
     &#34;&#34;&#34;
     Class method used to declare multiple new instances of `src.variable.variable.Variable` at the same time.
     A Variable name should respect the following naming conventions:
@@ -629,7 +610,7 @@ def declareBulk(cls, *lname: str) -&gt; list[Variable]:
 
     vars = []
     for name in lname:
-        vars.append(VariableManager.add(cls(name)))
+        vars.append(VariableManager.add(cls(name, lowerBound, upperBound)))
     return vars</code></pre>
 </details>
 </dd>
@@ -651,8 +632,7 @@ or Fraction, Fraction.</dd>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">@abstractmethod
-def getBounds(self) -&gt; tuple[Fraction, Fraction]:
+<pre><code class="python">def getBounds(self) -&gt; tuple[Fraction, Fraction]:
     &#34;&#34;&#34;
     Method use to known bounds of the variables
 
@@ -662,38 +642,7 @@ def getBounds(self) -&gt; tuple[Fraction, Fraction]:
         can be None, None if the variable have no limits,
         or Fraction, Fraction.
     &#34;&#34;&#34;
-    pass</code></pre>
-</details>
-</dd>
-<dt id="src.variable.variable.Variable.haveBound"><code class="name flex">
-<span>def <span class="ident">haveBound</span></span>(<span>self) ‑> tuple[bool, bool]</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Method use to say if the variable have lower and upper bound</p>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>res</code></strong></dt>
-<dd>true,true if the variable have a lower and an upper bound
-true, false if the variable have a lower and not an upper bound
-etc&hellip;</dd>
-</dl></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@abstractmethod
-def haveBound(self) -&gt; tuple[bool, bool]:
-    &#34;&#34;&#34;
-    Method use to say if the variable have lower and upper bound
-
-    Returns
-    -------
-    res: 
-        true,true if the variable have a lower and an upper bound
-        true, false if the variable have a lower and not an upper bound
-        etc...
-    &#34;&#34;&#34;
-    pass</code></pre>
+    return self.bounds</code></pre>
 </details>
 </dd>
 <dt id="src.variable.variable.Variable.isInteger"><code class="name flex">
@@ -750,7 +699,6 @@ def isInteger(self) -&gt; bool:
 <li><code><a title="src.variable.variable.Variable.declareAnonymous" href="#src.variable.variable.Variable.declareAnonymous">declareAnonymous</a></code></li>
 <li><code><a title="src.variable.variable.Variable.declareBulk" href="#src.variable.variable.Variable.declareBulk">declareBulk</a></code></li>
 <li><code><a title="src.variable.variable.Variable.getBounds" href="#src.variable.variable.Variable.getBounds">getBounds</a></code></li>
-<li><code><a title="src.variable.variable.Variable.haveBound" href="#src.variable.variable.Variable.haveBound">haveBound</a></code></li>
 <li><code><a title="src.variable.variable.Variable.isInteger" href="#src.variable.variable.Variable.isInteger">isInteger</a></code></li>
 <li><code><a title="src.variable.variable.Variable.name" href="#src.variable.variable.Variable.name">name</a></code></li>
 </ul>

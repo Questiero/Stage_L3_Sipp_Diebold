@@ -37,6 +37,8 @@ from __future__ import annotations
 from .unaryFormula import UnaryFormula
 from ...constants import Constants
 
+from fractions import Fraction
+
 # Typing only imports
 from .. import Formula
 from ..nullaryFormula.constraint.constraint import Constraint
@@ -78,7 +80,7 @@ class Not(UnaryFormula):
         
         return self.children.toDNF()
     
-    def getAdherence(self, var : Variable) -&gt; list[list[Constraint]]:
+    def getAdherence(self, var : Variable = None) -&gt; list[list[Constraint]]:
         &#39;&#39;&#39;
         Returns a 2D list containing all the constraints of the adherence of 
         the Formula, in Disjunctive Normal Form.
@@ -97,7 +99,7 @@ class Not(UnaryFormula):
         
         return self.children._getAdherenceNeg(var)
     
-    def _getAdherenceNeg(self, var : Variable)  -&gt; list[list[Constraint]]:
+    def _getAdherenceNeg(self, var : Variable = None)  -&gt; list[list[Constraint]]:
         &#39;&#39;&#39;
         Protected method used in the algorithm to recursivly determine the
         constraints of the adherence of the Formula, used when a Negation is in play
@@ -128,7 +130,7 @@ class Not(UnaryFormula):
         &#39;&#39;&#39;
         return Not(self.children.toLessOrEqConstraint())
     
-    def copyNegLitteral(self, e : Variable) -&gt; Constraint:
+    def copyNegLitteral(self, epsilon = 0) -&gt; Constraint:
         &#34;&#34;&#34;
         Method used to transform the strict operators (i.e the negation) in an open one.
 
@@ -150,12 +152,32 @@ class Not(UnaryFormula):
 
         for key in copyNeg.variables:
             copyNeg.variables[key] = -copyNeg.variables[key]
-        if copyNeg.operator == ConstraintOperator.GEQ: copyNeg.variables[e] = -1
-        else: copyNeg.variables[e] = 1
-        copyNeg.bound = -copyNeg.bound
+        copyNeg.bound = -(copyNeg.bound + epsilon)
                 
         return copyNeg
     
+    def toPCMLC(self, varDict) -&gt; Formula:
+        &#39;&#39;&#39;
+        Method used to transform a `src.formula.formula.Formula` into a new one, in the PCMLC formalism.
+
+        Returns
+        -------
+        src.formula.formula.Formula
+            A `src.formula.formula.Formula` in the PCMLC formalism.
+        &#39;&#39;&#39;
+        return self.children._toPCMLCNeg(varDict)
+    
+    def _toPCMLCNeg(self, varDict) -&gt; Formula:
+        &#39;&#39;&#39;
+        Method used to transform a `src.formula.formula.Formula` into a new one, in the PCMLC formalism.
+
+        Returns
+        -------
+        src.formula.formula.Formula
+            A `src.formula.formula.Formula` in the PCMLC formalism.
+        &#39;&#39;&#39;
+        return self.children.toPCMLC(varDict)
+
     def __str__(self):
         return Constants.NOT_STRING_OPERATOR + &#34;(&#34; + str(self.children) + &#34;)&#34;
     
@@ -183,7 +205,7 @@ class Not(UnaryFormula):
 <dl>
 <dt id="src.formula.unaryFormula.notOperator.Not"><code class="flex name class">
 <span>class <span class="ident">Not</span></span>
-<span>(</span><span>formulaInit: Formula, name: str = None)</span>
+<span>(</span><span>formulaInit: Formula, fmName: str = None)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Class representing the Not operator.</p>
@@ -231,7 +253,7 @@ class Not(UnaryFormula):
         
         return self.children.toDNF()
     
-    def getAdherence(self, var : Variable) -&gt; list[list[Constraint]]:
+    def getAdherence(self, var : Variable = None) -&gt; list[list[Constraint]]:
         &#39;&#39;&#39;
         Returns a 2D list containing all the constraints of the adherence of 
         the Formula, in Disjunctive Normal Form.
@@ -250,7 +272,7 @@ class Not(UnaryFormula):
         
         return self.children._getAdherenceNeg(var)
     
-    def _getAdherenceNeg(self, var : Variable)  -&gt; list[list[Constraint]]:
+    def _getAdherenceNeg(self, var : Variable = None)  -&gt; list[list[Constraint]]:
         &#39;&#39;&#39;
         Protected method used in the algorithm to recursivly determine the
         constraints of the adherence of the Formula, used when a Negation is in play
@@ -281,7 +303,7 @@ class Not(UnaryFormula):
         &#39;&#39;&#39;
         return Not(self.children.toLessOrEqConstraint())
     
-    def copyNegLitteral(self, e : Variable) -&gt; Constraint:
+    def copyNegLitteral(self, epsilon = 0) -&gt; Constraint:
         &#34;&#34;&#34;
         Method used to transform the strict operators (i.e the negation) in an open one.
 
@@ -303,12 +325,32 @@ class Not(UnaryFormula):
 
         for key in copyNeg.variables:
             copyNeg.variables[key] = -copyNeg.variables[key]
-        if copyNeg.operator == ConstraintOperator.GEQ: copyNeg.variables[e] = -1
-        else: copyNeg.variables[e] = 1
-        copyNeg.bound = -copyNeg.bound
+        copyNeg.bound = -(copyNeg.bound + epsilon)
                 
         return copyNeg
     
+    def toPCMLC(self, varDict) -&gt; Formula:
+        &#39;&#39;&#39;
+        Method used to transform a `src.formula.formula.Formula` into a new one, in the PCMLC formalism.
+
+        Returns
+        -------
+        src.formula.formula.Formula
+            A `src.formula.formula.Formula` in the PCMLC formalism.
+        &#39;&#39;&#39;
+        return self.children._toPCMLCNeg(varDict)
+    
+    def _toPCMLCNeg(self, varDict) -&gt; Formula:
+        &#39;&#39;&#39;
+        Method used to transform a `src.formula.formula.Formula` into a new one, in the PCMLC formalism.
+
+        Returns
+        -------
+        src.formula.formula.Formula
+            A `src.formula.formula.Formula` in the PCMLC formalism.
+        &#39;&#39;&#39;
+        return self.children.toPCMLC(varDict)
+
     def __str__(self):
         return Constants.NOT_STRING_OPERATOR + &#34;(&#34; + str(self.children) + &#34;)&#34;
     
@@ -333,7 +375,7 @@ class Not(UnaryFormula):
 <h3>Methods</h3>
 <dl>
 <dt id="src.formula.unaryFormula.notOperator.Not.copyNegLitteral"><code class="name flex">
-<span>def <span class="ident">copyNegLitteral</span></span>(<span>self, e: Variable) ‑> <a title="src.formula.nullaryFormula.constraint.constraint.Constraint" href="../nullaryFormula/constraint/constraint.html#src.formula.nullaryFormula.constraint.constraint.Constraint">Constraint</a></span>
+<span>def <span class="ident">copyNegLitteral</span></span>(<span>self, epsilon=0) ‑> <a title="src.formula.nullaryFormula.constraint.constraint.Constraint" href="../nullaryFormula/constraint/constraint.html#src.formula.nullaryFormula.constraint.constraint.Constraint">Constraint</a></span>
 </code></dt>
 <dd>
 <div class="desc"><p>Method used to transform the strict operators (i.e the negation) in an open one.</p>
@@ -351,7 +393,7 @@ class Not(UnaryFormula):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def copyNegLitteral(self, e : Variable) -&gt; Constraint:
+<pre><code class="python">def copyNegLitteral(self, epsilon = 0) -&gt; Constraint:
     &#34;&#34;&#34;
     Method used to transform the strict operators (i.e the negation) in an open one.
 
@@ -373,15 +415,13 @@ class Not(UnaryFormula):
 
     for key in copyNeg.variables:
         copyNeg.variables[key] = -copyNeg.variables[key]
-    if copyNeg.operator == ConstraintOperator.GEQ: copyNeg.variables[e] = -1
-    else: copyNeg.variables[e] = 1
-    copyNeg.bound = -copyNeg.bound
+    copyNeg.bound = -(copyNeg.bound + epsilon)
             
     return copyNeg</code></pre>
 </details>
 </dd>
 <dt id="src.formula.unaryFormula.notOperator.Not.getAdherence"><code class="name flex">
-<span>def <span class="ident">getAdherence</span></span>(<span>self, var: Variable) ‑> list[list[<a title="src.formula.nullaryFormula.constraint.constraint.Constraint" href="../nullaryFormula/constraint/constraint.html#src.formula.nullaryFormula.constraint.constraint.Constraint">Constraint</a>]]</span>
+<span>def <span class="ident">getAdherence</span></span>(<span>self, var: Variable = None) ‑> list[list[<a title="src.formula.nullaryFormula.constraint.constraint.Constraint" href="../nullaryFormula/constraint/constraint.html#src.formula.nullaryFormula.constraint.constraint.Constraint">Constraint</a>]]</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Returns a 2D list containing all the constraints of the adherence of
@@ -401,7 +441,7 @@ in Disjunctive Normal Form.</dd>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def getAdherence(self, var : Variable) -&gt; list[list[Constraint]]:
+<pre><code class="python">def getAdherence(self, var : Variable = None) -&gt; list[list[Constraint]]:
     &#39;&#39;&#39;
     Returns a 2D list containing all the constraints of the adherence of 
     the Formula, in Disjunctive Normal Form.
@@ -431,6 +471,7 @@ in Disjunctive Normal Form.</dd>
 <li><code><a title="src.formula.unaryFormula.unaryFormula.UnaryFormula.toDNF" href="../formula.html#src.formula.formula.Formula.toDNF">toDNF</a></code></li>
 <li><code><a title="src.formula.unaryFormula.unaryFormula.UnaryFormula.toLatex" href="../formula.html#src.formula.formula.Formula.toLatex">toLatex</a></code></li>
 <li><code><a title="src.formula.unaryFormula.unaryFormula.UnaryFormula.toLessOrEqConstraint" href="../formula.html#src.formula.formula.Formula.toLessOrEqConstraint">toLessOrEqConstraint</a></code></li>
+<li><code><a title="src.formula.unaryFormula.unaryFormula.UnaryFormula.toPCMLC" href="../formula.html#src.formula.formula.Formula.toPCMLC">toPCMLC</a></code></li>
 </ul>
 </li>
 </ul>

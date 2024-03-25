@@ -74,7 +74,7 @@ class Or(NaryFormula):
             The current Formula in Disjunctive Normal Form.
         &#39;&#39;&#39;
         
-        return Or(formulaSet = {child.toDNF() for child in self.children})
+        return Or(*{child.toDNF() for child in self.children})
     
     def _toDNFNeg(self) -&gt; Formula:
         &#39;&#39;&#39;
@@ -100,7 +100,7 @@ class Or(NaryFormula):
         dnfChildren = dnfChildren - orChildren
                 
         if len(orChildren) == 0:
-            return And(formulaSet = dnfChildren)
+            return And(*dnfChildren)
                                         
         combinations = [{orChild} for orChild in orChildren.pop().children]
         
@@ -114,11 +114,11 @@ class Or(NaryFormula):
             combinations = tempcomb
             tempcomb = []
 
-        dnfFormula = [And(formulaSet=comb.union(dnfChildren)) for comb in combinations]
+        dnfFormula = {And(*comb.union(dnfChildren)) for comb in combinations}
             
-        return Or(formulaSet = set(dnfFormula))
+        return Or(*dnfFormula)
     
-    def getAdherence(self, var : Variable) -&gt; list[list[Constraint]]:
+    def getAdherence(self, var : Variable = None) -&gt; list[list[Constraint]]:
         &#39;&#39;&#39;
         Returns a 2D list containing all the constraints of the adherence of 
         the Formula, in Disjunctive Normal Form.
@@ -143,7 +143,7 @@ class Or(NaryFormula):
                 
         return res
     
-    def _getAdherenceNeg(self, var : Variable)  -&gt; list[list[Constraint]]:
+    def _getAdherenceNeg(self, var : Variable = None)  -&gt; list[list[Constraint]]:
         &#39;&#39;&#39;
         Protected method used in the algorithm to recursivly determine the
         constraints of the adherence of the Formula, used when a Negation is in play
@@ -183,7 +183,25 @@ class Or(NaryFormula):
         for child in self.children:
             childrenModified.add(child.toLessOrEqConstraint())
 
-        return Or(formulaSet = childrenModified)
+        return Or(*childrenModified)
+        
+    def toPCMLC(self, varDict) -&gt; Formula:
+        &#39;&#39;&#39;
+        Method used to transform a `src.formula.formula.Formula` into a new one, in the PCMLC formalism.
+
+        Returns
+        -------
+        src.formula.formula.Formula
+            A `src.formula.formula.Formula` in the PCMLC formalism.
+        &#39;&#39;&#39;
+        return Or(*{formul.toPCMLC(varDict) for formul in self.children})
+
+    def _toPCMLCNeg(self, varDict) -&gt; Formula:
+
+        from . import And
+
+        return And(*{formul._toPCMLCNeg(varDict) for formul in self.children})
+
     
     def __str__(self):
 
@@ -233,7 +251,7 @@ class Or(NaryFormula):
 <dl>
 <dt id="src.formula.naryFormula.orOperator.Or"><code class="flex name class">
 <span>class <span class="ident">Or</span></span>
-<span>(</span><span>*formulas: Formula, formulaSet: set[Formula] = None, name: str = None)</span>
+<span>(</span><span>*formulas: Formula, fmName: str = None)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Class representing the Or operator as a relation with an arity equal or
@@ -280,7 +298,7 @@ greater than 1 in PCMLC as a syntax tree.</p>
             The current Formula in Disjunctive Normal Form.
         &#39;&#39;&#39;
         
-        return Or(formulaSet = {child.toDNF() for child in self.children})
+        return Or(*{child.toDNF() for child in self.children})
     
     def _toDNFNeg(self) -&gt; Formula:
         &#39;&#39;&#39;
@@ -306,7 +324,7 @@ greater than 1 in PCMLC as a syntax tree.</p>
         dnfChildren = dnfChildren - orChildren
                 
         if len(orChildren) == 0:
-            return And(formulaSet = dnfChildren)
+            return And(*dnfChildren)
                                         
         combinations = [{orChild} for orChild in orChildren.pop().children]
         
@@ -320,11 +338,11 @@ greater than 1 in PCMLC as a syntax tree.</p>
             combinations = tempcomb
             tempcomb = []
 
-        dnfFormula = [And(formulaSet=comb.union(dnfChildren)) for comb in combinations]
+        dnfFormula = {And(*comb.union(dnfChildren)) for comb in combinations}
             
-        return Or(formulaSet = set(dnfFormula))
+        return Or(*dnfFormula)
     
-    def getAdherence(self, var : Variable) -&gt; list[list[Constraint]]:
+    def getAdherence(self, var : Variable = None) -&gt; list[list[Constraint]]:
         &#39;&#39;&#39;
         Returns a 2D list containing all the constraints of the adherence of 
         the Formula, in Disjunctive Normal Form.
@@ -349,7 +367,7 @@ greater than 1 in PCMLC as a syntax tree.</p>
                 
         return res
     
-    def _getAdherenceNeg(self, var : Variable)  -&gt; list[list[Constraint]]:
+    def _getAdherenceNeg(self, var : Variable = None)  -&gt; list[list[Constraint]]:
         &#39;&#39;&#39;
         Protected method used in the algorithm to recursivly determine the
         constraints of the adherence of the Formula, used when a Negation is in play
@@ -389,7 +407,25 @@ greater than 1 in PCMLC as a syntax tree.</p>
         for child in self.children:
             childrenModified.add(child.toLessOrEqConstraint())
 
-        return Or(formulaSet = childrenModified)
+        return Or(*childrenModified)
+        
+    def toPCMLC(self, varDict) -&gt; Formula:
+        &#39;&#39;&#39;
+        Method used to transform a `src.formula.formula.Formula` into a new one, in the PCMLC formalism.
+
+        Returns
+        -------
+        src.formula.formula.Formula
+            A `src.formula.formula.Formula` in the PCMLC formalism.
+        &#39;&#39;&#39;
+        return Or(*{formul.toPCMLC(varDict) for formul in self.children})
+
+    def _toPCMLCNeg(self, varDict) -&gt; Formula:
+
+        from . import And
+
+        return And(*{formul._toPCMLCNeg(varDict) for formul in self.children})
+
     
     def __str__(self):
 
@@ -436,7 +472,7 @@ greater than 1 in PCMLC as a syntax tree.</p>
 <h3>Methods</h3>
 <dl>
 <dt id="src.formula.naryFormula.orOperator.Or.getAdherence"><code class="name flex">
-<span>def <span class="ident">getAdherence</span></span>(<span>self, var: Variable) ‑> list[list[<a title="src.formula.nullaryFormula.constraint.constraint.Constraint" href="../nullaryFormula/constraint/constraint.html#src.formula.nullaryFormula.constraint.constraint.Constraint">Constraint</a>]]</span>
+<span>def <span class="ident">getAdherence</span></span>(<span>self, var: Variable = None) ‑> list[list[<a title="src.formula.nullaryFormula.constraint.constraint.Constraint" href="../nullaryFormula/constraint/constraint.html#src.formula.nullaryFormula.constraint.constraint.Constraint">Constraint</a>]]</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Returns a 2D list containing all the constraints of the adherence of
@@ -456,7 +492,7 @@ in Disjunctive Normal Form.</dd>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def getAdherence(self, var : Variable) -&gt; list[list[Constraint]]:
+<pre><code class="python">def getAdherence(self, var : Variable = None) -&gt; list[list[Constraint]]:
     &#39;&#39;&#39;
     Returns a 2D list containing all the constraints of the adherence of 
     the Formula, in Disjunctive Normal Form.
@@ -506,7 +542,7 @@ in Disjunctive Normal Form.</dd>
         The current Formula in Disjunctive Normal Form.
     &#39;&#39;&#39;
     
-    return Or(formulaSet = {child.toDNF() for child in self.children})</code></pre>
+    return Or(*{child.toDNF() for child in self.children})</code></pre>
 </details>
 </dd>
 </dl>
@@ -518,6 +554,7 @@ in Disjunctive Normal Form.</dd>
 <li><code><a title="src.formula.naryFormula.naryFormula.NaryFormula.getVariables" href="naryFormula.html#src.formula.naryFormula.naryFormula.NaryFormula.getVariables">getVariables</a></code></li>
 <li><code><a title="src.formula.naryFormula.naryFormula.NaryFormula.toLatex" href="../formula.html#src.formula.formula.Formula.toLatex">toLatex</a></code></li>
 <li><code><a title="src.formula.naryFormula.naryFormula.NaryFormula.toLessOrEqConstraint" href="../formula.html#src.formula.formula.Formula.toLessOrEqConstraint">toLessOrEqConstraint</a></code></li>
+<li><code><a title="src.formula.naryFormula.naryFormula.NaryFormula.toPCMLC" href="../formula.html#src.formula.formula.Formula.toPCMLC">toPCMLC</a></code></li>
 </ul>
 </li>
 </ul>

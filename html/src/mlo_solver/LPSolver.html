@@ -77,18 +77,20 @@ class LPSolver(MLOSolver):
         lp = lp_solve.lpsolve(&#39;make_lp&#39;, 0, len(variables))
         lp_solve.lpsolve(&#39;set_verbose&#39;, lp, lp_solve.IMPORTANT)
 
+        infinite = lp_solve.lpsolve(&#34;get_infinite&#34;, lp)
+
         for i in range(0,len(variables)):
             if(variables[i].isInteger()): 
                 lp_solve.lpsolve(&#39;set_int&#39;, lp,i+1, 1)
 
-            haveBoundL, haveBoundR = variables[i].haveBound()
-            if(not haveBoundL and not haveBoundR):
+            getBoundL, getBoundR = variables[i].getBounds()
+            if(not getBoundL and not getBoundR):
                 lp_solve.lpsolve(&#39;set_unbounded&#39;, lp, i+1)
             else:
                 lower, upper = variables[i].getBounds()
-                if(lower == None): lower = -1e30
-                if(upper == None): upper = 1e30
-                lp_solve.lpsolve(&#39;set_bounds&#39;, lp, i+1)
+                if(lower == None): lower = -infinite
+                if(upper == None): upper = infinite
+                lp_solve.lpsolve(&#39;set_bounds&#39;, lp, i+1, float(lower), float(upper))
 
         lp_solve.lpsolve(&#39;set_obj&#39;, lp, objectif)
         for constraint in constraints:
@@ -160,18 +162,20 @@ class LPSolver(MLOSolver):
         lp = lp_solve.lpsolve(&#39;make_lp&#39;, 0, len(variables))
         lp_solve.lpsolve(&#39;set_verbose&#39;, lp, lp_solve.IMPORTANT)
 
+        infinite = lp_solve.lpsolve(&#34;get_infinite&#34;, lp)
+
         for i in range(0,len(variables)):
             if(variables[i].isInteger()): 
                 lp_solve.lpsolve(&#39;set_int&#39;, lp,i+1, 1)
 
-            haveBoundL, haveBoundR = variables[i].haveBound()
-            if(not haveBoundL and not haveBoundR):
+            getBoundL, getBoundR = variables[i].getBounds()
+            if(not getBoundL and not getBoundR):
                 lp_solve.lpsolve(&#39;set_unbounded&#39;, lp, i+1)
             else:
                 lower, upper = variables[i].getBounds()
-                if(lower == None): lower = -1e30
-                if(upper == None): upper = 1e30
-                lp_solve.lpsolve(&#39;set_bounds&#39;, lp, i+1)
+                if(lower == None): lower = -infinite
+                if(upper == None): upper = infinite
+                lp_solve.lpsolve(&#39;set_bounds&#39;, lp, i+1, float(lower), float(upper))
 
         lp_solve.lpsolve(&#39;set_obj&#39;, lp, objectif)
         for constraint in constraints:

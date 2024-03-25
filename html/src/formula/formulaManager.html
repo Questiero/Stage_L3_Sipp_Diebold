@@ -59,7 +59,7 @@ class FormulaManager():
         and customizable operators.
 
         While more intuitive due to the less restrictive scope of usable operators, this method of declaring formulas assume you 
-        previously named them, either via the `name` attribute in their constructor or thanks to `src.formula.formulaManager.FormulaManager.declare`.
+        previously named them, either via the `fmName` attribute in their constructor or thanks to `src.formula.formulaManager.FormulaManager.declare`.
         The operators could be customized in `src.constants.Constants` but are by default:\n
 
         * `&amp;` for the and operator, represented by `src.formula.naryFormula.andOperator.And`\n
@@ -76,7 +76,7 @@ class FormulaManager():
         &#39;&#39;&#39;
         ParserElement.enablePackrat()
         
-        formWord = Word(srange(&#34;[a-zA-Z_]&#34;), srange(&#34;[a-zA-Z0-9_]&#34;))
+        formWord = Word(srange(&#34;[a-zA-Z_]&#34;), srange(&#34;[a-zA-Z0-9_:]&#34;))
 
         expr = infix_notation(formWord,
                               [(Literal(Constants.AND_PARSER_OPERATOR), 2, OpAssoc.LEFT),
@@ -190,7 +190,7 @@ class FormulaManager():
         and customizable operators.
 
         While more intuitive due to the less restrictive scope of usable operators, this method of declaring formulas assume you 
-        previously named them, either via the `name` attribute in their constructor or thanks to `src.formula.formulaManager.FormulaManager.declare`.
+        previously named them, either via the `fmName` attribute in their constructor or thanks to `src.formula.formulaManager.FormulaManager.declare`.
         The operators could be customized in `src.constants.Constants` but are by default:\n
 
         * `&amp;` for the and operator, represented by `src.formula.naryFormula.andOperator.And`\n
@@ -207,7 +207,7 @@ class FormulaManager():
         &#39;&#39;&#39;
         ParserElement.enablePackrat()
         
-        formWord = Word(srange(&#34;[a-zA-Z_]&#34;), srange(&#34;[a-zA-Z0-9_]&#34;))
+        formWord = Word(srange(&#34;[a-zA-Z_]&#34;), srange(&#34;[a-zA-Z0-9_:]&#34;))
 
         expr = infix_notation(formWord,
                               [(Literal(Constants.AND_PARSER_OPERATOR), 2, OpAssoc.LEFT),
@@ -346,7 +346,7 @@ def declare(name: str, formula: Formula) -&gt; Formula:
 <div class="desc"><p>Function allowing the user to intuitively parse a <code><a title="src.formula.formula.Formula" href="formula.html#src.formula.formula.Formula">Formula</a></code> from a string, using an infixed notation
 and customizable operators.</p>
 <p>While more intuitive due to the less restrictive scope of usable operators, this method of declaring formulas assume you
-previously named them, either via the <code>name</code> attribute in their constructor or thanks to <code><a title="src.formula.formulaManager.FormulaManager.declare" href="#src.formula.formulaManager.FormulaManager.declare">FormulaManager.declare()</a></code>.
+previously named them, either via the <code>fmName</code> attribute in their constructor or thanks to <code><a title="src.formula.formulaManager.FormulaManager.declare" href="#src.formula.formulaManager.FormulaManager.declare">FormulaManager.declare()</a></code>.
 The operators could be customized in <code><a title="src.constants.Constants" href="../constants.html#src.constants.Constants">Constants</a></code> but are by default:</p>
 <ul>
 <li>
@@ -384,7 +384,7 @@ def parser(string: str):
     and customizable operators.
 
     While more intuitive due to the less restrictive scope of usable operators, this method of declaring formulas assume you 
-    previously named them, either via the `name` attribute in their constructor or thanks to `src.formula.formulaManager.FormulaManager.declare`.
+    previously named them, either via the `fmName` attribute in their constructor or thanks to `src.formula.formulaManager.FormulaManager.declare`.
     The operators could be customized in `src.constants.Constants` but are by default:\n
 
     * `&amp;` for the and operator, represented by `src.formula.naryFormula.andOperator.And`\n
@@ -401,7 +401,7 @@ def parser(string: str):
     &#39;&#39;&#39;
     ParserElement.enablePackrat()
     
-    formWord = Word(srange(&#34;[a-zA-Z_]&#34;), srange(&#34;[a-zA-Z0-9_]&#34;))
+    formWord = Word(srange(&#34;[a-zA-Z_]&#34;), srange(&#34;[a-zA-Z0-9_:]&#34;))
 
     expr = infix_notation(formWord,
                           [(Literal(Constants.AND_PARSER_OPERATOR), 2, OpAssoc.LEFT),
