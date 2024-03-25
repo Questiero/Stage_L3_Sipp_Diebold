@@ -183,6 +183,7 @@ class Revision:
                         lit = self.__executeLiteral(miniPsi, miniMu)
 
                         if self.__interpreter.sat(lit[1]):
+
                             if not (lit[0] is None):
                                 if (disRes is None):
                                     disRes = lit[0]
@@ -193,6 +194,8 @@ class Revision:
                             else:
                                 if (disRes is None) & (res is None):
                                     res = lit[1]
+                        else:
+                            print("\nWarning: one revised litteral isn't satisfiable, consider using a bigger Epsilon value for the distance function.\n")
 
                         if self.__verbose:
                             pbar.update(1)
