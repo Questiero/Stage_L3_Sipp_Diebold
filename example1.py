@@ -90,14 +90,14 @@ solver = ScipySolverRounded()
 
 # Declaration of the simplification algorithms used for this example.
 # Here, we chose to only use Daalmans' algorithm.
-simplifier = [Daalmans(solver)]
+simplifiers = [Daalmans(solver)]
 
 # Declaration of the discretized Manhattan distance function used for this example, using the weights declared above and an epsilon of 1e-4.
 distanceFunction = discreteL1DistanceFunction(weights, epsilon=Fraction("1e-4"))
 
 # Declaration of the Adaptation object used for this example, using all the variables declared beforehand and specifying
 # that we wish to have only one valid solution instead of all the possible ones.
-adaptator = Adaptation(solver, distanceFunction, simplifier, onlyOneSolution=True)
+adaptator = Adaptation(solver, distanceFunction, simplifiers, onlyOneSolution=True)
 
 # Preloading the adaptator, initializaing all the b2i_ variables and making it so the user can use them in the following parts of the script
 # (Necessary for DK8, the nb_fruitTypes constraint)

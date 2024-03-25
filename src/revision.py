@@ -385,9 +385,8 @@ class Revision:
 
             maxVarLength = max([len(var[0].name) for var in variables])
 
-            for var, value in sorted(variables, key=lambda x: x[0].lower()):
+            for var, value in sorted(variables, key=lambda x: x[0].name.lower()):
 
-                # TODO régler les bugs
                 if isinstance(var, IntegerVariable):
                     print(var.name.rjust(maxVarLength) + " =", int(value))
                 else:
