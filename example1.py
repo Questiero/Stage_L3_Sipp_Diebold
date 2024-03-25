@@ -13,69 +13,80 @@ from fractions import Fraction
 
 weights = {
     
+    #Two heuristics are used to define the weights. 
+    #The first one is based on a taxonomy of the ingredient categories, with weights starting from 1 for simple ingredients
+    #and multiplied by a factor of 1000 for each higher category, indicating its importance in the recipe.
+    #The second one is based on the conversions between units and mass for each type of food. 
+    #As there is a known correspondence of one unit to its mass for each food type, weights of unit variables are calculated according
+    #to the weights of mass variables.
+    
     # Presence of almond milk, a boolean variable with a light weight corresponding to a specific ingredient
     PropositionalVariable("almondMilk", fmName="almondMilk"): Fraction(1),
-    # Presence of banana, a boolean variable with a TODO
+    # Presence of banana, a boolean variable with a light weight corresponding to a specific ingredient
     PropositionalVariable("banana", fmName="banana"): Fraction(1),
     # Presence of bitterness, a boolean variable with a weight associated to a property of a recipe
-    PropositionalVariable("bitter", fmName="bitter"): Fraction(100),
-    # Presence of cow milk, a boolean variable with a light weight TODO
+    PropositionalVariable("bitter", fmName="bitter"): Fraction(10000),
+    # Presence of cow milk, a boolean variable with a light weight corresponding to a specific ingredient
     PropositionalVariable("cowMilk", fmName="cowMilk"): Fraction(1),
-    # Is the recipe for a dessert, a boolean variable with a weight associated to a property of a recipe
-    PropositionalVariable("dessert", fmName="dessert"): Fraction(100),
+    # Is the recipe for a dessert, a boolean variable with a weight associated to a wide category of ingredients or a property of a recipe
+    PropositionalVariable("dessert", fmName="dessert"): Fraction(10000),
     # Presence of fruit, a boolean variable with a weight associated to category of ingredients
-    PropositionalVariable("fruit", fmName="fruit"): Fraction(10),
-    # Presence of kiwi, a boolean variable with a TODO
+    PropositionalVariable("fruit", fmName="fruit"): Fraction(100),
+    # Presence of kiwi, a boolean variable with a light weight corresponding to a specific ingredient
     PropositionalVariable("kiwi", fmName="kiwi"): Fraction(1),
-    # Presence of milk, a boolean variable with a heavy weight TODO
-    PropositionalVariable("milk", fmName="milk"): Fraction(10),
+    # Presence of milk, a boolean variable with a weight associated to category of ingredients
+    PropositionalVariable("milk", fmName="milk"): Fraction(100),
     # Is the recipe for a milkshake, a boolean variable with a weight associated to a complete recipe
-    PropositionalVariable("milkshake", fmName="milkshake"): Fraction(1000),
-    # Presence of soy milk, a boolean variable with a light weight TODO
+    PropositionalVariable("milkshake", fmName="milkshake"): Fraction(1000000),
+    # Presence of soy milk, a boolean variable with a light weight corresponding to a specific ingredient
     PropositionalVariable("soyMilk", fmName="soyMilk"): Fraction(1),
 
-    # Mass (in grams) of almond milk, a nonnegative real (hence lowerBound to 0) with a weight of 1, chosen as the weight of a gram of food
+    #Masses are measured in grams and are nonnegative real with a lowerBound to 0.
+
+    # Mass of almond milk, with a weight of 1, chosen as the weight of one gram of food
     RealVariable.declare("almondMilk_g", lowerBound = Fraction(0)): Fraction(1),
-    # Liters of almond milk, a nonnegative real (hence lowerBound to 0) with a a weight equal to the volumic mass of one liter of milk (1030g/L) multiplied by the weight of a gram of milk
+    # Liters of almond milk, with a weight equal to the volumic mass of one liter of milk : 1030g/L (multiplied by 1, the weight of one gram of milk)
     RealVariable.declare("almondMilk_L", lowerBound = Fraction(0)): Fraction(1030),
-    # Mass (in grams) of banana, a nonnegative real (hence lowerBound to 0) with a TODO
+    # Mass of banana, with a weight of 1, chosen as the weight of one gram of food
     RealVariable.declare("banana_g", lowerBound = Fraction(0)): Fraction(1),
-    # Mass (in grams) of cow milk, a nonnegative real (hence lowerBound to 0) with a TODO
+    # Mass of cow milk, with a weight of 1, chosen as the weight of one gram of food
     RealVariable.declare("cowMilk_g", lowerBound = Fraction(0)): Fraction(1),
-    # Liters of cow milk, a nonnegative real (hence lowerBound to 0) with a TODO
+    # Liters of cow milk, with a weight equal to the volumic mass of one liter of milk : 1030g/L
     RealVariable.declare("cowMilk_L", lowerBound = Fraction(0)): Fraction(1030),
-    # Mass (in grams) of food, a nonnegative real (hence lowerBound to 0) with a weight associated to a wide category of ingredients/property of the recipe
-    RealVariable.declare("food_g", lowerBound = Fraction(0)): Fraction(100),
-    # Mass (in grams) of fruit, a nonnegative real (hence lowerBound to 0) with a weight associated to a category of ingredients
-    RealVariable.declare("fruit_g", lowerBound = Fraction(0)): Fraction(10),
-    # Mass (in grams) of granulated sugar, a nonnegative real (hence lowerBound to 0) with a TODO
+    # Mass of food, with a weight associated to a wide category of ingredients or a property of a recipe
+    RealVariable.declare("food_g", lowerBound = Fraction(0)): Fraction(10000),
+    # Mass of fruit, with a weight associated to a category of ingredients
+    RealVariable.declare("fruit_g", lowerBound = Fraction(0)): Fraction(100),
+    # Mass of granulated sugar, with a weight of 1, chosen as the weight of one gram of food
     RealVariable.declare("granulatedSugar_g", lowerBound = Fraction(0)): Fraction(1),
-    # Mass (in grams) of ice cube, a nonnegative real (hence lowerBound to 0) with a TODO
+    # Mass of ice cube, with a weight of 1, chosen as the weight of one gram of food
     RealVariable.declare("iceCube_g", lowerBound = Fraction(0)): Fraction(1),
-    # Mass (in grams) of kiwi, a nonnegative real (hence lowerBound to 0) with a TODO
+    # Mass of kiwi, with a weight of 1, chosen as the weight of one gram of food
     RealVariable.declare("kiwi_g", lowerBound = Fraction(0)): Fraction(1),
-    # Mass (in grams) of milk, a nonnegative real (hence lowerBound to 0) with a TODO
-    RealVariable.declare("milk_g", lowerBound = Fraction(0)): Fraction(10),
-    # Mass (in grams) of soy milk, a nonnegative real (hence lowerBound to 0) with a TODO
+    # Mass of milk, with a weight associated to a category of ingredients
+    RealVariable.declare("milk_g", lowerBound = Fraction(0)): Fraction(100),
+    # Mass of soy milk, with a weight of 1, chosen as the weight of one gram of food
     RealVariable.declare("soyMilk_g", lowerBound = Fraction(0)): Fraction(1),
-    # Liters of soy milk, a nonnegative real (hence lowerBound to 0) with a TODO
+    # Liters of soy milk, with a weight equal to the volumic mass of one liter of milk : 1030g/L
     RealVariable.declare("soyMilk_L", lowerBound = Fraction(0)): Fraction(1030),
-    # Sweetening power (in grams) of the recipe in grams, a nonnegative real (hence lowerBound to 0) with a weight associated to a property of the recipe
-    RealVariable.declare("sweeteningPower_g", lowerBound = Fraction(0)): Fraction(100),
-    # Mass (in grams) of vanilla sugar, a nonnegative real (hence lowerBound to 0) with a TODO
+    # Sweetening power (in grams) of the recipe in grams, with a weight associated to a property of the recipe
+    RealVariable.declare("sweeteningPower_g", lowerBound = Fraction(0)): Fraction(10000),
+    # Mass of vanilla sugar, with a weight of 1, chosen as the weight of one gram of food
     RealVariable.declare("vanillaSugar_g", lowerBound = Fraction(0)): Fraction(1),
 
-    # Number of bananas, a nonnegative integer (hence lowerBound to 0) with a with a weight equal to the average mass of a banana (115g/u) multiplied by the weight of a gram of banana
+    #Numbers of units/tbsp/fruitTypes are nonnegative integer with a lowerBound to 0.
+
+    # Number of bananas, with a with a weight corresponding to the average mass of a banana (115g/u).
     IntegerVariable.declare("banana_u", lowerBound = Fraction(0)): Fraction(115),
-    # Number of teaspoons of granulated sugar, a nonnegative integer (hence lowerBound to 0) with a TODO
+    # Number of tablespoons of granulated sugar, with a weight corresponding to the average mass of a tablespoon of granulated sugar (15g/tbsp).
     IntegerVariable.declare("granulatedSugar_tbsp", lowerBound = Fraction(0)): Fraction(15),
-    # Number of ice cubes, a nonnegative integer (hence lowerBound to 0) with a TODO
-    IntegerVariable.declare("iceCube_u", lowerBound = Fraction(0)): Fraction(24.759),
-    # Number of kiwis, a nonnegative integer (hence lowerBound to 0) with a TODO
+    # Number of ice cubes, with a weight corresponding to the average mass of an ice cube (25g/u).
+    IntegerVariable.declare("iceCube_u", lowerBound = Fraction(0)): Fraction(25),
+    # Number of kiwis, with a weight corresponding to the average mass of a kiwi (100g/u).
     IntegerVariable.declare("kiwi_u", lowerBound = Fraction(0)): Fraction(100),
     # Number of fruit types, a nonnegative integer (hence lowerBound to 0) with a weight associated to a property of the recipe that preserves the number of fruit types
-    IntegerVariable.declare("nb_fruitTypes", lowerBound = Fraction(0)): Fraction(100),
-    # Number of bags of vanilla sugar, a nonnegative integer (hence lowerBound to 0) with a TODO
+    IntegerVariable.declare("nb_fruitTypes", lowerBound = Fraction(0)): Fraction(10000),
+    # Number of bags of vanilla sugar, with a weight corresponding to the average mass of a bag of vanilla sugar(7.5g/u).
     IntegerVariable.declare("vanillaSugar_u", lowerBound = Fraction(0)): Fraction(7.5),
 
 }
@@ -121,7 +132,7 @@ dk &=  LinearConstraint("banana_g - 115 * banana_u = 0")\
      & LinearConstraint("kiwi_g - 100 * kiwi_u = 0")\
      & LinearConstraint("vanillaSugar_g - 7.5 * vanillaSugar_u = 0")\
      & LinearConstraint("granulatedSugar_g - 15 * granulatedSugar_tbsp = 0")\
-     & LinearConstraint("iceCube_g - 24.759 * iceCube_u = 0")
+     & LinearConstraint("iceCube_g - 25 * iceCube_u = 0")
 
 # DK3: Relation between each type of food and its subtypes in the taxonomy (TODO reprendre après envoie)
 # Source: The sweetening power of each ingredient is coming from USDA (https://fdc.nal.usda.gov/)
