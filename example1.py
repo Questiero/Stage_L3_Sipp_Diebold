@@ -28,7 +28,7 @@ weights = {
     PropositionalVariable("bitter", fmName="bitter"): Fraction(10000),
     # Presence of cow milk, a boolean variable with a light weight corresponding to a specific ingredient
     PropositionalVariable("cowMilk", fmName="cowMilk"): Fraction(1),
-    # Is the recipe for a dessert, a boolean variable with a weight associated to a wide category of ingredients or a property of a recipe
+    # Is the recipe a dessert, a boolean variable with a weight associated to a wide category of ingredients or a property of a recipe
     PropositionalVariable("dessert", fmName="dessert"): Fraction(10000),
     # Presence of fruit, a boolean variable with a weight associated to category of ingredients
     PropositionalVariable("fruit", fmName="fruit"): Fraction(100),
@@ -36,7 +36,7 @@ weights = {
     PropositionalVariable("kiwi", fmName="kiwi"): Fraction(1),
     # Presence of milk, a boolean variable with a weight associated to category of ingredients
     PropositionalVariable("milk", fmName="milk"): Fraction(100),
-    # Is the recipe for a milkshake, a boolean variable with a weight associated to a complete recipe
+    # Is the recipe a milkshake, a boolean variable with a very heavy weight associated to a complete recipe
     PropositionalVariable("milkshake", fmName="milkshake"): Fraction(1000000),
     # Presence of soy milk, a boolean variable with a light weight corresponding to a specific ingredient
     PropositionalVariable("soyMilk", fmName="soyMilk"): Fraction(1),
@@ -53,7 +53,8 @@ weights = {
     RealVariable.declare("cowMilk_g", lowerBound = Fraction(0)): Fraction(1),
     # Liters of cow milk, with a weight equal to the volumic mass of one liter of milk : 1030g/L
     RealVariable.declare("cowMilk_L", lowerBound = Fraction(0)): Fraction(1030),
-    # Mass of food, with a weight associated to a wide category of ingredients or a property of a recipe
+    # Mass of food, variable used to preserve the total mass of ingredients (and therefore their proportions), with a weight associated
+    # to a wide category of ingredients or a property of a recipe
     RealVariable.declare("food_g", lowerBound = Fraction(0)): Fraction(10000),
     # Mass of fruit, with a weight associated to a category of ingredients
     RealVariable.declare("fruit_g", lowerBound = Fraction(0)): Fraction(100),
@@ -69,24 +70,24 @@ weights = {
     RealVariable.declare("soyMilk_g", lowerBound = Fraction(0)): Fraction(1),
     # Liters of soy milk, with a weight equal to the volumic mass of one liter of milk : 1030g/L
     RealVariable.declare("soyMilk_L", lowerBound = Fraction(0)): Fraction(1030),
-    # Sweetening power (in grams) of the recipe in grams, with a weight associated to a property of the recipe
+    # Sweetening power of the recipe in grams, variable that corresponds to the total amount of sugar in the recipe with a weight associated to a property of the recipe
     RealVariable.declare("sweeteningPower_g", lowerBound = Fraction(0)): Fraction(10000),
     # Mass of vanilla sugar, with a weight of 1, chosen as the weight of one gram of food
     RealVariable.declare("vanillaSugar_g", lowerBound = Fraction(0)): Fraction(1),
 
     #Numbers of units/tbsp/fruitTypes are nonnegative integer with a lowerBound to 0.
 
-    # Number of bananas, with a with a weight corresponding to the average mass of a banana (115g/u).
+    # Number of bananas, with a with a weight corresponding to the average mass of a banana (115g/u)
     IntegerVariable.declare("banana_u", lowerBound = Fraction(0)): Fraction(115),
-    # Number of tablespoons of granulated sugar, with a weight corresponding to the average mass of a tablespoon of granulated sugar (15g/tbsp).
+    # Number of tablespoons of granulated sugar, with a weight corresponding to the average mass of a tablespoon of granulated sugar (15g/tbsp)
     IntegerVariable.declare("granulatedSugar_tbsp", lowerBound = Fraction(0)): Fraction(15),
-    # Number of ice cubes, with a weight corresponding to the average mass of an ice cube (25g/u).
+    # Number of ice cubes, with a weight corresponding to the average mass of an ice cube (25g/u)
     IntegerVariable.declare("iceCube_u", lowerBound = Fraction(0)): Fraction(25),
-    # Number of kiwis, with a weight corresponding to the average mass of a kiwi (100g/u).
+    # Number of kiwis, with a weight corresponding to the average mass of a kiwi (100g/u)
     IntegerVariable.declare("kiwi_u", lowerBound = Fraction(0)): Fraction(100),
-    # Number of fruit types, a nonnegative integer (hence lowerBound to 0) with a weight associated to a property of the recipe that preserves the number of fruit types
+    # Number of fruit types, variable that preserves the number of fruit types with a weight associated to a property of the recipe
     IntegerVariable.declare("nb_fruitTypes", lowerBound = Fraction(0)): Fraction(10000),
-    # Number of bags of vanilla sugar, with a weight corresponding to the average mass of a bag of vanilla sugar(7.5g/u).
+    # Number of bags of vanilla sugar, with a weight corresponding to the average mass of a bag of vanilla sugar(7.5g/u)
     IntegerVariable.declare("vanillaSugar_u", lowerBound = Fraction(0)): Fraction(7.5),
 
 }
@@ -123,9 +124,14 @@ dk = FormulaManager.parser("(banana -> fruit) & (kiwi -> fruit)")
 
 # DK2: For each food type and unit, there is a known correspondence of one unit of this food type to its mass,
 #      e.g. the mass of 1 banana and the mass of 1 tablespoon of granulated sugar.
-# Source: Mass coming from USDA (https://fdc.nal.usda.gov/)
-#                          Vahine (URL) (for vanilla sugar)
-dk &=  LinearConstraint("banana_g - 115 * banana_u = 0")\
+# Source: 
+#    - Banana (https://www.aprifel.com/fr/fiche-nutritionnelle/banane/?tab=composition_analyse_nutritionnelles)
+#    - Cow milk, soy milk and almond milk (rounded to the mass of cow milk) (https://conseilenagriculture.fr/calculettes/kglait-litre/)
+#    - Kiwi (https://www.aprifel.com/fr/fiche-nutritionnelle/kiwi/?tab=composition_analyse_nutritionnelles)
+#    - Vanilla sugar (https://www.vahine.fr/produits/sucres-et-levures/sucre-vanille)
+#    - Tablespoon of granulated sugar (https://www.mgc-prevention.fr/cuisiner-sans-balance/)
+#    - Ice cube of water of dimension 3x3x3cm : 27cm^3 * 0.917g/cm^3 = 24.759g, rounded to 25g (https://fr.wikipedia.org/wiki/Glace)
+dk &=  LinearConstraint("banana_g - 120 * banana_u = 0")\
      & LinearConstraint("cowMilk_g - 1030 * cowMilk_L = 0")\
      & LinearConstraint("soyMilk_g - 1030 * soyMilk_L = 0")\
      & LinearConstraint("almondMilk_g - 1030 * almondMilk_L = 0")\
@@ -135,8 +141,10 @@ dk &=  LinearConstraint("banana_g - 115 * banana_u = 0")\
      & LinearConstraint("iceCube_g - 25 * iceCube_u = 0")
 
 # DK3: Relation between each type of food and its subtypes in the taxonomy (TODO reprendre après envoie)
-# Source: The sweetening power of each ingredient is coming from USDA (https://fdc.nal.usda.gov/)
 # The sweetening power is known for every ingredient type, e.g. 0.158 for bananas (1 gram of banana has the same sweetening power as 0.158 gram of granulated sugar), 1 for granulated sugar, etc.
+# Source: The sweetening power of each ingredient is coming from USDA (https://fdc.nal.usda.gov/) apart from almond milk (https://www.bjorg.fr/produits/lait-amande-bio/)
+# and vanilla sugar (https://www.vahine.fr/produits/sucres-et-levures/sucre-vanille)
+
 dk &= LinearConstraint("sweeteningPower_g  - granulatedSugar_g\
                                            - 0.158 * banana_g\
                                            - 0.0899 * kiwi_g\
