@@ -16,7 +16,7 @@ class UnaryFormula(Formula):
 
     Attributes
     ----------
-    children: olaaaf.formula.formula.Formula
+    children: `olaaaf.formula.formula.Formula`
         The child of the current node.
     '''
 

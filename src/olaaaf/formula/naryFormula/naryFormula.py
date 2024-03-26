@@ -20,12 +20,12 @@ class NaryFormula(Formula):
 
     Parameters
     ----------
-    *formulas: list of olaaaf.formula.formula.Formula
+    *formulas: list of `olaaaf.formula.formula.Formula`
         The formulas meant as components of the \(n\)-ary operator.
 
     Attributes
     ----------
-    children: set of olaaaf.formula.formula.Formula
+    children: set of `olaaaf.formula.formula.Formula`
         The children of the current node.
     """
         
@@ -74,7 +74,7 @@ class NaryFormula(Formula):
 
         Returns
         -------
-        olaaaf.formula.formula.Formula
+        `olaaaf.formula.formula.Formula`
             Clone of the current `olaaaf.formula.formula.Formula`.
         """
 

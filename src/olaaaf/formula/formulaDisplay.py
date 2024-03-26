@@ -34,7 +34,7 @@ class FormulaDisplay:
 
         Parameters
         ----------
-        formulas : dictionary of String with olaaaf.formula.formula.Formula as key
+        formulas : dictionary of String with`olaaaf.formula.formula.Formula`as key
             Dictionary witch link a formula with a color
         variables: set of olaaaf.variable.variable.Variable
             List of variables witch will be displayed

@@ -43,7 +43,7 @@ class Formula(ABC):
 
         Returns
         -------
-        olaaaf.formula.formula.Formula
+        `olaaaf.formula.formula.Formula`
             The current `olaaaf.formula.formula.Formula` in Disjunctive Normal Form.
         '''
         pass
@@ -56,7 +56,7 @@ class Formula(ABC):
 
         Returns
         -------
-        olaaaf.formula.formula.Formula
+        `olaaaf.formula.formula.Formula`
             The current Formula in Disjunctive Normal Form under Negation.
         '''
         pass
@@ -107,7 +107,7 @@ class Formula(ABC):
 
         Returns
         ------
-        olaaaf.formula.formula.Formula
+        `olaaaf.formula.formula.Formula`
             A `olaaaf.formula.formula.Formula` with only `olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
         '''
         pass
@@ -117,9 +117,14 @@ class Formula(ABC):
         '''
         Method used to transform a `olaaaf.formula.formula.Formula` into a new one, in the PCMLC formalism.
 
+        Parameters
+        ----------
+        varDict : dictionnary
+            Dictionnary used to tell which variable should be replaced by which.
+
         Returns
         -------
-        olaaaf.formula.formula.Formula
+        `olaaaf.formula.formula.Formula`
             A `olaaaf.formula.formula.Formula` in the PCMLC formalism.
         '''
         pass
@@ -134,7 +139,7 @@ class Formula(ABC):
 
         Returns
         -------
-        olaaaf.formula.formula.Formula
+        `olaaaf.formula.formula.Formula`
             Clone of the current `olaaaf.formula.formula.Formula`.
         """
 

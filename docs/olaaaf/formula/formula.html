@@ -71,10 +71,8 @@ Typing depends of the formula's arity.</dd>
 <dd>
 <div class="desc"><p>Method returning a clone of the current Formula.</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><code><a title="olaaaf.formula.formula.Formula" href="#olaaaf.formula.formula.Formula">Formula</a></code></dt>
-<dd>Clone of the current <code><a title="olaaaf.formula.formula.Formula" href="#olaaaf.formula.formula.Formula">Formula</a></code>.</dd>
-</dl></div>
+<p><code><a title="olaaaf.formula.formula.Formula" href="#olaaaf.formula.formula.Formula">Formula</a></code>
+Clone of the current <code><a title="olaaaf.formula.formula.Formula" href="#olaaaf.formula.formula.Formula">Formula</a></code>.</p></div>
 </dd>
 <dt id="olaaaf.formula.formula.Formula.getAdherence"><code class="name flex">
 <span>def <span class="ident">getAdherence</span></span>(<span>self, var: Variable = None) ‑> list[list[<a title="olaaaf.formula.formula.Formula" href="#olaaaf.formula.formula.Formula">Formula</a>]]</span>
@@ -112,10 +110,8 @@ the Formula.</p>
 <dd>
 <div class="desc"><p>Method returning the current Formula in Disjunctive Normal Form.</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><code><a title="olaaaf.formula.formula.Formula" href="#olaaaf.formula.formula.Formula">Formula</a></code></dt>
-<dd>The current <code><a title="olaaaf.formula.formula.Formula" href="#olaaaf.formula.formula.Formula">Formula</a></code> in Disjunctive Normal Form.</dd>
-</dl></div>
+<p><code><a title="olaaaf.formula.formula.Formula" href="#olaaaf.formula.formula.Formula">Formula</a></code>
+The current <code><a title="olaaaf.formula.formula.Formula" href="#olaaaf.formula.formula.Formula">Formula</a></code> in Disjunctive Normal Form.</p></div>
 </dd>
 <dt id="olaaaf.formula.formula.Formula.toLatex"><code class="name flex">
 <span>def <span class="ident">toLatex</span></span>(<span>self) ‑> str</span>
@@ -134,21 +130,22 @@ the Formula.</p>
 <dd>
 <div class="desc"><p>Method used to transform a <code><a title="olaaaf.formula.formula.Formula" href="#olaaaf.formula.formula.Formula">Formula</a></code> into another one, with only <code><a title="olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ" href="nullaryFormula/constraint/constraintOperator.html#olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ">ConstraintOperator.LEQ</a></code> constraints.</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><code><a title="olaaaf.formula.formula.Formula" href="#olaaaf.formula.formula.Formula">Formula</a></code></dt>
-<dd>A <code><a title="olaaaf.formula.formula.Formula" href="#olaaaf.formula.formula.Formula">Formula</a></code> with only <code><a title="olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ" href="nullaryFormula/constraint/constraintOperator.html#olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ">ConstraintOperator.LEQ</a></code> constraints.</dd>
-</dl></div>
+<p><code><a title="olaaaf.formula.formula.Formula" href="#olaaaf.formula.formula.Formula">Formula</a></code>
+A <code><a title="olaaaf.formula.formula.Formula" href="#olaaaf.formula.formula.Formula">Formula</a></code> with only <code><a title="olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ" href="nullaryFormula/constraint/constraintOperator.html#olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ">ConstraintOperator.LEQ</a></code> constraints.</p></div>
 </dd>
 <dt id="olaaaf.formula.formula.Formula.toPCMLC"><code class="name flex">
 <span>def <span class="ident">toPCMLC</span></span>(<span>self, varDict) ‑> <a title="olaaaf.formula.formula.Formula" href="#olaaaf.formula.formula.Formula">Formula</a></span>
 </code></dt>
 <dd>
 <div class="desc"><p>Method used to transform a <code><a title="olaaaf.formula.formula.Formula" href="#olaaaf.formula.formula.Formula">Formula</a></code> into a new one, in the PCMLC formalism.</p>
-<h2 id="returns">Returns</h2>
+<h2 id="parameters">Parameters</h2>
 <dl>
-<dt><code><a title="olaaaf.formula.formula.Formula" href="#olaaaf.formula.formula.Formula">Formula</a></code></dt>
-<dd>A <code><a title="olaaaf.formula.formula.Formula" href="#olaaaf.formula.formula.Formula">Formula</a></code> in the PCMLC formalism.</dd>
-</dl></div>
+<dt><strong><code>varDict</code></strong> :&ensp;<code>dictionnary</code></dt>
+<dd>Dictionnary used to tell which variable should be replaced by which.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p><code><a title="olaaaf.formula.formula.Formula" href="#olaaaf.formula.formula.Formula">Formula</a></code>
+A <code><a title="olaaaf.formula.formula.Formula" href="#olaaaf.formula.formula.Formula">Formula</a></code> in the PCMLC formalism.</p></div>
 </dd>
 </dl>
 </dd>

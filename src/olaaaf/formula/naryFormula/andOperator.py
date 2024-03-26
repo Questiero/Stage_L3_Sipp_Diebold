@@ -21,12 +21,12 @@ class And(NaryFormula):
 
     Parameters
     ----------
-    *formulas: list of olaaaf.formula.formula.Formula
+    *formulas: list of `olaaaf.formula.formula.Formula`
         The formulas meant as components of the And operator.
 
     Attributes
     ----------
-    children: set of olaaaf.formula.formula.Formula
+    children: set of `olaaaf.formula.formula.Formula`
         The children of the current node.
     '''
     
@@ -38,7 +38,7 @@ class And(NaryFormula):
 
         Returns
         -------
-        olaaaf.formula.formula.Formula
+        `olaaaf.formula.formula.Formula`
             The current Formula in Disjunctive Normal Form.
         '''
                 
@@ -79,7 +79,7 @@ class And(NaryFormula):
 
         Returns
         -------
-        olaaaf.formula.formula.Formula
+        `olaaaf.formula.formula.Formula`
             The current Formula in Disjunctive Normal Form under Negation.
         '''
         
@@ -91,9 +91,14 @@ class And(NaryFormula):
         '''
         Method used to transform a `olaaaf.formula.formula.Formula` into a new one, in the PCMLC formalism.
 
+        Parameters
+        ----------
+        varDict : dictionnary
+            Dictionnary used to tell which variable should be replaced by which.
+
         Returns
         -------
-        olaaaf.formula.formula.Formula
+        `olaaaf.formula.formula.Formula`
             A `olaaaf.formula.formula.Formula` in the PCMLC formalism.
         '''
         return And(*{formul.toPCMLC(varDict) for formul in self.children})
@@ -164,7 +169,7 @@ class And(NaryFormula):
 
         Returns
         ------
-        olaaaf.formula.formula.Formula
+        `olaaaf.formula.formula.Formula`
             A `olaaaf.formula.formula.Formula` with only `olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
         '''
         childrenModified = set()

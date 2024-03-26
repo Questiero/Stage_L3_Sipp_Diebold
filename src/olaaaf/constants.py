@@ -47,14 +47,14 @@ class Constants():
     TOP_STRING_OPERATOR = "TOP" #: Value for the operator used in `olaaaf.formula.formula.Formula`'s string display for the `olaaaf.formula.nullaryFormula.top.Top` operator, defaulted as `TOP`.
     BOTTOM_STRING_OPERATOR = "BOT" #: Value for the operator used in `olaaaf.formula.formula.Formula`'s string display for the `olaaaf.formula.nullaryFormula.bottom.Bottom` operator, defaulted as `BOT`.
 
-    AND_LATEX_OPERATOR = "\\land" #: Value for the operator used in `olaaaf.formula.formula.Formula.toLatex` for the `olaaaf.formula.naryFormula.andOperator.And` operator, defaulted as `\land`.
-    OR_LATEX_OPERATOR = "\\lor" #: Value for the operator used in `olaaaf.formula.formula.Formula.toLatex` for the `olaaaf.formula.naryFormula.orOperator.Or` operator, defaulted as `\lor`.
-    NOT_LATEX_OPERATOR = "\\lnot" #: Value for the operator used in `olaaaf.formula.formula.Formula.toLatex` for the `olaaaf.formula.unaryFormula.notOperator.Not` operator, defaulted as `\lnot`.
-    XOR_LATEX_OPERATOR = "\\oplus" #: Value for the operator used in `olaaaf.formula.formula.Formula.toLatex` for the `olaaaf.formula.binaryFormula.xorOperator.Xor` operator, defaulted as `\oplus`.
-    IMPLICATION_LATEX_OPERATOR = "\\rightarrow" #: Value for the operator used in `olaaaf.formula.formula.Formula.toLatex` for the `olaaaf.formula.binaryFormula.implicationOperator.Implication` operator, defaulted as `\rightarrow`.
-    EQUIVALENCE_LATEX_OPERATOR = "\\leftrightarrow" #: Value for the operator used in `olaaaf.formula.formula.Formula.toLatex` for the `olaaaf.formula.binaryFormula.equivalenceOperator.Equivalence` operator, defaulted as `\leftrightarrow`.
-    TOP_LATEX_OPERATOR = "\\top" #: Value for the operator used in `olaaaf.formula.formula.Formula.toLatex` for the `olaaaf.formula.nullaryFormula.top.Top` operator, defaulted as `\top`.
-    BOTTOM_LATEX_OPERATOR = "\\bot" #: Value for the operator used in `olaaaf.formula.formula.Formula.toLatex` for the `olaaaf.formula.nullaryFormula.bottom.Bottom` operator, defaulted as `\bot`.
-    EQ_LATEX_OPERATOR = "=" #: Value for the operator used in `olaaaf.formula.formula.Formula.toLatex` for the `olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.EQ` operator, defaulted as `=`.
-    LEQ_LATEX_OPERATOR = "\\leqslant" #: Value for the operator used in `olaaaf.formula.formula.Formula.toLatex` for the `olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` operator, defaulted as `\leqslant`.
-    GEQ_LATEX_OPERATOR = "\\geqslant" #: Value for the operator used in `olaaaf.formula.formula.Formula.toLatex` for the `olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.GEQ` operator, defaulted as `\geqslant`.
+    AND_LATEX_OPERATOR = "\\land" #: Value for the operator used in ``olaaaf.formula.formula.Formula`.toLatex` for the `olaaaf.formula.naryFormula.andOperator.And` operator, defaulted as `\land`.
+    OR_LATEX_OPERATOR = "\\lor" #: Value for the operator used in ``olaaaf.formula.formula.Formula`.toLatex` for the `olaaaf.formula.naryFormula.orOperator.Or` operator, defaulted as `\lor`.
+    NOT_LATEX_OPERATOR = "\\lnot" #: Value for the operator used in ``olaaaf.formula.formula.Formula`.toLatex` for the `olaaaf.formula.unaryFormula.notOperator.Not` operator, defaulted as `\lnot`.
+    XOR_LATEX_OPERATOR = "\\oplus" #: Value for the operator used in ``olaaaf.formula.formula.Formula`.toLatex` for the `olaaaf.formula.binaryFormula.xorOperator.Xor` operator, defaulted as `\oplus`.
+    IMPLICATION_LATEX_OPERATOR = "\\rightarrow" #: Value for the operator used in ``olaaaf.formula.formula.Formula`.toLatex` for the `olaaaf.formula.binaryFormula.implicationOperator.Implication` operator, defaulted as `\rightarrow`.
+    EQUIVALENCE_LATEX_OPERATOR = "\\leftrightarrow" #: Value for the operator used in ``olaaaf.formula.formula.Formula`.toLatex` for the `olaaaf.formula.binaryFormula.equivalenceOperator.Equivalence` operator, defaulted as `\leftrightarrow`.
+    TOP_LATEX_OPERATOR = "\\top" #: Value for the operator used in ``olaaaf.formula.formula.Formula`.toLatex` for the `olaaaf.formula.nullaryFormula.top.Top` operator, defaulted as `\top`.
+    BOTTOM_LATEX_OPERATOR = "\\bot" #: Value for the operator used in ``olaaaf.formula.formula.Formula`.toLatex` for the `olaaaf.formula.nullaryFormula.bottom.Bottom` operator, defaulted as `\bot`.
+    EQ_LATEX_OPERATOR = "=" #: Value for the operator used in ``olaaaf.formula.formula.Formula`.toLatex` for the `olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.EQ` operator, defaulted as `=`.
+    LEQ_LATEX_OPERATOR = "\\leqslant" #: Value for the operator used in ``olaaaf.formula.formula.Formula`.toLatex` for the `olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` operator, defaulted as `\leqslant`.
+    GEQ_LATEX_OPERATOR = "\\geqslant" #: Value for the operator used in ``olaaaf.formula.formula.Formula`.toLatex` for the `olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.GEQ` operator, defaulted as `\geqslant`.

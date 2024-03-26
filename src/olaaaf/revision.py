@@ -99,9 +99,9 @@ class Revision:
 
         Parameters
         ----------
-        psi : olaaaf.formula.formula.Formula
+        psi : `olaaaf.formula.formula.Formula`
             \(\psi\), left part of the knowledge revision operator and `olaaaf.formula.formula.Formula` that will be revised.
-        mu : olaaaf.formula.formula.Formula
+        mu : `olaaaf.formula.formula.Formula`
             \(\mu\), right part of the knowledge revision operator and `olaaaf.formula.formula.Formula` that will be used to revise \(\psi\) by.
 
 
@@ -110,7 +110,7 @@ class Revision:
         Fraction
             Distance (calculated with the `olaaaf.distance.distance_function.distanceFunction.DistanceFunction`
             given at the initialization of the class) between \(\psi\) and \(\mu\).
-        olaaaf.formula.formula.Formula
+        `olaaaf.formula.formula.Formula`
             Result of the knowledge revison of \(\psi\) by \(\mu\).
         """
 

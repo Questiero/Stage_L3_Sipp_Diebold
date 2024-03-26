@@ -45,12 +45,12 @@ class FormulaInterpreter:
 
         Parameters
         ----------
-        phi : olaaaf.formula.formula.Formula
+        phi : `olaaaf.formula.formula.Formula`
             The `olaaaf.formula.formula.Formula` to simplify.
 
         Returns
         -------
-        olaaaf.formula.formula.Formula
+        `olaaaf.formula.formula.Formula`
             The simplified `olaaaf.formula.formula.Formula`.
         """
 
@@ -142,7 +142,7 @@ class FormulaInterpreter:
         Fraction
             Minimal distance (calculated with the `olaaaf.distance.distance_function.distanceFunction.DistanceFunction`
             given at the initialization of the class) that satisfies the optimization problem above. 
-        olaaaf.formula.formula.Formula
+        `olaaaf.formula.formula.Formula`
             `olaaaf.formula.formula.Formula` representing a point \(y \in \mathcal{M}(\mu)\) that satisfies the optimization problem above. 
         """
         # Reorder variables order
@@ -246,7 +246,7 @@ class FormulaInterpreter:
         Fraction
             Minimal distance (calculated with the `olaaaf.distance.distance_function.distanceFunction.DistanceFunction`
             given at the initialization of the class) that satisfies the optimization problem above. 
-        olaaaf.formula.formula.Formula
+        `olaaaf.formula.formula.Formula`
             `olaaaf.formula.formula.Formula` representing a point \(y \in \mathcal{M}(\mu)\) that satisfies the optimization problem above. 
         """
 
@@ -254,7 +254,7 @@ class FormulaInterpreter:
 
         return self.findOneSolution(variables, psi, mu)    
 
-    def removeNot(self, phi: And, epsilon = 0) -> And:
+    def removeNot(self, phi: And, epsilon = Fraction(0)) -> And:
         r"""
         Method used to transform a conjunction of litterals (i.e `olaaaf.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint`
         and `olaaaf.formula.unaryFormula.notOperator.Not` of `olaaaf.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint`) in a conjunction of `olaaaf.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint`,
@@ -266,6 +266,8 @@ class FormulaInterpreter:
         ----------
         phi : `olaaaf.formula.naryFormula.andOperator.And`
             Conjunctions of litterals to transform, as specified above.
+        epsilon : Fraction, optional
+            The approximation for the removed Not. By default, equals \(0\).
 
         Returns
         -------
@@ -315,7 +317,7 @@ class FormulaInterpreter:
         Fraction
             Minimal distance (calculated with the `olaaaf.distance.distance_function.distanceFunction.DistanceFunction`
             given at the initialization of the class) that satisfies the optimization problem above. 
-        olaaaf.formula.formula.Formula
+        `olaaaf.formula.formula.Formula`
             `olaaaf.formula.formula.Formula` representing a point \(y \in \mathcal{M}(\mu)\) that satisfies the optimization problem above. 
         """
 
@@ -376,7 +378,7 @@ class FormulaInterpreter:
         Fraction
             Minimal distance (calculated with the `olaaaf.distance.distance_function.distanceFunction.DistanceFunction`
             given at the initialization of the class) that satisfies the optimization problem above. 
-        olaaaf.formula.formula.Formula
+        `olaaaf.formula.formula.Formula`
             `olaaaf.formula.formula.Formula` representing a point \(y \in \mathcal{M}(\mu)\) that satisfies the optimization problem above. 
         """
 

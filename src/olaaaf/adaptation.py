@@ -61,11 +61,11 @@ class Adaptation:
 
         Parameters
         ----------
-        psi : olaaaf.formula.formula.Formula
+        psi : `olaaaf.formula.formula.Formula`
             \(src\), source case for the adaptation and `olaaaf.formula.formula.Formula` that will be adapted.
-        mu : olaaaf.formula.formula.Formula
+        mu : `olaaaf.formula.formula.Formula`
             \(tgt\), target problem for the adaptation and `olaaaf.formula.formula.Formula` that will be used to adapt \(src\) by.
-        dk : olaaaf.formula.formula.Formula
+        dk : `olaaaf.formula.formula.Formula`
             \(DK\), the domain knowledge.
 
         Returns
@@ -73,7 +73,7 @@ class Adaptation:
         Fraction
             Distance (calculated with the `olaaaf.distance.distance_function.distanceFunction.DistanceFunction`
             given at the initialization of the class) between \(src\) and \(tgt\).
-        olaaaf.formula.formula.Formula
+        `olaaaf.formula.formula.Formula`
             Result of the adaptation of \(src\) by \(tgt\).
         """
 

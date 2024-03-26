@@ -20,7 +20,7 @@ Please note that they have an optional argument `name` that we'll talk about in 
 
 * Use `olaaaf.formula.formulaManager.FormulaManager.parser` to declare a formula using a parser with customizable operators.
 While more intuitive due to the less restrictive scope of usable operators, this method of declaring formulas assume you 
-previously named them, either via the `name` attribute in their constructor or thanks to `olaaaf.formula.formulaManager.FormulaManager.declare`.
+previously named them, either via the `fmName` attribute in their constructor or thanks to `olaaaf.formula.formulaManager.FormulaManager.declare`.
 The operators could be customized in `olaaaf.constants.Constants` but are by default:
 
     * `&` for the and operator, represented by `olaaaf.formula.naryFormula.andOperator.And`\n

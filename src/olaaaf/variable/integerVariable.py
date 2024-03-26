@@ -20,6 +20,9 @@ class IntegerVariable(Variable):
     ----------
     name : String
         The name of the `olaaaf.variable.integerVariable.IntegerVariable`.
+    lowerBound, upperBound : `fraction.Fraction`, optional
+        Fractions représenting respectively the lower and upper bounds of the variable. If not defined, it is considered as if the variable is unbounded.
+
     """
 
     def isInteger(self) -> bool:

@@ -19,6 +19,8 @@ class Variable(ABC):
     ----------
     name : String
         The name of the `olaaaf.variable.variable.Variable`.
+    lowerBound, upperBound : `fraction.Fraction`, optional
+        Fractions représenting respectively the lower and upper bounds of the variable. If not defined, it is considered as if the variable is unbounded.
     """
     
     #: Name of the variable, by which they are identified.
@@ -46,6 +48,8 @@ class Variable(ABC):
         ----------
         ending : String
             The string to concatenate at the end of an anonymous variable's name, after its object id.
+        lowerBound, upperBound : `fraction.Fraction`, optional
+            Fractions représenting respectively the lower and upper bounds of the variable. If not defined, it is considered as if the variable is unbounded.
 
         Usage exemple
         -------------
@@ -80,7 +84,8 @@ class Variable(ABC):
         - Names are case sensitives\n
         - Name must begin with a letter\n
         - It can be followed by alphanumerical character or _\n
-        - Name can't contain any of the following symbols: +-*/@
+        - Name can't contain any of the following symbols: +-*/@:
+        - Names shouldn't begin with the prefix `b2i_`
 
         If this variable already exist under another type, an Exception will be raised.
 
@@ -88,6 +93,8 @@ class Variable(ABC):
         ----------
         name : String
             The name of the `olaaaf.variable.variable.Variable` to be declared.
+        lowerBound, upperBound : `fraction.Fraction`, optional
+            Fractions représenting respectively the lower and upper bounds of the variable. If not defined, it is considered as if the variable is unbounded.
 
         Returns
         -------
@@ -116,6 +123,8 @@ class Variable(ABC):
         ----------
         lname : list of String
             The names of the `olaaaf.variable.variable.Variable` to be declared.
+        lowerBound, upperBound : `fraction.Fraction`, optional
+            Fractions représenting respectively the lower and upper bounds of the variables. If not defined, it is considered as if the variable is unbounded.
 
         Returns
         -------
@@ -150,7 +159,7 @@ class Variable(ABC):
         Returns
         -------
         res:
-            True if the variable must have intergers values
+            True if the variable must have integers values
             else False
         """
         pass

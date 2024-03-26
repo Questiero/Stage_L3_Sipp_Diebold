@@ -47,12 +47,29 @@ of <code><a title="olaaaf.variable.integerVariable.IntegerVariable" href="#olaaa
 <dl>
 <dt><strong><code>name</code></strong> :&ensp;<code>String</code></dt>
 <dd>The name of the <code><a title="olaaaf.variable.integerVariable.IntegerVariable" href="#olaaaf.variable.integerVariable.IntegerVariable">IntegerVariable</a></code>.</dd>
+<dt><strong><code>lowerBound</code></strong>, <strong><code>upperBound</code></strong> :&ensp;<code>fraction.Fraction</code>, optional</dt>
+<dd>Fractions représenting respectively the lower and upper bounds of the variable. If not defined, it is considered as if the variable is unbounded.</dd>
 </dl></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="olaaaf.variable.variable.Variable" href="variable.html#olaaaf.variable.variable.Variable">Variable</a></li>
 <li>abc.ABC</li>
 </ul>
+<h3>Methods</h3>
+<dl>
+<dt id="olaaaf.variable.integerVariable.IntegerVariable.isInteger"><code class="name flex">
+<span>def <span class="ident">isInteger</span></span>(<span>self) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Method used to known if the variable must have intergers values.</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>res:</code></dt>
+<dd>True if the variable must have intergers values
+else False</dd>
+</dl></div>
+</dd>
+</dl>
 <h3>Inherited members</h3>
 <ul class="hlist">
 <li><code><b><a title="olaaaf.variable.variable.Variable" href="variable.html#olaaaf.variable.variable.Variable">Variable</a></b></code>:
@@ -61,7 +78,6 @@ of <code><a title="olaaaf.variable.integerVariable.IntegerVariable" href="#olaaa
 <li><code><a title="olaaaf.variable.variable.Variable.declareAnonymous" href="variable.html#olaaaf.variable.variable.Variable.declareAnonymous">declareAnonymous</a></code></li>
 <li><code><a title="olaaaf.variable.variable.Variable.declareBulk" href="variable.html#olaaaf.variable.variable.Variable.declareBulk">declareBulk</a></code></li>
 <li><code><a title="olaaaf.variable.variable.Variable.getBounds" href="variable.html#olaaaf.variable.variable.Variable.getBounds">getBounds</a></code></li>
-<li><code><a title="olaaaf.variable.variable.Variable.isInteger" href="variable.html#olaaaf.variable.variable.Variable.isInteger">isInteger</a></code></li>
 <li><code><a title="olaaaf.variable.variable.Variable.name" href="variable.html#olaaaf.variable.variable.Variable.name">name</a></code></li>
 </ul>
 </li>
@@ -85,6 +101,9 @@ of <code><a title="olaaaf.variable.integerVariable.IntegerVariable" href="#olaaa
 <ul>
 <li>
 <h4><code><a title="olaaaf.variable.integerVariable.IntegerVariable" href="#olaaaf.variable.integerVariable.IntegerVariable">IntegerVariable</a></code></h4>
+<ul class="">
+<li><code><a title="olaaaf.variable.integerVariable.IntegerVariable.isInteger" href="#olaaaf.variable.integerVariable.IntegerVariable.isInteger">isInteger</a></code></li>
+</ul>
 </li>
 </ul>
 </li>

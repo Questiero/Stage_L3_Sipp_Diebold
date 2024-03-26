@@ -21,7 +21,7 @@ class Not(UnaryFormula):
 
     Attributes
     ----------
-    children: olaaaf.formula.formula.Formula
+    children: `olaaaf.formula.formula.Formula`
         The child of the current node.
     '''
         
@@ -31,7 +31,7 @@ class Not(UnaryFormula):
 
         Returns
         -------
-        olaaaf.formula.formula.Formula
+        `olaaaf.formula.formula.Formula`
             The current `olaaaf.formula.formula.Formula` in Disjunctive Normal Form.
         '''
         
@@ -44,7 +44,7 @@ class Not(UnaryFormula):
 
         Returns
         -------
-        olaaaf.formula.formula.Formula
+        `olaaaf.formula.formula.Formula`
             The current `olaaaf.formula.formula.Formula` in Disjunctive Normal Form.
         '''
         
@@ -95,19 +95,19 @@ class Not(UnaryFormula):
 
         Returns
         ------
-        olaaaf.formula.formula.Formula
+        `olaaaf.formula.formula.Formula`
             A `olaaaf.formula.formula.Formula` with only `olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
         '''
         return Not(self.children.toLessOrEqConstraint())
     
-    def copyNegLitteral(self, epsilon = 0) -> Constraint:
+    def copyNegLitteral(self, epsilon = Fraction(0)) -> Constraint:
         """
         Method used to transform the strict operators (i.e the negation) in an open one.
 
         Parameters
         ----------
-        e : olaaaf.variable.variable.Variable
-            variable used in case of inequality.
+        epsilon : Fraction, optional
+            The approximation for the removed Not. By default, equals \(0\).
 
         Returns
         -------
@@ -130,9 +130,14 @@ class Not(UnaryFormula):
         '''
         Method used to transform a `olaaaf.formula.formula.Formula` into a new one, in the PCMLC formalism.
 
+        Parameters
+        ----------
+        varDict : dictionnary
+            Dictionnary used to tell which variable should be replaced by which.
+
         Returns
         -------
-        olaaaf.formula.formula.Formula
+        `olaaaf.formula.formula.Formula`
             A `olaaaf.formula.formula.Formula` in the PCMLC formalism.
         '''
         return self.children._toPCMLCNeg(varDict)
@@ -141,9 +146,14 @@ class Not(UnaryFormula):
         '''
         Method used to transform a `olaaaf.formula.formula.Formula` into a new one, in the PCMLC formalism.
 
+        Parameters
+        ----------
+        varDict : dictionnary
+            Dictionnary used to tell which variable should be replaced by which.
+
         Returns
         -------
-        olaaaf.formula.formula.Formula
+        `olaaaf.formula.formula.Formula`
             A `olaaaf.formula.formula.Formula` in the PCMLC formalism.
         '''
         return self.children.toPCMLC(varDict)

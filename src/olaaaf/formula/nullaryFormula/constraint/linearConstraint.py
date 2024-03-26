@@ -276,7 +276,7 @@ class LinearConstraint(Constraint):
 
         Returns
         ------
-        olaaaf.formula.formula.Formula
+        `olaaaf.formula.formula.Formula`
             A `olaaaf.formula.formula.Formula` with only `olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
         '''
         from ...naryFormula.andOperator import And
@@ -300,9 +300,14 @@ class LinearConstraint(Constraint):
         '''
         Method used to transform a `olaaaf.formula.formula.Formula` into a new one, in the PCMLC formalism.
 
+        Parameters
+        ----------
+        varDict : dictionnary
+            Dictionnary used to tell which variable should be replaced by which.
+
         Returns
         -------
-        olaaaf.formula.formula.Formula
+        `olaaaf.formula.formula.Formula`
             A `olaaaf.formula.formula.Formula` in the PCMLC formalism.
         '''
         return self
@@ -318,7 +323,7 @@ class LinearConstraint(Constraint):
 
         Returns
         -------
-        olaaaf.formula.formula.Formula
+        `olaaaf.formula.formula.Formula`
             Clone of the current `olaaaf.formula.formula.Formula`.
         """
                 

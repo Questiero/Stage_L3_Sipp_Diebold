@@ -46,6 +46,8 @@ of a <code><a title="olaaaf.variable.variable.Variable" href="#olaaaf.variable.v
 <dl>
 <dt><strong><code>name</code></strong> :&ensp;<code>String</code></dt>
 <dd>The name of the <code><a title="olaaaf.variable.variable.Variable" href="#olaaaf.variable.variable.Variable">Variable</a></code>.</dd>
+<dt><strong><code>lowerBound</code></strong>, <strong><code>upperBound</code></strong> :&ensp;<code>fraction.Fraction</code>, optional</dt>
+<dd>Fractions représenting respectively the lower and upper bounds of the variable. If not defined, it is considered as if the variable is unbounded.</dd>
 </dl></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -83,14 +85,17 @@ A Variable name should respect the following naming conventions:
 <p>It can be followed by alphanumerical character or _</p>
 </li>
 <li>
-<p>Name can't contain any of the following symbols: +-*/@</p>
+<p>Name can't contain any of the following symbols: +-*/@:</p>
 </li>
+<li>Names shouldn't begin with the prefix <code>b2i_</code></li>
 </ul>
 <p>If this variable already exist under another type, an Exception will be raised.</p>
 <h2 id="attributes">Attributes</h2>
 <dl>
 <dt><strong><code>name</code></strong> :&ensp;<code>String</code></dt>
 <dd>The name of the <code><a title="olaaaf.variable.variable.Variable" href="#olaaaf.variable.variable.Variable">Variable</a></code> to be declared.</dd>
+<dt><strong><code>lowerBound</code></strong>, <strong><code>upperBound</code></strong> :&ensp;<code>fraction.Fraction</code>, optional</dt>
+<dd>Fractions représenting respectively the lower and upper bounds of the variable. If not defined, it is considered as if the variable is unbounded.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
@@ -114,6 +119,8 @@ it's object's id. The user can also specify an ending to an anonymous variable n
 <dl>
 <dt><strong><code>ending</code></strong> :&ensp;<code>String</code></dt>
 <dd>The string to concatenate at the end of an anonymous variable's name, after its object id.</dd>
+<dt><strong><code>lowerBound</code></strong>, <strong><code>upperBound</code></strong> :&ensp;<code>fraction.Fraction</code>, optional</dt>
+<dd>Fractions représenting respectively the lower and upper bounds of the variable. If not defined, it is considered as if the variable is unbounded.</dd>
 </dl>
 <h2 id="usage-exemple">Usage Exemple</h2>
 <pre><code class="language-py">    lc = LinearConstraint(&quot;&quot;)
@@ -154,6 +161,8 @@ A Variable name should respect the following naming conventions:
 <dl>
 <dt><strong><code>lname</code></strong> :&ensp;<code>list</code> of <code>String</code></dt>
 <dd>The names of the <code><a title="olaaaf.variable.variable.Variable" href="#olaaaf.variable.variable.Variable">Variable</a></code> to be declared.</dd>
+<dt><strong><code>lowerBound</code></strong>, <strong><code>upperBound</code></strong> :&ensp;<code>fraction.Fraction</code>, optional</dt>
+<dd>Fractions représenting respectively the lower and upper bounds of the variables. If not defined, it is considered as if the variable is unbounded.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
@@ -184,7 +193,7 @@ or Fraction, Fraction.</dd>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code>res:</code></dt>
-<dd>True if the variable must have intergers values
+<dd>True if the variable must have integers values
 else False</dd>
 </dl></div>
 </dd>

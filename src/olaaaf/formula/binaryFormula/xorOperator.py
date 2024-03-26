@@ -21,7 +21,7 @@ class Xor(BinaryFormula):
 
     Attributes
     ----------
-    children: tuple of olaaaf.formula.formula.Formula
+    children: tuple of `olaaaf.formula.formula.Formula`
         The children of the current node.
     '''
     
@@ -35,7 +35,7 @@ class Xor(BinaryFormula):
 
         Returns
         -------
-        olaaaf.formula.formula.Formula
+        `olaaaf.formula.formula.Formula`
             The simplified version of the implication operator.
             In this case, it's (a AND NOT b) OR (NOT a AND b).
         '''

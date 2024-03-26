@@ -19,14 +19,14 @@ class Projector (ABC):
 
         Parameters
         ----------
-        phi: olaaaf.formula.formula.Formula
+        phi: `olaaaf.formula.formula.Formula`
             The `olaaaf.formula.formula.Formula` to project.
         variables: set of olaaaf.variable.variable.Variable
             The subset of `olaaaf.variable.variable.Variable` to project on.
         
         Returns
         -------
-        olaaaf.formula.formula.Formula
+        `olaaaf.formula.formula.Formula`
             The projection of \(\varphi\) on the specified subset of its variables.
         """
         pass

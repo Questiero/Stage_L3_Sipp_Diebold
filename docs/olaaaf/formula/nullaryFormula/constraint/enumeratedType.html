@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
 <title>olaaaf.formula.nullaryFormula.constraint.enumeratedType API documentation</title>
-<meta name="description" content="" />
+<meta name="description" content="Representation of an enumerated Type." />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
 <link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
@@ -23,6 +23,7 @@
 <h1 class="title">Module <code>olaaaf.formula.nullaryFormula.constraint.enumeratedType</code></h1>
 </header>
 <section id="section-intro">
+<p>Representation of an enumerated Type.</p>
 </section>
 <section>
 </section>
@@ -38,7 +39,14 @@
 <span>(</span><span>name: str, values: list[str] = None)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Representation of a PropositionalVariable in CPC.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the enumerated type, either to get (if <code>values</code> is <code>None</code>) or to create.</dd>
+<dt><strong><code>values</code></strong> :&ensp;<code>list[str]</code>, optional</dt>
+<dd>List of the names of the values the enumerated type can have.</dd>
+</dl></div>
 <h3>Class variables</h3>
 <dl>
 <dt id="olaaaf.formula.nullaryFormula.constraint.enumeratedType.EnumeratedType.name"><code class="name">var <span class="ident">name</span> : str</code></dt>
@@ -56,13 +64,31 @@
 <span>def <span class="ident">declare</span></span>(<span>name: str, values: list[str])</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Function to declare a new <code><a title="olaaaf.formula.nullaryFormula.constraint.enumeratedType.EnumeratedType" href="#olaaaf.formula.nullaryFormula.constraint.enumeratedType.EnumeratedType">EnumeratedType</a></code>, accessible either via the constructor or the <code>get()</code> function.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the enumerated type to declare.</dd>
+<dt><strong><code>values</code></strong> :&ensp;<code>list[str]</code></dt>
+<dd>List of the names of the values the enumerated type can have.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p><code><a title="olaaaf.formula.nullaryFormula.constraint.enumeratedType.EnumeratedType" href="#olaaaf.formula.nullaryFormula.constraint.enumeratedType.EnumeratedType">EnumeratedType</a></code>
+The newly declared enumerated type.</p></div>
 </dd>
 <dt id="olaaaf.formula.nullaryFormula.constraint.enumeratedType.EnumeratedType.get"><code class="name flex">
 <span>def <span class="ident">get</span></span>(<span>name: str)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Function to get a previously declared <code><a title="olaaaf.formula.nullaryFormula.constraint.enumeratedType.EnumeratedType" href="#olaaaf.formula.nullaryFormula.constraint.enumeratedType.EnumeratedType">EnumeratedType</a></code>.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the enumerated type to get.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p><code><a title="olaaaf.formula.nullaryFormula.constraint.enumeratedType.EnumeratedType" href="#olaaaf.formula.nullaryFormula.constraint.enumeratedType.EnumeratedType">EnumeratedType</a></code>
+The enumerated type to get.</p></div>
 </dd>
 </dl>
 <h3>Methods</h3>
@@ -71,7 +97,10 @@
 <span>def <span class="ident">generateConstraints</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Method to generate the necessary constraints to translate an enumerated type into multiple propositional constraints.</p>
+<h2 id="returns">Returns</h2>
+<p><code><a title="olaaaf.formula.formula.Formula" href="../../formula.html#olaaaf.formula.formula.Formula">Formula</a></code>
+The necessary constraints.</p></div>
 </dd>
 </dl>
 </dd>

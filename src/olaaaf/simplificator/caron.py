@@ -33,12 +33,12 @@ class Caron(Simplificator):
 
         Parameters
         ----------
-        phi: olaaaf.formula.formula.Formula
-            The olaaaf.formula.formula.Formula to simplify.
+        phi: `olaaaf.formula.formula.Formula`
+            The`olaaaf.formula.formula.Formula`to simplify.
         
         Returns
         -------
-        olaaaf.formula.formula.Formula
+        `olaaaf.formula.formula.Formula`
             The simplified form of \(\varphi\)
         """
 

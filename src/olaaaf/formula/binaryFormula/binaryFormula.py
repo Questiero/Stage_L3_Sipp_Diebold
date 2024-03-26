@@ -24,7 +24,7 @@ class BinaryFormula(Formula):
 
     Attributes
     ----------
-    children: tuple of olaaaf.formula.formula.Formula
+    children: tuple of `olaaaf.formula.formula.Formula`
         The children of the current node.
     '''
         
@@ -43,7 +43,7 @@ class BinaryFormula(Formula):
 
         Returns
         -------
-        formula: olaaaf.formula.formula.Formula
+        formula: `olaaaf.formula.formula.Formula`
             The simplified version of the binary operator.
         '''
         
@@ -68,7 +68,7 @@ class BinaryFormula(Formula):
 
         Returns
         -------
-        variables: olaaaf.formula.formula.Formula
+        variables: `olaaaf.formula.formula.Formula`
             The current Formula in Disjunctive Normal Form.
         '''
         
@@ -81,7 +81,7 @@ class BinaryFormula(Formula):
 
         Returns
         -------
-        variables: olaaaf.formula.formula.Formula
+        variables: `olaaaf.formula.formula.Formula`
             The current Formula in Disjunctive Normal Form under Negation.
         '''
         
@@ -93,7 +93,7 @@ class BinaryFormula(Formula):
 
         Returns
         ------
-        olaaaf.formula.formula.Formula
+        `olaaaf.formula.formula.Formula`
             A `olaaaf.formula.formula.Formula` with only `olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
         '''
         childrenModified = []
@@ -140,9 +140,14 @@ class BinaryFormula(Formula):
         '''
         Method used to transform a `olaaaf.formula.formula.Formula` into a new one, in the PCMLC formalism.
 
+        Parameters
+        ----------
+        varDict : dictionnary
+            Dictionnary used to tell which variable should be replaced by which.
+
         Returns
         -------
-        olaaaf.formula.formula.Formula
+        `olaaaf.formula.formula.Formula`
             A `olaaaf.formula.formula.Formula` in the PCMLC formalism.
         '''
         return self._eliminate().toPCMLC(varDict)

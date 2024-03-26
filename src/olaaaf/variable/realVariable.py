@@ -20,6 +20,9 @@ class RealVariable(Variable):
     ----------
     name : String
         The name of the `olaaaf.variable.realVariable.RealVariable`.
+    lowerBound, upperBound : `fraction.Fraction`, optional
+        Fractions représenting respectively the lower and upper bounds of the variable. If not defined, it is considered as if the variable is unbounded.
+
     """
     
     def isInteger(self) -> bool:
@@ -29,7 +32,7 @@ class RealVariable(Variable):
         Returns
         -------
         res:
-            True if the variable must have intergers values
+            True if the variable must have integers values
             else False
         """
 
