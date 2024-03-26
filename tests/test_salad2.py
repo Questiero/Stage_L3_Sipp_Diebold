@@ -12,16 +12,32 @@ from fractions import Fraction
      DECLARATION OF THE VARIABLES AND THEIR WEIGHTS
 """
 
-# _cup => 1 metric cup
 weights = {
+
+    #Two heuristics are used to define the weights. 
+    #The first one is based on a taxonomy of the ingredient categories, with weights starting from 1 for simple ingredients
+    #and multiplied by a factor of 100 for each higher category, indicating its importance in the recipe.
+    #The second one is based on the conversions between units/liters and mass for each type of food. 
+    #As there is a known correspondence of one unit to its mass for each food type, weights of unit variables are calculated according
+    #to the weights of mass variables.
+
+    # Presence of green cabbage, a boolean variable with a light weight corresponding to a specific ingredient
     PropositionalVariable("greenCabbage"): Fraction(1),
+    # Presence of carrot, a boolean variable with a light weight corresponding to a specific ingredient
     PropositionalVariable("carrot"): Fraction(1),
-    PropositionalVariable("shallot"): Fraction(1e6),
-    PropositionalVariable("soySauce"): Fraction(1e6),
+    # Presence of shallot, a boolean variable with a light weight corresponding to a specific ingredient
+    PropositionalVariable("shallot"): Fraction(1),
+    # Presence of soy sauce, a boolean variable with a light weight corresponding to a specific ingredient
+    PropositionalVariable("soySauce"): Fraction(1),
+    # Presence of vinegar, a boolean variable with a light weight corresponding to a specific ingredient
     PropositionalVariable("vinegar"): Fraction(1),
-    PropositionalVariable("saladDish"): Fraction(1e6),
-    PropositionalVariable("oliveOil"): Fraction(1e6),
+    # Is the recipe a salad dish, a boolean variable with a very heavy weight associated to a complete recipe
+    PropositionalVariable("saladDish"): Fraction(1000000),
+    # Presence of olive oil, a boolean variable with a light weight corresponding to a specific ingredient
+    PropositionalVariable("oliveOil"): Fraction(1),
+    # Presence of lemon juice, a boolean variable with a light weight corresponding to a specific ingredient
     PropositionalVariable("lemonJuice"): Fraction(1),
+    # Presence of water, a boolean variable with a light weight corresponding to a specific ingredient
     PropositionalVariable("water"): Fraction(1),
 
 
