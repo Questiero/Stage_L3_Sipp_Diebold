@@ -1,9 +1,9 @@
 """
 Representation of logical formulas and multiple tools to use them, abstracted depending on the operator's formula.\n
 
-## Declaration of a new `src.olaaaf.formula.formula.Formula`
+## Declaration of a new `olaaaf.formula.formula.Formula`
 
-To declare a new `src.olaaaf.formula.formula.Formula`, you have multiple options:\n
+To declare a new `olaaaf.formula.formula.Formula`, you have multiple options:\n
 
 * Use the usual class constructors. Depending on the operator's arity, the arguments that are expected might change
 (namely, those represents the arguments of the operators and, as such, a different number of them could be expected).
@@ -11,24 +11,24 @@ Please note that they have an optional argument `name` that we'll talk about in 
 
 * Use Python's built-in (but restrictive) operators between two existing formulas, namely:\n
 
-    * `&` for the and operator, represented by `src.olaaaf.formula.naryFormula.andOperator.And`\n
-    * `|` for the or operator, represented by `src.olaaaf.formula.naryFormula.orOperator.Or`\n
-    * `~` for the not operator, represented by `src.olaaaf.formula.unaryFormula.notOperator.Not`\n
-    * `>>` for the implication operator, represented by `src.olaaaf.formula.binaryFormula.implicationOperator.Implication`\n
-    * `//` for the equivalence operator, represented by `src.olaaaf.formula.binaryFormula.equivalenceOperator.Equivalence`\n
-    * `!=` for the xor operator, represented by `src.olaaaf.formula.binaryFormula.xorOperator.Xor`\n
+    * `&` for the and operator, represented by `olaaaf.formula.naryFormula.andOperator.And`\n
+    * `|` for the or operator, represented by `olaaaf.formula.naryFormula.orOperator.Or`\n
+    * `~` for the not operator, represented by `olaaaf.formula.unaryFormula.notOperator.Not`\n
+    * `>>` for the implication operator, represented by `olaaaf.formula.binaryFormula.implicationOperator.Implication`\n
+    * `//` for the equivalence operator, represented by `olaaaf.formula.binaryFormula.equivalenceOperator.Equivalence`\n
+    * `!=` for the xor operator, represented by `olaaaf.formula.binaryFormula.xorOperator.Xor`\n
 
-* Use `src.olaaaf.formula.formulaManager.FormulaManager.parser` to declare a formula using a parser with customizable operators.
+* Use `olaaaf.formula.formulaManager.FormulaManager.parser` to declare a formula using a parser with customizable operators.
 While more intuitive due to the less restrictive scope of usable operators, this method of declaring formulas assume you 
-previously named them, either via the `name` attribute in their constructor or thanks to `src.olaaaf.formula.formulaManager.FormulaManager.declare`.
-The operators could be customized in `src.olaaaf.constants.Constants` but are by default:
+previously named them, either via the `fmName` attribute in their constructor or thanks to `olaaaf.formula.formulaManager.FormulaManager.declare`.
+The operators could be customized in `olaaaf.constants.Constants` but are by default:
 
-    * `&` for the and operator, represented by `src.olaaaf.formula.naryFormula.andOperator.And`\n
-    * `|` for the or operator, represented by `src.olaaaf.formula.naryFormula.orOperator.Or`\n
-    * `~` for the not operator, represented by `src.olaaaf.formula.unaryFormula.notOperator.Not`\n
-    * `->` for the implication operator, represented by `src.olaaaf.formula.binaryFormula.implicationOperator.Implication`\n
-    * `<->` for the equivalence operator, represented by `src.olaaaf.formula.binaryFormula.equivalenceOperator.Equivalence`\n
-    * `<+>` for the xor operator, represented by `src.olaaaf.formula.binaryFormula.xorOperator.Xor`\n
+    * `&` for the and operator, represented by `olaaaf.formula.naryFormula.andOperator.And`\n
+    * `|` for the or operator, represented by `olaaaf.formula.naryFormula.orOperator.Or`\n
+    * `~` for the not operator, represented by `olaaaf.formula.unaryFormula.notOperator.Not`\n
+    * `->` for the implication operator, represented by `olaaaf.formula.binaryFormula.implicationOperator.Implication`\n
+    * `<->` for the equivalence operator, represented by `olaaaf.formula.binaryFormula.equivalenceOperator.Equivalence`\n
+    * `<+>` for the xor operator, represented by `olaaaf.formula.binaryFormula.xorOperator.Xor`\n
 
 ### Exemple of declaration
 

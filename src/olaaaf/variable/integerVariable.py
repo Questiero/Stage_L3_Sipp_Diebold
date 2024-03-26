@@ -11,15 +11,18 @@ from fractions import Fraction
 
 class IntegerVariable(Variable):
     r"""
-    Class, representing an integer number `src.olaaaf.variable.variable.Variable`, meaning a `src.olaaaf.variable.variable.Variable` defined in \(\mathbb{Z}\).
+    Class, representing an integer number `olaaaf.variable.variable.Variable`, meaning a `olaaaf.variable.variable.Variable` defined in \(\mathbb{Z}\).
     Most of the time, you **shouldn't** use the constructor
-    of `src.olaaaf.variable.integerVariable.IntegerVariable` and should rather look into `src.olaaaf.variable.integerVariable.IntegerVariable.declare`, 
-    `src.olaaaf.variable.integerVariable.IntegerVariable.declareBulk` or `src.olaaaf.variable.integerVariable.IntegerVariable.declareAnonymous`.
+    of `olaaaf.variable.integerVariable.IntegerVariable` and should rather look into `olaaaf.variable.integerVariable.IntegerVariable.declare`, 
+    `olaaaf.variable.integerVariable.IntegerVariable.declareBulk` or `olaaaf.variable.integerVariable.IntegerVariable.declareAnonymous`.
 
     Parameters
     ----------
     name : String
-        The name of the `src.olaaaf.variable.integerVariable.IntegerVariable`.
+        The name of the `olaaaf.variable.integerVariable.IntegerVariable`.
+    lowerBound, upperBound : `fraction.Fraction`, optional
+        Fractions représenting respectively the lower and upper bounds of the variable. If not defined, it is considered as if the variable is unbounded.
+
     """
 
     def isInteger(self) -> bool:

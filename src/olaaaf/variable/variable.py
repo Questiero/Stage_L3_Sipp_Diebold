@@ -12,13 +12,15 @@ from abc import ABC, abstractmethod
 class Variable(ABC):
     """
     Abstract class, representing a variable. Most of the time, you **shouldn't** use the constructor
-    of a `src.olaaaf.variable.variable.Variable` and should rather look into `src.olaaaf.variable.variable.Variable.declare`, 
-    `src.olaaaf.variable.variable.Variable.declareBulk` or `src.olaaaf.variable.variable.Variable.declareAnonymous`.
+    of a `olaaaf.variable.variable.Variable` and should rather look into `olaaaf.variable.variable.Variable.declare`, 
+    `olaaaf.variable.variable.Variable.declareBulk` or `olaaaf.variable.variable.Variable.declareAnonymous`.
 
     Parameters
     ----------
     name : String
-        The name of the `src.olaaaf.variable.variable.Variable`.
+        The name of the `olaaaf.variable.variable.Variable`.
+    lowerBound, upperBound : `fraction.Fraction`, optional
+        Fractions représenting respectively the lower and upper bounds of the variable. If not defined, it is considered as if the variable is unbounded.
     """
     
     #: Name of the variable, by which they are identified.
@@ -33,11 +35,11 @@ class Variable(ABC):
         """
         Class method, allowing the user to declare an anonymous variable meant to be used inside algorithms without risking any
         naming conflit with the standardly defined variables.\n
-        Anonymous variables aren't stored in `src.olaaaf.variable.variableManager.VariableManager.instance` and, as such,
-        can't be used in `src.olaaaf.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint`'s constructor.\n
+        Anonymous variables aren't stored in `olaaaf.variable.variableManager.VariableManager.instance` and, as such,
+        can't be used in `olaaaf.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint`'s constructor.\n
 
         Since they can't be used in the usual constructor, one must first declare an empty
-        `src.olaaaf.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint` before adding them manualy.
+        `olaaaf.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint` before adding them manualy.
 
         To prevent naming conflicts with regular variables, an anonymous variable's name always start with
         it's object's id. The user can also specify an ending to an anonymous variable name.
@@ -46,6 +48,8 @@ class Variable(ABC):
         ----------
         ending : String
             The string to concatenate at the end of an anonymous variable's name, after its object id.
+        lowerBound, upperBound : `fraction.Fraction`, optional
+            Fractions représenting respectively the lower and upper bounds of the variable. If not defined, it is considered as if the variable is unbounded.
 
         Usage exemple
         -------------
@@ -80,19 +84,22 @@ class Variable(ABC):
         - Names are case sensitives\n
         - Name must begin with a letter\n
         - It can be followed by alphanumerical character or _\n
-        - Name can't contain any of the following symbols: +-*/@
+        - Name can't contain any of the following symbols: +-*/@:
+        - Names shouldn't begin with the prefix `b2i_`
 
         If this variable already exist under another type, an Exception will be raised.
 
         Attributes
         ----------
         name : String
-            The name of the `src.olaaaf.variable.variable.Variable` to be declared.
+            The name of the `olaaaf.variable.variable.Variable` to be declared.
+        lowerBound, upperBound : `fraction.Fraction`, optional
+            Fractions représenting respectively the lower and upper bounds of the variable. If not defined, it is considered as if the variable is unbounded.
 
         Returns
         -------
-        src.olaaaf.variable.variable.Variable
-            The newly declared `src.olaaaf.variable.variable.Variable`.
+        olaaaf.variable.variable.Variable
+            The newly declared `olaaaf.variable.variable.Variable`.
         """
 
         from .variableManager import VariableManager
@@ -102,7 +109,7 @@ class Variable(ABC):
     @classmethod
     def declareBulk(cls, *lname: str, lowerBound = None, upperBound = None) -> list[Variable]:
         """
-        Class method used to declare multiple new instances of `src.olaaaf.variable.variable.Variable` at the same time.
+        Class method used to declare multiple new instances of `olaaaf.variable.variable.Variable` at the same time.
         A Variable name should respect the following naming conventions:
         - A name is unique and shouldn't be declared multiple times\n
         - Names are case sensitives\n
@@ -115,12 +122,14 @@ class Variable(ABC):
         Attributes
         ----------
         lname : list of String
-            The names of the `src.olaaaf.variable.variable.Variable` to be declared.
+            The names of the `olaaaf.variable.variable.Variable` to be declared.
+        lowerBound, upperBound : `fraction.Fraction`, optional
+            Fractions représenting respectively the lower and upper bounds of the variables. If not defined, it is considered as if the variable is unbounded.
 
         Returns
         -------
-        list of src.olaaaf.variable.variable.Variable
-            A list containing all the newly declared instances of `src.olaaaf.variable.variable.Variable`.
+        list of olaaaf.variable.variable.Variable
+            A list containing all the newly declared instances of `olaaaf.variable.variable.Variable`.
         """
 
         from .variableManager import VariableManager
@@ -150,7 +159,7 @@ class Variable(ABC):
         Returns
         -------
         res:
-            True if the variable must have intergers values
+            True if the variable must have integers values
             else False
         """
         pass

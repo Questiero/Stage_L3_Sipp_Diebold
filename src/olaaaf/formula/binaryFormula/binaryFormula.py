@@ -24,7 +24,7 @@ class BinaryFormula(Formula):
 
     Attributes
     ----------
-    children: tuple of src.olaaaf.formula.formula.Formula
+    children: tuple of `olaaaf.formula.formula.Formula`
         The children of the current node.
     '''
         
@@ -43,7 +43,7 @@ class BinaryFormula(Formula):
 
         Returns
         -------
-        formula: src.olaaaf.formula.formula.Formula
+        formula: `olaaaf.formula.formula.Formula`
             The simplified version of the binary operator.
         '''
         
@@ -56,7 +56,7 @@ class BinaryFormula(Formula):
 
         Returns
         -------
-        variables: set of src.olaaaf.variable.variable.Variable
+        variables: set of olaaaf.variable.variable.Variable
             All the variables used in the Formula.
         '''
         
@@ -68,7 +68,7 @@ class BinaryFormula(Formula):
 
         Returns
         -------
-        variables: src.olaaaf.formula.formula.Formula
+        variables: `olaaaf.formula.formula.Formula`
             The current Formula in Disjunctive Normal Form.
         '''
         
@@ -81,7 +81,7 @@ class BinaryFormula(Formula):
 
         Returns
         -------
-        variables: src.olaaaf.formula.formula.Formula
+        variables: `olaaaf.formula.formula.Formula`
             The current Formula in Disjunctive Normal Form under Negation.
         '''
         
@@ -89,12 +89,12 @@ class BinaryFormula(Formula):
     
     def toLessOrEqConstraint(self):
         '''
-        Method used to transform a `src.olaaaf.formula.formula.Formula` into another one, with only `src.olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
+        Method used to transform a `olaaaf.formula.formula.Formula` into another one, with only `olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
 
         Returns
         ------
-        src.olaaaf.formula.formula.Formula
-            A `src.olaaaf.formula.formula.Formula` with only `src.olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
+        `olaaaf.formula.formula.Formula`
+            A `olaaaf.formula.formula.Formula` with only `olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
         '''
         childrenModified = []
         for child in self.children: childrenModified.append(child.toLessOrEqConstraint())
@@ -112,7 +112,7 @@ class BinaryFormula(Formula):
 
         Returns
         -------
-        res: list of list of src.olaaaf.formula.nullaryFormula.constraint.constraint.Constraint
+        res: list of list of olaaaf.formula.nullaryFormula.constraint.constraint.Constraint
             2D list containing all the constraints of discute vraiment de l'implémentationthe adherence of the Formula,
             in Disjunctive Normal Form.
         '''
@@ -130,7 +130,7 @@ class BinaryFormula(Formula):
 
         Returns
         -------
-        res: list of list of src.olaaaf.formula.nullaryFormula.constraint.constraint.Constraint
+        res: list of list of olaaaf.formula.nullaryFormula.constraint.constraint.Constraint
             2D list containing all the constraints of the adherence of the Formula,
             in Disjunctive Normal Form under Negation.
         '''
@@ -138,12 +138,17 @@ class BinaryFormula(Formula):
     
     def toPCMLC(self, varDict) -> Formula:
         '''
-        Method used to transform a `src.olaaaf.formula.formula.Formula` into a new one, in the PCMLC formalism.
+        Method used to transform a `olaaaf.formula.formula.Formula` into a new one, in the PCMLC formalism.
+
+        Parameters
+        ----------
+        varDict : dictionnary
+            Dictionnary used to tell which variable should be replaced by which.
 
         Returns
         -------
-        src.olaaaf.formula.formula.Formula
-            A `src.olaaaf.formula.formula.Formula` in the PCMLC formalism.
+        `olaaaf.formula.formula.Formula`
+            A `olaaaf.formula.formula.Formula` in the PCMLC formalism.
         '''
         return self._eliminate().toPCMLC(varDict)
     

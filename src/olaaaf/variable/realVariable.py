@@ -11,15 +11,18 @@ from fractions import Fraction
 
 class RealVariable(Variable):
     r"""
-    Class, representing a real number `src.olaaaf.variable.variable.Variable`, meaning a `src.olaaaf.variable.variable.Variable` defined in \(\mathbb{R}\).
+    Class, representing a real number `olaaaf.variable.variable.Variable`, meaning a `olaaaf.variable.variable.Variable` defined in \(\mathbb{R}\).
     Most of the time, you **shouldn't** use the constructor
-    of `src.olaaaf.variable.realVariable.RealVariable` and should rather look into `src.olaaaf.variable.realVariable.RealVariable.declare`, 
-    `src.olaaaf.variable.realVariable.RealVariable.declareBulk` or `src.olaaaf.variable.realVariable.RealVariable.declareAnonymous`.
+    of `olaaaf.variable.realVariable.RealVariable` and should rather look into `olaaaf.variable.realVariable.RealVariable.declare`, 
+    `olaaaf.variable.realVariable.RealVariable.declareBulk` or `olaaaf.variable.realVariable.RealVariable.declareAnonymous`.
 
     Parameters
     ----------
     name : String
-        The name of the `src.olaaaf.variable.realVariable.RealVariable`.
+        The name of the `olaaaf.variable.realVariable.RealVariable`.
+    lowerBound, upperBound : `fraction.Fraction`, optional
+        Fractions représenting respectively the lower and upper bounds of the variable. If not defined, it is considered as if the variable is unbounded.
+
     """
     
     def isInteger(self) -> bool:
@@ -29,7 +32,7 @@ class RealVariable(Variable):
         Returns
         -------
         res:
-            True if the variable must have intergers values
+            True if the variable must have integers values
             else False
         """
 

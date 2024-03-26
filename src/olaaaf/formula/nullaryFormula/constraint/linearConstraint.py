@@ -43,9 +43,9 @@ class LinearConstraint(Constraint):
         
     Attributes
     ----------
-    variables: dictionnary of fractions.Fraction with src.olaaaf.variable.variable.Variable as key
+    variables: dictionnary of fractions.Fraction with olaaaf.variable.variable.Variable as key
         The variables in the constraint, associated with their coefficient
-    operator: src.olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator
+    operator: olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator
         The operator of the constraint
     bound: fractions.Fraction
         The bound of the constraint
@@ -135,7 +135,7 @@ class LinearConstraint(Constraint):
 
         Returns
         -------
-        variables: set of src.olaaaf.variable.variable.Variable
+        variables: set of olaaaf.variable.variable.Variable
             All the variables used in the Formula.
         '''
         
@@ -152,7 +152,7 @@ class LinearConstraint(Constraint):
 
         Returns
         -------
-        list of list of src.olaaaf.formula.nullaryFormula.constraint.constraint.Constraint
+        list of list of olaaaf.formula.nullaryFormula.constraint.constraint.Constraint
             2D list containing all the constraints of discute vraiment de l'implémentationthe adherence of the Formula,
             in Disjunctive Normal Form.
         '''
@@ -170,7 +170,7 @@ class LinearConstraint(Constraint):
 
         Returns
         -------
-        list of list of src.olaaaf.formula.nullaryFormula.constraint.constraint.Constraint
+        list of list of olaaaf.formula.nullaryFormula.constraint.constraint.Constraint
             2D list containing all the constraints of the adherence of the Formula,
             in Disjunctive Normal Form under Negation.
         '''
@@ -231,7 +231,7 @@ class LinearConstraint(Constraint):
     
     def toLatex(self):
         r"""
-        Method returning a \(\LaTeX\) expression representing the Formula. Operators are customisable in `src.olaaaf.constants.Constants`.
+        Method returning a \(\LaTeX\) expression representing the Formula. Operators are customisable in `olaaaf.constants.Constants`.
         
         Returns
         -------
@@ -272,12 +272,12 @@ class LinearConstraint(Constraint):
             
     def toLessOrEqConstraint(self):
         '''
-        Method used to transform a `src.olaaaf.formula.formula.Formula` into another one, with only `src.olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
+        Method used to transform a `olaaaf.formula.formula.Formula` into another one, with only `olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
 
         Returns
         ------
-        src.olaaaf.formula.formula.Formula
-            A `src.olaaaf.formula.formula.Formula` with only `src.olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
+        `olaaaf.formula.formula.Formula`
+            A `olaaaf.formula.formula.Formula` with only `olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
         '''
         from ...naryFormula.andOperator import And
         res = self.clone()
@@ -298,12 +298,17 @@ class LinearConstraint(Constraint):
     
     def toPCMLC(self, varDict) -> Formula:
         '''
-        Method used to transform a `src.olaaaf.formula.formula.Formula` into a new one, in the PCMLC formalism.
+        Method used to transform a `olaaaf.formula.formula.Formula` into a new one, in the PCMLC formalism.
+
+        Parameters
+        ----------
+        varDict : dictionnary
+            Dictionnary used to tell which variable should be replaced by which.
 
         Returns
         -------
-        src.olaaaf.formula.formula.Formula
-            A `src.olaaaf.formula.formula.Formula` in the PCMLC formalism.
+        `olaaaf.formula.formula.Formula`
+            A `olaaaf.formula.formula.Formula` in the PCMLC formalism.
         '''
         return self
     
@@ -318,8 +323,8 @@ class LinearConstraint(Constraint):
 
         Returns
         -------
-        src.olaaaf.formula.formula.Formula
-            Clone of the current `src.olaaaf.formula.formula.Formula`.
+        `olaaaf.formula.formula.Formula`
+            Clone of the current `olaaaf.formula.formula.Formula`.
         """
                 
         clonedLc = LinearConstraint("")

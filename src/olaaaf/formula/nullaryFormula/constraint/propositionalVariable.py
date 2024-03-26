@@ -1,5 +1,5 @@
 """
-Representation of a PropositionalVariable in CPC.
+Representation of a Propositional Variable in CPC.
 """
 
 from __future__ import annotations
@@ -55,12 +55,17 @@ class PropositionalVariable(Constraint):
     
     def toPCMLC(self, varDict) -> Formula:
         '''
-        Method used to transform a `src.olaaaf.formula.formula.Formula` into a new one, in the PCMLC formalism.
+        Method used to transform a `olaaaf.formula.formula.Formula` into a new one, in the PCMLC formalism.
+
+        Parameters
+        ----------
+        varDict : dictionnary
+            Dictionnary used to tell which variable should be replaced by which.
 
         Returns
         -------
-        src.olaaaf.formula.formula.Formula
-            A `src.olaaaf.formula.formula.Formula` in the PCMLC formalism.
+        `olaaaf.formula.formula.Formula`
+            A `olaaaf.formula.formula.Formula` in the PCMLC formalism.
         '''
         LC = LinearConstraint("")
         LC.variables = {varDict[self]: Fraction(-1)}
@@ -70,12 +75,17 @@ class PropositionalVariable(Constraint):
     
     def _toPCMLCNeg(self, varDict) -> Formula:
         '''
-        Method used to transform a `src.olaaaf.formula.formula.Formula` into a new one, in the PCMLC formalism.
+        Method used to transform a `olaaaf.formula.formula.Formula` into a new one, in the PCMLC formalism.
+
+        Parameters
+        ----------
+        varDict : dictionnary
+            Dictionnary used to tell which variable should be replaced by which.
 
         Returns
         -------
-        src.olaaaf.formula.formula.Formula
-            A `src.olaaaf.formula.formula.Formula` in the PCMLC formalism.
+        `olaaaf.formula.formula.Formula`
+            A `olaaaf.formula.formula.Formula` in the PCMLC formalism.
         '''
         LC = LinearConstraint("")
         LC.variables = {varDict[self]: Fraction(1)}
@@ -89,8 +99,8 @@ class PropositionalVariable(Constraint):
 
         Returns
         -------
-        src.olaaaf.formula.formula.Formula
-            Clone of the current `src.olaaaf.formula.formula.Formula`.
+        `olaaaf.formula.formula.Formula`
+            Clone of the current `olaaaf.formula.formula.Formula`.
         """
                 
         clonedPv = PropositionalVariable("")

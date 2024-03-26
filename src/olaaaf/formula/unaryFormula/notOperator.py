@@ -21,7 +21,7 @@ class Not(UnaryFormula):
 
     Attributes
     ----------
-    children: src.olaaaf.formula.formula.Formula
+    children: `olaaaf.formula.formula.Formula`
         The child of the current node.
     '''
         
@@ -31,8 +31,8 @@ class Not(UnaryFormula):
 
         Returns
         -------
-        src.olaaaf.formula.formula.Formula
-            The current `src.olaaaf.formula.formula.Formula` in Disjunctive Normal Form.
+        `olaaaf.formula.formula.Formula`
+            The current `olaaaf.formula.formula.Formula` in Disjunctive Normal Form.
         '''
         
         return self.children._toDNFNeg()
@@ -44,8 +44,8 @@ class Not(UnaryFormula):
 
         Returns
         -------
-        src.olaaaf.formula.formula.Formula
-            The current `src.olaaaf.formula.formula.Formula` in Disjunctive Normal Form.
+        `olaaaf.formula.formula.Formula`
+            The current `olaaaf.formula.formula.Formula` in Disjunctive Normal Form.
         '''
         
         return self.children.toDNF()
@@ -57,12 +57,12 @@ class Not(UnaryFormula):
 
         Attributes
         ----------
-        var : src.olaaaf.variable.variable.Variable
+        var : olaaaf.variable.variable.Variable
             variable used in case of inequality.
 
         Returns
         -------
-        list of list of src.olaaaf.formula.nullaryFormula.constraint.constraint.Constraint
+        list of list of olaaaf.formula.nullaryFormula.constraint.constraint.Constraint
             2D list containing all the constraints of discute vraiment de l'implémentationthe adherence of the Formula,
             in Disjunctive Normal Form.
         '''
@@ -77,12 +77,12 @@ class Not(UnaryFormula):
 
         Attributes
         ----------
-        var : src.olaaaf.variable.variable.Variable
+        var : olaaaf.variable.variable.Variable
             variable used in case of inequality.
 
         Returns
         -------
-        list of list of src.olaaaf.formula.nullaryFormula.constraint.constraint.Constraint
+        list of list of olaaaf.formula.nullaryFormula.constraint.constraint.Constraint
             2D list containing all the constraints of the adherence of the Formula,
             in Disjunctive Normal Form under Negation.
         '''
@@ -91,28 +91,28 @@ class Not(UnaryFormula):
     
     def toLessOrEqConstraint(self):
         '''
-        Method used to transform a `src.olaaaf.formula.formula.Formula` into another one, with only `src.olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
+        Method used to transform a `olaaaf.formula.formula.Formula` into another one, with only `olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
 
         Returns
         ------
-        src.olaaaf.formula.formula.Formula
-            A `src.olaaaf.formula.formula.Formula` with only `src.olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
+        `olaaaf.formula.formula.Formula`
+            A `olaaaf.formula.formula.Formula` with only `olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
         '''
         return Not(self.children.toLessOrEqConstraint())
     
-    def copyNegLitteral(self, epsilon = 0) -> Constraint:
+    def copyNegLitteral(self, epsilon = Fraction(0)) -> Constraint:
         """
         Method used to transform the strict operators (i.e the negation) in an open one.
 
         Parameters
         ----------
-        e : src.olaaaf.variable.variable.Variable
-            variable used in case of inequality.
+        epsilon : Fraction, optional
+            The approximation for the removed Not. By default, equals \(0\).
 
         Returns
         -------
-        src.olaaaf.formula.nullaryFormula.constraint.constraint.Constraint
-            The transformed `src.olaaaf.formula.nullaryFormula.constraint.constraint.Constraint`
+        olaaaf.formula.nullaryFormula.constraint.constraint.Constraint
+            The transformed `olaaaf.formula.nullaryFormula.constraint.constraint.Constraint`
         """
         
         if not isinstance(self.children, Constraint):
@@ -128,23 +128,33 @@ class Not(UnaryFormula):
     
     def toPCMLC(self, varDict) -> Formula:
         '''
-        Method used to transform a `src.olaaaf.formula.formula.Formula` into a new one, in the PCMLC formalism.
+        Method used to transform a `olaaaf.formula.formula.Formula` into a new one, in the PCMLC formalism.
+
+        Parameters
+        ----------
+        varDict : dictionnary
+            Dictionnary used to tell which variable should be replaced by which.
 
         Returns
         -------
-        src.olaaaf.formula.formula.Formula
-            A `src.olaaaf.formula.formula.Formula` in the PCMLC formalism.
+        `olaaaf.formula.formula.Formula`
+            A `olaaaf.formula.formula.Formula` in the PCMLC formalism.
         '''
         return self.children._toPCMLCNeg(varDict)
     
     def _toPCMLCNeg(self, varDict) -> Formula:
         '''
-        Method used to transform a `src.olaaaf.formula.formula.Formula` into a new one, in the PCMLC formalism.
+        Method used to transform a `olaaaf.formula.formula.Formula` into a new one, in the PCMLC formalism.
+
+        Parameters
+        ----------
+        varDict : dictionnary
+            Dictionnary used to tell which variable should be replaced by which.
 
         Returns
         -------
-        src.olaaaf.formula.formula.Formula
-            A `src.olaaaf.formula.formula.Formula` in the PCMLC formalism.
+        `olaaaf.formula.formula.Formula`
+            A `olaaaf.formula.formula.Formula` in the PCMLC formalism.
         '''
         return self.children.toPCMLC(varDict)
 
@@ -153,7 +163,7 @@ class Not(UnaryFormula):
     
     def toLatex(self):
         r"""
-        Method returning a \(\LaTeX\) expression representing the Formula. Operators are customisable in `src.olaaaf.constants.Constants`.
+        Method returning a \(\LaTeX\) expression representing the Formula. Operators are customisable in `olaaaf.constants.Constants`.
         
         Returns
         -------

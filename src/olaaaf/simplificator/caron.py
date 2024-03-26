@@ -1,6 +1,6 @@
 """
-Implementation of the Caron algorithm for simplification of conjunction of literals (i.e `src.olaaaf.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint` or
-    `src.olaaaf.formula.unaryFormula.notOperator.Not`).
+Implementation of the Caron algorithm for simplification of conjunction of literals (i.e `olaaaf.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint` or
+    `olaaaf.formula.unaryFormula.notOperator.Not`).
 """
 
 from __future__ import annotations
@@ -13,14 +13,14 @@ from ..mlo_solver import MLOSolver, OptimizationValues
 
 class Caron(Simplificator):
     """
-    Implementation of the Caron algorithm for simplification of conjunction of literals (i.e `src.olaaaf.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint` or
-    `src.olaaaf.formula.unaryFormula.notOperator.Not`).
+    Implementation of the Caron algorithm for simplification of conjunction of literals (i.e `olaaaf.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint` or
+    `olaaaf.formula.unaryFormula.notOperator.Not`).
     Caron’s algorithm deals with the removal of redundant mixed linear constraints.
 
     Parameters
     ----------
-    solver: src.olaaaf.mlo_solver.MLOSolver.MLOSolver
-        The `src.olaaaf.mlo_solver.MLOSolver.MLOSolver` used to solve optimization problems.
+    solver: olaaaf.mlo_solver.MLOSolver.MLOSolver
+        The `olaaaf.mlo_solver.MLOSolver.MLOSolver` used to solve optimization problems.
     """
 
     _interpreter = None
@@ -29,16 +29,16 @@ class Caron(Simplificator):
 
     def run(self, phi):
         r"""
-        Main method of `src.olaaaf.simplificator.caron.Caron`, allowing to simplify a given `src.olaaaf.formula.formula.Formula`.
+        Main method of `olaaaf.simplificator.caron.Caron`, allowing to simplify a given `olaaaf.formula.formula.Formula`.
 
         Parameters
         ----------
-        phi: src.olaaaf.formula.formula.Formula
-            The src.olaaaf.formula.formula.Formula to simplify.
+        phi: `olaaaf.formula.formula.Formula`
+            The`olaaaf.formula.formula.Formula`to simplify.
         
         Returns
         -------
-        src.olaaaf.formula.formula.Formula
+        `olaaaf.formula.formula.Formula`
             The simplified form of \(\varphi\)
         """
 

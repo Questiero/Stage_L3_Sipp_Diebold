@@ -29,16 +29,16 @@ class ScipySolver(MLOSolver) :
 
         Parameters
         ----------
-        variables : list of src.olaaaf.variable.variable.Variable
+        variables : list of olaaaf.variable.variable.Variable
             Variables used in constraints.
         objectif : list of fractions.Fraction
             Weights of the objective function to optimize.
-        constraints : list of tuple of the form (list of fractions.Fraction, src.olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator, fractions.Fraction)
+        constraints : list of tuple of the form (list of fractions.Fraction, olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator, fractions.Fraction)
             Each tuple represents a linear constraint, with the first element being the weights, the second the operator and the third the bound.
 
         Returns
         -------
-        src.olaaaf.mlo_solver.optimizationValues.OptimizationValues
+        olaaaf.mlo_solver.optimizationValues.OptimizationValues
             Information of the final state of the problem.
         list of fractions.Fraction
             The point at the optimal, if found.

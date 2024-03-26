@@ -22,10 +22,10 @@ class l1DistanceFunction(distanceFunctionOnNumericalTuple):
 
     Parameters
     ----------
-    weights : a dictionnary of fractions.Fraction with src.olaaaf.variable.variable.Variable as key
+    weights : a dictionnary of fractions.Fraction with olaaaf.variable.variable.Variable as key
         The weights of the l1 distance function
-    domain: src.olaaaf.distance.domain.domain.Domain
-        The `src.olaaaf.distance.domain.domain.Domain` on which the distance function is defined.
+    domain: olaaaf.distance.domain.domain.Domain
+        The `olaaaf.distance.domain.domain.Domain` on which the distance function is defined.
     """
 
     _weights : dict[Variable, Fraction]
@@ -40,8 +40,8 @@ class l1DistanceFunction(distanceFunctionOnNumericalTuple):
 
         Parameters
         ----------
-        x, y : tuple of src.olaaaf.variable.variable.Variable
-            The two tuples of `src.olaaaf.variable.variable.Variable` you which to get the distance between.
+        x, y : tuple of olaaaf.variable.variable.Variable
+            The two tuples of `olaaaf.variable.variable.Variable` you which to get the distance between.
 
         Returns
         -------

@@ -1,5 +1,5 @@
 """
-Class used to store all non-anonymous user-declared `src.olaaaf.variable.variable.Variable`
+Class used to store all non-anonymous user-declared `olaaaf.variable.variable.Variable`
 and allow easy retrieving of already defined ones.
 """
 
@@ -11,12 +11,12 @@ import re
 
 class VariableManager:
     """
-    VariableManager class, used to manage all instances of `src.olaaaf.variable.variable.Variable`.
+    VariableManager class, used to manage all instances of `olaaaf.variable.variable.Variable`.
     
     Attributes
     ----------
     instance: dictionary of Variable by String
-        A dictionary of all instances of `src.olaaaf.variable.variable.Variable`, with their name as key.
+        A dictionary of all instances of `olaaaf.variable.variable.Variable`, with their name as key.
 
     """
     
@@ -26,16 +26,16 @@ class VariableManager:
     @staticmethod
     def verify(name: str, cls: type[Variable]) -> None:
         """
-        Function verifying if a `src.olaaaf.variable.variable.Variable` can be added to `src.olaaaf.variable.variableManager.VariableManager.instance`,
+        Function verifying if a `olaaaf.variable.variable.Variable` can be added to `olaaaf.variable.variableManager.VariableManager.instance`,
         meaning that the name respects the naming conventions and that it doesn't already exists under another type.
     
         Parameters
         ----------
         name: String
-            Name of the `src.olaaaf.variable.variable.Variable`.
+            Name of the `olaaaf.variable.variable.Variable`.
 
         cl: class
-            Type of the `src.olaaaf.variable.variable.Variable`.
+            Type of the `olaaaf.variable.variable.Variable`.
         
         Raises
         ------
@@ -52,23 +52,23 @@ class VariableManager:
     @staticmethod
     def add(obj: Variable) -> Variable:
         """
-        Function adding a `src.olaaaf.variable.variable.Variable` to `src.olaaaf.variable.variableManager.VariableManager.instance`.
+        Function adding a `olaaaf.variable.variable.Variable` to `olaaaf.variable.variableManager.VariableManager.instance`.
     
         Parameters
         ----------
-        obj: src.olaaaf.variable.variable.Variable
-            The `src.olaaaf.variable.variable.Variable` to add.
+        obj: olaaaf.variable.variable.Variable
+            The `olaaaf.variable.variable.Variable` to add.
         
             
         Returns
         -------
-        src.olaaaf.variable.variable.Variable
-            The `src.olaaaf.variable.variable.Variable` added if the execution of this function was successful.
+        olaaaf.variable.variable.Variable
+            The `olaaaf.variable.variable.Variable` added if the execution of this function was successful.
 
         Raises
         ------
         TypeError
-            If the object isn't a `src.olaaaf.variable.variable.Variable`, already defined with another type or its name is not valid.
+            If the object isn't a `olaaaf.variable.variable.Variable`, already defined with another type or its name is not valid.
 
         """
 
@@ -82,17 +82,17 @@ class VariableManager:
     @classmethod
     def get(cls, name : str) -> Variable:
         """
-        Function to get a `src.olaaaf.variable.variable.Variable` from the `src.olaaaf.variable.variableManager.VariableManager.instance`.
+        Function to get a `olaaaf.variable.variable.Variable` from the `olaaaf.variable.variableManager.VariableManager.instance`.
     
         Parameters
         ----------
         name: String
-            The name of the `src.olaaaf.variable.variable.Variable` to get.
+            The name of the `olaaaf.variable.variable.Variable` to get.
         
         Returns
         -------
-        src.olaaaf.variable.variable.Variable
-            The `src.olaaaf.variable.variable.Variable` to get.
+        olaaaf.variable.variable.Variable
+            The `olaaaf.variable.variable.Variable` to get.
 
         Raises
         ------
@@ -107,19 +107,19 @@ class VariableManager:
     @staticmethod
     def declare(name: str, cls: type[Variable]) -> Variable:
         """
-        Function to declare a `src.olaaaf.variable.variable.Variable`.
+        Function to declare a `olaaaf.variable.variable.Variable`.
     
         Parameters
         ----------
         name: String
-            Name of the `src.olaaaf.variable.variable.Variable`.
+            Name of the `olaaaf.variable.variable.Variable`.
 
         cl: class
-            Type of the `src.olaaaf.variable.variable.Variable`.
+            Type of the `olaaaf.variable.variable.Variable`.
 
         Returns:
         Variable
-            The newly defined `src.olaaaf.variable.variable.Variable`.
+            The newly defined `olaaaf.variable.variable.Variable`.
         """
         
         obj = cls.__new__(name)
