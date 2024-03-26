@@ -1,6 +1,3 @@
-import sys
-sys.path.append(".")
-
 from olaaaf.formula import LinearConstraint, PropositionalVariable, EnumeratedType
 from olaaaf.mlo_solver import  ScipySolverRounded
 from olaaaf import Adaptation
