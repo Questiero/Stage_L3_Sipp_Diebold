@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
 <title>olaaaf.revision API documentation</title>
-<meta name="description" content="Main class of the module, allowing the user to make the knowledge revision between two `src.olaaaf.formula.formula.Formula`
-\(\psi\) and \(\mu\) that …" />
+<meta name="description" content="Main class of the module, allowing the user to make the knowledge revision between two `olaaaf.formula.formula.Formula`
+\(\psi\) and \(\mu\) that are …" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
 <link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
@@ -24,7 +24,7 @@
 <h1 class="title">Module <code>olaaaf.revision</code></h1>
 </header>
 <section id="section-intro">
-<p>Main class of the module, allowing the user to make the knowledge revision between two <code>src.olaaaf.formula.formula.Formula</code>
+<p>Main class of the module, allowing the user to make the knowledge revision between two <code><a title="olaaaf.formula.formula.Formula" href="formula/formula.html#olaaaf.formula.formula.Formula">Formula</a></code>
 <span><span class="MathJax_Preview">\psi</span><script type="math/tex">\psi</script></span> and <span><span class="MathJax_Preview">\mu</span><script type="math/tex">\mu</script></span> that are constraints.</p>
 </section>
 <section>
@@ -41,25 +41,25 @@
 <span>(</span><span>solverInit: MLOSolver, distance: DistanceFunction, simplifiers: list[Simplificator] = [], onlyOneSolution: bool = True, verbose: bool = True, projector: Projector = None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Main class of the module, allowing the user to make the knowledge revision between two <code>src.olaaaf.formula.formula.Formula</code>
+<div class="desc"><p>Main class of the module, allowing the user to make the knowledge revision between two <code><a title="olaaaf.formula.formula.Formula" href="formula/formula.html#olaaaf.formula.formula.Formula">Formula</a></code>
 <span><span class="MathJax_Preview">\psi</span><script type="math/tex">\psi</script></span> and <span><span class="MathJax_Preview">\mu</span><script type="math/tex">\mu</script></span> that are mixed integer linear constraints.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt><strong><code>solverInit</code></strong> :&ensp;<code>src.olaaaf.mlo_solver.MLOSolver.MLOSolver</code></dt>
+<dt><strong><code>solverInit</code></strong> :&ensp;<code><a title="olaaaf.mlo_solver.MLOSolver.MLOSolver" href="mlo_solver/MLOSolver.html#olaaaf.mlo_solver.MLOSolver.MLOSolver">MLOSolver</a></code></dt>
 <dd>The solver that will be used for optimization.</dd>
-<dt><strong><code>distance</code></strong> :&ensp;<code>src.olaaaf.distance.distance_function.distanceFunction.DistanceFunction</code></dt>
+<dt><strong><code>distance</code></strong> :&ensp;<code><a title="olaaaf.distance.distance_function.distanceFunction.DistanceFunction" href="distance/distance_function/distanceFunction.html#olaaaf.distance.distance_function.distanceFunction.DistanceFunction">DistanceFunction</a></code></dt>
 <dd>The distance function that will be used and, more importantly, the weights <span><span class="MathJax_Preview">(w_i)</span><script type="math/tex">(w_i)</script></span> and <span><span class="MathJax_Preview">\varepsilon</span><script type="math/tex">\varepsilon</script></span> arguments of it.
-The original algorithm is meant to be used with a <code>src.olaaaf.distance.distance_function.discreteL1DistanceFunction.discreteL1DistanceFunction</code>.</dd>
-<dt><strong><code>simplifiers</code></strong> :&ensp;<code>list</code> of <code>src.olaaaf.simplificator.simplificator.Simplificator</code>, optional</dt>
-<dd>List of all of the <code>src.olaaaf.simplificator.simplificator.Simplificator</code> that will be applied to the <code>src.olaaaf.formula.formula.Formula</code>,
+The original algorithm is meant to be used with a <code><a title="olaaaf.distance.distance_function.discreteL1DistanceFunction.discreteL1DistanceFunction" href="distance/distance_function/discreteL1DistanceFunction.html#olaaaf.distance.distance_function.discreteL1DistanceFunction.discreteL1DistanceFunction">discreteL1DistanceFunction</a></code>.</dd>
+<dt><strong><code>simplifiers</code></strong> :&ensp;<code>list</code> of <code><a title="olaaaf.simplificator.simplificator.Simplificator" href="simplificator/simplificator.html#olaaaf.simplificator.simplificator.Simplificator">Simplificator</a></code>, optional</dt>
+<dd>List of all of the <code><a title="olaaaf.simplificator.simplificator.Simplificator" href="simplificator/simplificator.html#olaaaf.simplificator.simplificator.Simplificator">Simplificator</a></code> that will be applied to the <code><a title="olaaaf.formula.formula.Formula" href="formula/formula.html#olaaaf.formula.formula.Formula">Formula</a></code>,
 in order given by the list.</dd>
 <dt><strong><code>onlyOneSolution</code></strong> :&ensp;<code>boolean</code>, optional</dt>
 <dd>If set to <code>True</code>, the revision algorithm will only return one point that satisfies <span><span class="MathJax_Preview">\psi \circ \mu</span><script type="math/tex">\psi \circ \mu</script></span>.
 If not, it will return all solutions.
-By default, this constant is set to whichever one was chosen in <code>src.olaaaf.constants.Constants</code>.</dd>
+By default, this constant is set to whichever one was chosen in <code><a title="olaaaf.constants.Constants" href="constants.html#olaaaf.constants.Constants">Constants</a></code>.</dd>
 <dt><strong><code>verbose</code></strong> :&ensp;<code>boolean</code>, optional</dt>
 <dd>If set to <code>True</code>, the revision algorithm will have a verbose display in the terminal.
-By default, this constant is set to whichever one was chosen in <code>src.olaaaf.constants.Constants</code>.</dd>
+By default, this constant is set to whichever one was chosen in <code><a title="olaaaf.constants.Constants" href="constants.html#olaaaf.constants.Constants">Constants</a></code>.</dd>
 <dt><strong><code>projector</code></strong> :&ensp;<code>boolean</code>, optional</dt>
 <dd>Projector algorithm to use, only necessary if <code>onlyOneSolution</code> is set to <code>False</code>.</dd>
 </dl></div>
@@ -72,17 +72,17 @@ By default, this constant is set to whichever one was chosen in <code>src.olaaaf
 <div class="desc"><p>Execute the revision of <span><span class="MathJax_Preview">\psi</span><script type="math/tex">\psi</script></span> by <span><span class="MathJax_Preview">\mu</span><script type="math/tex">\mu</script></span>.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt><strong><code>psi</code></strong> :&ensp;<code>src.olaaaf.formula.formula.Formula</code></dt>
-<dd><span><span class="MathJax_Preview">\psi</span><script type="math/tex">\psi</script></span>, left part of the knowledge revision operator and <code>src.olaaaf.formula.formula.Formula</code> that will be revised.</dd>
-<dt><strong><code>mu</code></strong> :&ensp;<code>src.olaaaf.formula.formula.Formula</code></dt>
-<dd><span><span class="MathJax_Preview">\mu</span><script type="math/tex">\mu</script></span>, right part of the knowledge revision operator and <code>src.olaaaf.formula.formula.Formula</code> that will be used to revise <span><span class="MathJax_Preview">\psi</span><script type="math/tex">\psi</script></span> by.</dd>
+<dt><strong><code>psi</code></strong> :&ensp;<code><a title="olaaaf.formula.formula.Formula" href="formula/formula.html#olaaaf.formula.formula.Formula">Formula</a></code></dt>
+<dd><span><span class="MathJax_Preview">\psi</span><script type="math/tex">\psi</script></span>, left part of the knowledge revision operator and <code><a title="olaaaf.formula.formula.Formula" href="formula/formula.html#olaaaf.formula.formula.Formula">Formula</a></code> that will be revised.</dd>
+<dt><strong><code>mu</code></strong> :&ensp;<code><a title="olaaaf.formula.formula.Formula" href="formula/formula.html#olaaaf.formula.formula.Formula">Formula</a></code></dt>
+<dd><span><span class="MathJax_Preview">\mu</span><script type="math/tex">\mu</script></span>, right part of the knowledge revision operator and <code><a title="olaaaf.formula.formula.Formula" href="formula/formula.html#olaaaf.formula.formula.Formula">Formula</a></code> that will be used to revise <span><span class="MathJax_Preview">\psi</span><script type="math/tex">\psi</script></span> by.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code>Fraction</code></dt>
-<dd>Distance (calculated with the <code>src.olaaaf.distance.distance_function.distanceFunction.DistanceFunction</code>
+<dd>Distance (calculated with the <code><a title="olaaaf.distance.distance_function.distanceFunction.DistanceFunction" href="distance/distance_function/distanceFunction.html#olaaaf.distance.distance_function.distanceFunction.DistanceFunction">DistanceFunction</a></code>
 given at the initialization of the class) between <span><span class="MathJax_Preview">\psi</span><script type="math/tex">\psi</script></span> and <span><span class="MathJax_Preview">\mu</span><script type="math/tex">\mu</script></span>.</dd>
-<dt><code>src.olaaaf.formula.formula.Formula</code></dt>
+<dt><code><a title="olaaaf.formula.formula.Formula" href="formula/formula.html#olaaaf.formula.formula.Formula">Formula</a></code></dt>
 <dd>Result of the knowledge revison of <span><span class="MathJax_Preview">\psi</span><script type="math/tex">\psi</script></span> by <span><span class="MathJax_Preview">\mu</span><script type="math/tex">\mu</script></span>.</dd>
 </dl></div>
 </dd>
@@ -91,7 +91,7 @@ given at the initialization of the class) between <span><span class="MathJax_Pre
 </code></dt>
 <dd>
 <div class="desc"><p>Methd used to preload the revision algorithm.</p>
-<p>This step is necessary before using <code>execute</code> since it translates every non-<code>src.olaaaf.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint</code>
+<p>This step is necessary before using <code>execute</code> since it translates every non-<code><a title="olaaaf.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint" href="formula/nullaryFormula/constraint/linearConstraint.html#olaaaf.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint">LinearConstraint</a></code>
 into one and introduces new under-the-box variables that the user might want to use.</p></div>
 </dd>
 </dl>

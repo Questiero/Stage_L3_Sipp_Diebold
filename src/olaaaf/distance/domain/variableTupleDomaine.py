@@ -1,5 +1,5 @@
 """
-Class reprensenting a domain on which a distance function is defined on a tuple of `src.olaaaf.variable.variable.Variable`.
+Class reprensenting a domain on which a distance function is defined on a tuple of `olaaaf.variable.variable.Variable`.
 """
 
 from __future__ import annotations
@@ -9,11 +9,11 @@ from .domain import Domain
 
 class VariableTupleDomaine(Domain):
     """
-    Class reprensenting a domain on which a distance function is defined on a tuple of `src.olaaaf.variable.variable.Variable`.
+    Class reprensenting a domain on which a distance function is defined on a tuple of `olaaaf.variable.variable.Variable`.
 
     Parameters
     ----------
-    variable : list of src.olaaaf.variable.variable.Variable
+    variable : list of olaaaf.variable.variable.Variable
         The variables on which the domain is defined.
     """
 

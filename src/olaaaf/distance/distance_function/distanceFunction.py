@@ -16,8 +16,8 @@ class DistanceFunction(ABC):
 
     Parameters
     ----------
-    domain: src.olaaaf.distance.domain.domain.Domain
-        The `src.olaaaf.distance.domain.domain.Domain` on which the distance function is defined.
+    domain: olaaaf.distance.domain.domain.Domain
+        The `olaaaf.distance.domain.domain.Domain` on which the distance function is defined.
     """
     
     _domain : Domain
@@ -32,8 +32,8 @@ class DistanceFunction(ABC):
 
         Parameters
         ----------
-        x, y : tuple of src.olaaaf.variable.variable.Variable
-            The two tuples of `src.olaaaf.variable.variable.Variable` you which to get the distance between.
+        x, y : tuple of olaaaf.variable.variable.Variable
+            The two tuples of `olaaaf.variable.variable.Variable` you which to get the distance between.
 
         Returns
         -------

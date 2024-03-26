@@ -57,16 +57,16 @@
 <div class="desc"><p>Method returning the result of a mixed linear problem.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt><strong><code>variables</code></strong> :&ensp;<code>list</code> of <code>src.olaaaf.variable.variable.Variable</code></dt>
+<dt><strong><code>variables</code></strong> :&ensp;<code>list</code> of <code><a title="olaaaf.variable.variable.Variable" href="../variable/variable.html#olaaaf.variable.variable.Variable">Variable</a></code></dt>
 <dd>Variables used in constraints.</dd>
 <dt><strong><code>objectif</code></strong> :&ensp;<code>list</code> of <code>fractions.Fraction</code></dt>
 <dd>Weights of the objective function to optimize.</dd>
-<dt><strong><code>constraints</code></strong> :&ensp;<code>list</code> of <code>tuple</code> of <code>the form (list</code> of <code>fractions.Fraction, src.olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator, fractions.Fraction)</code></dt>
+<dt><strong><code>constraints</code></strong> :&ensp;<code>list</code> of <code>tuple</code> of <code>the form (list</code> of <code>fractions.Fraction, <a title="olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator" href="../formula/nullaryFormula/constraint/constraintOperator.html#olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator">ConstraintOperator</a>, fractions.Fraction)</code></dt>
 <dd>Each tuple represents a linear constraint, with the first element being the weights, the second the operator and the third the bound.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>src.olaaaf.mlo_solver.optimizationValues.OptimizationValues</code></dt>
+<dt><code><a title="olaaaf.mlo_solver.optimizationValues.OptimizationValues" href="optimizationValues.html#olaaaf.mlo_solver.optimizationValues.OptimizationValues">OptimizationValues</a></code></dt>
 <dd>Information of the final state of the problem.</dd>
 <dt><code>list</code> of <code>fractions.Fraction</code></dt>
 <dd>The point at the optimal, if found.</dd>

@@ -1,7 +1,7 @@
 """
-This class allows the user to easily declare a new `src.olaaaf.formula.formula.Formula` thanks to
-`src.olaaaf.formula.formulaManager.FormulaManager.parser` and store in memory all previously named formulas,
-either via their constructor or the function `src.olaaaf.formula.formulaManager.FormulaManager.declare`.
+This class allows the user to easily declare a new `olaaaf.formula.formula.Formula` thanks to
+`olaaaf.formula.formulaManager.FormulaManager.parser` and store in memory all previously named formulas,
+either via their constructor or the function `olaaaf.formula.formulaManager.FormulaManager.declare`.
 """
 
 from __future__ import annotations
@@ -13,28 +13,28 @@ from pyparsing import Literal, Word, srange, infix_notation, OpAssoc, ParseResul
 
 class FormulaManager():
     """
-    Class compiling multiple tools used to declare any `src.olaaaf.formula.formula.Formula` in a more intuitive way.
+    Class compiling multiple tools used to declare any `olaaaf.formula.formula.Formula` in a more intuitive way.
     """
 
-    #: A way to store all known and named `src.olaaaf.formula.formula.Formula` so they could be accessed again more easily.
+    #: A way to store all known and named `olaaaf.formula.formula.Formula` so they could be accessed again more easily.
     formulaDict: dict[str, Formula] = dict()
 
     @staticmethod
     def parser(string: str):
         '''
-        Function allowing the user to intuitively parse a `src.olaaaf.formula.formula.Formula` from a string, using an infixed notation 
+        Function allowing the user to intuitively parse a `olaaaf.formula.formula.Formula` from a string, using an infixed notation 
         and customizable operators.
 
         While more intuitive due to the less restrictive scope of usable operators, this method of declaring formulas assume you 
-        previously named them, either via the `fmName` attribute in their constructor or thanks to `src.olaaaf.formula.formulaManager.FormulaManager.declare`.
-        The operators could be customized in `src.olaaaf.constants.Constants` but are by default:\n
+        previously named them, either via the `fmName` attribute in their constructor or thanks to `olaaaf.formula.formulaManager.FormulaManager.declare`.
+        The operators could be customized in `olaaaf.constants.Constants` but are by default:\n
 
-        * `&` for the and operator, represented by `src.olaaaf.formula.naryFormula.andOperator.And`\n
-        * `|` for the or operator, represented by `src.olaaaf.formula.naryFormula.orOperator.Or`\n
-        * `~` for the not operator, represented by `src.olaaaf.formula.unaryFormula.notOperator.Not`\n
-        * `->` for the implication operator, represented by `src.olaaaf.formula.binaryFormula.implicationOperator.Implication`\n
-        * `<->` for the equivalence operator, represented by `src.olaaaf.formula.binaryFormula.equivalenceOperator.Equivalence`\n
-        * `<+>` for the xor operator, represented by `src.olaaaf.formula.binaryFormula.xorOperator.Xor`\n
+        * `&` for the and operator, represented by `olaaaf.formula.naryFormula.andOperator.And`\n
+        * `|` for the or operator, represented by `olaaaf.formula.naryFormula.orOperator.Or`\n
+        * `~` for the not operator, represented by `olaaaf.formula.unaryFormula.notOperator.Not`\n
+        * `->` for the implication operator, represented by `olaaaf.formula.binaryFormula.implicationOperator.Implication`\n
+        * `<->` for the equivalence operator, represented by `olaaaf.formula.binaryFormula.equivalenceOperator.Equivalence`\n
+        * `<+>` for the xor operator, represented by `olaaaf.formula.binaryFormula.xorOperator.Xor`\n
 
         Attributes
         ----------
@@ -105,19 +105,19 @@ class FormulaManager():
     @staticmethod
     def declare(name: str, formula: Formula) -> Formula:
         """
-        Function allowing the user to easily declare and name a new `src.olaaaf.formula.formula.Formula` for it to be stored in
-        `src.olaaaf.formula.formulaManager.FormulaManager.formulaDict`.
+        Function allowing the user to easily declare and name a new `olaaaf.formula.formula.Formula` for it to be stored in
+        `olaaaf.formula.formulaManager.FormulaManager.formulaDict`.
 
         Attributes
         ----------
         name: String 
-            The name of the `src.olaaaf.formula.formula.Formula` to declare.
-            If the name is already in use, the old `src.olaaaf.formula.formula.Formula` will be forgotten and replaced by the newly declared one.\n
+            The name of the `olaaaf.formula.formula.Formula` to declare.
+            If the name is already in use, the old `olaaaf.formula.formula.Formula` will be forgotten and replaced by the newly declared one.\n
             For now, no restriction on the name is given but that should change in the near future.
         
             
-        formula: `src.olaaaf.formula.formula.Formula`
-            The `src.olaaaf.formula.formula.Formula` to declare and name.
+        formula: `olaaaf.formula.formula.Formula`
+            The `olaaaf.formula.formula.Formula` to declare and name.
         """
 
         FormulaManager.formulaDict[name] = formula

@@ -24,8 +24,8 @@
 </header>
 <section id="section-intro">
 <p>Representation of logical formulas and multiple tools to use them, abstracted depending on the operator's formula.</p>
-<h2 id="declaration-of-a-new-srcolaaafformulaformulaformula">Declaration of a new <code>src.olaaaf.formula.formula.Formula</code></h2>
-<p>To declare a new <code>src.olaaaf.formula.formula.Formula</code>, you have multiple options:</p>
+<h2 id="declaration-of-a-new-formula">Declaration of a new <code><a title="olaaaf.formula.formula.Formula" href="formula.html#olaaaf.formula.formula.Formula">Formula</a></code></h2>
+<p>To declare a new <code><a title="olaaaf.formula.formula.Formula" href="formula.html#olaaaf.formula.formula.Formula">Formula</a></code>, you have multiple options:</p>
 <ul>
 <li>
 <p>Use the usual class constructors. Depending on the operator's arity, the arguments that are expected might change
@@ -36,48 +36,48 @@ Please note that they have an optional argument <code>name</code> that we'll tal
 <p>Use Python's built-in (but restrictive) operators between two existing formulas, namely:</p>
 <ul>
 <li>
-<p><code>&amp;</code> for the and operator, represented by <code>src.olaaaf.formula.naryFormula.andOperator.And</code></p>
+<p><code>&amp;</code> for the and operator, represented by <code><a title="olaaaf.formula.naryFormula.andOperator.And" href="naryFormula/andOperator.html#olaaaf.formula.naryFormula.andOperator.And">And</a></code></p>
 </li>
 <li>
-<p><code>|</code> for the or operator, represented by <code>src.olaaaf.formula.naryFormula.orOperator.Or</code></p>
+<p><code>|</code> for the or operator, represented by <code><a title="olaaaf.formula.naryFormula.orOperator.Or" href="naryFormula/orOperator.html#olaaaf.formula.naryFormula.orOperator.Or">Or</a></code></p>
 </li>
 <li>
-<p><code>~</code> for the not operator, represented by <code>src.olaaaf.formula.unaryFormula.notOperator.Not</code></p>
+<p><code>~</code> for the not operator, represented by <code><a title="olaaaf.formula.unaryFormula.notOperator.Not" href="unaryFormula/notOperator.html#olaaaf.formula.unaryFormula.notOperator.Not">Not</a></code></p>
 </li>
 <li>
-<p><code>&gt;&gt;</code> for the implication operator, represented by <code>src.olaaaf.formula.binaryFormula.implicationOperator.Implication</code></p>
+<p><code>&gt;&gt;</code> for the implication operator, represented by <code><a title="olaaaf.formula.binaryFormula.implicationOperator.Implication" href="binaryFormula/implicationOperator.html#olaaaf.formula.binaryFormula.implicationOperator.Implication">Implication</a></code></p>
 </li>
 <li>
-<p><code>//</code> for the equivalence operator, represented by <code>src.olaaaf.formula.binaryFormula.equivalenceOperator.Equivalence</code></p>
+<p><code>//</code> for the equivalence operator, represented by <code><a title="olaaaf.formula.binaryFormula.equivalenceOperator.Equivalence" href="binaryFormula/equivalenceOperator.html#olaaaf.formula.binaryFormula.equivalenceOperator.Equivalence">Equivalence</a></code></p>
 </li>
 <li>
-<p><code>!=</code> for the xor operator, represented by <code>src.olaaaf.formula.binaryFormula.xorOperator.Xor</code></p>
+<p><code>!=</code> for the xor operator, represented by <code><a title="olaaaf.formula.binaryFormula.xorOperator.Xor" href="binaryFormula/xorOperator.html#olaaaf.formula.binaryFormula.xorOperator.Xor">Xor</a></code></p>
 </li>
 </ul>
 </li>
 <li>
-<p>Use <code>src.olaaaf.formula.formulaManager.FormulaManager.parser</code> to declare a formula using a parser with customizable operators.
+<p>Use <code><a title="olaaaf.formula.formulaManager.FormulaManager.parser" href="formulaManager.html#olaaaf.formula.formulaManager.FormulaManager.parser">FormulaManager.parser()</a></code> to declare a formula using a parser with customizable operators.
 While more intuitive due to the less restrictive scope of usable operators, this method of declaring formulas assume you
-previously named them, either via the <code>name</code> attribute in their constructor or thanks to <code>src.olaaaf.formula.formulaManager.FormulaManager.declare</code>.
-The operators could be customized in <code>src.olaaaf.constants.Constants</code> but are by default:</p>
+previously named them, either via the <code>name</code> attribute in their constructor or thanks to <code><a title="olaaaf.formula.formulaManager.FormulaManager.declare" href="formulaManager.html#olaaaf.formula.formulaManager.FormulaManager.declare">FormulaManager.declare()</a></code>.
+The operators could be customized in <code><a title="olaaaf.constants.Constants" href="../constants.html#olaaaf.constants.Constants">Constants</a></code> but are by default:</p>
 <ul>
 <li>
-<p><code>&amp;</code> for the and operator, represented by <code>src.olaaaf.formula.naryFormula.andOperator.And</code></p>
+<p><code>&amp;</code> for the and operator, represented by <code><a title="olaaaf.formula.naryFormula.andOperator.And" href="naryFormula/andOperator.html#olaaaf.formula.naryFormula.andOperator.And">And</a></code></p>
 </li>
 <li>
-<p><code>|</code> for the or operator, represented by <code>src.olaaaf.formula.naryFormula.orOperator.Or</code></p>
+<p><code>|</code> for the or operator, represented by <code><a title="olaaaf.formula.naryFormula.orOperator.Or" href="naryFormula/orOperator.html#olaaaf.formula.naryFormula.orOperator.Or">Or</a></code></p>
 </li>
 <li>
-<p><code>~</code> for the not operator, represented by <code>src.olaaaf.formula.unaryFormula.notOperator.Not</code></p>
+<p><code>~</code> for the not operator, represented by <code><a title="olaaaf.formula.unaryFormula.notOperator.Not" href="unaryFormula/notOperator.html#olaaaf.formula.unaryFormula.notOperator.Not">Not</a></code></p>
 </li>
 <li>
-<p><code>-&gt;</code> for the implication operator, represented by <code>src.olaaaf.formula.binaryFormula.implicationOperator.Implication</code></p>
+<p><code>-&gt;</code> for the implication operator, represented by <code><a title="olaaaf.formula.binaryFormula.implicationOperator.Implication" href="binaryFormula/implicationOperator.html#olaaaf.formula.binaryFormula.implicationOperator.Implication">Implication</a></code></p>
 </li>
 <li>
-<p><code>&lt;-&gt;</code> for the equivalence operator, represented by <code>src.olaaaf.formula.binaryFormula.equivalenceOperator.Equivalence</code></p>
+<p><code>&lt;-&gt;</code> for the equivalence operator, represented by <code><a title="olaaaf.formula.binaryFormula.equivalenceOperator.Equivalence" href="binaryFormula/equivalenceOperator.html#olaaaf.formula.binaryFormula.equivalenceOperator.Equivalence">Equivalence</a></code></p>
 </li>
 <li>
-<p><code>&lt;+&gt;</code> for the xor operator, represented by <code>src.olaaaf.formula.binaryFormula.xorOperator.Xor</code></p>
+<p><code>&lt;+&gt;</code> for the xor operator, represented by <code><a title="olaaaf.formula.binaryFormula.xorOperator.Xor" href="binaryFormula/xorOperator.html#olaaaf.formula.binaryFormula.xorOperator.Xor">Xor</a></code></p>
 </li>
 </ul>
 </li>
@@ -105,12 +105,12 @@ Implication(formulaName = &quot;psi&quot;, ~(a | b), ~b)
 </dd>
 <dt><code class="name"><a title="olaaaf.formula.formulaDisplay" href="formulaDisplay.html">olaaaf.formula.formulaDisplay</a></code></dt>
 <dd>
-<div class="desc"><p>Utility class, allowing the user to get a visualisation of a <code>src.olaaaf.formula.formula.Formula</code>.</p></div>
+<div class="desc"><p>Utility class, allowing the user to get a visualisation of a <code><a title="olaaaf.formula.formula.Formula" href="formula.html#olaaaf.formula.formula.Formula">Formula</a></code>.</p></div>
 </dd>
 <dt><code class="name"><a title="olaaaf.formula.formulaManager" href="formulaManager.html">olaaaf.formula.formulaManager</a></code></dt>
 <dd>
-<div class="desc"><p>This class allows the user to easily declare a new <code>src.olaaaf.formula.formula.Formula</code> thanks to
-…</p></div>
+<div class="desc"><p>This class allows the user to easily declare a new <code><a title="olaaaf.formula.formula.Formula" href="formula.html#olaaaf.formula.formula.Formula">Formula</a></code> thanks to
+<code><a title="olaaaf.formula.formulaManager.FormulaManager.parser" href="formulaManager.html#olaaaf.formula.formulaManager.FormulaManager.parser">FormulaManager.parser()</a></code> …</p></div>
 </dd>
 <dt><code class="name"><a title="olaaaf.formula.naryFormula" href="naryFormula/index.html">olaaaf.formula.naryFormula</a></code></dt>
 <dd>
@@ -137,7 +137,7 @@ Implication(formulaName = &quot;psi&quot;, ~(a | b), ~b)
 <h1>Index</h1>
 <div class="toc">
 <ul>
-<li><a href="#declaration-of-a-new-srcolaaafformulaformulaformula">Declaration of a new src.olaaaf.formula.formula.Formula</a><ul>
+<li><a href="#declaration-of-a-new-olaaafformulaformulaformula">Declaration of a new olaaaf.formula.formula.Formula</a><ul>
 <li><a href="#exemple-of-declaration">Exemple of declaration</a></li>
 </ul>
 </li>

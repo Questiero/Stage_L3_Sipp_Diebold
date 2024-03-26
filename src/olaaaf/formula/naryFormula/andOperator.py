@@ -21,12 +21,12 @@ class And(NaryFormula):
 
     Parameters
     ----------
-    *formulas: list of src.olaaaf.formula.formula.Formula
+    *formulas: list of olaaaf.formula.formula.Formula
         The formulas meant as components of the And operator.
 
     Attributes
     ----------
-    children: set of src.olaaaf.formula.formula.Formula
+    children: set of olaaaf.formula.formula.Formula
         The children of the current node.
     '''
     
@@ -38,7 +38,7 @@ class And(NaryFormula):
 
         Returns
         -------
-        src.olaaaf.formula.formula.Formula
+        olaaaf.formula.formula.Formula
             The current Formula in Disjunctive Normal Form.
         '''
                 
@@ -79,7 +79,7 @@ class And(NaryFormula):
 
         Returns
         -------
-        src.olaaaf.formula.formula.Formula
+        olaaaf.formula.formula.Formula
             The current Formula in Disjunctive Normal Form under Negation.
         '''
         
@@ -89,12 +89,12 @@ class And(NaryFormula):
     
     def toPCMLC(self, varDict) -> Formula:
         '''
-        Method used to transform a `src.olaaaf.formula.formula.Formula` into a new one, in the PCMLC formalism.
+        Method used to transform a `olaaaf.formula.formula.Formula` into a new one, in the PCMLC formalism.
 
         Returns
         -------
-        src.olaaaf.formula.formula.Formula
-            A `src.olaaaf.formula.formula.Formula` in the PCMLC formalism.
+        olaaaf.formula.formula.Formula
+            A `olaaaf.formula.formula.Formula` in the PCMLC formalism.
         '''
         return And(*{formul.toPCMLC(varDict) for formul in self.children})
 
@@ -111,13 +111,13 @@ class And(NaryFormula):
 
         Attributes
         ----------
-        var : src.olaaaf.variable.variable.Variable
+        var : olaaaf.variable.variable.Variable
             Variable used in case of inequality.
 
 
         Returns
         -------
-        list of list of src.olaaaf.formula.nullaryFormula.constraint.constraint.Constraint
+        list of list of olaaaf.formula.nullaryFormula.constraint.constraint.Constraint
             2D list containing all the constraints of discute vraiment de l'implémentationthe adherence of the Formula,
             in Disjunctive Normal Form.
         '''
@@ -139,13 +139,13 @@ class And(NaryFormula):
 
         Attributes
         ----------
-        var : src.olaaaf.variable.variable.Variable
+        var : olaaaf.variable.variable.Variable
             Variable used in case of inequality.
 
 
         Returns
         -------
-        list of list of src.olaaaf.formula.nullaryFormula.constraint.constraint.Constraint
+        list of list of olaaaf.formula.nullaryFormula.constraint.constraint.Constraint
             2D list containing all the constraints of the adherence of the Formula,
             in Disjunctive Normal Form under Negation.
         '''
@@ -160,12 +160,12 @@ class And(NaryFormula):
 
     def toLessOrEqConstraint(self):
         '''
-        Method used to transform a `src.olaaaf.formula.formula.Formula` into another one, with only `src.olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
+        Method used to transform a `olaaaf.formula.formula.Formula` into another one, with only `olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
 
         Returns
         ------
-        src.olaaaf.formula.formula.Formula
-            A `src.olaaaf.formula.formula.Formula` with only `src.olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
+        olaaaf.formula.formula.Formula
+            A `olaaaf.formula.formula.Formula` with only `olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
         '''
         childrenModified = set()
         
@@ -190,7 +190,7 @@ class And(NaryFormula):
     
     def toLatex(self):
         r"""
-        Method returning a \(\LaTeX\) expression representing the Formula. Operators are customisable in `src.olaaaf.constants.Constants`.
+        Method returning a \(\LaTeX\) expression representing the Formula. Operators are customisable in `olaaaf.constants.Constants`.
         
         Returns
         -------

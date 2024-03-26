@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
 <title>olaaaf.projector.floatConvexHullProjector API documentation</title>
-<meta name="description" content="Projector of a `src.olaaaf.formula.formula.Formula` to a sub-set of its variables, using floating numbers and SciPy&#39;s
+<meta name="description" content="Projector of a `olaaaf.formula.formula.Formula` to a sub-set of its variables, using floating numbers and SciPy&#39;s
 `ConvexHull`." />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
@@ -24,7 +24,7 @@
 <h1 class="title">Module <code>olaaaf.projector.floatConvexHullProjector</code></h1>
 </header>
 <section id="section-intro">
-<p>Projector of a <code>src.olaaaf.formula.formula.Formula</code> to a sub-set of its variables, using floating numbers and SciPy's
+<p>Projector of a <code><a title="olaaaf.formula.formula.Formula" href="../formula/formula.html#olaaaf.formula.formula.Formula">Formula</a></code> to a sub-set of its variables, using floating numbers and SciPy's
 <code>ConvexHull</code>.</p>
 </section>
 <section>
@@ -41,14 +41,14 @@
 <span>(</span><span>rounding: int = 12, simplifiers: list[Simplificator] = None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Projector of a <code>src.olaaaf.formula.formula.Formula</code> to a sub-set of its variables, using floating numbers and SciPy's
+<div class="desc"><p>Projector of a <code><a title="olaaaf.formula.formula.Formula" href="../formula/formula.html#olaaaf.formula.formula.Formula">Formula</a></code> to a sub-set of its variables, using floating numbers and SciPy's
 <code>ConvexHull</code>.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>rounding</code></strong> :&ensp;<code>int</code>, optional</dt>
 <dd>The rounding you wish to have to eliminte floating point integers approximation errors. By default, is set to 12.</dd>
-<dt><strong><code>simplifiers</code></strong> :&ensp;<code>list</code> of <code>src.olaaaf.simplificator.simplificator.Simplificator</code>, optional</dt>
-<dd>List of all of the <code>src.olaaaf.simplificator.simplificator.Simplificator</code> that will be applied to the <code>src.olaaaf.formula.formula.Formula</code>,
+<dt><strong><code>simplifiers</code></strong> :&ensp;<code>list</code> of <code><a title="olaaaf.simplificator.simplificator.Simplificator" href="../simplificator/simplificator.html#olaaaf.simplificator.simplificator.Simplificator">Simplificator</a></code>, optional</dt>
+<dd>List of all of the <code><a title="olaaaf.simplificator.simplificator.Simplificator" href="../simplificator/simplificator.html#olaaaf.simplificator.simplificator.Simplificator">Simplificator</a></code> that will be applied to the <code><a title="olaaaf.formula.formula.Formula" href="../formula/formula.html#olaaaf.formula.formula.Formula">Formula</a></code>,
 in order given by the list.</dd>
 </dl></div>
 <h3>Ancestors</h3>
@@ -62,18 +62,18 @@ in order given by the list.</dd>
 <span>def <span class="ident">projectOn</span></span>(<span>self, phi: And, variables: set[Variable])</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Main method of <code>src.olaaaf.projector.floatConvexHullProjector.FloatConvexHullProjector</code>, allowing to project a given
-<code>src.olaaaf.formula.formula.Formula</code> to a subset of its <code>src.olaaaf.variable.variable.Variable</code>.</p>
+<div class="desc"><p>Main method of <code><a title="olaaaf.projector.floatConvexHullProjector.FloatConvexHullProjector" href="#olaaaf.projector.floatConvexHullProjector.FloatConvexHullProjector">FloatConvexHullProjector</a></code>, allowing to project a given
+<code><a title="olaaaf.formula.formula.Formula" href="../formula/formula.html#olaaaf.formula.formula.Formula">Formula</a></code> to a subset of its <code><a title="olaaaf.variable.variable.Variable" href="../variable/variable.html#olaaaf.variable.variable.Variable">Variable</a></code>.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt><strong><code>phi</code></strong> :&ensp;<code>src.olaaaf.formula.formula.Formula</code></dt>
-<dd>The src.olaaaf.formula.formula.Formula to project.</dd>
-<dt><strong><code>variables</code></strong> :&ensp;<code>set</code> of <code>src.olaaaf.variable.variable.Variable</code></dt>
-<dd>The subset of <code>src.olaaaf.variable.variable.Variable</code> to project on.</dd>
+<dt><strong><code>phi</code></strong> :&ensp;<code><a title="olaaaf.formula.formula.Formula" href="../formula/formula.html#olaaaf.formula.formula.Formula">Formula</a></code></dt>
+<dd>The olaaaf.formula.formula.Formula to project.</dd>
+<dt><strong><code>variables</code></strong> :&ensp;<code>set</code> of <code><a title="olaaaf.variable.variable.Variable" href="../variable/variable.html#olaaaf.variable.variable.Variable">Variable</a></code></dt>
+<dd>The subset of <code><a title="olaaaf.variable.variable.Variable" href="../variable/variable.html#olaaaf.variable.variable.Variable">Variable</a></code> to project on.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>src.olaaaf.formula.formula.Formula</code></dt>
+<dt><code><a title="olaaaf.formula.formula.Formula" href="../formula/formula.html#olaaaf.formula.formula.Formula">Formula</a></code></dt>
 <dd>The projection of <span><span class="MathJax_Preview">\varphi</span><script type="math/tex">\varphi</script></span> on the specified subset of its variables.</dd>
 </dl></div>
 </dd>

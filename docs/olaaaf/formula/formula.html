@@ -72,8 +72,8 @@ Typing depends of the formula's arity.</dd>
 <div class="desc"><p>Method returning a clone of the current Formula.</p>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>src.olaaaf.formula.formula.Formula</code></dt>
-<dd>Clone of the current <code>src.olaaaf.formula.formula.Formula</code>.</dd>
+<dt><code><a title="olaaaf.formula.formula.Formula" href="#olaaaf.formula.formula.Formula">Formula</a></code></dt>
+<dd>Clone of the current <code><a title="olaaaf.formula.formula.Formula" href="#olaaaf.formula.formula.Formula">Formula</a></code>.</dd>
 </dl></div>
 </dd>
 <dt id="olaaaf.formula.formula.Formula.getAdherence"><code class="name flex">
@@ -84,12 +84,12 @@ Typing depends of the formula's arity.</dd>
 the Formula, in Disjunctive Normal Form.</p>
 <h2 id="attributes">Attributes</h2>
 <dl>
-<dt><strong><code>var</code></strong> :&ensp;<code>src.olaaaf.variable.variable.Variable</code></dt>
+<dt><strong><code>var</code></strong> :&ensp;<code><a title="olaaaf.variable.variable.Variable" href="../variable/variable.html#olaaaf.variable.variable.Variable">Variable</a></code></dt>
 <dd>variable used in case of inequality</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>list</code> of <code>list</code> of <code>src.olaaaf.formula.nullaryFormula.constraint.constraint.Constraint</code></dt>
+<dt><code>list</code> of <code>list</code> of <code><a title="olaaaf.formula.nullaryFormula.constraint.constraint.Constraint" href="nullaryFormula/constraint/constraint.html#olaaaf.formula.nullaryFormula.constraint.constraint.Constraint">Constraint</a></code></dt>
 <dd>2D list containing all the constraints of discute vraiment de l'implémentationthe adherence of the Formula,
 in Disjunctive Normal Form.</dd>
 </dl></div>
@@ -102,8 +102,8 @@ in Disjunctive Normal Form.</dd>
 the Formula.</p>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>set</code> of <code>src.olaaaf.variable.variable.Variable</code></dt>
-<dd>All the variables used in the <code>src.olaaaf.formula.formula.Formula</code>.</dd>
+<dt><code>set</code> of <code><a title="olaaaf.variable.variable.Variable" href="../variable/variable.html#olaaaf.variable.variable.Variable">Variable</a></code></dt>
+<dd>All the variables used in the <code><a title="olaaaf.formula.formula.Formula" href="#olaaaf.formula.formula.Formula">Formula</a></code>.</dd>
 </dl></div>
 </dd>
 <dt id="olaaaf.formula.formula.Formula.toDNF"><code class="name flex">
@@ -113,15 +113,15 @@ the Formula.</p>
 <div class="desc"><p>Method returning the current Formula in Disjunctive Normal Form.</p>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>src.olaaaf.formula.formula.Formula</code></dt>
-<dd>The current <code>src.olaaaf.formula.formula.Formula</code> in Disjunctive Normal Form.</dd>
+<dt><code><a title="olaaaf.formula.formula.Formula" href="#olaaaf.formula.formula.Formula">Formula</a></code></dt>
+<dd>The current <code><a title="olaaaf.formula.formula.Formula" href="#olaaaf.formula.formula.Formula">Formula</a></code> in Disjunctive Normal Form.</dd>
 </dl></div>
 </dd>
 <dt id="olaaaf.formula.formula.Formula.toLatex"><code class="name flex">
 <span>def <span class="ident">toLatex</span></span>(<span>self) ‑> str</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Method returning a <span><span class="MathJax_Preview">\LaTeX</span><script type="math/tex">\LaTeX</script></span> expression representing the Formula. Operators are customisable in <code>src.olaaaf.constants.Constants</code>.</p>
+<div class="desc"><p>Method returning a <span><span class="MathJax_Preview">\LaTeX</span><script type="math/tex">\LaTeX</script></span> expression representing the Formula. Operators are customisable in <code><a title="olaaaf.constants.Constants" href="../constants.html#olaaaf.constants.Constants">Constants</a></code>.</p>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code>String</code></dt>
@@ -132,22 +132,22 @@ the Formula.</p>
 <span>def <span class="ident">toLessOrEqConstraint</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Method used to transform a <code>src.olaaaf.formula.formula.Formula</code> into another one, with only <code>src.olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ</code> constraints.</p>
+<div class="desc"><p>Method used to transform a <code><a title="olaaaf.formula.formula.Formula" href="#olaaaf.formula.formula.Formula">Formula</a></code> into another one, with only <code><a title="olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ" href="nullaryFormula/constraint/constraintOperator.html#olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ">ConstraintOperator.LEQ</a></code> constraints.</p>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>src.olaaaf.formula.formula.Formula</code></dt>
-<dd>A <code>src.olaaaf.formula.formula.Formula</code> with only <code>src.olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ</code> constraints.</dd>
+<dt><code><a title="olaaaf.formula.formula.Formula" href="#olaaaf.formula.formula.Formula">Formula</a></code></dt>
+<dd>A <code><a title="olaaaf.formula.formula.Formula" href="#olaaaf.formula.formula.Formula">Formula</a></code> with only <code><a title="olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ" href="nullaryFormula/constraint/constraintOperator.html#olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ">ConstraintOperator.LEQ</a></code> constraints.</dd>
 </dl></div>
 </dd>
 <dt id="olaaaf.formula.formula.Formula.toPCMLC"><code class="name flex">
 <span>def <span class="ident">toPCMLC</span></span>(<span>self, varDict) ‑> <a title="olaaaf.formula.formula.Formula" href="#olaaaf.formula.formula.Formula">Formula</a></span>
 </code></dt>
 <dd>
-<div class="desc"><p>Method used to transform a <code>src.olaaaf.formula.formula.Formula</code> into a new one, in the PCMLC formalism.</p>
+<div class="desc"><p>Method used to transform a <code><a title="olaaaf.formula.formula.Formula" href="#olaaaf.formula.formula.Formula">Formula</a></code> into a new one, in the PCMLC formalism.</p>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>src.olaaaf.formula.formula.Formula</code></dt>
-<dd>A <code>src.olaaaf.formula.formula.Formula</code> in the PCMLC formalism.</dd>
+<dt><code><a title="olaaaf.formula.formula.Formula" href="#olaaaf.formula.formula.Formula">Formula</a></code></dt>
+<dd>A <code><a title="olaaaf.formula.formula.Formula" href="#olaaaf.formula.formula.Formula">Formula</a></code> in the PCMLC formalism.</dd>
 </dl></div>
 </dd>
 </dl>

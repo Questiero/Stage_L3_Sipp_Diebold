@@ -40,12 +40,12 @@
 </code></dt>
 <dd>
 <div class="desc"><p>Abstract class, representing a variable. Most of the time, you <strong>shouldn't</strong> use the constructor
-of a <code>src.olaaaf.variable.variable.Variable</code> and should rather look into <code>src.olaaaf.variable.variable.Variable.declare</code>,
-<code>src.olaaaf.variable.variable.Variable.declareBulk</code> or <code>src.olaaaf.variable.variable.Variable.declareAnonymous</code>.</p>
+of a <code><a title="olaaaf.variable.variable.Variable" href="#olaaaf.variable.variable.Variable">Variable</a></code> and should rather look into <code><a title="olaaaf.variable.variable.Variable.declare" href="#olaaaf.variable.variable.Variable.declare">Variable.declare()</a></code>,
+<code><a title="olaaaf.variable.variable.Variable.declareBulk" href="#olaaaf.variable.variable.Variable.declareBulk">Variable.declareBulk()</a></code> or <code><a title="olaaaf.variable.variable.Variable.declareAnonymous" href="#olaaaf.variable.variable.Variable.declareAnonymous">Variable.declareAnonymous()</a></code>.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>name</code></strong> :&ensp;<code>String</code></dt>
-<dd>The name of the <code>src.olaaaf.variable.variable.Variable</code>.</dd>
+<dd>The name of the <code><a title="olaaaf.variable.variable.Variable" href="#olaaaf.variable.variable.Variable">Variable</a></code>.</dd>
 </dl></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -90,12 +90,12 @@ A Variable name should respect the following naming conventions:
 <h2 id="attributes">Attributes</h2>
 <dl>
 <dt><strong><code>name</code></strong> :&ensp;<code>String</code></dt>
-<dd>The name of the <code>src.olaaaf.variable.variable.Variable</code> to be declared.</dd>
+<dd>The name of the <code><a title="olaaaf.variable.variable.Variable" href="#olaaaf.variable.variable.Variable">Variable</a></code> to be declared.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>src.olaaaf.variable.variable.Variable</code></dt>
-<dd>The newly declared <code>src.olaaaf.variable.variable.Variable</code>.</dd>
+<dt><code><a title="olaaaf.variable.variable.Variable" href="#olaaaf.variable.variable.Variable">Variable</a></code></dt>
+<dd>The newly declared <code><a title="olaaaf.variable.variable.Variable" href="#olaaaf.variable.variable.Variable">Variable</a></code>.</dd>
 </dl></div>
 </dd>
 <dt id="olaaaf.variable.variable.Variable.declareAnonymous"><code class="name flex">
@@ -104,10 +104,10 @@ A Variable name should respect the following naming conventions:
 <dd>
 <div class="desc"><p>Class method, allowing the user to declare an anonymous variable meant to be used inside algorithms without risking any
 naming conflit with the standardly defined variables.</p>
-<p>Anonymous variables aren't stored in <code>src.olaaaf.variable.variableManager.VariableManager.instance</code> and, as such,
-can't be used in <code>src.olaaaf.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint</code>'s constructor.</p>
+<p>Anonymous variables aren't stored in <code><a title="olaaaf.variable.variableManager.VariableManager.instance" href="variableManager.html#olaaaf.variable.variableManager.VariableManager.instance">VariableManager.instance</a></code> and, as such,
+can't be used in <code><a title="olaaaf.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint" href="../formula/nullaryFormula/constraint/linearConstraint.html#olaaaf.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint">LinearConstraint</a></code>'s constructor.</p>
 <p>Since they can't be used in the usual constructor, one must first declare an empty
-<code>src.olaaaf.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint</code> before adding them manualy.</p>
+<code><a title="olaaaf.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint" href="../formula/nullaryFormula/constraint/linearConstraint.html#olaaaf.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint">LinearConstraint</a></code> before adding them manualy.</p>
 <p>To prevent naming conflicts with regular variables, an anonymous variable's name always start with
 it's object's id. The user can also specify an ending to an anonymous variable name.</p>
 <h2 id="attributes">Attributes</h2>
@@ -132,7 +132,7 @@ it's object's id. The user can also specify an ending to an anonymous variable n
 <span>def <span class="ident">declareBulk</span></span>(<span>*lname: str, lowerBound=None, upperBound=None) ‑> list[<a title="olaaaf.variable.variable.Variable" href="#olaaaf.variable.variable.Variable">Variable</a>]</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Class method used to declare multiple new instances of <code>src.olaaaf.variable.variable.Variable</code> at the same time.
+<div class="desc"><p>Class method used to declare multiple new instances of <code><a title="olaaaf.variable.variable.Variable" href="#olaaaf.variable.variable.Variable">Variable</a></code> at the same time.
 A Variable name should respect the following naming conventions:
 - A name is unique and shouldn't be declared multiple times</p>
 <ul>
@@ -153,12 +153,12 @@ A Variable name should respect the following naming conventions:
 <h2 id="attributes">Attributes</h2>
 <dl>
 <dt><strong><code>lname</code></strong> :&ensp;<code>list</code> of <code>String</code></dt>
-<dd>The names of the <code>src.olaaaf.variable.variable.Variable</code> to be declared.</dd>
+<dd>The names of the <code><a title="olaaaf.variable.variable.Variable" href="#olaaaf.variable.variable.Variable">Variable</a></code> to be declared.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>list</code> of <code>src.olaaaf.variable.variable.Variable</code></dt>
-<dd>A list containing all the newly declared instances of <code>src.olaaaf.variable.variable.Variable</code>.</dd>
+<dt><code>list</code> of <code><a title="olaaaf.variable.variable.Variable" href="#olaaaf.variable.variable.Variable">Variable</a></code></dt>
+<dd>A list containing all the newly declared instances of <code><a title="olaaaf.variable.variable.Variable" href="#olaaaf.variable.variable.Variable">Variable</a></code>.</dd>
 </dl></div>
 </dd>
 </dl>

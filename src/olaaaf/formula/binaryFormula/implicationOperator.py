@@ -21,7 +21,7 @@ class Implication(BinaryFormula):
 
     Attributes
     ----------
-    children: tuple of src.olaaaf.formula.formula.Formula
+    children: tuple of olaaaf.formula.formula.Formula
         The children of the current node.
     '''
     
@@ -35,7 +35,7 @@ class Implication(BinaryFormula):
 
         Returns
         -------
-        src.olaaaf.formula.formula.Formula
+        olaaaf.formula.formula.Formula
             The simplified version of the implication operator.
             In this case, it's NOT a OR b.
         '''

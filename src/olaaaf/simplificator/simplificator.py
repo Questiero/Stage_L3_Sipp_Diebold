@@ -1,6 +1,6 @@
 """
-Abstract class, representing a simplificator of conjunction of litterals (i.e `src.olaaaf.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint` or
-`src.olaaaf.formula.unaryFormula.notOperator.Not`).
+Abstract class, representing a simplificator of conjunction of litterals (i.e `olaaaf.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint` or
+`olaaaf.formula.unaryFormula.notOperator.Not`).
 """
 
 from __future__ import annotations
@@ -11,8 +11,8 @@ from abc import ABC, abstractmethod
 
 class Simplificator(ABC):
     """
-    Abstract class, representing a simplificator of conjunction of litterals (i.e `src.olaaaf.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint` or
-    `src.olaaaf.formula.unaryFormula.notOperator.Not`).
+    Abstract class, representing a simplificator of conjunction of litterals (i.e `olaaaf.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint` or
+    `olaaaf.formula.unaryFormula.notOperator.Not`).
     """
 
     def __init__(self):
@@ -40,16 +40,16 @@ class Simplificator(ABC):
     @abstractmethod
     def run(self, phi: Formula) -> Formula:
         r"""
-        Main method of a `src.olaaaf.simplificator.simplificator.Simplificator`, allowing to simplify a given `src.olaaaf.formula.formula.Formula`.
+        Main method of a `olaaaf.simplificator.simplificator.Simplificator`, allowing to simplify a given `olaaaf.formula.formula.Formula`.
 
         Parameters
         ----------
-        phi: src.olaaaf.formula.formula.Formula
-            The src.olaaaf.formula.formula.Formula to simplify.
+        phi: olaaaf.formula.formula.Formula
+            The olaaaf.formula.formula.Formula to simplify.
         
         Returns
         -------
-        src.olaaaf.formula.formula.Formula
+        olaaaf.formula.formula.Formula
             The simplified form of \(\varphi\)
         """
 

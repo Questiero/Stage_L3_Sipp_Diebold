@@ -11,15 +11,15 @@ from fractions import Fraction
 
 class RealVariable(Variable):
     r"""
-    Class, representing a real number `src.olaaaf.variable.variable.Variable`, meaning a `src.olaaaf.variable.variable.Variable` defined in \(\mathbb{R}\).
+    Class, representing a real number `olaaaf.variable.variable.Variable`, meaning a `olaaaf.variable.variable.Variable` defined in \(\mathbb{R}\).
     Most of the time, you **shouldn't** use the constructor
-    of `src.olaaaf.variable.realVariable.RealVariable` and should rather look into `src.olaaaf.variable.realVariable.RealVariable.declare`, 
-    `src.olaaaf.variable.realVariable.RealVariable.declareBulk` or `src.olaaaf.variable.realVariable.RealVariable.declareAnonymous`.
+    of `olaaaf.variable.realVariable.RealVariable` and should rather look into `olaaaf.variable.realVariable.RealVariable.declare`, 
+    `olaaaf.variable.realVariable.RealVariable.declareBulk` or `olaaaf.variable.realVariable.RealVariable.declareAnonymous`.
 
     Parameters
     ----------
     name : String
-        The name of the `src.olaaaf.variable.realVariable.RealVariable`.
+        The name of the `olaaaf.variable.realVariable.RealVariable`.
     """
     
     def isInteger(self) -> bool:

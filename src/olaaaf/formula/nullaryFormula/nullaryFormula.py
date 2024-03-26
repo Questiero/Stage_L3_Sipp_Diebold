@@ -28,7 +28,7 @@ class NullaryFormula(Formula):
 
         Returns
         -------
-        src.olaaaf.formula.formula.Formula
+        olaaaf.formula.formula.Formula
             The current Formula in Disjunctive Normal Form. Since the arity
             is null, returns self.
         '''
@@ -43,7 +43,7 @@ class NullaryFormula(Formula):
 
         Returns
         -------
-        src.olaaaf.formula.formula.Formula
+        olaaaf.formula.formula.Formula
             The current Formula in Disjunctive Normal Form under Negation. Since
             the arity is null, returns Not(self).
         '''

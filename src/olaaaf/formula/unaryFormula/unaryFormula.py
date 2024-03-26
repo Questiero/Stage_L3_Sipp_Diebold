@@ -16,7 +16,7 @@ class UnaryFormula(Formula):
 
     Attributes
     ----------
-    children: src.olaaaf.formula.formula.Formula
+    children: olaaaf.formula.formula.Formula
         The child of the current node.
     '''
 
@@ -34,8 +34,8 @@ class UnaryFormula(Formula):
 
         Returns
         -------
-        set of src.olaaaf.variable.variable.Variable
-            All the variables used in the `src.olaaaf.formula.unaryFormula.unaryFormula.UnaryFormula`.
+        set of olaaaf.variable.variable.Variable
+            All the variables used in the `olaaaf.formula.unaryFormula.unaryFormula.UnaryFormula`.
         '''
         
         return self.children.getVariables()

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
 <title>olaaaf.variable.variableManager API documentation</title>
-<meta name="description" content="Class used to store all non-anonymous user-declared `src.olaaaf.variable.variable.Variable`
+<meta name="description" content="Class used to store all non-anonymous user-declared `olaaaf.variable.variable.Variable`
 and allow easy retrieving of already defined ones." />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
@@ -24,7 +24,7 @@ and allow easy retrieving of already defined ones." />
 <h1 class="title">Module <code>olaaaf.variable.variableManager</code></h1>
 </header>
 <section id="section-intro">
-<p>Class used to store all non-anonymous user-declared <code>src.olaaaf.variable.variable.Variable</code>
+<p>Class used to store all non-anonymous user-declared <code><a title="olaaaf.variable.variable.Variable" href="variable.html#olaaaf.variable.variable.Variable">Variable</a></code>
 and allow easy retrieving of already defined ones.</p>
 </section>
 <section>
@@ -40,11 +40,11 @@ and allow easy retrieving of already defined ones.</p>
 <span>class <span class="ident">VariableManager</span></span>
 </code></dt>
 <dd>
-<div class="desc"><p>VariableManager class, used to manage all instances of <code>src.olaaaf.variable.variable.Variable</code>.</p>
+<div class="desc"><p>VariableManager class, used to manage all instances of <code><a title="olaaaf.variable.variable.Variable" href="variable.html#olaaaf.variable.variable.Variable">Variable</a></code>.</p>
 <h2 id="attributes">Attributes</h2>
 <dl>
 <dt><strong><code>instance</code></strong> :&ensp;<code>dictionary</code> of <code>Variable by String</code></dt>
-<dd>A dictionary of all instances of <code>src.olaaaf.variable.variable.Variable</code>, with their name as key.</dd>
+<dd>A dictionary of all instances of <code><a title="olaaaf.variable.variable.Variable" href="variable.html#olaaaf.variable.variable.Variable">Variable</a></code>, with their name as key.</dd>
 </dl></div>
 <h3>Class variables</h3>
 <dl>
@@ -59,53 +59,53 @@ and allow easy retrieving of already defined ones.</p>
 <span>def <span class="ident">add</span></span>(<span>obj: Variable) ‑> <a title="olaaaf.variable.variable.Variable" href="variable.html#olaaaf.variable.variable.Variable">Variable</a></span>
 </code></dt>
 <dd>
-<div class="desc"><p>Function adding a <code>src.olaaaf.variable.variable.Variable</code> to <code>src.olaaaf.variable.variableManager.VariableManager.instance</code>.</p>
+<div class="desc"><p>Function adding a <code><a title="olaaaf.variable.variable.Variable" href="variable.html#olaaaf.variable.variable.Variable">Variable</a></code> to <code><a title="olaaaf.variable.variableManager.VariableManager.instance" href="#olaaaf.variable.variableManager.VariableManager.instance">VariableManager.instance</a></code>.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt><strong><code>obj</code></strong> :&ensp;<code>src.olaaaf.variable.variable.Variable</code></dt>
-<dd>The <code>src.olaaaf.variable.variable.Variable</code> to add.</dd>
+<dt><strong><code>obj</code></strong> :&ensp;<code><a title="olaaaf.variable.variable.Variable" href="variable.html#olaaaf.variable.variable.Variable">Variable</a></code></dt>
+<dd>The <code><a title="olaaaf.variable.variable.Variable" href="variable.html#olaaaf.variable.variable.Variable">Variable</a></code> to add.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>src.olaaaf.variable.variable.Variable</code></dt>
-<dd>The <code>src.olaaaf.variable.variable.Variable</code> added if the execution of this function was successful.</dd>
+<dt><code><a title="olaaaf.variable.variable.Variable" href="variable.html#olaaaf.variable.variable.Variable">Variable</a></code></dt>
+<dd>The <code><a title="olaaaf.variable.variable.Variable" href="variable.html#olaaaf.variable.variable.Variable">Variable</a></code> added if the execution of this function was successful.</dd>
 </dl>
 <h2 id="raises">Raises</h2>
 <dl>
 <dt><code>TypeError</code></dt>
-<dd>If the object isn't a <code>src.olaaaf.variable.variable.Variable</code>, already defined with another type or its name is not valid.</dd>
+<dd>If the object isn't a <code><a title="olaaaf.variable.variable.Variable" href="variable.html#olaaaf.variable.variable.Variable">Variable</a></code>, already defined with another type or its name is not valid.</dd>
 </dl></div>
 </dd>
 <dt id="olaaaf.variable.variableManager.VariableManager.declare"><code class="name flex">
 <span>def <span class="ident">declare</span></span>(<span>name: str, cls: type[Variable]) ‑> <a title="olaaaf.variable.variable.Variable" href="variable.html#olaaaf.variable.variable.Variable">Variable</a></span>
 </code></dt>
 <dd>
-<div class="desc"><p>Function to declare a <code>src.olaaaf.variable.variable.Variable</code>.</p>
+<div class="desc"><p>Function to declare a <code><a title="olaaaf.variable.variable.Variable" href="variable.html#olaaaf.variable.variable.Variable">Variable</a></code>.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>name</code></strong> :&ensp;<code>String</code></dt>
-<dd>Name of the <code>src.olaaaf.variable.variable.Variable</code>.</dd>
+<dd>Name of the <code><a title="olaaaf.variable.variable.Variable" href="variable.html#olaaaf.variable.variable.Variable">Variable</a></code>.</dd>
 <dt><strong><code>cl</code></strong> :&ensp;<code>class</code></dt>
-<dd>Type of the <code>src.olaaaf.variable.variable.Variable</code>.</dd>
+<dd>Type of the <code><a title="olaaaf.variable.variable.Variable" href="variable.html#olaaaf.variable.variable.Variable">Variable</a></code>.</dd>
 <dt>Returns:</dt>
 <dt><strong><code>Variable</code></strong></dt>
-<dd>The newly defined <code>src.olaaaf.variable.variable.Variable</code>.</dd>
+<dd>The newly defined <code><a title="olaaaf.variable.variable.Variable" href="variable.html#olaaaf.variable.variable.Variable">Variable</a></code>.</dd>
 </dl></div>
 </dd>
 <dt id="olaaaf.variable.variableManager.VariableManager.get"><code class="name flex">
 <span>def <span class="ident">get</span></span>(<span>name: str) ‑> <a title="olaaaf.variable.variable.Variable" href="variable.html#olaaaf.variable.variable.Variable">Variable</a></span>
 </code></dt>
 <dd>
-<div class="desc"><p>Function to get a <code>src.olaaaf.variable.variable.Variable</code> from the <code>src.olaaaf.variable.variableManager.VariableManager.instance</code>.</p>
+<div class="desc"><p>Function to get a <code><a title="olaaaf.variable.variable.Variable" href="variable.html#olaaaf.variable.variable.Variable">Variable</a></code> from the <code><a title="olaaaf.variable.variableManager.VariableManager.instance" href="#olaaaf.variable.variableManager.VariableManager.instance">VariableManager.instance</a></code>.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>name</code></strong> :&ensp;<code>String</code></dt>
-<dd>The name of the <code>src.olaaaf.variable.variable.Variable</code> to get.</dd>
+<dd>The name of the <code><a title="olaaaf.variable.variable.Variable" href="variable.html#olaaaf.variable.variable.Variable">Variable</a></code> to get.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>src.olaaaf.variable.variable.Variable</code></dt>
-<dd>The <code>src.olaaaf.variable.variable.Variable</code> to get.</dd>
+<dt><code><a title="olaaaf.variable.variable.Variable" href="variable.html#olaaaf.variable.variable.Variable">Variable</a></code></dt>
+<dd>The <code><a title="olaaaf.variable.variable.Variable" href="variable.html#olaaaf.variable.variable.Variable">Variable</a></code> to get.</dd>
 </dl>
 <h2 id="raises">Raises</h2>
 <dl>
@@ -117,14 +117,14 @@ and allow easy retrieving of already defined ones.</p>
 <span>def <span class="ident">verify</span></span>(<span>name: str, cls: type[Variable]) ‑> None</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Function verifying if a <code>src.olaaaf.variable.variable.Variable</code> can be added to <code>src.olaaaf.variable.variableManager.VariableManager.instance</code>,
+<div class="desc"><p>Function verifying if a <code><a title="olaaaf.variable.variable.Variable" href="variable.html#olaaaf.variable.variable.Variable">Variable</a></code> can be added to <code><a title="olaaaf.variable.variableManager.VariableManager.instance" href="#olaaaf.variable.variableManager.VariableManager.instance">VariableManager.instance</a></code>,
 meaning that the name respects the naming conventions and that it doesn't already exists under another type.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>name</code></strong> :&ensp;<code>String</code></dt>
-<dd>Name of the <code>src.olaaaf.variable.variable.Variable</code>.</dd>
+<dd>Name of the <code><a title="olaaaf.variable.variable.Variable" href="variable.html#olaaaf.variable.variable.Variable">Variable</a></code>.</dd>
 <dt><strong><code>cl</code></strong> :&ensp;<code>class</code></dt>
-<dd>Type of the <code>src.olaaaf.variable.variable.Variable</code>.</dd>
+<dd>Type of the <code><a title="olaaaf.variable.variable.Variable" href="variable.html#olaaaf.variable.variable.Variable">Variable</a></code>.</dd>
 </dl>
 <h2 id="raises">Raises</h2>
 <dl>

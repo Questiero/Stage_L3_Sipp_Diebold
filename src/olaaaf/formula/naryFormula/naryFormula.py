@@ -20,12 +20,12 @@ class NaryFormula(Formula):
 
     Parameters
     ----------
-    *formulas: list of src.olaaaf.formula.formula.Formula
+    *formulas: list of olaaaf.formula.formula.Formula
         The formulas meant as components of the \(n\)-ary operator.
 
     Attributes
     ----------
-    children: set of src.olaaaf.formula.formula.Formula
+    children: set of olaaaf.formula.formula.Formula
         The children of the current node.
     """
         
@@ -56,8 +56,8 @@ class NaryFormula(Formula):
 
         Returns
         -------
-        set of src.olaaaf.variable.variable.Variable
-            All the variables used in the \(n\)-ary `src.olaaaf.formula.formula.Formula` or its children.
+        set of olaaaf.variable.variable.Variable
+            All the variables used in the \(n\)-ary `olaaaf.formula.formula.Formula` or its children.
         """
         
         tempChildren = self.children.copy()
@@ -74,8 +74,8 @@ class NaryFormula(Formula):
 
         Returns
         -------
-        src.olaaaf.formula.formula.Formula
-            Clone of the current `src.olaaaf.formula.formula.Formula`.
+        olaaaf.formula.formula.Formula
+            Clone of the current `olaaaf.formula.formula.Formula`.
         """
 
         clone = self.__class__(*self.children)
