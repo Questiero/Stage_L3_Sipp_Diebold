@@ -55,12 +55,12 @@ class PropositionalVariable(Constraint):
     
     def toPCMLC(self, varDict) -> Formula:
         '''
-        Method used to transform a `src.formula.formula.Formula` into a new one, in the PCMLC formalism.
+        Method used to transform a `src.olaaaf.formula.formula.Formula` into a new one, in the PCMLC formalism.
 
         Returns
         -------
-        src.formula.formula.Formula
-            A `src.formula.formula.Formula` in the PCMLC formalism.
+        src.olaaaf.formula.formula.Formula
+            A `src.olaaaf.formula.formula.Formula` in the PCMLC formalism.
         '''
         LC = LinearConstraint("")
         LC.variables = {varDict[self]: Fraction(-1)}
@@ -70,12 +70,12 @@ class PropositionalVariable(Constraint):
     
     def _toPCMLCNeg(self, varDict) -> Formula:
         '''
-        Method used to transform a `src.formula.formula.Formula` into a new one, in the PCMLC formalism.
+        Method used to transform a `src.olaaaf.formula.formula.Formula` into a new one, in the PCMLC formalism.
 
         Returns
         -------
-        src.formula.formula.Formula
-            A `src.formula.formula.Formula` in the PCMLC formalism.
+        src.olaaaf.formula.formula.Formula
+            A `src.olaaaf.formula.formula.Formula` in the PCMLC formalism.
         '''
         LC = LinearConstraint("")
         LC.variables = {varDict[self]: Fraction(1)}
@@ -89,8 +89,8 @@ class PropositionalVariable(Constraint):
 
         Returns
         -------
-        src.formula.formula.Formula
-            Clone of the current `src.formula.formula.Formula`.
+        src.olaaaf.formula.formula.Formula
+            Clone of the current `src.olaaaf.formula.formula.Formula`.
         """
                 
         clonedPv = PropositionalVariable("")

@@ -12,13 +12,13 @@ from abc import ABC, abstractmethod
 class Variable(ABC):
     """
     Abstract class, representing a variable. Most of the time, you **shouldn't** use the constructor
-    of a `src.variable.variable.Variable` and should rather look into `src.variable.variable.Variable.declare`, 
-    `src.variable.variable.Variable.declareBulk` or `src.variable.variable.Variable.declareAnonymous`.
+    of a `src.olaaaf.variable.variable.Variable` and should rather look into `src.olaaaf.variable.variable.Variable.declare`, 
+    `src.olaaaf.variable.variable.Variable.declareBulk` or `src.olaaaf.variable.variable.Variable.declareAnonymous`.
 
     Parameters
     ----------
     name : String
-        The name of the `src.variable.variable.Variable`.
+        The name of the `src.olaaaf.variable.variable.Variable`.
     """
     
     #: Name of the variable, by which they are identified.
@@ -33,11 +33,11 @@ class Variable(ABC):
         """
         Class method, allowing the user to declare an anonymous variable meant to be used inside algorithms without risking any
         naming conflit with the standardly defined variables.\n
-        Anonymous variables aren't stored in `src.variable.variableManager.VariableManager.instance` and, as such,
-        can't be used in `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint`'s constructor.\n
+        Anonymous variables aren't stored in `src.olaaaf.variable.variableManager.VariableManager.instance` and, as such,
+        can't be used in `src.olaaaf.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint`'s constructor.\n
 
         Since they can't be used in the usual constructor, one must first declare an empty
-        `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint` before adding them manualy.
+        `src.olaaaf.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint` before adding them manualy.
 
         To prevent naming conflicts with regular variables, an anonymous variable's name always start with
         it's object's id. The user can also specify an ending to an anonymous variable name.
@@ -87,12 +87,12 @@ class Variable(ABC):
         Attributes
         ----------
         name : String
-            The name of the `src.variable.variable.Variable` to be declared.
+            The name of the `src.olaaaf.variable.variable.Variable` to be declared.
 
         Returns
         -------
-        src.variable.variable.Variable
-            The newly declared `src.variable.variable.Variable`.
+        src.olaaaf.variable.variable.Variable
+            The newly declared `src.olaaaf.variable.variable.Variable`.
         """
 
         from .variableManager import VariableManager
@@ -102,7 +102,7 @@ class Variable(ABC):
     @classmethod
     def declareBulk(cls, *lname: str, lowerBound = None, upperBound = None) -> list[Variable]:
         """
-        Class method used to declare multiple new instances of `src.variable.variable.Variable` at the same time.
+        Class method used to declare multiple new instances of `src.olaaaf.variable.variable.Variable` at the same time.
         A Variable name should respect the following naming conventions:
         - A name is unique and shouldn't be declared multiple times\n
         - Names are case sensitives\n
@@ -115,12 +115,12 @@ class Variable(ABC):
         Attributes
         ----------
         lname : list of String
-            The names of the `src.variable.variable.Variable` to be declared.
+            The names of the `src.olaaaf.variable.variable.Variable` to be declared.
 
         Returns
         -------
-        list of src.variable.variable.Variable
-            A list containing all the newly declared instances of `src.variable.variable.Variable`.
+        list of src.olaaaf.variable.variable.Variable
+            A list containing all the newly declared instances of `src.olaaaf.variable.variable.Variable`.
         """
 
         from .variableManager import VariableManager

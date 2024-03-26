@@ -1,7 +1,7 @@
 """
 Representation of simplification algorithms, used to simplify a conjunction of litterals
-(i.e `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint` or
-`src.formula.unaryFormula.notOperator.Not`).
+(i.e `src.olaaaf.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint` or
+`src.olaaaf.formula.unaryFormula.notOperator.Not`).
 """
 
 from .simplificator import Simplificator

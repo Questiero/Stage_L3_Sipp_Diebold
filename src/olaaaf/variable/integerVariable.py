@@ -11,15 +11,15 @@ from fractions import Fraction
 
 class IntegerVariable(Variable):
     r"""
-    Class, representing an integer number `src.variable.variable.Variable`, meaning a `src.variable.variable.Variable` defined in \(\mathbb{Z}\).
+    Class, representing an integer number `src.olaaaf.variable.variable.Variable`, meaning a `src.olaaaf.variable.variable.Variable` defined in \(\mathbb{Z}\).
     Most of the time, you **shouldn't** use the constructor
-    of `src.variable.integerVariable.IntegerVariable` and should rather look into `src.variable.integerVariable.IntegerVariable.declare`, 
-    `src.variable.integerVariable.IntegerVariable.declareBulk` or `src.variable.integerVariable.IntegerVariable.declareAnonymous`.
+    of `src.olaaaf.variable.integerVariable.IntegerVariable` and should rather look into `src.olaaaf.variable.integerVariable.IntegerVariable.declare`, 
+    `src.olaaaf.variable.integerVariable.IntegerVariable.declareBulk` or `src.olaaaf.variable.integerVariable.IntegerVariable.declareAnonymous`.
 
     Parameters
     ----------
     name : String
-        The name of the `src.variable.integerVariable.IntegerVariable`.
+        The name of the `src.olaaaf.variable.integerVariable.IntegerVariable`.
     """
 
     def isInteger(self) -> bool:

@@ -1,5 +1,5 @@
 r"""
-Main class of the module, allowing the user to make the knowledge revision between two `src.formula.formula.Formula`
+Main class of the module, allowing the user to make the knowledge revision between two `src.olaaaf.formula.formula.Formula`
 \(\psi\) and \(\mu\) that are mixed integer linear constraints.
 """
 
@@ -12,7 +12,7 @@ from .distance import DistanceFunction
 from .constants import Constants
 from .simplificator import Simplificator
 from .projector import Projector
-from .variable import IntegerVariable, RealVariable
+from .variable import IntegerVariable
 
 from fractions import Fraction
 from tqdm import tqdm
@@ -23,23 +23,28 @@ import math
 
 class Revision:
     r"""
-    Main class of the module, allowing the user to make the knowledge revision between two `src.formula.formula.Formula`
+    Main class of the module, allowing the user to make the knowledge revision between two `src.olaaaf.formula.formula.Formula`
     \(\psi\) and \(\mu\) that are mixed integer linear constraints.
 
     Parameters
     ----------
-    solverInit : src.mlo_solver.MLOSolver.MLOSolver
+    solverInit : src.olaaaf.mlo_solver.MLOSolver.MLOSolver
         The solver that will be used for optimization.
-    distance : src.distance.distance_function.distanceFunction.DistanceFunction
+    distance : src.olaaaf.distance.distance_function.distanceFunction.DistanceFunction
         The distance function that will be used and, more importantly, the weights \((w_i)\) and \(\varepsilon\) arguments of it.
-        The original algorithm is meant to be used with a `src.distance.distance_function.discreteL1DistanceFunction.discreteL1DistanceFunction`.
-    simplifiers : list of src.simplificator.simplificator.Simplificator, optional
-        List of all of the `src.simplificator.simplificator.Simplificator` that will be applied to the `src.formula.formula.Formula`, 
+        The original algorithm is meant to be used with a `src.olaaaf.distance.distance_function.discreteL1DistanceFunction.discreteL1DistanceFunction`.
+    simplifiers : list of src.olaaaf.simplificator.simplificator.Simplificator, optional
+        List of all of the `src.olaaaf.simplificator.simplificator.Simplificator` that will be applied to the `src.olaaaf.formula.formula.Formula`, 
         in order given by the list.
     onlyOneSolution : boolean, optional
-        If set to `True`, the revision algorithm will by default only return one point that satisfies \(\psi \circ \mu\).
+        If set to `True`, the revision algorithm will only return one point that satisfies \(\psi \circ \mu\).
         If not, it will return all solutions.
-        By default, this constant is set to whichever one was chosen in `src.constants.Constants`.
+        By default, this constant is set to whichever one was chosen in `src.olaaaf.constants.Constants`.
+    verbose : boolean, optional
+        If set to `True`, the revision algorithm will have a verbose display in the terminal.
+        By default, this constant is set to whichever one was chosen in `src.olaaaf.constants.Constants`.
+    projector : boolean, optional
+        Projector algorithm to use, only necessary if `onlyOneSolution` is set to `False`.
     """
     
     __distance : DistanceFunction
@@ -58,6 +63,12 @@ class Revision:
         self.__projector = projector
 
     def preload(self):
+        r"""
+        Methd used to preload the revision algorithm.
+
+        This step is necessary before using `execute` and recommended before the domain knowledge definition since it translates every
+        non-`src.olaaaf.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint` into one and introduces new under-the-box variables that the user might want to use.
+        """
 
         weights = self.__distance.getWeights()
         self.boolToInt = dict()
@@ -88,18 +99,18 @@ class Revision:
 
         Parameters
         ----------
-        psi : src.formula.formula.Formula
-            \(\psi\), left part of the knowledge revision operator and `src.formula.formula.Formula` that will be revised.
-        mu : src.formula.formula.Formula
-            \(\mu\), right part of the knowledge revision operator and `src.formula.formula.Formula` that will be used to revise \(\psi\) by.
+        psi : src.olaaaf.formula.formula.Formula
+            \(\psi\), left part of the knowledge revision operator and `src.olaaaf.formula.formula.Formula` that will be revised.
+        mu : src.olaaaf.formula.formula.Formula
+            \(\mu\), right part of the knowledge revision operator and `src.olaaaf.formula.formula.Formula` that will be used to revise \(\psi\) by.
 
 
         Returns
         -------
         Fraction
-            Distance (calculated with the `src.distance.distance_function.distanceFunction.DistanceFunction`
+            Distance (calculated with the `src.olaaaf.distance.distance_function.distanceFunction.DistanceFunction`
             given at the initialization of the class) between \(\psi\) and \(\mu\).
-        src.formula.formula.Formula
+        src.olaaaf.formula.formula.Formula
             Result of the knowledge revison of \(\psi\) by \(\mu\).
         """
 
@@ -110,19 +121,19 @@ class Revision:
             mu &= And(*self.__e2bConstraints)
 
         if self.__verbose:
-            print("\n" + self.getTime(), "Transforming Psi in DNF form")
+            print("\n" + self.__getTime(), "Transforming Psi in DNF form")
         psiDNF = psi.toPCMLC(self.boolToInt).toLessOrEqConstraint().toDNF()
 
         if self.__verbose:
-            print("\n" + self.getTime(), "Transforming Mu in DNF form")
+            print("\n" + self.__getTime(), "Transforming Mu in DNF form")
         muDNF = mu.toPCMLC(self.boolToInt).toLessOrEqConstraint().toDNF()
 
         res = self.__executeDNF(self.__convertExplicit(psiDNF), self.__convertExplicit(muDNF))
 
         if self.__verbose:
-            print("\n" + self.getTime(), f"Solution found with distance of {res[0]}:\n")
+            print("\n" + self.__getTime(), f"Solution found with distance of {res[0]}:\n")
             try:
-                self.organizedPrintResult(res[1])
+                self.__organizedPrintResult(res[1])
             except:
                 print(res[1])
 
@@ -135,7 +146,7 @@ class Revision:
 
         if self.__verbose:
             print("")
-            psiIter = tqdm(psi.children, desc=f"{self.getTime()} Testing satisfiability of every child of Psi", mininterval=0.5)
+            psiIter = tqdm(psi.children, desc=f"{self.__getTime()} Testing satisfiability of every child of Psi", mininterval=0.5)
         else:
             psiIter = psi.children
 
@@ -148,8 +159,8 @@ class Revision:
             raise(AttributeError("Psi is not satisfiable"))
 
         if self.__verbose:
-            print(self.getTime(), f"{len(satPsi)} satisfiable children of Psi found\n")
-            muIter = tqdm(mu.children, desc=f"{self.getTime()} Testing satisfiability of every child of Mu", mininterval=0.5)
+            print(self.__getTime(), f"{len(satPsi)} satisfiable children of Psi found\n")
+            muIter = tqdm(mu.children, desc=f"{self.__getTime()} Testing satisfiability of every child of Mu", mininterval=0.5)
         else:
             muIter = mu.children
             
@@ -164,15 +175,15 @@ class Revision:
         maxIter = len(satPsi)*len(satMu)
 
         if self.__verbose:
-            print(self.getTime(), f"{len(satMu)} satisfiable children of Mu found")
-            print("\n" + self.getTime(), f"{maxIter} combinations of conjunctions found")
+            print(self.__getTime(), f"{len(satMu)} satisfiable children of Mu found")
+            print("\n" + self.__getTime(), f"{maxIter} combinations of conjunctions found")
 
         if(self._onlyOneSolution):
 
             with ExitStack() as stack:
 
                 if self.__verbose:
-                    pbar = stack.enter_context(tqdm(total=maxIter, desc=f"{self.getTime()} Revision of every combination", mininterval=0.5))
+                    pbar = stack.enter_context(tqdm(total=maxIter, desc=f"{self.__getTime()} Revision of every combination", mininterval=0.5))
 
                 for miniPsi in satPsi:
                     for miniMu in satMu:
@@ -207,7 +218,7 @@ class Revision:
             with ExitStack() as stack:
 
                 if self.__verbose:
-                    pbar = stack.enter_context(tqdm(total=maxIter, desc=f"{self.getTime()} Revision of every combination", mininterval=0.5))
+                    pbar = stack.enter_context(tqdm(total=maxIter, desc=f"{self.__getTime()} Revision of every combination", mininterval=0.5))
 
                 for miniPsi in satPsi:
                     for miniMu in satMu:
@@ -348,7 +359,7 @@ class Revision:
 
         return self.__projector.projectOn(expandConstraint, yVariables.keys())
     
-    def getTime(self):
+    def __getTime(self):
 
         timeNow = time.perf_counter()-self.__timeStart
         m = int(timeNow//60)
@@ -359,7 +370,7 @@ class Revision:
 
         return "{:0>2d}m{:0>2d}.{:0>3d}s |".format(m, sbfr, saftr)
     
-    def organizedPrintResult(self, res):
+    def __organizedPrintResult(self, res):
 
         variables = list()
 

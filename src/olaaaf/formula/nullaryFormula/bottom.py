@@ -32,7 +32,7 @@ class Bottom(NullaryFormula):
 
         Returns
         -------
-        set of src.variable.variable.Variable
+        set of src.olaaaf.variable.variable.Variable
             All the variables used in Bottom, so None.
         '''
         
@@ -45,7 +45,7 @@ class Bottom(NullaryFormula):
 
         Returns
         -------
-        list of list of src.formula.nullaryFormula.constraint.constraint.Constraint
+        list of list of src.olaaaf.formula.nullaryFormula.constraint.constraint.Constraint
             2D list containing all the constraints of the adherence of Bottom,
             in Disjunctive Normal Form. In this case, an empty list.
         '''
@@ -60,7 +60,7 @@ class Bottom(NullaryFormula):
 
         Returns
         -------
-        list of list of src.formula.nullaryFormula.constraint.constraint.Constraint
+        list of list of src.olaaaf.formula.nullaryFormula.constraint.constraint.Constraint
             2D list containing all the constraints of the adherence of Bottom,
             in Disjunctive Normal Form under Negation. In this case, an empty list. 
         '''
@@ -72,7 +72,7 @@ class Bottom(NullaryFormula):
     
     def toLatex(self):
         r"""
-        Method returning a \(\LaTeX\) expression representing the Formula. Operators are customisable in `src.constants.Constants`.
+        Method returning a \(\LaTeX\) expression representing the Formula. Operators are customisable in `src.olaaaf.constants.Constants`.
         
         Returns
         -------

@@ -1,5 +1,5 @@
 """
-Rounded approximation of `src.mlo_solver.scipySolver.ScipySolver`, reducing floating point approximations.
+Rounded approximation of `src.olaaaf.mlo_solver.scipySolver.ScipySolver`, reducing floating point approximations.
 """
 
 from __future__ import annotations
@@ -14,7 +14,7 @@ import numpy as np
 
 class ScipySolverRounded(ScipySolver):
     """
-    Rounded approximation of `src.mlo_solver.scipySolver.ScipySolver`, reducing floating point approximations.
+    Rounded approximation of `src.olaaaf.mlo_solver.scipySolver.ScipySolver`, reducing floating point approximations.
 
     Parameters
     ----------
@@ -34,16 +34,16 @@ class ScipySolverRounded(ScipySolver):
 
         Parameters
         ----------
-        variables : list of src.variable.variable.Variable
+        variables : list of src.olaaaf.variable.variable.Variable
             Variables used in constraints.
         objectif : list of fractions.Fraction
             Weights of the objective function to optimize.
-        constraints : list of tuple of the form (list of fractions.Fraction, src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator, fractions.Fraction)
+        constraints : list of tuple of the form (list of fractions.Fraction, src.olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator, fractions.Fraction)
             Each tuple represents a linear constraint, with the first element being the weights, the second the operator and the third the bound.
 
         Returns
         -------
-        src.mlo_solver.optimizationValues.OptimizationValues
+        src.olaaaf.mlo_solver.optimizationValues.OptimizationValues
             Information of the final state of the problem.
         list of fractions.Fraction
             The point at the optimal, if found.

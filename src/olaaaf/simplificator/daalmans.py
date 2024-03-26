@@ -1,6 +1,6 @@
 """
-Implementation of the Daalmans method for simplification of conjunction of literals (i.e `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint` or
-    `src.formula.unaryFormula.notOperator.Not`).
+Implementation of the Daalmans method for simplification of conjunction of literals (i.e `src.olaaaf.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint` or
+    `src.olaaaf.formula.unaryFormula.notOperator.Not`).
 """
 
 from __future__ import annotations
@@ -14,16 +14,16 @@ from fractions import Fraction
 
 class Daalmans(Simplificator):
     """
-    Implementation of the Daalmans method for simplification of conjunction of literals (i.e `src.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint` or
-    `src.formula.unaryFormula.notOperator.Not`).
+    Implementation of the Daalmans method for simplification of conjunction of literals (i.e `src.olaaaf.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint` or
+    `src.olaaaf.formula.unaryFormula.notOperator.Not`).
     This method is split into two algorithm :\n
     - The first algorithm is concerned with detecting fixed variables. Fixed variables are variables that can only have one value.\n
     - The second algorithm deals with the removal of redundant mixed linear constraints.
 
     Parameters
     ----------
-    solver: src.mlo_solver.MLOSolver.MLOSolver
-        The `src.mlo_solver.MLOSolver.MLOSolver` used to solve optimization problems.
+    solver: src.olaaaf.mlo_solver.MLOSolver.MLOSolver
+        The `src.olaaaf.mlo_solver.MLOSolver.MLOSolver` used to solve optimization problems.
     """
 
     _interpreter = None
@@ -33,16 +33,16 @@ class Daalmans(Simplificator):
     
     def run(self, phi: Formula) -> Formula:
         r"""
-        Main method of `src.simplificator.daalmans.Daalmans`, allowing to simplify a given `src.formula.formula.Formula`.
+        Main method of `src.olaaaf.simplificator.daalmans.Daalmans`, allowing to simplify a given `src.olaaaf.formula.formula.Formula`.
 
         Parameters
         ----------
-        phi: src.formula.formula.Formula
-            The src.formula.formula.Formula to simplify.
+        phi: src.olaaaf.formula.formula.Formula
+            The src.olaaaf.formula.formula.Formula to simplify.
         
         Returns
         -------
-        src.formula.formula.Formula
+        src.olaaaf.formula.formula.Formula
             The simplified form of \(\varphi\)
         """
 

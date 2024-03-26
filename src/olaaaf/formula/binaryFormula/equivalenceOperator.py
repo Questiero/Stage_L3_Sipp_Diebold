@@ -21,7 +21,7 @@ class Equivalence(BinaryFormula):
 
     Attributes
     ----------
-    children: tuple of src.formula.formula.Formula
+    children: tuple of src.olaaaf.formula.formula.Formula
         The children of the current node.
     '''
     
@@ -35,7 +35,7 @@ class Equivalence(BinaryFormula):
 
         Returns
         -------
-        src.formula.formula.Formula
+        src.olaaaf.formula.formula.Formula
             The simplified version of the equivalence operator.
             In this case, it's (a AND b) OR (NOT a AND NOT b).
         '''

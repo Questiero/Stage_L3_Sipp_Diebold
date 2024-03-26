@@ -1,6 +1,6 @@
 """
-This module is an implementation of a logical belief revision operator, built with scalability in mind.
-By design choice, each class is split into its own file, i.e. it's own sub-module, and overall mimick Java's conventions.
+Olaaaf is a general adaptation prototype based on belief revision whose long-term aim is to cover a broad range of adaptation processes.
+It is based on a formalism that covers both attribute-value pairs (often used for representing cases) and taxonomies (often used for representing domain knowledge).
 
 """
 

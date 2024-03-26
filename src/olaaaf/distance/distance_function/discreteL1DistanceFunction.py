@@ -25,12 +25,12 @@ class discreteL1DistanceFunction(distanceFunctionOnNumericalTuple):
 
     Parameters
     ----------
-    weights : a dictionnary of fractions.Fraction with src.variable.variable.Variable as key
+    weights : a dictionnary of fractions.Fraction with src.olaaaf.variable.variable.Variable as key
         The weights of the l1 distance function
     epsilon : fractions.Fraction
         The value by which the l1 distance function will be discretized.
-    domain: src.distance.domain.domain.Domain
-        The `src.distance.domain.domain.Domain` on which the distance function is defined.
+    domain: src.olaaaf.distance.domain.domain.Domain
+        The `src.olaaaf.distance.domain.domain.Domain` on which the distance function is defined.
     """
 
     def __init__(self, weights : dict[Variable, Fraction], epsilon : Fraction = Fraction("1e-3"), domaine : Domain = None):
@@ -43,8 +43,8 @@ class discreteL1DistanceFunction(distanceFunctionOnNumericalTuple):
 
         Parameters
         ----------
-        x, y : tuple of src.variable.variable.Variable
-            The two tuples of `src.variable.variable.Variable` you which to get the distance between.
+        x, y : tuple of src.olaaaf.variable.variable.Variable
+            The two tuples of `src.olaaaf.variable.variable.Variable` you which to get the distance between.
 
         Returns
         -------

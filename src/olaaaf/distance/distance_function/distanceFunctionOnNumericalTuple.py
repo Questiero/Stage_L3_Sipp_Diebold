@@ -16,8 +16,8 @@ class distanceFunctionOnNumericalTuple(DistanceFunction):
 
     Parameters
     ----------
-    domain: src.distance.domain.variableTupleDomaine.VariableTupleDomaine
-        The `src.distance.domain.variableTupleDomaine.VariableTupleDomaine` on which the distance function is defined.
+    domain: src.olaaaf.distance.domain.variableTupleDomaine.VariableTupleDomaine
+        The `src.olaaaf.distance.domain.variableTupleDomaine.VariableTupleDomaine` on which the distance function is defined.
     """
 
     def __init__(self, domaine : VariableTupleDomaine):

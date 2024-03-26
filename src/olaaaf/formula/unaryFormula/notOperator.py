@@ -21,7 +21,7 @@ class Not(UnaryFormula):
 
     Attributes
     ----------
-    children: src.formula.formula.Formula
+    children: src.olaaaf.formula.formula.Formula
         The child of the current node.
     '''
         
@@ -31,8 +31,8 @@ class Not(UnaryFormula):
 
         Returns
         -------
-        src.formula.formula.Formula
-            The current `src.formula.formula.Formula` in Disjunctive Normal Form.
+        src.olaaaf.formula.formula.Formula
+            The current `src.olaaaf.formula.formula.Formula` in Disjunctive Normal Form.
         '''
         
         return self.children._toDNFNeg()
@@ -44,8 +44,8 @@ class Not(UnaryFormula):
 
         Returns
         -------
-        src.formula.formula.Formula
-            The current `src.formula.formula.Formula` in Disjunctive Normal Form.
+        src.olaaaf.formula.formula.Formula
+            The current `src.olaaaf.formula.formula.Formula` in Disjunctive Normal Form.
         '''
         
         return self.children.toDNF()
@@ -57,12 +57,12 @@ class Not(UnaryFormula):
 
         Attributes
         ----------
-        var : src.variable.variable.Variable
+        var : src.olaaaf.variable.variable.Variable
             variable used in case of inequality.
 
         Returns
         -------
-        list of list of src.formula.nullaryFormula.constraint.constraint.Constraint
+        list of list of src.olaaaf.formula.nullaryFormula.constraint.constraint.Constraint
             2D list containing all the constraints of discute vraiment de l'implémentationthe adherence of the Formula,
             in Disjunctive Normal Form.
         '''
@@ -77,12 +77,12 @@ class Not(UnaryFormula):
 
         Attributes
         ----------
-        var : src.variable.variable.Variable
+        var : src.olaaaf.variable.variable.Variable
             variable used in case of inequality.
 
         Returns
         -------
-        list of list of src.formula.nullaryFormula.constraint.constraint.Constraint
+        list of list of src.olaaaf.formula.nullaryFormula.constraint.constraint.Constraint
             2D list containing all the constraints of the adherence of the Formula,
             in Disjunctive Normal Form under Negation.
         '''
@@ -91,12 +91,12 @@ class Not(UnaryFormula):
     
     def toLessOrEqConstraint(self):
         '''
-        Method used to transform a `src.formula.formula.Formula` into another one, with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
+        Method used to transform a `src.olaaaf.formula.formula.Formula` into another one, with only `src.olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
 
         Returns
         ------
-        src.formula.formula.Formula
-            A `src.formula.formula.Formula` with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
+        src.olaaaf.formula.formula.Formula
+            A `src.olaaaf.formula.formula.Formula` with only `src.olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
         '''
         return Not(self.children.toLessOrEqConstraint())
     
@@ -106,13 +106,13 @@ class Not(UnaryFormula):
 
         Parameters
         ----------
-        e : src.variable.variable.Variable
+        e : src.olaaaf.variable.variable.Variable
             variable used in case of inequality.
 
         Returns
         -------
-        src.formula.nullaryFormula.constraint.constraint.Constraint
-            The transformed `src.formula.nullaryFormula.constraint.constraint.Constraint`
+        src.olaaaf.formula.nullaryFormula.constraint.constraint.Constraint
+            The transformed `src.olaaaf.formula.nullaryFormula.constraint.constraint.Constraint`
         """
         
         if not isinstance(self.children, Constraint):
@@ -128,23 +128,23 @@ class Not(UnaryFormula):
     
     def toPCMLC(self, varDict) -> Formula:
         '''
-        Method used to transform a `src.formula.formula.Formula` into a new one, in the PCMLC formalism.
+        Method used to transform a `src.olaaaf.formula.formula.Formula` into a new one, in the PCMLC formalism.
 
         Returns
         -------
-        src.formula.formula.Formula
-            A `src.formula.formula.Formula` in the PCMLC formalism.
+        src.olaaaf.formula.formula.Formula
+            A `src.olaaaf.formula.formula.Formula` in the PCMLC formalism.
         '''
         return self.children._toPCMLCNeg(varDict)
     
     def _toPCMLCNeg(self, varDict) -> Formula:
         '''
-        Method used to transform a `src.formula.formula.Formula` into a new one, in the PCMLC formalism.
+        Method used to transform a `src.olaaaf.formula.formula.Formula` into a new one, in the PCMLC formalism.
 
         Returns
         -------
-        src.formula.formula.Formula
-            A `src.formula.formula.Formula` in the PCMLC formalism.
+        src.olaaaf.formula.formula.Formula
+            A `src.olaaaf.formula.formula.Formula` in the PCMLC formalism.
         '''
         return self.children.toPCMLC(varDict)
 
@@ -153,7 +153,7 @@ class Not(UnaryFormula):
     
     def toLatex(self):
         r"""
-        Method returning a \(\LaTeX\) expression representing the Formula. Operators are customisable in `src.constants.Constants`.
+        Method returning a \(\LaTeX\) expression representing the Formula. Operators are customisable in `src.olaaaf.constants.Constants`.
         
         Returns
         -------

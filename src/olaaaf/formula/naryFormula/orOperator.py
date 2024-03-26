@@ -21,12 +21,12 @@ class Or(NaryFormula):
 
     Parameters
     ----------
-    *formulas: list of src.formula.formula.Formula
+    *formulas: list of src.olaaaf.formula.formula.Formula
         The formulas meant as components of the Or operator.
 
     Attributes
     ----------
-    children: set of src.formula.formula.Formula
+    children: set of src.olaaaf.formula.formula.Formula
         The children of the current node.
     '''
     
@@ -38,7 +38,7 @@ class Or(NaryFormula):
 
         Returns
         -------
-        src.formula.formula.Formula
+        src.olaaaf.formula.formula.Formula
             The current Formula in Disjunctive Normal Form.
         '''
         
@@ -51,7 +51,7 @@ class Or(NaryFormula):
 
         Returns
         -------
-        src.formula.formula.Formula
+        src.olaaaf.formula.formula.Formula
             The current Formula in Disjunctive Normal Form under Negation.
         '''
         
@@ -93,12 +93,12 @@ class Or(NaryFormula):
 
         Attributes
         ----------
-        var : src.variable.variable.Variable
+        var : src.olaaaf.variable.variable.Variable
             Variable used in case of inequality.
 
         Returns
         -------
-        list of list of src.formula.nullaryFormula.constraint.constraint.Constraint
+        list of list of src.olaaaf.formula.nullaryFormula.constraint.constraint.Constraint
             2D list containing all the constraints of discute vraiment de l'implémentationthe adherence of the Formula,
             in Disjunctive Normal Form.
         '''
@@ -139,12 +139,12 @@ class Or(NaryFormula):
     
     def toLessOrEqConstraint(self):
         '''
-        Method used to transform a `src.formula.formula.Formula` into another one, with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
+        Method used to transform a `src.olaaaf.formula.formula.Formula` into another one, with only `src.olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
 
         Returns
         ------
-        src.formula.formula.Formula
-            A `src.formula.formula.Formula` with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
+        src.olaaaf.formula.formula.Formula
+            A `src.olaaaf.formula.formula.Formula` with only `src.olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
         '''
         childrenModified = set()
         
@@ -155,12 +155,12 @@ class Or(NaryFormula):
         
     def toPCMLC(self, varDict) -> Formula:
         '''
-        Method used to transform a `src.formula.formula.Formula` into a new one, in the PCMLC formalism.
+        Method used to transform a `src.olaaaf.formula.formula.Formula` into a new one, in the PCMLC formalism.
 
         Returns
         -------
-        src.formula.formula.Formula
-            A `src.formula.formula.Formula` in the PCMLC formalism.
+        src.olaaaf.formula.formula.Formula
+            A `src.olaaaf.formula.formula.Formula` in the PCMLC formalism.
         '''
         return Or(*{formul.toPCMLC(varDict) for formul in self.children})
 
@@ -187,7 +187,7 @@ class Or(NaryFormula):
     
     def toLatex(self):
         r"""
-        Method returning a \(\LaTeX\) expression representing the Formula. Operators are customisable in `src.constants.Constants`.
+        Method returning a \(\LaTeX\) expression representing the Formula. Operators are customisable in `src.olaaaf.constants.Constants`.
         
         Returns
         -------

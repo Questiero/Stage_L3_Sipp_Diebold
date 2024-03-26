@@ -1,5 +1,5 @@
 """
-Projector of a `src.formula.formula.Formula` to a sub-set of its variables, using floating numbers and SciPy's
+Projector of a `src.olaaaf.formula.formula.Formula` to a sub-set of its variables, using floating numbers and SciPy's
 `ConvexHull`.
 """
 
@@ -19,15 +19,15 @@ np.set_printoptions(threshold=np.inf)
 
 class FloatConvexHullProjector (Projector):
     r"""
-    Projector of a `src.formula.formula.Formula` to a sub-set of its variables, using floating numbers and SciPy's
+    Projector of a `src.olaaaf.formula.formula.Formula` to a sub-set of its variables, using floating numbers and SciPy's
     `ConvexHull`.
 
     Parameters
     ----------
     rounding: int, optional
         The rounding you wish to have to eliminte floating point integers approximation errors. By default, is set to 12.
-    simplifiers : list of src.simplificator.simplificator.Simplificator, optional
-        List of all of the `src.simplificator.simplificator.Simplificator` that will be applied to the `src.formula.formula.Formula`, 
+    simplifiers : list of src.olaaaf.simplificator.simplificator.Simplificator, optional
+        List of all of the `src.olaaaf.simplificator.simplificator.Simplificator` that will be applied to the `src.olaaaf.formula.formula.Formula`, 
         in order given by the list.
     """
 
@@ -43,19 +43,19 @@ class FloatConvexHullProjector (Projector):
 
     def projectOn(self, phi: And, variables: set[Variable]):
         r"""
-        Main method of `src.projector.floatConvexHullProjector.FloatConvexHullProjector`, allowing to project a given
-        `src.formula.formula.Formula` to a subset of its `src.variable.variable.Variable`.
+        Main method of `src.olaaaf.projector.floatConvexHullProjector.FloatConvexHullProjector`, allowing to project a given
+        `src.olaaaf.formula.formula.Formula` to a subset of its `src.olaaaf.variable.variable.Variable`.
 
         Parameters
         ----------
-        phi: src.formula.formula.Formula
-            The src.formula.formula.Formula to project.
-        variables: set of src.variable.variable.Variable
-            The subset of `src.variable.variable.Variable` to project on.
+        phi: src.olaaaf.formula.formula.Formula
+            The src.olaaaf.formula.formula.Formula to project.
+        variables: set of src.olaaaf.variable.variable.Variable
+            The subset of `src.olaaaf.variable.variable.Variable` to project on.
         
         Returns
         -------
-        src.formula.formula.Formula
+        src.olaaaf.formula.formula.Formula
             The projection of \(\varphi\) on the specified subset of its variables.
         """
 

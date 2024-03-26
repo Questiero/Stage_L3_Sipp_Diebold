@@ -1,5 +1,5 @@
 """
-Utility class, allowing the user to get a visualisation of a `src.formula.formula.Formula`.
+Utility class, allowing the user to get a visualisation of a `src.olaaaf.formula.formula.Formula`.
 """
 
 from __future__ import annotations
@@ -34,9 +34,9 @@ class FormulaDisplay:
 
         Parameters
         ----------
-        formulas : dictionary of String with src.formula.formula.Formula as key
+        formulas : dictionary of String with src.olaaaf.formula.formula.Formula as key
             Dictionary witch link a formula with a color
-        variables: set of src.variable.variable.Variable
+        variables: set of src.olaaaf.variable.variable.Variable
             List of variables witch will be displayed
         '''
         for phi in formulas.keys():
@@ -70,7 +70,7 @@ class FormulaDisplay:
         ----------
         phi:
             A formula
-        variables: set of src.variable.variable.Variable
+        variables: set of src.olaaaf.variable.variable.Variable
             List of variables 
         values : list of fracitons.Fraction
             List of values for each formulas

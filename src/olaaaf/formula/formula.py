@@ -31,8 +31,8 @@ class Formula(ABC):
 
         Returns
         -------
-        set of src.variable.variable.Variable
-            All the variables used in the `src.formula.formula.Formula`.
+        set of src.olaaaf.variable.variable.Variable
+            All the variables used in the `src.olaaaf.formula.formula.Formula`.
         '''
         pass
     
@@ -43,8 +43,8 @@ class Formula(ABC):
 
         Returns
         -------
-        src.formula.formula.Formula
-            The current `src.formula.formula.Formula` in Disjunctive Normal Form.
+        src.olaaaf.formula.formula.Formula
+            The current `src.olaaaf.formula.formula.Formula` in Disjunctive Normal Form.
         '''
         pass
     
@@ -56,7 +56,7 @@ class Formula(ABC):
 
         Returns
         -------
-        src.formula.formula.Formula
+        src.olaaaf.formula.formula.Formula
             The current Formula in Disjunctive Normal Form under Negation.
         '''
         pass
@@ -69,12 +69,12 @@ class Formula(ABC):
 
         Attributes
         ----------
-        var : src.variable.variable.Variable
+        var : src.olaaaf.variable.variable.Variable
             variable used in case of inequality
 
         Returns
         -------
-        list of list of src.formula.nullaryFormula.constraint.constraint.Constraint
+        list of list of src.olaaaf.formula.nullaryFormula.constraint.constraint.Constraint
             2D list containing all the constraints of discute vraiment de l'implémentationthe adherence of the Formula,
             in Disjunctive Normal Form.
         '''
@@ -89,12 +89,12 @@ class Formula(ABC):
 
         Attributes
         ----------
-        var : src.variable.variable.Variable
-            `src.variable.variable.Variable` used in case of inequality
+        var : src.olaaaf.variable.variable.Variable
+            `src.olaaaf.variable.variable.Variable` used in case of inequality
 
         Returns
         -------
-        list of list of src.formula.nullaryFormula.constraint.constraint.Constraint
+        list of list of src.olaaaf.formula.nullaryFormula.constraint.constraint.Constraint
             2D list containing all the constraints of the adherence of the Formula,
             in Disjunctive Normal Form under Negation.
         '''
@@ -103,24 +103,24 @@ class Formula(ABC):
     @abstractmethod
     def toLessOrEqConstraint(self):
         '''
-        Method used to transform a `src.formula.formula.Formula` into another one, with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
+        Method used to transform a `src.olaaaf.formula.formula.Formula` into another one, with only `src.olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
 
         Returns
         ------
-        src.formula.formula.Formula
-            A `src.formula.formula.Formula` with only `src.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
+        src.olaaaf.formula.formula.Formula
+            A `src.olaaaf.formula.formula.Formula` with only `src.olaaaf.formula.nullaryFormula.constraint.constraintOperator.ConstraintOperator.LEQ` constraints.
         '''
         pass
 
     @abstractmethod
     def toPCMLC(self, varDict) -> Formula:
         '''
-        Method used to transform a `src.formula.formula.Formula` into a new one, in the PCMLC formalism.
+        Method used to transform a `src.olaaaf.formula.formula.Formula` into a new one, in the PCMLC formalism.
 
         Returns
         -------
-        src.formula.formula.Formula
-            A `src.formula.formula.Formula` in the PCMLC formalism.
+        src.olaaaf.formula.formula.Formula
+            A `src.olaaaf.formula.formula.Formula` in the PCMLC formalism.
         '''
         pass
 
@@ -134,8 +134,8 @@ class Formula(ABC):
 
         Returns
         -------
-        src.formula.formula.Formula
-            Clone of the current `src.formula.formula.Formula`.
+        src.olaaaf.formula.formula.Formula
+            Clone of the current `src.olaaaf.formula.formula.Formula`.
         """
 
         clone = self.__class__(self.children)
@@ -158,7 +158,7 @@ class Formula(ABC):
     @abstractmethod
     def toLatex(self) -> str:
         r"""
-        Method returning a \(\LaTeX\) expression representing the Formula. Operators are customisable in `src.constants.Constants`.
+        Method returning a \(\LaTeX\) expression representing the Formula. Operators are customisable in `src.olaaaf.constants.Constants`.
         
         Returns
         -------
