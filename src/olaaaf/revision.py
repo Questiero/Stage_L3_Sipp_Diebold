@@ -1,6 +1,6 @@
 r"""
 Main class of the module, allowing the user to make the knowledge revision between two `src.olaaaf.formula.formula.Formula`
-\(\psi\) and \(\mu\) that are mixed integer linear constraints.
+\(\psi\) and \(\mu\) that are constraints.
 """
 
 from __future__ import annotations
@@ -66,8 +66,8 @@ class Revision:
         r"""
         Methd used to preload the revision algorithm.
 
-        This step is necessary before using `execute` and recommended before the domain knowledge definition since it translates every
-        non-`src.olaaaf.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint` into one and introduces new under-the-box variables that the user might want to use.
+        This step is necessary before using `execute` since it translates every non-`src.olaaaf.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint`
+        into one and introduces new under-the-box variables that the user might want to use.
         """
 
         weights = self.__distance.getWeights()

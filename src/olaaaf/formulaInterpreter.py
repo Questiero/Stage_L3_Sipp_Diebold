@@ -286,35 +286,99 @@ class FormulaInterpreter:
         return And(*andSet)
 
     def findOneSolutionWithLimit(self, variables : list[Variable], psi : And, mu : And, lambdaEpsilon) -> tuple[Fraction, Formula]:
+        r"""
+        Method used to interact with the initialy specified `src.olaaaf.mlo_solver.MLOSolver.MLOSolver`, thus finding one solution of
+        the optimization of the following system when \(\psi\) and \(\mu\) are conjunctions of
+        `src.olaaaf.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint`, with \(d\) the  `src.olaaaf.distance.distance_function.distanceFunction.DistanceFunction`
+        given at the initialization of the class.
 
-            # Reorder variables order
-            variables = list(variables)
-            constraints = self.__buildConstraints(variables, psi, mu)
+        \[
+            \begin{cases}
+                x \in \mathcal{M}(\psi) \\
+                y \in \mathcal{M}(\mu) \\
+                d(x,y) \geq \lambda_\epsilon\\
+                \text{minimize } d(x, y)
+            \end{cases}
+        \]
 
-            # creation of the objective function
-            obj = [0]*len(variables)*2
-            constraintLambdaEpsilon = [0]*len(variables)*2
-            for variable in variables:
-                obj.append(self.__distanceFunction.getWeights()[variable])
-                constraintLambdaEpsilon.append(-self.__distanceFunction.getWeights()[variable])
-            constraints.append((constraintLambdaEpsilon, ConstraintOperator.LEQ, -lambdaEpsilon))
-            res = self.__MLOSolver.solve(variables*3, obj, constraints)
+        Parameters
+        ----------
+        variables : list of `src.olaaaf.variable.variable.Variable`
+            List of all the `src.olaaaf.variable.variable.Variable` in use in both \(\psi\) and \(\mu\).
+        psi, mu : `src.olaaaf.formula.naryFormula.andOperator.And`
+            \(\psi\) and \(\mu\), conjunctions of litterals as used in the optimization problem above.
+        lambdaEpsilon: `fraction.Fraction`
+            The \(\lambda_\epsilon\) specified in the system above.
 
-            # interpretation of the mlo solver result
-            if(res[0] == OptimizationValues.INFEASIBLE): 
-                raise Exception("Optimize couple impossible") 
-            
-            values = res[1]
-            resSet = set([])
-            for i in range(0,len(variables)):
-                lc = LinearConstraint("") 
-                lc.variables = {variables[i]: Fraction(1)}
-                lc.operator = ConstraintOperator.EQ
-                lc.bound = Fraction(values[len(variables)+i])
-                resSet.add(lc)
-            return (res[2], And(*resSet))
+        Returns
+        -------
+        Fraction
+            Minimal distance (calculated with the `src.olaaaf.distance.distance_function.distanceFunction.DistanceFunction`
+            given at the initialization of the class) that satisfies the optimization problem above. 
+        src.olaaaf.formula.formula.Formula
+            `src.olaaaf.formula.formula.Formula` representing a point \(y \in \mathcal{M}(\mu)\) that satisfies the optimization problem above. 
+        """
+
+        # Reorder variables order
+        variables = list(variables)
+        constraints = self.__buildConstraints(variables, psi, mu)
+
+        # creation of the objective function
+        obj = [0]*len(variables)*2
+        constraintLambdaEpsilon = [0]*len(variables)*2
+        for variable in variables:
+            obj.append(self.__distanceFunction.getWeights()[variable])
+            constraintLambdaEpsilon.append(-self.__distanceFunction.getWeights()[variable])
+        constraints.append((constraintLambdaEpsilon, ConstraintOperator.LEQ, -lambdaEpsilon))
+        res = self.__MLOSolver.solve(variables*3, obj, constraints)
+
+        # interpretation of the mlo solver result
+        if(res[0] == OptimizationValues.INFEASIBLE): 
+            raise Exception("Optimize couple impossible") 
+        
+        values = res[1]
+        resSet = set([])
+        for i in range(0,len(variables)):
+            lc = LinearConstraint("") 
+            lc.variables = {variables[i]: Fraction(1)}
+            lc.operator = ConstraintOperator.EQ
+            lc.bound = Fraction(values[len(variables)+i])
+            resSet.add(lc)
+        return (res[2], And(*resSet))
 
     def optimizeCoupleWithLimit(self, psi : And, mu : And, lambdaEpsilon) -> tuple[Fraction, Formula]:
+        r"""
+        Method used to interact with the initialy specified `src.olaaaf.mlo_solver.MLOSolver.MLOSolver`, thus finding one solution of
+        the optimization of the following system when \(\psi\) and \(\mu\) are conjunctions of
+        `src.olaaaf.formula.nullaryFormula.constraint.linearConstraint.LinearConstraint`, with \(d\) the  `src.olaaaf.distance.distance_function.distanceFunction.DistanceFunction`
+        given at the initialization of the class.
+
+        \[
+            \begin{cases}
+                x \in \mathcal{M}(\psi) \\
+                y \in \mathcal{M}(\mu) \\
+                d(x,y) \geq \lambda_\epsilon\\
+                \text{minimize } d(x, y)
+            \end{cases}
+        \]
+
+        Parameters
+        ----------
+        variables : list of `src.olaaaf.variable.variable.Variable`
+            List of all the `src.olaaaf.variable.variable.Variable` in use in both \(\psi\) and \(\mu\).
+        psi, mu : `src.olaaaf.formula.naryFormula.andOperator.And`
+            \(\psi\) and \(\mu\), conjunctions of litterals as used in the optimization problem above.
+        lambdaEpsilon: `fraction.Fraction`
+            The \(\lambda_\epsilon\) specified in the system above.
+
+        Returns
+        -------
+        Fraction
+            Minimal distance (calculated with the `src.olaaaf.distance.distance_function.distanceFunction.DistanceFunction`
+            given at the initialization of the class) that satisfies the optimization problem above. 
+        src.olaaaf.formula.formula.Formula
+            `src.olaaaf.formula.formula.Formula` representing a point \(y \in \mathcal{M}(\mu)\) that satisfies the optimization problem above. 
+        """
 
         variables = list(And(psi,mu).getVariables())
 
