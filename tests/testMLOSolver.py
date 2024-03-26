@@ -1,5 +1,3 @@
-import sys
-sys.path.append(".")
 import unittest
 from olaaaf.mlo_solver import ScipySolverRounded
 from olaaaf.variable import RealVariable

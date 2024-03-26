@@ -1,5 +1,3 @@
-import sys
-sys.path.append(".")
 import unittest
 from olaaaf.variable import RealVariable
 from fractions import Fraction
