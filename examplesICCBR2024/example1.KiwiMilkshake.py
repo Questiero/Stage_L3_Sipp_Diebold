@@ -85,8 +85,6 @@ weights = {
     IntegerVariable.declare("iceCube_u", lowerBound = Fraction(0)): Fraction(25),
     # Number of kiwis, with a weight corresponding to the average mass of a kiwi (100g/u)
     IntegerVariable.declare("kiwi_u", lowerBound = Fraction(0)): Fraction(100),
-    # Number of fruit types, variable that preserves the number of fruit types with a weight associated to a property of the recipe
-    IntegerVariable.declare("nb_fruitTypes", lowerBound = Fraction(0)): Fraction(10000),
     # Number of bags of vanilla sugar, with a weight corresponding to the average mass of a bag of vanilla sugar(7.5g/u)
     IntegerVariable.declare("vanillaSugar_u", lowerBound = Fraction(0)): Fraction(7.5),
 
