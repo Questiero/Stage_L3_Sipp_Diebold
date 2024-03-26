@@ -1,14 +1,14 @@
 import sys
 sys.path.append(".")
 import unittest
-from src.variable import RealVariable
+from olaaaf.variable import RealVariable
 from fractions import Fraction
-from src.formula.nullaryFormula import LinearConstraint
-from src.mlo_solver import LPSolverRounded
-from src.simplificator import Daalmans
-from src.projector import FloatConvexHullProjector
-from src.revision import Revision
-from src.distance import discreteL1DistanceFunction
+from olaaaf.formula.nullaryFormula import LinearConstraint
+from olaaaf.mlo_solver import LPSolverRounded
+from olaaaf.simplificator import Daalmans
+from olaaaf.projector import FloatConvexHullProjector
+from olaaaf.revision import Revision
+from olaaaf.distance import discreteL1DistanceFunction
 
 
 class TestRevision(unittest.TestCase):

@@ -4,7 +4,7 @@ Representation of a LinearConstraint in PCMLC.
 
 from __future__ import annotations
 
-from src.formula.formula import Formula
+from ....formula.formula import Formula
 
 from .constraint import Constraint
 from ....variable import VariableManager

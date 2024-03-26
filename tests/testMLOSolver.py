@@ -1,11 +1,11 @@
 import sys
 sys.path.append(".")
 import unittest
-from src.mlo_solver import ScipySolverRounded
-from src.variable import RealVariable
-from src.variable import IntegerVariable
-from src.formula.nullaryFormula.constraint import ConstraintOperator
-from src.mlo_solver import OptimizationValues
+from olaaaf.mlo_solver import ScipySolverRounded
+from olaaaf.variable import RealVariable
+from olaaaf.variable import IntegerVariable
+from olaaaf.formula.nullaryFormula.constraint import ConstraintOperator
+from olaaaf.mlo_solver import OptimizationValues
 from fractions import Fraction
 
 class TestMLOSolver(unittest.TestCase):

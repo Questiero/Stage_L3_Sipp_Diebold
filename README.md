@@ -1,13 +1,59 @@
-# Informations about the project
+# Olaaaf
 
-This project still has some errors/problems and a TODO list.
+Olaaaf is a general adaptation prototype based on belief revision whose long-term aim is to cover a broad range of adaptation processes. It is based on a formalism that covers both attribute-value pairs
+(often used for representing cases) and taxonomies (often used for representing domain knowledge).
 
-## For errors/problems:
- - The SciPy Mixed Linear Optimizer does not necessarily recognize the difference between an unfeasible or unbounded problem. This differentiation being used in our project, we get a problem.
- - A problem of the satisfiability of the results returned by the belief review operator is present. We found a temporary solution with the rounding argument of the projector.
- - FloatConvexHullProjector probably has some issues while trying to project on dimensions n >= 2, since the quickhull algorithm only works with n+1 dots and cases where we have fewer dots need to be generalized.
+## Table of Contents
 
-## TODO list :
- - Fix all preceded errors ;
- - Top and Bottom implantation ;
- - Create a class for the weights of the distance function, and add a subclass corresponding to rational weights.
+- [Dependencies](#dependencies)
+- [Usage](#usage)
+- [Examples](#examples)
+- [Documentation](#documentation)
+- [License](#license)
+
+## Dependencies
+
+Please note that each dependency might work with an earlier version.
+However, they haven't been tested and aren't officialy supported.
+
+### Necessary dependencies
+
+- Python v3.10.13 or higher.
+- [tqdm](https://tqdm.github.io) v4.65.0 or higher.
+- [Pyparsing](https://github.com/pyparsing/pyparsing) v3.0.9 or higher.
+- [SciPy](https://scipy.org) v1.11.4 or higher.
+
+### Optional dependencies
+
+- [LPSolve](https://lpsolve.sourceforge.net/5.5/) v5.5.2.0 or higher.
+  - Since LPSolve isn't officially available for Python 3, [Chandrasekhar Atina's wrapper](https://github.com/chandu-atina/lp_solve_python_3x) is used.
+- [matplotlib](https://matplotlib.org) v3.8.0 or higher.
+
+## Usage
+
+**TODO explication de Yan en fonction de ce qu'on a pour un vrai package**
+
+This _README Template_ is easiest to use when copied to your projects main directory. Change its content with a text editor or with a special markdown editor.
+
+    code to install this project
+
+Describe here how to add this to your project
+
+    code how to load or add this to your project
+
+## Examples
+
+As of right now, four examples are availabe for you to go through. Namely:
+
+- [Example 1](examplesICCBR2024/example1.KiwiMilkshake.py) is the adaptation of a banana milkshake recipe to obtain a kiwi milkshake recipe.
+- [Example 2](examplesICCBR2024/example2.KiwiMilkshakeNoBanana.py) is the adaptation of a banana milkshake recipe to obtain a kiwi milkshake recipe, with no banana.
+- [Example 3](examplesICCBR2024/example3.KiwiMilkshakeSameNumberOfFruitTypes.py) is the adaptation of a banana milkshake reciepe to obtain a kiwi milkshake recipe, while conserving the same number of fruit types between the two recipes.
+- [Example 4](examplesICCBR2024/example4.CarrotCabbageSalad.py) is the adaptation of a carrot and cabbage salad to remove the vinegar, using adaptation rules.
+
+## Documentation
+
+Olaaaf's documentation is available [here](https://olaaafengine.github.io/docs/).
+
+## License
+
+Olaaaf is published under the [MIT License](LICENSE).

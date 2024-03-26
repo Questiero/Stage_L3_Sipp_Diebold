@@ -1,10 +1,10 @@
-from src.formula import LinearConstraint
-from src.mlo_solver import LPSolverRounded
-from src.revision import Revision
-from src.variable import RealVariable
-from src.distance import discreteL1DistanceFunction
-from src.simplificator import Daalmans
-from src.projector import FloatConvexHullProjector
+from olaaaf.formula import LinearConstraint
+from olaaaf.mlo_solver import LPSolverRounded
+from olaaaf.revision import Revision
+from olaaaf.variable import RealVariable
+from olaaaf.distance import discreteL1DistanceFunction
+from olaaaf.simplificator import Daalmans
+from olaaaf.projector import FloatConvexHullProjector
 
 from fractions import Fraction
 

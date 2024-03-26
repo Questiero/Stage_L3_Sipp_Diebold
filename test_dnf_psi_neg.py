@@ -1,10 +1,10 @@
-from src.formula import FormulaDisplay, LinearConstraint
-from src.mlo_solver import LPSolverRounded
-from src.revision import Revision
-from src.variable import RealVariable
-from src.distance import discreteL1DistanceFunction
-from src.simplificator import Daalmans
-from src.projector import FloatConvexHullProjector
+from olaaaf.formula import FormulaDisplay, LinearConstraint
+from olaaaf.mlo_solver import LPSolverRounded
+from olaaaf.revision import Revision
+from olaaaf.variable import RealVariable
+from olaaaf.distance import discreteL1DistanceFunction
+from olaaaf.simplificator import Daalmans
+from olaaaf.projector import FloatConvexHullProjector
 
 from fractions import Fraction
 
@@ -27,6 +27,6 @@ mu = (LinearConstraint("x + y >= 6") & LinearConstraint("5*x + y <= 25") & Linea
 rev = Revision(solver, discreteL1DistanceFunction(weights), simplifier, onlyOneSolution=False, projector=projector)
 res = rev.execute(psi, mu)
 
-from src.formula.formulaDisplay import FormulaDisplay
+from olaaaf.formula.formulaDisplay import FormulaDisplay
 display = FormulaDisplay()
 display.display({psi.toLessOrEqConstraint() : 'blue', mu.toLessOrEqConstraint() : 'green', res[1].toLessOrEqConstraint() : 'red'}, [x,y])

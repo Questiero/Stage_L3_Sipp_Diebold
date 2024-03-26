@@ -1,9 +1,9 @@
-from src.formula import LinearConstraint, PropositionalVariable, EnumeratedType
-from src.mlo_solver import  ScipySolverRounded
-from src import Adaptation
-from src.variable import RealVariable, IntegerVariable
-from src.distance import discreteL1DistanceFunction
-from src.simplificator import Daalmans
+from olaaaf.formula import LinearConstraint, PropositionalVariable, EnumeratedType
+from olaaaf.mlo_solver import  ScipySolverRounded
+from olaaaf import Adaptation
+from olaaaf.variable import RealVariable, IntegerVariable
+from olaaaf.distance import discreteL1DistanceFunction
+from olaaaf.simplificator import Daalmans
 
 from fractions import Fraction
 
