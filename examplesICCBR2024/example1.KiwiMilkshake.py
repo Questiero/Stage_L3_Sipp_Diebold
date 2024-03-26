@@ -123,7 +123,7 @@ dk = FormulaManager.parser("(banana -> fruit) & (kiwi -> fruit)")
 # DK2: For each food type and unit, there is a known correspondence of one unit of this food type to its mass,
 #      e.g. the mass of 1 banana and the mass of 1 tablespoon of granulated sugar.
 # Source: 
-#    - Banana (https://www.aprifel.com/fr/fiche-nutritionnelle/banane/?tab=composition_analyse_nutritionnelles)
+#    - Banana (https://www.aprifel.com/en/nutritional-sheet/banana/?tab=composition_analyse_nutritionnelles)
 #    - Cow milk, soy milk and almond milk (rounded to the mass of cow milk) (https://conseilenagriculture.fr/calculettes/kglait-litre/)
 #    - Kiwi (https://www.aprifel.com/fr/fiche-nutritionnelle/kiwi/?tab=composition_analyse_nutritionnelles)
 #    - Vanilla sugar (https://www.vahine.fr/produits/sucres-et-levures/sucre-vanille)
@@ -138,7 +138,7 @@ dk &=  LinearConstraint("banana_g - 120 * banana_u = 0")\
      & LinearConstraint("granulatedSugar_g - 15 * granulatedSugar_tbsp = 0")\
      & LinearConstraint("iceCube_g - 25 * iceCube_u = 0")
 
-# DK3: Relation between each type of food and its subtypes in the taxonomy (TODO reprendre après envoie)
+# DK3: Relation between each type of food and its subtypes in the taxonomy (e.g. the mass of fruits is the sum of the masses of bananas,kiwis, etc.).
 # The sweetening power is known for every ingredient type, e.g. 0.158 for bananas (1 gram of banana has the same sweetening power as 0.158 gram of granulated sugar), 1 for granulated sugar, etc.
 # Source: The sweetening power of each ingredient is coming from USDA (https://fdc.nal.usda.gov/) apart from almond milk (https://www.bjorg.fr/produits/lait-amande-bio/)
 # and vanilla sugar (https://www.vahine.fr/produits/sucres-et-levures/sucre-vanille)
