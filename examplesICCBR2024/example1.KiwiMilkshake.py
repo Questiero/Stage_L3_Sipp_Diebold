@@ -15,7 +15,7 @@ weights = {
     
     #Two heuristics are used to define the weights. 
     #The first one is based on a taxonomy of the ingredient categories, with weights starting from 1 for simple ingredients
-    #and multiplied by a factor of 1000 for each higher category, indicating its importance in the recipe.
+    #and multiplied by a factor of 100 for each higher category, indicating its importance in the recipe.
     #The second one is based on the conversions between units and mass for each type of food. 
     #As there is a known correspondence of one unit to its mass for each food type, weights of unit variables are calculated according
     #to the weights of mass variables.
@@ -41,17 +41,17 @@ weights = {
     # Presence of soy milk, a boolean variable with a light weight corresponding to a specific ingredient
     PropositionalVariable("soyMilk", fmName="soyMilk"): Fraction(1),
 
-    #Masses are measured in grams and are nonnegative real with a lowerBound to 0.
+    #Masses are measured in grams and volumes in liters and are nonnegative real with a lowerBound to 0.
 
     # Mass of almond milk, with a weight of 1, chosen as the weight of one gram of food
     RealVariable.declare("almondMilk_g", lowerBound = Fraction(0)): Fraction(1),
-    # Liters of almond milk, with a weight equal to the volumic mass of one liter of milk : 1030g/L (multiplied by 1, the weight of one gram of milk)
+    # Liters of almond milk, with a weight equal to the volumic mass of one liter of milk: 1030g/L (multiplied by 1, the weight of one gram of milk)
     RealVariable.declare("almondMilk_L", lowerBound = Fraction(0)): Fraction(1030),
     # Mass of banana, with a weight of 1, chosen as the weight of one gram of food
     RealVariable.declare("banana_g", lowerBound = Fraction(0)): Fraction(1),
     # Mass of cow milk, with a weight of 1, chosen as the weight of one gram of food
     RealVariable.declare("cowMilk_g", lowerBound = Fraction(0)): Fraction(1),
-    # Liters of cow milk, with a weight equal to the volumic mass of one liter of milk : 1030g/L
+    # Liters of cow milk, with a weight equal to the volumic mass of one liter of milk: 1030g/L
     RealVariable.declare("cowMilk_L", lowerBound = Fraction(0)): Fraction(1030),
     # Mass of food, variable used to preserve the total mass of ingredients (and therefore their proportions), with a weight associated
     # to a wide category of ingredients or a property of a recipe
@@ -68,7 +68,7 @@ weights = {
     RealVariable.declare("milk_g", lowerBound = Fraction(0)): Fraction(100),
     # Mass of soy milk, with a weight of 1, chosen as the weight of one gram of food
     RealVariable.declare("soyMilk_g", lowerBound = Fraction(0)): Fraction(1),
-    # Liters of soy milk, with a weight equal to the volumic mass of one liter of milk : 1030g/L
+    # Liters of soy milk, with a weight equal to the volumic mass of one liter of milk: 1030g/L
     RealVariable.declare("soyMilk_L", lowerBound = Fraction(0)): Fraction(1030),
     # Sweetening power of the recipe in grams, variable that corresponds to the total amount of sugar in the recipe with a weight associated to a property of the recipe
     RealVariable.declare("sweeteningPower_g", lowerBound = Fraction(0)): Fraction(10000),
@@ -77,7 +77,7 @@ weights = {
 
     #Numbers of units/tbsp/fruitTypes are nonnegative integer with a lowerBound to 0.
 
-    # Number of bananas, with a with a weight corresponding to the average mass of a banana (115g/u)
+    # Number of bananas, with a weight corresponding to the average mass of a banana (115g/u)
     IntegerVariable.declare("banana_u", lowerBound = Fraction(0)): Fraction(115),
     # Number of tablespoons of granulated sugar, with a weight corresponding to the average mass of a tablespoon of granulated sugar (15g/tbsp)
     IntegerVariable.declare("granulatedSugar_tbsp", lowerBound = Fraction(0)): Fraction(15),
@@ -85,7 +85,7 @@ weights = {
     IntegerVariable.declare("iceCube_u", lowerBound = Fraction(0)): Fraction(25),
     # Number of kiwis, with a weight corresponding to the average mass of a kiwi (100g/u)
     IntegerVariable.declare("kiwi_u", lowerBound = Fraction(0)): Fraction(100),
-    # Number of bags of vanilla sugar, with a weight corresponding to the average mass of a bag of vanilla sugar(7.5g/u)
+    # Number of bags of vanilla sugar, with a weight corresponding to the average mass of a bag of vanilla sugar (7.5g/u)
     IntegerVariable.declare("vanillaSugar_u", lowerBound = Fraction(0)): Fraction(7.5),
 
 }
