@@ -49,12 +49,12 @@
 <dd>The solver that will be used for optimization.</dd>
 <dt><strong><code>distance</code></strong> :&ensp;<code><a title="olaaaf.distance.distance_function.distanceFunction.DistanceFunction" href="distance/distance_function/distanceFunction.html#olaaaf.distance.distance_function.distanceFunction.DistanceFunction">DistanceFunction</a></code></dt>
 <dd>The distance function that will be used and, more importantly, the weights <span><span class="MathJax_Preview">(w_i)</span><script type="math/tex">(w_i)</script></span> and <span><span class="MathJax_Preview">\varepsilon</span><script type="math/tex">\varepsilon</script></span> arguments of it.
-The original algorithm is meant to be used with a <code><a title="olaaaf.distance.distance_function.discreteL1DistanceFunction.discreteL1DistanceFunction" href="distance/distance_function/discreteL1DistanceFunction.html#olaaaf.distance.distance_function.discreteL1DistanceFunction.discreteL1DistanceFunction">discreteL1DistanceFunction</a></code>.</dd>
+The original algorithm is meant to be used with a <code><a title="olaaaf.distance.distance_function.discreteL1DistanceFunction.DiscreteL1DistanceFunction" href="distance/distance_function/discreteL1DistanceFunction.html#olaaaf.distance.distance_function.discreteL1DistanceFunction.DiscreteL1DistanceFunction">DiscreteL1DistanceFunction</a></code>.</dd>
 <dt><strong><code>simplifiers</code></strong> :&ensp;<code>list</code> of <code><a title="olaaaf.simplificator.simplificator.Simplificator" href="simplificator/simplificator.html#olaaaf.simplificator.simplificator.Simplificator">Simplificator</a></code>, optional</dt>
 <dd>List of all of the <code><a title="olaaaf.simplificator.simplificator.Simplificator" href="simplificator/simplificator.html#olaaaf.simplificator.simplificator.Simplificator">Simplificator</a></code> that will be applied to the <code><a title="olaaaf.formula.formula.Formula" href="formula/formula.html#olaaaf.formula.formula.Formula">Formula</a></code>,
 in order given by the list.</dd>
 <dt><strong><code>onlyOneSolution</code></strong> :&ensp;<code>boolean</code>, optional</dt>
-<dd>If set to <code>True</code>, the adaptation algorithm will only return one point that satisfies <span><span class="MathJax_Preview">\psi \circ \mu</span><script type="math/tex">\psi \circ \mu</script></span>.
+<dd>If set to <code>True</code>, the adaptation algorithm will only return one solution.
 If not, it will return all solutions.
 By default, this constant is set to whichever one was chosen in <code><a title="olaaaf.constants.Constants" href="constants.html#olaaaf.constants.Constants">Constants</a></code>.</dd>
 <dt><strong><code>verbose</code></strong> :&ensp;<code>boolean</code>, optional</dt>
@@ -66,16 +66,16 @@ By default, this constant is set to whichever one was chosen in <code><a title="
 <h3>Methods</h3>
 <dl>
 <dt id="olaaaf.adaptation.Adaptation.execute"><code class="name flex">
-<span>def <span class="ident">execute</span></span>(<span>self, src: Formula, trgt: Formula, dk: Formula)</span>
+<span>def <span class="ident">execute</span></span>(<span>self, srce_case: Formula, trgt: Formula, dk: Formula)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Execute the adaptation of <span><span class="MathJax_Preview">src</span><script type="math/tex">src</script></span> by <span><span class="MathJax_Preview">tgt</span><script type="math/tex">tgt</script></span>, with the domain knowledge <span><span class="MathJax_Preview">DK</span><script type="math/tex">DK</script></span>.</p>
+<div class="desc"><p>Execute the adaptation of <span><span class="MathJax_Preview">srce_case</span><script type="math/tex">srce_case</script></span> by <span><span class="MathJax_Preview">tgt_problem</span><script type="math/tex">tgt_problem</script></span>, with the domain knowledge <span><span class="MathJax_Preview">DK</span><script type="math/tex">DK</script></span>.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt><strong><code>psi</code></strong> :&ensp;<code><a title="olaaaf.formula.formula.Formula" href="formula/formula.html#olaaaf.formula.formula.Formula">Formula</a></code></dt>
-<dd><span><span class="MathJax_Preview">src</span><script type="math/tex">src</script></span>, source case for the adaptation and <code><a title="olaaaf.formula.formula.Formula" href="formula/formula.html#olaaaf.formula.formula.Formula">Formula</a></code> that will be adapted.</dd>
-<dt><strong><code>mu</code></strong> :&ensp;<code><a title="olaaaf.formula.formula.Formula" href="formula/formula.html#olaaaf.formula.formula.Formula">Formula</a></code></dt>
-<dd><span><span class="MathJax_Preview">tgt</span><script type="math/tex">tgt</script></span>, target problem for the adaptation and <code><a title="olaaaf.formula.formula.Formula" href="formula/formula.html#olaaaf.formula.formula.Formula">Formula</a></code> that will be used to adapt <span><span class="MathJax_Preview">src</span><script type="math/tex">src</script></span> by.</dd>
+<dt><strong><code>srce_case</code></strong> :&ensp;<code><a title="olaaaf.formula.formula.Formula" href="formula/formula.html#olaaaf.formula.formula.Formula">Formula</a></code></dt>
+<dd><span><span class="MathJax_Preview">srce_case</span><script type="math/tex">srce_case</script></span>, source case for the adaptation and <code><a title="olaaaf.formula.formula.Formula" href="formula/formula.html#olaaaf.formula.formula.Formula">Formula</a></code> that will be adapted.</dd>
+<dt><strong><code>tgt_problem</code></strong> :&ensp;<code><a title="olaaaf.formula.formula.Formula" href="formula/formula.html#olaaaf.formula.formula.Formula">Formula</a></code></dt>
+<dd><span><span class="MathJax_Preview">tgt_problem</span><script type="math/tex">tgt_problem</script></span>, target problem for the adaptation and <code><a title="olaaaf.formula.formula.Formula" href="formula/formula.html#olaaaf.formula.formula.Formula">Formula</a></code> that will be used to adapt <span><span class="MathJax_Preview">srce_case</span><script type="math/tex">srce_case</script></span> by.</dd>
 <dt><strong><code>dk</code></strong> :&ensp;<code><a title="olaaaf.formula.formula.Formula" href="formula/formula.html#olaaaf.formula.formula.Formula">Formula</a></code></dt>
 <dd><span><span class="MathJax_Preview">DK</span><script type="math/tex">DK</script></span>, the domain knowledge.</dd>
 </dl>
@@ -83,10 +83,10 @@ By default, this constant is set to whichever one was chosen in <code><a title="
 <dl>
 <dt><code>Fraction</code></dt>
 <dd>Distance (calculated with the <code><a title="olaaaf.distance.distance_function.distanceFunction.DistanceFunction" href="distance/distance_function/distanceFunction.html#olaaaf.distance.distance_function.distanceFunction.DistanceFunction">DistanceFunction</a></code>
-given at the initialization of the class) between <span><span class="MathJax_Preview">src</span><script type="math/tex">src</script></span> and <span><span class="MathJax_Preview">tgt</span><script type="math/tex">tgt</script></span>.</dd>
+given at the initialization of the class) between <span><span class="MathJax_Preview">srce_case</span><script type="math/tex">srce_case</script></span> and <span><span class="MathJax_Preview">tgt_problem</span><script type="math/tex">tgt_problem</script></span>.</dd>
 </dl>
 <p><code><a title="olaaaf.formula.formula.Formula" href="formula/formula.html#olaaaf.formula.formula.Formula">Formula</a></code>
-Result of the adaptation of <span><span class="MathJax_Preview">src</span><script type="math/tex">src</script></span> by <span><span class="MathJax_Preview">tgt</span><script type="math/tex">tgt</script></span>.</p></div>
+Result of the adaptation of <span><span class="MathJax_Preview">srce_case</span><script type="math/tex">srce_case</script></span> by <span><span class="MathJax_Preview">tgt_problem</span><script type="math/tex">tgt_problem</script></span>.</p></div>
 </dd>
 <dt id="olaaaf.adaptation.Adaptation.preload"><code class="name flex">
 <span>def <span class="ident">preload</span></span>(<span>self)</span>

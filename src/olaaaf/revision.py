@@ -32,7 +32,7 @@ class Revision:
         The solver that will be used for optimization.
     distance : olaaaf.distance.distance_function.distanceFunction.DistanceFunction
         The distance function that will be used and, more importantly, the weights \((w_i)\) and \(\varepsilon\) arguments of it.
-        The original algorithm is meant to be used with a `olaaaf.distance.distance_functiondiscreteL1DistanceFunctiondiscreteL1DistanceFunction`.
+        The original algorithm is meant to be used with a `olaaaf.distance.distance_function.discreteL1DistanceFunction.DiscreteL1DistanceFunction`.
     simplifiers : list of olaaaf.simplificator.simplificator.Simplificator, optional
         List of all of the `olaaaf.simplificator.simplificator.Simplificator` that will be applied to the `olaaaf.formula.formula.Formula`, 
         in order given by the list.
