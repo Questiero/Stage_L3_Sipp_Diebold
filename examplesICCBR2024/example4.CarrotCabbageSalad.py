@@ -2,15 +2,12 @@
      Example 4: adaptation of a carrot and cabage salad to remove the vinegar, using an adaptation rule.
 """
 
-import sys
-sys.path.append(".")
-
-from src.olaaaf.formula import LinearConstraint, PropositionalVariable
-from src.olaaaf.mlo_solver import  ScipySolverRounded
-from src.olaaaf import Adaptation
-from src.olaaaf.variable import RealVariable, IntegerVariable
-from src.olaaaf.distance import DiscreteL1DistanceFunction
-from src.olaaaf.simplificator import Daalmans
+from olaaaf.formula import LinearConstraint, PropositionalVariable
+from olaaaf.mlo_solver import  ScipySolverRounded
+from olaaaf import Adaptation
+from olaaaf.variable import RealVariable, IntegerVariable
+from olaaaf.distance import DiscreteL1DistanceFunction
+from olaaaf.simplificator import Daalmans
 
 from fractions import Fraction
 
