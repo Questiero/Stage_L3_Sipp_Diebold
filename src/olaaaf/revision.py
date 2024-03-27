@@ -394,7 +394,7 @@ class Revision:
                     raise AttributeError("Can't print (yet) if more than one variable per constraint")
                 else:
                     var = lc.variables.popitem()
-                    if (var[0].name[0:4] != "b2i_") & (not var[0].name[1].isnumeric()):
+                    if (not var[0].name.startswith("b2i_")) & (not var[0].name[1].isnumeric()) & (not var[0].name.startswith("ak_")):
                         variables.append((var[0], lc.bound / var[1])) # Taking coefficients into account, even though it should always be 1
 
             maxVarLength = max([len(var[0].name) for var in variables])
@@ -402,9 +402,14 @@ class Revision:
             for var, value in sorted(variables, key=lambda x: x[0].name.lower()):
 
                 if isinstance(var, IntegerVariable):
-                    print(var.name.rjust(maxVarLength) + " =", int(value))
+                    print("{} = {}".format(var.name.rjust(maxVarLength), int(value)))
                 else:
-                    print(var.name.rjust(maxVarLength) + " =", float(value))
+                    if (value == int(value)):
+                        print("{} = {}.".format(var.name.rjust(maxVarLength), int(value)))
+                    elif (value >= 1e6) | (value <= 1e-3):
+                        print("{} = {:#.3e}".format(var.name.rjust(maxVarLength), float(value)))
+                    else:
+                        print("{} = {:#.3g}".format(var.name.rjust(maxVarLength), float(value)))
 
             print("")
 

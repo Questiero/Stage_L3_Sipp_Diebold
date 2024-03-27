@@ -85,7 +85,7 @@ class Variable(ABC):
         - Name must begin with a letter\n
         - It can be followed by alphanumerical character or _\n
         - Name can't contain any of the following symbols: +-*/@:
-        - Names shouldn't begin with the prefix `b2i_`
+        - Names shouldn't begin with the prefix `b2i_` or `ak_`
 
         If this variable already exist under another type, an Exception will be raised.
 

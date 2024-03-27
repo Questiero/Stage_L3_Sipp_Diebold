@@ -2,12 +2,15 @@
      Example 4: adaptation of a carrot and cabage salad to remove the vinegar, using an adaptation rule.
 """
 
-from olaaaf.formula import LinearConstraint, PropositionalVariable
-from olaaaf.mlo_solver import  ScipySolverRounded
-from olaaaf import Adaptation
-from olaaaf.variable import RealVariable, IntegerVariable
-from olaaaf.distance import DiscreteL1DistanceFunction
-from olaaaf.simplificator import Daalmans
+import sys
+sys.path.append(".")
+
+from src.olaaaf.formula import LinearConstraint, PropositionalVariable
+from src.olaaaf.mlo_solver import  ScipySolverRounded
+from src.olaaaf import Adaptation
+from src.olaaaf.variable import RealVariable, IntegerVariable
+from src.olaaaf.distance import DiscreteL1DistanceFunction
+from src.olaaaf.simplificator import Daalmans
 
 from fractions import Fraction
 
@@ -88,8 +91,8 @@ weights = {
 
     # The two adaptation rules that form the Adaptation Knowledge receive a real variable each, which allows to set a very high weight to both.
 
-    RealVariable.declare("ak1"): Fraction(1e12),
-    RealVariable.declare("ak2"): Fraction(1e12)
+    RealVariable.declare("ak_deltaVinegarLemonJuiceWater"): Fraction(1e12),
+    RealVariable.declare("ak_equalWaterLemonJuice"): Fraction(1e12)
 }
 
 """
@@ -148,11 +151,11 @@ dk &= (PropositionalVariable("carrot") // ~LinearConstraint("carrot_g <= 0"))\
     & (PropositionalVariable("water") // ~LinearConstraint("water_g <= 0"))
 
 # AK: The two adaptation rules applied to the source case when the recipe is a salad dish.
-# AK1 states that vinegar can be replaced by an equal combined amount (in grams) of lemon juice and water.
-# AK2 states that there should be always the same proportions of water and lemon juice in the recipe.
+#    - ak_deltaVinegarLemonJuiceWater states that vinegar can be replaced by an equal combined amount (in grams) of lemon juice and water.
+#    - ak_equalWaterLemonJuice states that there should be always the same proportions of water and lemon juice in the recipe.
 ak = PropositionalVariable("saladDish") >>\
-        (LinearConstraint("ak1 - vinegar_g - water_g - lemonJuice_g = 0")\
-        & LinearConstraint("ak2 - water_g + lemonJuice_g = 0"))
+        (LinearConstraint("ak_deltaVinegarLemonJuiceWater - vinegar_g - water_g - lemonJuice_g = 0")\
+        & LinearConstraint("ak_equalWaterLemonJuice - water_g + lemonJuice_g = 0"))
 
 """
      SPECIFICATION OF THE SOURCE CASE AND OF THE TARGET PROBLEM
@@ -173,15 +176,15 @@ tgt_problem = PropositionalVariable("saladDish")\
     & PropositionalVariable("greenCabbage")\
     & ~PropositionalVariable("vinegar")
 
-min_dist, tgt_case = adaptator.execute(srce_case, tgt_problem, dk)
+min_dist, tgt_case = adaptator.execute(srce_case, tgt_problem, dk & ak)
 
 """
      RESULT
 
 00m09.522s | Solution found with distance of 81:
 
-             ak1 = 20.0
-             ak2 = 0.0
+             ak_deltaVinegarLemonJuiceWater = 20.0
+             ak_equalWaterLemonJuice = 0.0
         carrot_g = 244.0
         carrot_u = 4
           food_g = 752.0
