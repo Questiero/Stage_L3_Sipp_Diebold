@@ -17,13 +17,6 @@ from fractions import Fraction
 
 weights = {
     
-    #Two heuristics are used to define the weights. 
-    #The first one is based on a taxonomy of the ingredient categories, with weights starting from 1 for simple ingredients
-    #and multiplied by a factor of 100 for each higher category, indicating its importance in the recipe.
-    #The second one is based on the conversions between units and mass for each type of food. 
-    #As there is a known correspondence of one unit to its mass for each food type, weights of unit variables are calculated according
-    #to the weights of mass variables.
-    
     # Presence of almond milk, a boolean variable with a light weight corresponding to a specific ingredient
     PropositionalVariable("almondMilk", fmName="almondMilk"): Fraction(1),
     # Presence of banana, a boolean variable with a light weight corresponding to a specific ingredient
