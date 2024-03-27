@@ -2,7 +2,7 @@ from olaaaf.formula import LinearConstraint, PropositionalVariable, EnumeratedTy
 from olaaaf.mlo_solver import  ScipySolverRounded
 from olaaaf import Adaptation
 from olaaaf.variable import RealVariable, IntegerVariable
-from olaaaf.distance import discreteL1DistanceFunction
+from olaaaf.distance import DiscreteL1DistanceFunction
 from olaaaf.simplificator import Daalmans
 from olaaaf.projector import FloatConvexHullProjector
 
@@ -70,7 +70,7 @@ weights = {
 
 solver = ScipySolverRounded()
 simplifier = [Daalmans(solver)]
-adaptator = Adaptation(solver, discreteL1DistanceFunction(weights, epsilon=Fraction("1e-4")), simplifier, onlyOneSolution=True)
+adaptator = Adaptation(solver, DiscreteL1DistanceFunction(weights, epsilon=Fraction("1e-4")), simplifier, onlyOneSolution=True)
 
 adaptator.preload()
 

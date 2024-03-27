@@ -1,8 +1,12 @@
-from olaaaf.formula import LinearConstraint, PropositionalVariable, EnumeratedType
+"""
+     Example 4: adaptation of a carrot and cabage salad to remove the vinegar, using an adaptation rule.
+"""
+
+from olaaaf.formula import LinearConstraint, PropositionalVariable
 from olaaaf.mlo_solver import  ScipySolverRounded
 from olaaaf import Adaptation
 from olaaaf.variable import RealVariable, IntegerVariable
-from olaaaf.distance import discreteL1DistanceFunction
+from olaaaf.distance import DiscreteL1DistanceFunction
 from olaaaf.simplificator import Daalmans
 
 from fractions import Fraction
@@ -101,7 +105,7 @@ solver = ScipySolverRounded()
 simplifiers = [Daalmans(solver)]
 
 # Declaration of the discretized Manhattan distance function used for this example, using the weights declared above and an epsilon of 1e-4.
-distanceFunction = discreteL1DistanceFunction(weights, epsilon=Fraction("1e-4"))
+distanceFunction = DiscreteL1DistanceFunction(weights, epsilon=Fraction("1e-4"))
 
 # Declaration of the Adaptation object used for this example, using all the variables declared beforehand and specifying
 #that we wish to have only one valid solution instead of all the possible ones.
@@ -155,7 +159,7 @@ ak = PropositionalVariable("saladDish") >>\
 """
 
 # Source case
-src = PropositionalVariable("saladDish")\
+srce_case = PropositionalVariable("saladDish")\
     & LinearConstraint("carrot_u = 2")\
     & LinearConstraint("greenCabbage_cup = 4")\
     & LinearConstraint("oliveOil_g = 50")\
@@ -164,15 +168,15 @@ src = PropositionalVariable("saladDish")\
     & LinearConstraint("vinegar_g = 20")
 
 # Target problem
-tgt = PropositionalVariable("saladDish")\
+tgt_problem = PropositionalVariable("saladDish")\
     & PropositionalVariable("carrot")\
     & PropositionalVariable("greenCabbage")\
     & ~PropositionalVariable("vinegar")
 
-res = adaptator.execute(src, tgt, dk & ak)[1]
+min_dist, tgt_case = adaptator.execute(srce_case, tgt_problem, dk)
 
 """
-     EXPECTED RESULT
+     RESULT
 
 00m09.522s | Solution found with distance of 81:
 

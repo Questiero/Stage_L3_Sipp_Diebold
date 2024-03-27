@@ -4,13 +4,13 @@ Class representing a l1 distance function, also called cityblock or Manhattan.
 
 from __future__ import annotations
 
-from .distanceFunctionOnNumericalTuple import distanceFunctionOnNumericalTuple
+from .distanceFunctionOnNumericalTuple import DistanceFunctionOnNumericalTuple
 from ..domain import Domain
 from ...variable import Variable
 
 from fractions import Fraction
 
-class l1DistanceFunction(distanceFunctionOnNumericalTuple):
+class l1DistanceFunction(DistanceFunctionOnNumericalTuple):
     r"""
     Class representing a l1 distance function, also called cityblock or Manhattan, defined as such:
 

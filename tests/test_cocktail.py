@@ -2,7 +2,7 @@ from olaaaf.formula import LinearConstraint
 from olaaaf.mlo_solver import LPSolverRounded
 from olaaaf.revision import Revision
 from olaaaf.variable import RealVariable, IntegerVariable
-from olaaaf.distance import discreteL1DistanceFunction
+from olaaaf.distance import DiscreteL1DistanceFunction
 from olaaaf.simplificator import Daalmans
 from olaaaf.projector import FloatConvexHullProjector
 
@@ -30,5 +30,5 @@ psi = LinearConstraint("vol_tequila = 4") & LinearConstraint("vol_sirop = 2")\
     & LinearConstraint("vol_jusCitronVert <= 3") & cd
 mu = LinearConstraint("vol_alcool = 0") & cd
 
-rev = Revision(solver, discreteL1DistanceFunction(weights), simplifier, onlyOneSolution=False, projector=projector)
+rev = Revision(solver, DiscreteL1DistanceFunction(weights), simplifier, onlyOneSolution=False, projector=projector)
 res = rev.execute(psi, mu)

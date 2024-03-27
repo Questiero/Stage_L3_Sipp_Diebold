@@ -6,7 +6,7 @@ from olaaaf.mlo_solver import LPSolverRounded
 from olaaaf.simplificator import Daalmans
 from olaaaf.projector import FloatConvexHullProjector
 from olaaaf.revision import Revision
-from olaaaf.distance import discreteL1DistanceFunction
+from olaaaf.distance import DiscreteL1DistanceFunction
 
 
 class TestRevision(unittest.TestCase):
@@ -24,7 +24,7 @@ class TestRevision(unittest.TestCase):
         mu = (LinearConstraint("x + y >= 6") & LinearConstraint("5*x + y <= 25") & LinearConstraint("-0.5*x + y <= 3") & LinearConstraint("1/3*x + y >= 4"))\
             | (LinearConstraint("5*x + y >= 25") & LinearConstraint("3*x + y >= 16") & LinearConstraint("-x + y >= -4") & LinearConstraint("x <= 6") & LinearConstraint("x + y <= 9"))
 
-        rev = Revision(solver, discreteL1DistanceFunction(weights), simplifier, onlyOneSolution=False, projector=projector)
+        rev = Revision(solver, DiscreteL1DistanceFunction(weights), simplifier, onlyOneSolution=False, projector=projector)
         res = rev.execute(psi, mu)
         self.assertEqual(res[1], (LinearConstraint("- 1/2*x + y <= 3") & LinearConstraint("x + y <= 6") & LinearConstraint("- x - y <= -6") & LinearConstraint("-1/3*x - y <= -4")) | (LinearConstraint("x = 5") & LinearConstraint("y = 1")), "The revision of triangle and polygone isn't what we expected.")
 
@@ -47,7 +47,7 @@ class TestRevision(unittest.TestCase):
         psi = LinearConstraint("vol_tequila = 4") & LinearConstraint("vol_sirop = 2") & cd
         mu = LinearConstraint("vol_alcool = 0") & cd
 
-        rev = Revision(solver, discreteL1DistanceFunction(weights), simplifier, onlyOneSolution=False, projector=projector)
+        rev = Revision(solver, DiscreteL1DistanceFunction(weights), simplifier, onlyOneSolution=False, projector=projector)
         res = rev.execute(psi, mu)
 
         self.assertTrue(simplifier[0]._interpreter.sat(res[1].toLessOrEqConstraint().toDNF()), "The revision of cocktail simplified is insat.")
@@ -68,7 +68,7 @@ class TestRevision(unittest.TestCase):
         | LinearConstraint("x >= 7") & LinearConstraint("x <= 9") & LinearConstraint("y >= 0") & LinearConstraint("y <= 7")\
         | LinearConstraint("x >= -2") & LinearConstraint("x <= 0") & LinearConstraint("y >= 0") & LinearConstraint("y <= 7")
 
-        rev = Revision(solver, discreteL1DistanceFunction(weights), simplifier, onlyOneSolution=False, projector=projector)
+        rev = Revision(solver, DiscreteL1DistanceFunction(weights), simplifier, onlyOneSolution=False, projector=projector)
         res = rev.execute(psi, mu)
 
         self.assertEqual(res[1], (LinearConstraint("x = 5") & LinearConstraint("y <= 5") & LinearConstraint("- y <= -2")) | (LinearConstraint("x <= 5") & LinearConstraint("- x <= -2") & LinearConstraint("y = 2")) | (LinearConstraint("x <= 5") & LinearConstraint("- x <= -2") & LinearConstraint("y = 5")) | (LinearConstraint("x = 2") & LinearConstraint("- y <= -2") & LinearConstraint("y <= 5")))

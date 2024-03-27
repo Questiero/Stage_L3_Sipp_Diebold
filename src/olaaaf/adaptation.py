@@ -24,12 +24,12 @@ class Adaptation:
         The solver that will be used for optimization.
     distance : olaaaf.distance.distance_function.distanceFunction.DistanceFunction
         The distance function that will be used and, more importantly, the weights \((w_i)\) and \(\varepsilon\) arguments of it.
-        The original algorithm is meant to be used with a `olaaaf.distance.distance_function.discreteL1DistanceFunction.discreteL1DistanceFunction`.
+        The original algorithm is meant to be used with a `olaaaf.distance.distance_functiondiscreteL1DistanceFunctiondiscreteL1DistanceFunction`.
     simplifiers : list of olaaaf.simplificator.simplificator.Simplificator, optional
         List of all of the `olaaaf.simplificator.simplificator.Simplificator` that will be applied to the `olaaaf.formula.formula.Formula`, 
         in order given by the list.
     onlyOneSolution : boolean, optional
-        If set to `True`, the adaptation algorithm will only return one point that satisfies \(\psi \circ \mu\).
+        If set to `True`, the adaptation algorithm will only return one solution.
         If not, it will return all solutions.
         By default, this constant is set to whichever one was chosen in `olaaaf.constants.Constants`.
     verbose : boolean, optional
@@ -55,16 +55,16 @@ class Adaptation:
 
         self.__revision.preload()
 
-    def execute(self, src : Formula, trgt : Formula, dk : Formula):
+    def execute(self, srce_case : Formula, trgt : Formula, dk : Formula):
         r"""
-        Execute the adaptation of \(src\) by \(tgt\), with the domain knowledge \(DK\).
+        Execute the adaptation of \(srce_case\) by \(tgt_problem\), with the domain knowledge \(DK\).
 
         Parameters
         ----------
-        psi : `olaaaf.formula.formula.Formula`
-            \(src\), source case for the adaptation and `olaaaf.formula.formula.Formula` that will be adapted.
-        mu : `olaaaf.formula.formula.Formula`
-            \(tgt\), target problem for the adaptation and `olaaaf.formula.formula.Formula` that will be used to adapt \(src\) by.
+        srce_case : `olaaaf.formula.formula.Formula`
+            \(srce_case\), source case for the adaptation and `olaaaf.formula.formula.Formula` that will be adapted.
+        tgt_problem : `olaaaf.formula.formula.Formula`
+            \(tgt_problem\), target problem for the adaptation and `olaaaf.formula.formula.Formula` that will be used to adapt \(srce_case\) by.
         dk : `olaaaf.formula.formula.Formula`
             \(DK\), the domain knowledge.
 
@@ -72,9 +72,9 @@ class Adaptation:
         -------
         Fraction
             Distance (calculated with the `olaaaf.distance.distance_function.distanceFunction.DistanceFunction`
-            given at the initialization of the class) between \(src\) and \(tgt\).
+            given at the initialization of the class) between \(srce_case\) and \(tgt_problem\).
         `olaaaf.formula.formula.Formula`
-            Result of the adaptation of \(src\) by \(tgt\).
+            Result of the adaptation of \(srce_case\) by \(tgt_problem\).
         """
 
-        return self.__revision.execute(src & dk, trgt & dk)
+        return self.__revision.execute(srce_case & dk, trgt & dk)

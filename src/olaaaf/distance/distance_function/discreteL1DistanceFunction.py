@@ -4,7 +4,7 @@ Class representing a discretized l1 distance function, also called cityblock or 
 
 from __future__ import annotations
 
-from .distanceFunctionOnNumericalTuple import distanceFunctionOnNumericalTuple
+from .distanceFunctionOnNumericalTuple import DistanceFunctionOnNumericalTuple
 from .l1DistanceFunction import l1DistanceFunction
 from ..domain import Domain
 from ...variable import Variable
@@ -12,7 +12,7 @@ from ...variable import Variable
 from fractions import Fraction
 from math import ceil
 
-class discreteL1DistanceFunction(distanceFunctionOnNumericalTuple):
+class DiscreteL1DistanceFunction(DistanceFunctionOnNumericalTuple):
     r"""
     Class representing a discretized l1 distance function \(d_\varepsilon\), also called cityblock or Manhattan, defined as such:
 

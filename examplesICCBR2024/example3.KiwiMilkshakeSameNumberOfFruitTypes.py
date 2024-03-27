@@ -1,8 +1,12 @@
+"""
+     Example 3: adaptation of a banana milkshake recipe to a kiwi milkshake recipe, while conserving the number of fruit types.
+"""
+
 from olaaaf.formula import LinearConstraint, PropositionalVariable, FormulaManager
 from olaaaf.mlo_solver import  ScipySolverRounded
 from olaaaf import Adaptation
 from olaaaf.variable import RealVariable, IntegerVariable
-from olaaaf.distance import discreteL1DistanceFunction
+from olaaaf.distance import DiscreteL1DistanceFunction
 from olaaaf.simplificator import Daalmans
 
 from fractions import Fraction
@@ -105,7 +109,7 @@ solver = ScipySolverRounded()
 simplifiers = [Daalmans(solver)]
 
 # Declaration of the discretized Manhattan distance function used for this example, using the weights declared above and an epsilon of 1e-4.
-distanceFunction = discreteL1DistanceFunction(weights, epsilon=Fraction("1e-4"))
+distanceFunction = DiscreteL1DistanceFunction(weights, epsilon=Fraction("1e-4"))
 
 # Declaration of the Adaptation object used for this example, using all the variables declared beforehand and specifying
 # that we wish to have only one valid solution instead of all the possible ones.
@@ -181,7 +185,7 @@ dk &= LinearConstraint("nb_fruitTypes - b2i_banana - b2i_kiwi = 0")
 """
 
 # Source case
-src =  LinearConstraint("banana_u = 2")\
+srce_case =  LinearConstraint("banana_u = 2")\
      & LinearConstraint("granulatedSugar_tbsp = 4")\
      & LinearConstraint("vanillaSugar_u = 2")\
      & LinearConstraint("cowMilk_L = 1.")\
@@ -192,12 +196,12 @@ src =  LinearConstraint("banana_u = 2")\
      & PropositionalVariable("milkshake")\
 
 # Target problem
-tgt = FormulaManager.parser("kiwi & milkshake")
+tgt_problem = FormulaManager.parser("kiwi & milkshake")
 
-res = adaptator.execute(src, tgt, dk)[1]
+min_dist, tgt_case = adaptator.execute(srce_case, tgt_problem, dk)
 
 """
-     EXPECTED RESULT
+     RESULT
 
 00m41.126s | Solution found with distance of 10644:
 

@@ -10,7 +10,7 @@ from fractions import Fraction
 
 from abc import abstractmethod
 
-class distanceFunctionOnNumericalTuple(DistanceFunction):
+class DistanceFunctionOnNumericalTuple(DistanceFunction):
     """
     Abstract class representing a distance function applied on numerical tuples.
 
